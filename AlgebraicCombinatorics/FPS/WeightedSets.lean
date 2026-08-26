@@ -60,7 +60,8 @@ variable {R : Type*} [CommSemiring R]
 /-! ### Weighted Sets -/
 
 /-- A weighted set is a type equipped with a weight function to ℕ.
-    (Definition \ref{def.gf-ws.weighted-sets}(a)) -/
+    (Definition \ref{def.gf-ws.weighted-sets}(a)) @statement_id stmt-src-def.gf-ws.weighted-sets
+-/
 structure WeightedSet (α : Type*) where
   /-- The weight function assigning a natural number to each element -/
   weight : α → ℕ
@@ -70,7 +71,8 @@ namespace WeightedSet
 variable {α β γ : Type*}
 
 /-- A weighted set is finite-type if for each n ∈ ℕ, there are only finitely many
-    elements of weight n. (Definition \ref{def.gf-ws.weighted-sets}(b)) -/
+    elements of weight n. (Definition \ref{def.gf-ws.weighted-sets}(b)) @statement_id stmt-src-def.gf-ws.weighted-sets
+-/
 def IsFiniteType (W : WeightedSet α) : Prop :=
   ∀ n : ℕ, Set.Finite {a : α | W.weight a = n}
 
@@ -86,7 +88,8 @@ def countOfWeight (W : WeightedSet α) (hft : W.IsFiniteType) (n : ℕ) : ℕ :=
 
 /-- The weight generating function of a finite-type weighted set is the FPS
     ∑_{n ∈ ℕ} (# of elements of weight n) · x^n.
-    (Definition \ref{def.gf-ws.weighted-sets}(c)) -/
+    (Definition \ref{def.gf-ws.weighted-sets}(c)) @statement_id stmt-src-def.gf-ws.weighted-sets
+-/
 def weightGenFun (W : WeightedSet α) (hft : W.IsFiniteType) : R⟦X⟧ :=
   PowerSeries.mk fun n => (W.countOfWeight hft n : R)
 
@@ -98,7 +101,8 @@ theorem weightGenFun_eq_sum (W : WeightedSet α) (hft : W.IsFiniteType) :
 /-! ### Isomorphisms of Weighted Sets -/
 
 /-- An isomorphism between weighted sets is a weight-preserving bijection.
-    (Definition \ref{def.gf-ws.weighted-sets}(d)) -/
+    (Definition \ref{def.gf-ws.weighted-sets}(d)) @statement_id stmt-src-def.gf-ws.weighted-sets
+-/
 structure Isomorphism (W₁ : WeightedSet α) (W₂ : WeightedSet β) where
   /-- The underlying bijection -/
   toEquiv : α ≃ β
@@ -106,14 +110,16 @@ structure Isomorphism (W₁ : WeightedSet α) (W₂ : WeightedSet β) where
   weight_eq : ∀ a : α, W₂.weight (toEquiv a) = W₁.weight a
 
 /-- Two weighted sets are isomorphic if there exists an isomorphism between them.
-    (Definition \ref{def.gf-ws.weighted-sets}(e)) -/
+    (Definition \ref{def.gf-ws.weighted-sets}(e)) @statement_id stmt-src-def.gf-ws.weighted-sets
+-/
 def AreIsomorphic (W₁ : WeightedSet α) (W₂ : WeightedSet β) : Prop :=
   Nonempty (Isomorphism W₁ W₂)
 
 notation W₁ " ≅ᵥ " W₂ => AreIsomorphic W₁ W₂
 
 /-- Isomorphic finite-type weighted sets have equal weight generating functions.
-    (Proposition \ref{prop.gf-ws.iso}) -/
+    (Proposition \ref{prop.gf-ws.iso}) @statement_id stmt-src-prop.gf-ws.iso
+-/
 theorem weightGenFun_eq_of_isomorphic (W₁ : WeightedSet α) (W₂ : WeightedSet β)
     (hft₁ : W₁.IsFiniteType) (hft₂ : W₂.IsFiniteType) (h : W₁ ≅ᵥ W₂) :
     W₁.weightGenFun (R := R) hft₁ = W₂.weightGenFun hft₂ := by
@@ -131,7 +137,8 @@ theorem weightGenFun_eq_of_isomorphic (W₁ : WeightedSet α) (W₂ : WeightedSe
 /-! ### Disjoint Union of Weighted Sets -/
 
 /-- The disjoint union of two weighted sets, with weights inherited from each component.
-    (Definition \ref{def.gf-ws.djun}) -/
+    (Definition \ref{def.gf-ws.djun}) @statement_id stmt-src-def.gf-ws.djun
+-/
 def disjointUnion (W₁ : WeightedSet α) (W₂ : WeightedSet β) : WeightedSet (α ⊕ β) where
   weight := Sum.elim W₁.weight W₂.weight
 
@@ -143,7 +150,8 @@ infixl:65 " +ᵥ " => disjointUnion
 @[simp] lemma disjointUnion_weight_inr (W₁ : WeightedSet α) (W₂ : WeightedSet β) (b : β) :
     (W₁ +ᵥ W₂).weight (Sum.inr b) = W₂.weight b := rfl
 
-/-- The disjoint union of finite-type weighted sets is finite-type. -/
+/-- The disjoint union of finite-type weighted sets is finite-type. @statement_id stmt-src-prop.gf-ws.djun
+-/
 theorem disjointUnion_isFiniteType (W₁ : WeightedSet α) (W₂ : WeightedSet β)
     (hft₁ : W₁.IsFiniteType) (hft₂ : W₂.IsFiniteType) : (W₁ +ᵥ W₂).IsFiniteType := by
   intro n
@@ -170,7 +178,8 @@ theorem disjointUnion_isFiniteType (W₁ : WeightedSet α) (W₂ : WeightedSet �
   exact Set.Finite.union (Set.Finite.image _ (hft₁ n)) (Set.Finite.image _ (hft₂ n))
 
 /-- The weight generating function of a disjoint union is the sum of the generating functions.
-    (Proposition \ref{prop.gf-ws.djun}) -/
+    (Proposition \ref{prop.gf-ws.djun}) @statement_id stmt-src-prop.gf-ws.djun
+-/
 theorem weightGenFun_disjointUnion (W₁ : WeightedSet α) (W₂ : WeightedSet β)
     (hft₁ : W₁.IsFiniteType) (hft₂ : W₂.IsFiniteType) :
     (W₁ +ᵥ W₂).weightGenFun (R := R) (disjointUnion_isFiniteType W₁ W₂ hft₁ hft₂) =
@@ -224,7 +233,8 @@ theorem weightGenFun_disjointUnion (W₁ : WeightedSet α) (W₂ : WeightedSet �
 /-! ### Product of Weighted Sets -/
 
 /-- The product of two weighted sets, with weight defined as the sum of component weights.
-    (Definition \ref{def.gf-ws.prod}) -/
+    (Definition \ref{def.gf-ws.prod}) @statement_id stmt-src-def.gf-ws.prod
+-/
 def prod (W₁ : WeightedSet α) (W₂ : WeightedSet β) : WeightedSet (α × β) where
   weight := fun ⟨a, b⟩ => W₁.weight a + W₂.weight b
 
@@ -234,7 +244,8 @@ infixl:70 " ×ᵥ " => prod
     (W₁ ×ᵥ W₂).weight p = W₁.weight p.1 + W₂.weight p.2 := rfl
 
 /-- The product of finite-type weighted sets is finite-type.
-    (Proof of first part of Proposition \ref{prop.gf-ws.prod}) -/
+    (Proof of first part of Proposition \ref{prop.gf-ws.prod}) @statement_id stmt-src-prop.gf-ws.prod
+-/
 theorem prod_isFiniteType (W₁ : WeightedSet α) (W₂ : WeightedSet β)
     (hft₁ : W₁.IsFiniteType) (hft₂ : W₂.IsFiniteType) : (W₁ ×ᵥ W₂).IsFiniteType := by
   intro n
@@ -259,7 +270,8 @@ theorem prod_isFiniteType (W₁ : WeightedSet α) (W₂ : WeightedSet β)
     This is the key theorem showing that the weight generating function respects
     Cartesian products: ḡ(A × B) = ḡ(A) · ḡ(B). The proof partitions the pairs of
     total weight n by the weight of the first component, showing this equals the
-    convolution sum that defines multiplication of power series. -/
+    convolution sum that defines multiplication of power series. @statement_id stmt-src-prop.gf-ws.prod
+-/
 theorem weightGenFun_prod [DecidableEq α] [DecidableEq β] (W₁ : WeightedSet α) (W₂ : WeightedSet β)
     (hft₁ : W₁.IsFiniteType) (hft₂ : W₂.IsFiniteType) :
     (W₁ ×ᵥ W₂).weightGenFun (R := R) (prod_isFiniteType W₁ W₂ hft₁ hft₂) =
@@ -307,7 +319,8 @@ theorem weightGenFun_prod [DecidableEq α] [DecidableEq β] (W₁ : WeightedSet 
 def pow (W : WeightedSet α) (k : ℕ) : WeightedSet (Fin k → α) where
   weight := fun f => ∑ i, W.weight (f i)
 
-/-- The k-th power of a finite-type weighted set is finite-type. -/
+/-- The k-th power of a finite-type weighted set is finite-type. @statement_id stmt-src-prop.gf-ws.pow
+-/
 theorem pow_isFiniteType (W : WeightedSet α) (hft : W.IsFiniteType) (k : ℕ) :
     (W.pow k).IsFiniteType := by
   intro n
@@ -324,7 +337,8 @@ theorem pow_isFiniteType (W : WeightedSet α) (hft : W.IsFiniteType) (k : ℕ) :
   simp only [Set.mem_setOf_eq, pow] at hf ⊢
   exact (Finset.single_le_sum (by simp) (Finset.mem_univ i)).trans_eq hf
 
-/-- Helper: pow (n+1) is isomorphic to W × pow n -/
+/-- Helper: pow (n+1) is isomorphic to W × pow n @statement_id stmt-src-lem.gf-ws.pow-succ-equiv
+-/
 def pow_succ_equiv (W : WeightedSet α) (n : ℕ) :
     Isomorphism (W.pow (n + 1)) (W ×ᵥ (W.pow n)) where
   toEquiv := (Fin.succFunEquiv α n).trans (Equiv.prodComm _ _)
@@ -334,7 +348,8 @@ def pow_succ_equiv (W : WeightedSet α) (n : ℕ) :
     simp [Fin.last, Fin.natAdd, Fin.castSucc, Fin.castAdd]
 
 /-- The weight generating function of A^k is (ḡ(A))^k.
-    (Proposition \ref{prop.gf-ws.pow}) -/
+    (Proposition \ref{prop.gf-ws.pow}) @statement_id stmt-src-prop.gf-ws.pow
+-/
 theorem weightGenFun_pow (W : WeightedSet α) (hft : W.IsFiniteType) (k : ℕ) :
     (W.pow k).weightGenFun (R := R) (pow_isFiniteType W hft k) =
       (W.weightGenFun hft) ^ k := by
@@ -407,7 +422,8 @@ def HasPositiveWeights (W : WeightedSet α) : Prop :=
     then tuples of weight 2 include ⟨1, ![2]⟩, ⟨2, ![0, 2]⟩, ⟨3, ![0, 0, 2]⟩, etc.
     
     The key insight is that with positive weights, a tuple of length n has weight ≥ n, so for weight m,
-    we only need to consider tuples of length ≤ m. -/
+    we only need to consider tuples of length ≤ m. @statement_id stmt-src-lem.gf-ws.tuples-finite-type
+-/
 theorem tuples_isFiniteType (W : WeightedSet α) (hft : W.IsFiniteType)
     (hpos : W.HasPositiveWeights) : W.tuples.IsFiniteType := by
   intro m
@@ -565,10 +581,12 @@ namespace DominoTilingsZ
 
 /-! #### Shapes and Dominos (Definition \ref{def.domino.shapes-and-tilings}) -/
 
-/-- A shape is a subset of ℤ² (Definition \ref{def.domino.shapes-and-tilings}(a)) -/
+/-- A shape is a subset of ℤ² (Definition \ref{def.domino.shapes-and-tilings}(a)) @statement_id stmt-src-def.domino.shapes-and-tilings
+-/
 abbrev Shape := Set (ℤ × ℤ)
 
-/-- The n × m rectangle (Definition \ref{def.domino.shapes-and-tilings}(b)) -/
+/-- The n × m rectangle (Definition \ref{def.domino.shapes-and-tilings}(b)) @statement_id stmt-src-def.domino.shapes-and-tilings
+-/
 def Rectangle (n m : ℕ) : Shape :=
   {p : ℤ × ℤ | 1 ≤ p.1 ∧ p.1 ≤ n ∧ 1 ≤ p.2 ∧ p.2 ≤ m}
 
@@ -601,7 +619,8 @@ theorem Rectangle_ncard (n m : ℕ) : (Rectangle n m).ncard = n * m := by
   rw [h, Set.ncard_prod]
   simp [Set.ncard_eq_toFinset_card', Set.toFinset_Icc]
 
-/-- A domino is either horizontal or vertical (Definition \ref{def.domino.shapes-and-tilings}(c)) -/
+/-- A domino is either horizontal or vertical (Definition \ref{def.domino.shapes-and-tilings}(c)) @statement_id stmt-src-def.domino.shapes-and-tilings
+-/
 inductive Domino : Type
   | horizontal (i j : ℤ) : Domino  -- {(i,j), (i+1,j)}
   | vertical (i j : ℤ) : Domino    -- {(i,j), (i,j+1)}
@@ -688,7 +707,8 @@ theorem Domino.eq_of_toShape_eq {d1 d2 : Domino} (h : d1.toShape = d2.toShape) :
       · rcases h2 with ⟨hi2, hj2⟩ | ⟨hi2, hj2⟩ <;> omega
 
 /-- A domino tiling of a shape S is a set partition of S into dominos
-    (Definition \ref{def.domino.shapes-and-tilings}(d)) -/
+    (Definition \ref{def.domino.shapes-and-tilings}(d)) @statement_id stmt-src-def.domino.shapes-and-tilings
+-/
 structure Tiling (S : Shape) where
   /-- The set of dominos in the tiling -/
   dominos : Set Domino
@@ -726,7 +746,8 @@ theorem Tiling.unique_empty (T : Tiling (∅ : Shape)) : T.dominos = ∅ := by
 
     This is defined as the cardinality of the type of all tilings.
     Note: For this to be meaningful, the set of tilings must be finite,
-    which holds for any finite rectangle. -/
+    which holds for any finite rectangle. @statement_id stmt-src-def.domino.shapes-and-tilings
+-/
 def numTilings (n m : ℕ) : ℕ := Nat.card (Tiling (Rectangle n m))
 
 notation "d_[" n "," m "]" => numTilings n m
@@ -947,6 +968,7 @@ private lemma no_horizontal_at_1_if_vertical (n : ℕ) (T : Tiling (Rectangle n 
   rw [hi] at hdisj'
   exact Set.disjoint_iff.mp hdisj' ⟨h_in_vert, h_in_horiz⟩
 
+/-- @statement_id stmt-src-lem.gf-ws.fault-at-1-if-vertical -/
 lemma fault_at_1_if_vertical (n : ℕ) (hn : n ≥ 2) (T : Tiling (Rectangle n 2))
     (hv : Domino.vertical 1 1 ∈ T.dominos) : hasFault n T 1 := by
   refine ⟨by omega, by omega, ?_⟩
@@ -995,6 +1017,7 @@ private lemma domino_covering_12_valid (n : ℕ) (T : Tiling (Rectangle n 2))
       simp only [Rectangle, Set.mem_setOf_eq] at this; omega
     · left; simp only [Domino.vertical.injEq]; omega
 
+/-- @statement_id stmt-src-lem.gf-ws.horizontal-12-if-horizontal-11 -/
 lemma horizontal_12_if_horizontal_11 (n : ℕ) (hn : n ≥ 1) (T : Tiling (Rectangle n 2))
     (hh : Domino.horizontal 1 1 ∈ T.dominos) : Domino.horizontal 1 2 ∈ T.dominos := by
   obtain ⟨d, hd, hmem⟩ := exists_domino_covering_12 n hn T
@@ -1032,6 +1055,7 @@ private lemma no_horizontal_at_2_if_horizontal_pair (n : ℕ) (T : Tiling (Recta
     have h22_hi2 : ((2 : ℤ), (2 : ℤ)) ∈ (Domino.horizontal i 2).toShape := by simp [Domino.toShape, hi]
     exact Set.disjoint_iff.mp this ⟨h22_h12, h22_hi2⟩
 
+/-- @statement_id stmt-src-lem.gf-ws.fault-at-2-if-horizontal -/
 lemma fault_at_2_if_horizontal (n : ℕ) (hn : n ≥ 3) (T : Tiling (Rectangle n 2))
     (hh : Domino.horizontal 1 1 ∈ T.dominos) : hasFault n T 2 := by
   have hn1 : n ≥ 1 := by omega
@@ -1046,7 +1070,8 @@ lemma fault_at_2_if_horizontal (n : ℕ) (hn : n ≥ 3) (T : Tiling (Rectangle n
     · right; omega
   | vertical i j => trivial
 
-/-- The only faultfree tilings of height-2 rectangles have width 1 or 2 -/
+/-- The only faultfree tilings of height-2 rectangles have width 1 or 2 @statement_id stmt-src-lem.gf-ws.faultfree-height2-classification
+-/
 theorem faultfree_height2_classification (n : ℕ) (T : Tiling (Rectangle n 2))
     (hff : isFaultfree n T) : n = 1 ∨ n = 2 := by
   obtain ⟨hn_pos, hno_fault⟩ := hff
@@ -1470,7 +1495,8 @@ theorem countOfWeight_faultfreeHeight2_eq_zero (n : ℕ) (hn1 : n ≠ 1) (hn2 : 
     omega
   · simp
 
-/-- The generating function of faultfree height-2 tilings is x + x² -/
+/-- The generating function of faultfree height-2 tilings is x + x² @statement_id stmt-src-lem.gf-ws.weightgenfun-faultfreeheight2
+-/
 theorem weightGenFun_faultfreeHeight2 :
     FaultfreeTilingsHeight2.weightGenFun (R := ℚ) faultfreeTilingsHeight2_isFiniteType =
       PowerSeries.X + PowerSeries.X ^ 2 := by
@@ -1728,7 +1754,8 @@ private lemma partialWidthSum_add_le (k : ℕ)
     _ ≤ ∑ j : Fin i2.val, (ts ⟨j.val, Nat.lt_trans j.isLt i2.isLt⟩).1 := by
           apply Finset.sum_le_univ_sum_of_nonneg; intro _; exact Nat.zero_le _
 
-/-- Helper: Dominos from different components have disjoint x-coordinate ranges -/
+/-- Helper: Dominos from different components have disjoint x-coordinate ranges @statement_id stmt-src-lem.gf-ws.compose-component-disjoint
+-/
 theorem composeTilings_component_dominos_disjoint (k : ℕ) 
     (ts : Fin k → (Σ m : ℕ, {T' : Tiling (Rectangle m 2) // isFaultfree m T'}))
     (i1 i2 : Fin k) (hi : i1 ≠ i2)
@@ -1801,7 +1828,8 @@ private lemma point_in_some_component (k : ℕ) (_hk : k ≥ 1)
     Each faultfree tiling is shifted by the cumulative width of the previous tilings,
     and the union of all shifted dominos forms the composed tiling.
     
-    This is the inverse of decomposeTiling. -/
+    This is the inverse of decomposeTiling. @statement_id stmt-src-lem.gf-ws.compose-tilings
+-/
 def composeTilings (k : ℕ) 
     (ts : Fin k → (Σ m : ℕ, {T' : Tiling (Rectangle m 2) // isFaultfree m T'})) :
     Σ n : ℕ, Tiling (Rectangle n 2) :=
@@ -2056,7 +2084,8 @@ def Domino.inLeftPart (d : Domino) (k : ℕ) : Prop :=
 def Domino.inRightPart (d : Domino) (k : ℕ) : Prop :=
   ∀ p ∈ d.toShape, p.1 ≥ k + 1
 
-/-- At a fault, each domino is either entirely left or entirely right -/
+/-- At a fault, each domino is either entirely left or entirely right @statement_id stmt-src-lem.gf-ws.domino-left-or-right
+-/
 theorem domino_left_or_right_at_fault {n : ℕ} {T : Tiling (Rectangle n 2)} {k : ℕ}
     (hk : hasFault n T k) (d : Domino) (hd : d ∈ T.dominos) :
     d.inLeftPart k ∨ d.inRightPart k := by
@@ -2089,7 +2118,8 @@ theorem domino_left_or_right_at_fault {n : ℕ} {T : Tiling (Rectangle n 2)} {k 
       simp only [Set.mem_insert_iff, Set.mem_singleton_iff] at hp
       rcases hp with rfl | rfl <;> simp <;> omega
 
-/-- Restrict a tiling to the left part at a fault position -/
+/-- Restrict a tiling to the left part at a fault position @statement_id stmt-src-lem.gf-ws.restrict-left
+-/
 def restrictTilingLeft (n : ℕ) (T : Tiling (Rectangle n 2)) (k : ℕ) 
     (hk : hasFault n T k) : Tiling (Rectangle k 2) where
   dominos := {d ∈ T.dominos | d.inLeftPart k}
@@ -2121,7 +2151,8 @@ def restrictTilingLeft (n : ℕ) (T : Tiling (Rectangle n 2)) (k : ℕ)
         have hge := hright (x, y) hp
         omega
 
-/-- Restrict a tiling to the right part at a fault position, shifted to origin -/
+/-- Restrict a tiling to the right part at a fault position, shifted to origin @statement_id stmt-src-lem.gf-ws.restrict-right
+-/
 def restrictTilingRight (n : ℕ) (T : Tiling (Rectangle n 2)) (k : ℕ) 
     (hk : hasFault n T k) : Tiling (Rectangle (n - k) 2) where
   dominos := ({d ∈ T.dominos | d.inRightPart k}).image (fun d => d.shiftNeg k)
@@ -2187,7 +2218,8 @@ theorem restrictTilingRight_proof_irrel (n : ℕ) (T : Tiling (Rectangle n 2)) (
     (hk1 hk2 : hasFault n T k) : 
     restrictTilingRight n T k hk1 = restrictTilingRight n T k hk2 := rfl
 
-/-- The left restriction at a fault is faultfree if k is the smallest fault -/
+/-- The left restriction at a fault is faultfree if k is the smallest fault @statement_id stmt-src-lem.gf-ws.restrict-left-faultfree
+-/
 theorem restrictTilingLeft_isFaultfree (n : ℕ) (T : Tiling (Rectangle n 2)) (k : ℕ) 
     (hk : hasFault n T k) (hmin : ∀ j, j < k → ¬hasFault n T j) : 
     isFaultfree k (restrictTilingLeft n T k hk) := by
@@ -2238,7 +2270,8 @@ theorem dominos_eq_leftPart_union_rightPart (n : ℕ) (T : Tiling (Rectangle n 2
   · intro hd
     rcases hd with ⟨hd, _⟩ | ⟨hd, _⟩ <;> exact hd
 
-/-- The original dominos equal the union of left part and shifted right part -/
+/-- The original dominos equal the union of left part and shifted right part @statement_id stmt-src-lem.gf-ws.dominos-eq-left-union-shifted-right
+-/
 theorem dominos_eq_left_union_shifted_right (n : ℕ) (T : Tiling (Rectangle n 2)) (k : ℕ) 
     (hk : hasFault n T k) : 
     T.dominos = (restrictTilingLeft n T k hk).dominos ∪ 
@@ -2334,7 +2367,8 @@ theorem partialWidthSum_one (k : ℕ) (hk : k ≥ 2)
     partialWidthSum k ts ⟨1, by omega⟩ = (ts ⟨0, by omega⟩).1 := by
   simp only [partialWidthSum, Finset.univ_unique, Finset.sum_singleton, Fin.default_eq_zero, Fin.val_zero]
 
-/-- For k >= 2, the composed tiling has a fault at position (ts 0).1 -/
+/-- For k >= 2, the composed tiling has a fault at position (ts 0).1 @statement_id stmt-src-lem.gf-ws.compose-fault-at-boundary
+-/
 theorem composeTilings_hasFault_at_boundary (k : ℕ) (hk : k ≥ 2)
     (ts : Fin k → (Σ m : ℕ, {T' : Tiling (Rectangle m 2) // isFaultfree m T'})) :
     hasFault (composeTilings k ts).1 (composeTilings k ts).2 (ts ⟨0, by omega⟩).1 := by
@@ -2419,7 +2453,8 @@ theorem composeTilings_hasFault_at_boundary (k : ℕ) (hk : k ≥ 2)
       -- Vertical dominos don't affect faults
       trivial
 
-/-- For k >= 1, there are no faults at positions less than (ts 0).1 in the composed tiling -/
+/-- For k >= 1, there are no faults at positions less than (ts 0).1 in the composed tiling @statement_id stmt-src-lem.gf-ws.compose-no-fault-before-boundary
+-/
 theorem composeTilings_no_fault_before_boundary (k : ℕ) (hk : k ≥ 1)
     (ts : Fin k → (Σ m : ℕ, {T' : Tiling (Rectangle m 2) // isFaultfree m T'}))
     (p : ℕ) (hp : p < (ts ⟨0, hk⟩).1) : ¬hasFault (composeTilings k ts).1 (composeTilings k ts).2 p := by
@@ -2451,7 +2486,8 @@ theorem composeTilings_no_fault_before_boundary (k : ℕ) (hk : k ≥ 1)
     have hcross := hfault.2.2 d hd_shifted
     exact hcross
 
-/-- The minimum fault in a composed tiling with k >= 2 components is at (ts 0).1 -/
+/-- The minimum fault in a composed tiling with k >= 2 components is at (ts 0).1 @statement_id stmt-src-lem.gf-ws.compose-minfault-eq
+-/
 theorem composeTilings_minFault_eq (k : ℕ) (hk : k ≥ 2)
     (ts : Fin k → (Σ m : ℕ, {T' : Tiling (Rectangle m 2) // isFaultfree m T'})) 
     (hne : (faultPositions (composeTilings k ts).1 (composeTilings k ts).2).Nonempty) :
@@ -2585,7 +2621,8 @@ theorem restrictTilingLeft_composeTilings_dominos (k : ℕ) (hk : k ≥ 2)
       exact composeTilings_component0_inLeftPart k (by omega) ts d hd
 
 /-- The left restriction of a composed tiling equals the first component's tiling.
-    This follows from `restrictTilingLeft_composeTilings_dominos` via `Tiling.ext`. -/
+    This follows from `restrictTilingLeft_composeTilings_dominos` via `Tiling.ext`. @statement_id stmt-src-lem.gf-ws.restrict-left-compose-eq
+-/
 theorem restrictTilingLeft_composeTilings_eq (k : ℕ) (hk : k ≥ 2)
     (ts : Fin k → (Σ m : ℕ, {T' : Tiling (Rectangle m 2) // isFaultfree m T'}))
     (hfault : hasFault (composeTilings k ts).1 (composeTilings k ts).2 (ts ⟨0, by omega⟩).1) :
@@ -2740,7 +2777,8 @@ theorem restrictTilingRight_composeTilings_dominos_eq (k : ℕ) (hk : k ≥ 2)
     
     Note: The two tilings have the same type because:
     - restrictTilingRight has width (composeTilings k ts).1 - (ts 0).1
-    - composeTilings (k-1) (tail ts) has width (composeTilings k ts).1 - (ts 0).1 (by composeTilings_tail_width) -/
+    - composeTilings (k-1) (tail ts) has width (composeTilings k ts).1 - (ts 0).1 (by composeTilings_tail_width) @statement_id stmt-src-lem.gf-ws.restrict-right-compose-eq
+-/
 theorem restrictTilingRight_composeTilings_eq (k : ℕ) (hk : k ≥ 2)
     (ts : Fin k → (Σ m : ℕ, {T' : Tiling (Rectangle m 2) // isFaultfree m T'}))
     (hfault : hasFault (composeTilings k ts).1 (composeTilings k ts).2 (ts ⟨0, by omega⟩).1) :
@@ -2765,7 +2803,8 @@ theorem restrictTilingRight_composeTilings_eq (k : ℕ) (hk : k ≥ 2)
     
     Implementation: We recursively find the minimum fault position, cut the tiling there,
     and decompose the right part. The left part at a minimum fault is always faultfree.
-    If no faults exist, the entire tiling is faultfree and returned as a singleton. -/
+    If no faults exist, the entire tiling is faultfree and returned as a singleton. @statement_id stmt-src-lem.gf-ws.decompose-tiling
+-/
 noncomputable def decomposeTiling : (n : ℕ) → (T : Tiling (Rectangle n 2)) → 
     Σ k : ℕ, Fin k → (Σ m : ℕ, {T' : Tiling (Rectangle m 2) // isFaultfree m T'})
   | 0, _ => ⟨0, Fin.elim0⟩
@@ -2825,7 +2864,8 @@ theorem decomposeTiling_hasFault_fst (n : ℕ) (T : Tiling (Rectangle (n + 1) 2)
     (decomposeTiling (n + 1) T).1 = (decomposeTiling (n + 1 - k) right).1 + 1 := by
   simp only [decomposeTiling, dif_pos hne]
 
-/-- Decomposition followed by composition gives back the original tiling -/
+/-- Decomposition followed by composition gives back the original tiling @statement_id stmt-src-lem.gf-ws.compose-decompose
+-/
 theorem composeTilings_decomposeTiling (n : ℕ) (T : Tiling (Rectangle n 2)) :
     let ⟨k, ts⟩ := decomposeTiling n T
     composeTilings k ts = ⟨n, T⟩ := by
@@ -3192,7 +3232,8 @@ private lemma sigma_fin_fun_ext {α : Type*} (n m : ℕ) (h : n = m)
        decomposeTiling returns the empty tuple by definition.
     2. If k > 0, the composed tiling has positive width, and we need to show that
        the faults in the composed tiling occur exactly at the partial width sums,
-       so decomposing at those faults recovers the original pieces. -/
+       so decomposing at those faults recovers the original pieces. @statement_id stmt-src-lem.gf-ws.decompose-compose
+-/
 theorem decomposeTiling_composeTilings (k : ℕ) 
     (ts : Fin k → (Σ m : ℕ, {T' : Tiling (Rectangle m 2) // isFaultfree m T'})) :
     decomposeTiling (composeTilings k ts).1 (composeTilings k ts).2 = ⟨k, ts⟩ := by
@@ -3575,7 +3616,8 @@ theorem composeTilings_width (k : ℕ)
   rfl
 
 /-- The sum of widths of the faultfree tilings equals the width of the original.
-    This is the key property that makes the decomposition weight-preserving. -/
+    This is the key property that makes the decomposition weight-preserving. @statement_id stmt-src-lem.gf-ws.decompose-weight-sum
+-/
 theorem decomposeTiling_weight_sum (n : ℕ) (T : Tiling (Rectangle n 2)) :
     let ⟨k, ts⟩ := decomposeTiling n T
     (∑ i : Fin k, (ts i).1) = n := by
@@ -3597,7 +3639,8 @@ theorem decomposeTiling_weight_sum (n : ℕ) (T : Tiling (Rectangle n 2)) :
     where D = TilingsHeight2 and F = FaultfreeTilingsHeight2.
     
     The isomorphism preserves weights: the sum of the widths of the faultfree tilings
-    in the tuple equals the width of the original tiling. -/
+    in the tuple equals the width of the original tiling. @statement_id stmt-src-lem.gf.weighted-set.domino.fd
+-/
 def tiling_decomposition_isomorphism :
     WeightedSet.Isomorphism TilingsHeight2 FaultfreeTilingsHeight2.tuples where
   toEquiv := {
@@ -3621,7 +3664,8 @@ theorem tiling_decomposition (n : ℕ) (T : Tiling (Rectangle n 2)) :
 /-- Prepend a vertical domino to a tiling of Rectangle m 2, giving a tiling of Rectangle (m+1) 2.
     
     The new tiling has dominos = {vertical 1 1} ∪ (T.dominos shifted right by 1).
-    This is the inverse of restricting at fault 1 when a vertical domino is present. -/
+    This is the inverse of restricting at fault 1 when a vertical domino is present. @statement_id stmt-src-lem.gf-ws.prepend-vertical
+-/
 def prependVertical (m : ℕ) (T : Tiling (Rectangle m 2)) : Tiling (Rectangle (m + 1) 2) where
   dominos := {Domino.vertical 1 1} ∪ T.dominos.image (fun d => d.shiftNat 1)
   pairwise_disjoint := by
@@ -3738,7 +3782,8 @@ lemma vertical_11_not_in_shiftNat_image (m : ℕ) (T : Tiling (Rectangle m 2)) :
 /-- Prepend a pair of horizontal dominos to a tiling of Rectangle m 2, giving a tiling of Rectangle (m+2) 2.
     
     The new tiling has dominos = {horizontal 1 1, horizontal 1 2} ∪ (T.dominos shifted right by 2).
-    This is the inverse of restricting at fault 2 when horizontal dominos are present. -/
+    This is the inverse of restricting at fault 2 when horizontal dominos are present. @statement_id stmt-src-lem.gf-ws.prepend-horizontal-pair
+-/
 def prependHorizontalPair (m : ℕ) (T : Tiling (Rectangle m 2)) : Tiling (Rectangle (m + 2) 2) where
   dominos := {Domino.horizontal 1 1, Domino.horizontal 1 2} ∪ T.dominos.image (fun d => d.shiftNat 2)
   pairwise_disjoint := by
@@ -3983,7 +4028,8 @@ lemma vertical_11_not_in_shiftNat2_image (m : ℕ) (T : Tiling (Rectangle m 2)) 
     - If a vertical domino covers (1,1)-(1,2): removing it and shifting gives a tiling of Rectangle (n+1) 2
     - If horizontal dominos cover (1,1)-(2,1) and (1,2)-(2,2): removing them and shifting gives a tiling of Rectangle n 2
 
-    This is a classical result in combinatorics. -/
+    This is a classical result in combinatorics. @statement_id stmt-src-lem.gf-ws.numtilings-recurrence
+-/
 lemma numTilings_recurrence (n : ℕ) : d_[n + 2, 2] = d_[n, 2] + d_[n + 1, 2] := by
   -- The proof constructs a bijection between tilings of Rectangle (n+2) 2 and
   -- the disjoint union of tilings of Rectangle n 2 and Rectangle (n+1) 2.
@@ -4476,7 +4522,8 @@ lemma numTilings_recurrence (n : ℕ) : d_[n + 2, 2] = d_[n, 2] + d_[n + 1, 2] :
   haveI : Finite (Tiling (Rectangle (n + 1) 2)) := Set.finite_univ_iff.mp hfin_n1
   rw [Nat.card_congr e, Nat.card_sum, add_comm]
 
-/-- The number of domino tilings of a 2×n rectangle equals the (n+1)-th Fibonacci number -/
+/-- The number of domino tilings of a 2×n rectangle equals the (n+1)-th Fibonacci number @statement_id stmt-src-lem.gf-ws.numtilings-2-n
+-/
 theorem numTilings_2_n (n : ℕ) : d_[n, 2] = Nat.fib (n + 1) := by
   -- The proof uses strong induction with the Fibonacci recurrence.
   -- Base cases: d_[0, 2] = 1 = fib(1), d_[1, 2] = 1 = fib(2)
@@ -4503,7 +4550,8 @@ theorem numTilings_2_n (n : ℕ) : d_[n, 2] = Nat.fib (n + 1) := by
       -- Apply the recurrence lemma
       exact numTilings_recurrence n
 
-/-- The count of tilings at weight n equals the number of tilings of R_{n,2} -/
+/-- The count of tilings at weight n equals the number of tilings of R_{n,2} @statement_id stmt-src-lem.gf-ws.countofweight-tilingsheight2
+-/
 lemma countOfWeight_tilingsHeight2_eq (n : ℕ) :
     TilingsHeight2.countOfWeight tilingsHeight2_isFiniteType n = d_[n, 2] := by
   -- This follows from the definition: elements of weight n are exactly tilings of R_{n,2}
@@ -4530,7 +4578,8 @@ lemma countOfWeight_tilingsHeight2_eq (n : ℕ) :
   rw [Set.ncard_range_of_injective h_inj]
 
 /-- The generating function of height-2 tilings equals 1/(1-x-x²),
-    which is the Fibonacci generating function -/
+    which is the Fibonacci generating function @statement_id stmt-src-lem.gf-ws.weightgenfun-tilingsheight2
+-/
 theorem weightGenFun_tilingsHeight2 :
     TilingsHeight2.weightGenFun (R := ℚ) tilingsHeight2_isFiniteType =
       PowerSeries.mk fun n => (Nat.fib (n + 1) : ℚ) := by
@@ -4595,7 +4644,8 @@ lemma tiling_dominos_subset (n m : ℕ) (T : Tiling (Rectangle n m)) :
   rw [T.cover] at h
   exact h
 
-/-- The set of tilings of a rectangle is finite -/
+/-- The set of tilings of a rectangle is finite @statement_id stmt-src-lem.gf-ws.tilings-finite
+-/
 lemma tilings_finite (n m : ℕ) : Set.Finite (Set.univ : Set (Tiling (Rectangle n m))) := by
   let f : Tiling (Rectangle n m) → Set Domino := fun T => T.dominos
   have hf : Function.Injective f := by

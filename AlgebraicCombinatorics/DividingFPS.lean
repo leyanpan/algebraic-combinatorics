@@ -62,7 +62,8 @@ We recall the key facts here for reference.
 
 /-- **Theorem (thm.commring.inverse-uni)**: In a commutative ring, inverses are unique.
 If `a * b = 1` and `a * c = 1`, then `b = c`.
-This follows from Mathlib's `left_inv_eq_right_inv`. -/
+This follows from Mathlib's `left_inv_eq_right_inv`. @statement_id stmt-src-def.commring.inverse-2
+-/
 theorem inverse_unique {L : Type*} [CommRing L] {a b c : L}
     (hb : a * b = 1) (hc : a * c = 1) : b = c := by
   have hb' : b * a = 1 := by rw [mul_comm]; exact hb
@@ -95,26 +96,31 @@ variable {L : Type*} [CommRing L]
 
 /-- **Proposition (prop.commring.fracs.1a)**: For an invertible element `a`,
     the inverse `a⁻¹` equals `1/a` (i.e., `1 * a⁻¹`).
-    This is essentially definitional in Mathlib. -/
+    This is essentially definitional in Mathlib. @statement_id stmt-src-prop.commring.fracs.1
+-/
 theorem fracs1_inv_eq_one_mul_inv (u : Lˣ) : (u⁻¹ : Lˣ) = 1 * u⁻¹ := by
   simp
 
 /-- **Proposition (prop.commring.fracs.1b)**: If `a` and `b` are invertible,
-    then `a * b` is invertible. -/
+    then `a * b` is invertible. @statement_id stmt-src-prop.commring.fracs.1
+-/
 theorem fracs1_isUnit_mul {a b : L} (ha : IsUnit a) (hb : IsUnit b) : IsUnit (a * b) :=
   ha.mul hb
 
-/-- **Proposition (prop.commring.fracs.1b)**: `(a * b)⁻¹ = b⁻¹ * a⁻¹` for units. -/
+/-- **Proposition (prop.commring.fracs.1b)**: `(a * b)⁻¹ = b⁻¹ * a⁻¹` for units. @statement_id stmt-src-prop.commring.fracs.1
+-/
 theorem fracs1_mul_inv_rev (u v : Lˣ) : (u * v)⁻¹ = v⁻¹ * u⁻¹ :=
   mul_inv_rev u v
 
 /-- **Proposition (prop.commring.fracs.1b)**: In a commutative ring,
-    `(a * b)⁻¹ = a⁻¹ * b⁻¹` for units. -/
+    `(a * b)⁻¹ = a⁻¹ * b⁻¹` for units. @statement_id stmt-src-prop.commring.fracs.1
+-/
 theorem fracs1_mul_inv_comm (u v : Lˣ) : (u * v)⁻¹ = u⁻¹ * v⁻¹ := by
   rw [mul_inv_rev, mul_comm]
 
 /-- **Proposition (prop.commring.fracs.1c)**: For a unit `u` and integer `n`,
-    `u^{-n} = (u⁻¹)^n`. -/
+    `u^{-n} = (u⁻¹)^n`. @statement_id stmt-src-prop.commring.fracs.1
+-/
 theorem fracs1_zpow_neg_eq_inv_zpow (u : Lˣ) (n : ℤ) : u ^ (-n) = u⁻¹ ^ n := by
   rw [zpow_neg, inv_zpow]
 
@@ -123,26 +129,31 @@ theorem fracs1_zpow_neg_eq_inv_zpow (u : Lˣ) (n : ℤ) : u ^ (-n) = u⁻¹ ^ n 
 theorem fracs1_zpow_neg_eq_zpow_inv (u : Lˣ) (n : ℤ) : u ^ (-n) = (u ^ n)⁻¹ :=
   zpow_neg u n
 
-/-- **Proposition (prop.commring.fracs.1d)**: `a^{n+m} = a^n * a^m` for all integers `n, m`. -/
+/-- **Proposition (prop.commring.fracs.1d)**: `a^{n+m} = a^n * a^m` for all integers `n, m`. @statement_id stmt-src-prop.commring.fracs.1
+-/
 theorem fracs1_zpow_add (u : Lˣ) (n m : ℤ) : u ^ (n + m) = u ^ n * u ^ m :=
   zpow_add u n m
 
-/-- **Proposition (prop.commring.fracs.1d)**: `(a * b)^n = a^n * b^n` for all integers `n`. -/
+/-- **Proposition (prop.commring.fracs.1d)**: `(a * b)^n = a^n * b^n` for all integers `n`. @statement_id stmt-src-prop.commring.fracs.1
+-/
 theorem fracs1_mul_zpow (u v : Lˣ) (n : ℤ) : (u * v) ^ n = u ^ n * v ^ n :=
   mul_zpow u v n
 
-/-- **Proposition (prop.commring.fracs.1d)**: `(a^n)^m = a^{nm}` for all integers `n, m`. -/
+/-- **Proposition (prop.commring.fracs.1d)**: `(a^n)^m = a^{nm}` for all integers `n, m`. @statement_id stmt-src-prop.commring.fracs.1
+-/
 theorem fracs1_zpow_mul (u : Lˣ) (n m : ℤ) : (u ^ n) ^ m = u ^ (n * m) :=
   (zpow_mul u n m).symm
 
 /-- Division notation for units: `b / a` means `b * a⁻¹`.
-    This formalizes the notation `b/a` for `a` invertible in the text. -/
+    This formalizes the notation `b/a` for `a` invertible in the text. @statement_id stmt-src-def.commring.fracs
+-/
 def divByUnit (b : L) (a : Lˣ) : L := b * (a⁻¹ : Lˣ)
 
 /-- Local notation for division by a unit. -/
 scoped notation:70 b " /ᵤ " a => divByUnit b a
 
-/-- **Proposition (prop.commring.fracs.1e)**: `b/a + d/c = (bc + ad)/(ac)`. -/
+/-- **Proposition (prop.commring.fracs.1e)**: `b/a + d/c = (bc + ad)/(ac)`. @statement_id stmt-src-prop.commring.fracs.1
+-/
 theorem fracs1_div_add_div (a c : Lˣ) (b d : L) :
     (b /ᵤ a) + (d /ᵤ c) = (b * (c : L) + (a : L) * d) /ᵤ (a * c) := by
   unfold divByUnit
@@ -156,14 +167,16 @@ theorem fracs1_div_add_div (a c : Lˣ) (b d : L) :
     _ = (b * ↑c + ↑a * d) * (↑a⁻¹ * ↑c⁻¹) := by ring
     _ = (b * ↑c + ↑a * d) * (↑c⁻¹ * ↑a⁻¹) := by rw [hcomm]
 
-/-- **Proposition (prop.commring.fracs.1e)**: `(b/a) * (d/c) = (bd)/(ac)`. -/
+/-- **Proposition (prop.commring.fracs.1e)**: `(b/a) * (d/c) = (bd)/(ac)`. @statement_id stmt-src-prop.commring.fracs.1
+-/
 theorem fracs1_div_mul_div (a c : Lˣ) (b d : L) :
     (b /ᵤ a) * (d /ᵤ c) = (b * d) /ᵤ (a * c) := by
   unfold divByUnit
   simp only [Units.val_mul, mul_inv_rev]
   ring
 
-/-- **Proposition (prop.commring.fracs.1f)**: `c/a = b` iff `c = a * b`. -/
+/-- **Proposition (prop.commring.fracs.1f)**: `c/a = b` iff `c = a * b`. @statement_id stmt-src-prop.commring.fracs.1
+-/
 theorem fracs1_div_eq_iff (a : Lˣ) (b c : L) :
     (c /ᵤ a) = b ↔ c = (a : L) * b := by
   unfold divByUnit
@@ -191,14 +204,16 @@ This is `PowerSeries.isUnit_iff_constantCoeff` in Mathlib.
 -/
 
 /-- An FPS is invertible iff its constant term is invertible.
-  Label: prop.fps.invertible -/
+  Label: prop.fps.invertible @statement_id stmt-src-prop.fps.invertible
+-/
 theorem fps_invertible_iff_constantCoeff (a : PowerSeries K) :
     IsUnit a ↔ IsUnit (a.constantCoeff) :=
   PowerSeries.isUnit_iff_constantCoeff
 
 /-- **Corollary (cor.fps.invertible.field)**: Over a field, an FPS is invertible
 iff its constant term is nonzero.
-Label: cor.fps.invertible.field -/
+Label: cor.fps.invertible.field @statement_id stmt-src-cor.fps.invertible.field
+-/
 theorem fps_invertible_iff_constantCoeff_ne_zero {F : Type*} [Field F] (a : PowerSeries F) :
     IsUnit a ↔ a.constantCoeff ≠ 0 := by
   rw [fps_invertible_iff_constantCoeff]
@@ -211,7 +226,8 @@ Explicit formulas for the coefficients of the inverse of an FPS.
 
 /-- The constant term of the inverse of an FPS equals the inverse of its constant term.
 This is a direct corollary of Mathlib's `PowerSeries.constantCoeff_inv`.
-Label: fps_inv_coeff_zero -/
+Label: fps_inv_coeff_zero @statement_id stmt-src-lem.fps.inv-coeff-zero
+-/
 theorem fps_inv_coeff_zero {F : Type*} [Field F] (f : PowerSeries F) :
     PowerSeries.coeff 0 f⁻¹ = (PowerSeries.coeff 0 f)⁻¹ := by
   simp only [PowerSeries.coeff_zero_eq_constantCoeff, PowerSeries.constantCoeff_inv]
@@ -228,7 +244,8 @@ The recurrence shows that each coefficient of `f⁻¹` can be computed from:
 - The coefficients `f₁, f₂, ..., f_n` of `f`
 - The previously computed coefficients `[x^0]f⁻¹, [x^1]f⁻¹, ..., [x^{n-1}]f⁻¹`
 
-Label: fps_inv_coeff_succ -/
+Label: fps_inv_coeff_succ @statement_id stmt-src-lem.fps.inv-coeff-succ
+-/
 theorem fps_inv_coeff_succ {F : Type*} [Field F] (f : PowerSeries F) (n : ℕ) :
     PowerSeries.coeff (n + 1) f⁻¹ =
       -(PowerSeries.coeff 0 f)⁻¹ *
@@ -277,7 +294,8 @@ theorem fps_inv_coeff_succ {F : Type*} [Field F] (f : PowerSeries F) (n : ℕ) :
     exact Nat.succ_injective hxy
 
 /-- Helper lemma: For an invertible FPS `f`, the unit inverse `hf.unit⁻¹` equals `f⁻¹`.
-This connects the `IsUnit` formulation with the direct inverse. -/
+This connects the `IsUnit` formulation with the direct inverse. @statement_id stmt-src-lem.fps.isunit-inv-eq-inv
+-/
 lemma fps_isUnit_inv_eq_inv {F : Type*} [Field F] (f : PowerSeries F) (hf : IsUnit f) :
     (↑hf.unit⁻¹ : PowerSeries F) = f⁻¹ := by
   have hfeq : (↑hf.unit : PowerSeries F) = f := IsUnit.unit_spec hf
@@ -295,14 +313,16 @@ lemma fps_isUnit_inv_eq_inv {F : Type*} [Field F] (f : PowerSeries F) (hf : IsUn
 
 /-- The constant term of the inverse of an invertible FPS equals the inverse of its constant term.
 This is the `IsUnit` version of `fps_inv_coeff_zero`.
-Label: fps_inv_coeff_zero_isUnit -/
+Label: fps_inv_coeff_zero_isUnit @statement_id stmt-src-lem.fps.inv-coeff-zero-isunit
+-/
 theorem fps_inv_coeff_zero_isUnit {F : Type*} [Field F] (f : PowerSeries F) (hf : IsUnit f) :
     PowerSeries.coeff 0 (↑hf.unit⁻¹ : PowerSeries F) = (PowerSeries.coeff 0 f)⁻¹ := by
   rw [fps_isUnit_inv_eq_inv f hf, fps_inv_coeff_zero]
 
 /-- Recurrence for coefficients of the inverse of an invertible FPS.
 This is the `IsUnit` version of `fps_inv_coeff_succ`.
-Label: fps_inv_coeff_succ_isUnit -/
+Label: fps_inv_coeff_succ_isUnit @statement_id stmt-src-lem.fps.inv-coeff-succ-isunit
+-/
 theorem fps_inv_coeff_succ_isUnit {F : Type*} [Field F] (f : PowerSeries F) (hf : IsUnit f) (n : ℕ) :
     PowerSeries.coeff (n + 1) (↑hf.unit⁻¹ : PowerSeries F) =
       -(PowerSeries.coeff 0 f)⁻¹ *
@@ -317,14 +337,16 @@ We prove Newton's binomial formula: `(1+x)^n = Σ_{k ∈ ℕ} C(n,k) x^k` for al
 
 /-- **Proposition (prop.fps.invertible.1+x)**: The FPS `1+x` is invertible, with inverse
 `1 - x + x^2 - x^3 + ...`.
-Label: prop.fps.invertible.1+x -/
+Label: prop.fps.invertible.1+x @statement_id stmt-src-prop.fps.invertible.1-x
+-/
 theorem fps_onePlusX_isUnit : IsUnit (1 + PowerSeries.X : PowerSeries K) := by
   rw [fps_invertible_iff_constantCoeff]
   simp [PowerSeries.constantCoeff_X]
 
 /-- The inverse of `1+x` is `Σ_{n ∈ ℕ} (-1)^n x^n`.
 Note: This requires `K` to be a field to have `Inv` instance on `PowerSeries K`.
-Label: prop.fps.invertible.1+x -/
+Label: prop.fps.invertible.1+x @statement_id stmt-src-prop.fps.invertible.1-x
+-/
 theorem fps_onePlusX_inv {F : Type*} [Field F] :
     (1 + PowerSeries.X : PowerSeries F)⁻¹ = PowerSeries.mk fun n => (-1 : F) ^ n := by
   -- (1 - X)⁻¹ = mk 1 (the power series with all coefficients 1)
@@ -365,7 +387,8 @@ For `r` in a BinomialRing `R` and `k ∈ ℕ`, we have `C(-r, k) = (-1)^k * C(r+
 
 Note: In Mathlib, generalized binomial coefficients are defined via `Ring.choose`
 for `BinomialRing`s. This generalizes the classical formula for `n ∈ ℂ`.
-Label: thm.binom.upneg-n -/
+Label: thm.binom.upneg-n @statement_id stmt-src-thm.binom.upneg-n
+-/
 theorem binomUpperNegation {R : Type*} [CommRing R] [BinomialRing R] [NatPowAssoc R]
     (r : R) (k : ℕ) :
     Ring.choose (-r) k = (-1 : R) ^ k * Ring.choose (r + k - 1) k := by
@@ -376,7 +399,8 @@ theorem binomUpperNegation {R : Type*} [CommRing R] [BinomialRing R] [NatPowAsso
 
 /-- Specialization of `binomUpperNegation` to integers.
 For `n ∈ ℤ` and `k ∈ ℕ`, we have `C(-n, k) = (-1)^k * C(k+n-1, k)`.
-Label: thm.binom.upneg-n -/
+Label: thm.binom.upneg-n @statement_id stmt-src-thm.binom.upneg-n
+-/
 theorem binomUpperNegation_int (n : ℤ) (k : ℕ) :
     Ring.choose (-n) k = (-1 : ℤ) ^ k * Ring.choose (k + n - 1) k := by
   have := binomUpperNegation (R := ℤ) n k
@@ -388,7 +412,8 @@ theorem binomUpperNegation_int (n : ℤ) (k : ℕ) :
 
 Note: We express this using the inverse since PowerSeries over a general ring
 doesn't have integer power operations.
-Label: prop.fps.anti-newton-binom -/
+Label: prop.fps.anti-newton-binom @statement_id stmt-src-prop.fps.anti-newton-binom
+-/
 theorem fps_onePlusX_pow_neg {F : Type*} [Field F] [BinomialRing F] (n : ℕ) :
     ((1 + PowerSeries.X : PowerSeries F)⁻¹) ^ n =
       PowerSeries.mk fun k => (-1 : F) ^ k * Ring.choose ((n : ℤ) + k - 1) k := by
@@ -474,7 +499,8 @@ theorem fps_onePlusX_pow_neg {F : Type*} [Field F] [BinomialRing F] (n : ℕ) :
 
 /-- **Corollary (cor.fps.anti-newton-binom-2)**: For each `n ∈ ℕ`, we have
 `(1+x)^{-n} = Σ_{k ∈ ℕ} C(-n, k) * x^k`.
-Label: cor.fps.anti-newton-binom-2 -/
+Label: cor.fps.anti-newton-binom-2 @statement_id stmt-src-cor.fps.anti-newton-binom-2
+-/
 theorem fps_onePlusX_pow_neg' {F : Type*} [Field F] [BinomialRing F] (n : ℕ) :
     ((1 + PowerSeries.X : PowerSeries F)⁻¹) ^ n =
       PowerSeries.mk fun k => (Ring.choose (-(n : ℤ)) k : F) := by
@@ -539,7 +565,8 @@ private lemma coeff_natCast_fps {R : Type*} [CommRing R] (k j : ℕ) :
 For each `n ∈ ℕ`, we have `(1+x)^n = Σ_{k ∈ ℕ} C(n,k) x^k`.
 
 Note: For non-negative integers, this follows from the standard binomial theorem.
-Label: thm.fps.newton-binom -/
+Label: thm.fps.newton-binom @statement_id stmt-src-thm.fps.newton-binom
+-/
 theorem fps_newtonBinomial_nat {R : Type*} [CommRing R] (n : ℕ) :
     (1 + PowerSeries.X : PowerSeries R) ^ n =
       PowerSeries.mk fun k => if k ≤ n then (n.choose k : R) else 0 := by
@@ -592,7 +619,8 @@ theorem fps_newtonBinomial_nat {R : Type*} [CommRing R] (n : ℕ) :
 
 /-- Newton's binomial formula for negative integer exponents over a field.
 The inverse of `(1+x)^n` equals `Σ C(-n,k) x^k`.
-Label: thm.fps.newton-binom -/
+Label: thm.fps.newton-binom @statement_id stmt-src-thm.fps.newton-binom
+-/
 theorem fps_newtonBinomial_neg {F : Type*} [Field F] [BinomialRing F] (n : ℕ) :
     ((1 + PowerSeries.X : PowerSeries F)⁻¹) ^ n =
       PowerSeries.mk fun k => (Ring.choose (-(n : ℤ)) k : F) :=
@@ -606,11 +634,13 @@ we define `a/x` to be the FPS `(a_1, a_2, a_3, ...)`.
 
 /-- Division of an FPS by `x`, defined when the constant term is zero.
 Given `a = (a_0, a_1, a_2, ...)` with `a_0 = 0`, returns `(a_1, a_2, a_3, ...)`.
-Label: def.fps.div-by-x -/
+Label: def.fps.div-by-x @statement_id stmt-src-def.fps.div-by-x
+-/
 def PowerSeries.divByX (a : PowerSeries K) (_ : a.constantCoeff = 0) : PowerSeries K :=
   PowerSeries.mk fun n => a.coeff (n + 1)
 
-/-- The coefficient of `x^n` in `a/x` is the coefficient of `x^{n+1}` in `a`. -/
+/-- The coefficient of `x^n` in `a/x` is the coefficient of `x^{n+1}` in `a`. @statement_id stmt-src-lem.fps.coeff-divbyx
+-/
 @[simp]
 theorem PowerSeries.coeff_divByX (a : PowerSeries K) (ha : a.constantCoeff = 0) (n : ℕ) :
     (PowerSeries.divByX a ha).coeff n = a.coeff (n + 1) := by
@@ -618,7 +648,8 @@ theorem PowerSeries.coeff_divByX (a : PowerSeries K) (ha : a.constantCoeff = 0) 
 
 /-- **Proposition (prop.fps.div-by-x-inverts)**: `a = x * b` iff
 `a` has zero constant term and `b = a/x`.
-Label: prop.fps.div-by-x-inverts -/
+Label: prop.fps.div-by-x-inverts @statement_id stmt-src-prop.fps.div-by-x-inverts
+-/
 theorem fps_eq_X_mul_iff (a b : PowerSeries K) :
     a = PowerSeries.X * b ↔ (a.constantCoeff = 0 ∧
       ∃ h : a.constantCoeff = 0, b = PowerSeries.divByX a h) := by
@@ -650,14 +681,16 @@ theorem fps_X_mul_constantCoeff_zero (b : PowerSeries K) :
   simp [PowerSeries.constantCoeff_X]
 
 /-- If `a.constantCoeff = 0`, then `a = X * (a/x)`.
-Label: prop.fps.div-by-x-inverts (helper) -/
+Label: prop.fps.div-by-x-inverts (helper) @statement_id stmt-src-lem.fps.eq-x-mul-divbyx
+-/
 theorem fps_eq_X_mul_divByX (a : PowerSeries K) (ha : a.constantCoeff = 0) :
     a = PowerSeries.X * PowerSeries.divByX a ha := by
   rw [fps_eq_X_mul_iff]
   exact ⟨ha, ha, rfl⟩
 
 /-- `(X * b) / X = b`.
-Label: prop.fps.div-by-x-inverts (helper) -/
+Label: prop.fps.div-by-x-inverts (helper) @statement_id stmt-src-lem.fps.divbyx-x-mul
+-/
 theorem fps_divByX_X_mul (b : PowerSeries K) :
     PowerSeries.divByX (PowerSeries.X * b) (fps_X_mul_constantCoeff_zero b) = b := by
   ext n
@@ -665,7 +698,8 @@ theorem fps_divByX_X_mul (b : PowerSeries K) :
 
 /-- **Lemma (lem.fps.g=xh)**: If an FPS `a` has zero constant term, then
 there exists an FPS `h` such that `a = x * h`.
-Label: lem.fps.g=xh -/
+Label: lem.fps.g=xh @statement_id stmt-src-lem.fps.g-xh
+-/
 theorem fps_exists_X_mul_of_constantCoeff_zero (a : PowerSeries K) (ha : a.constantCoeff = 0) :
     ∃ h : PowerSeries K, a = PowerSeries.X * h := by
   refine ⟨PowerSeries.divByX a ha, ?_⟩
@@ -683,7 +717,8 @@ Various lemmas about coefficients and multiples of FPSs.
 -/
 
 /-- **Lemma (lem.fps.first-n-coeffs-of-xna)**: The first `k` coefficients of `x^k * a` are zero.
-Label: lem.fps.first-n-coeffs-of-xna -/
+Label: lem.fps.first-n-coeffs-of-xna @statement_id stmt-src-lem.fps.first-n-coeffs-of-xna
+-/
 theorem fps_coeff_X_pow_mul_eq_zero (k : ℕ) (a : PowerSeries K) (m : ℕ) (hm : m < k) :
     (PowerSeries.X ^ k * a).coeff m = 0 := by
   rw [PowerSeries.coeff_X_pow_mul']
@@ -691,7 +726,8 @@ theorem fps_coeff_X_pow_mul_eq_zero (k : ℕ) (a : PowerSeries K) (m : ℕ) (hm 
 
 /-- **Lemma (lem.fps.muls-of-xn)**: The first `k` coefficients of `f` are zero iff
 `f` is a multiple of `x^k`.
-Label: lem.fps.muls-of-xn -/
+Label: lem.fps.muls-of-xn @statement_id stmt-src-lem.fps.muls-of-xn
+-/
 theorem fps_first_k_coeffs_zero_iff_X_pow_dvd (k : ℕ) (f : PowerSeries K) :
     (∀ m < k, f.coeff m = 0) ↔ PowerSeries.X ^ k ∣ f := by
   exact PowerSeries.X_pow_dvd_iff.symm
@@ -701,7 +737,8 @@ def PowerSeries.isMultipleOf (f g : PowerSeries K) : Prop := g ∣ f
 
 /-- **Lemma (lem.fps.prod.irlv.fg)**: If the first `n+1` coefficients of `f` and `g` agree,
 then the first `n+1` coefficients of `a*f` and `a*g` agree.
-Label: lem.fps.prod.irlv.fg -/
+Label: lem.fps.prod.irlv.fg @statement_id stmt-src-lem.fps.prod.irlv.fg
+-/
 theorem fps_coeff_mul_eq_of_coeff_eq (a f g : PowerSeries K) (n : ℕ)
     (h : ∀ m ≤ n, f.coeff m = g.coeff m) :
     ∀ m ≤ n, (a * f).coeff m = (a * g).coeff m := by
@@ -717,7 +754,8 @@ theorem fps_coeff_mul_eq_of_coeff_eq (a f g : PowerSeries K) (n : ℕ)
 
 /-- **Lemma (lem.fps.prod.irlv.mul)**: If `v` is a multiple of `u`, and the first `n+1`
 coefficients of `u` are zero, then the first `n+1` coefficients of `v` are zero.
-Label: lem.fps.prod.irlv.mul -/
+Label: lem.fps.prod.irlv.mul @statement_id stmt-src-lem.fps.prod.irlv.mul
+-/
 theorem fps_coeff_zero_of_multiple (u v : PowerSeries K) (n : ℕ)
     (hdvd : u ∣ v) (hu : ∀ m ≤ n, u.coeff m = 0) :
     ∀ m ≤ n, v.coeff m = 0 := by
@@ -738,7 +776,8 @@ theorem fps_coeff_zero_of_multiple (u v : PowerSeries K) (n : ℕ)
 /-- **Lemma (lem.fps.prod.irlv.cong-mul)**: If the first `n+1` coefficients of `a` and `b`
 agree, and the first `n+1` coefficients of `c` and `d` agree, then the first `n+1`
 coefficients of `a*c` and `b*d` agree.
-Label: lem.fps.prod.irlv.cong-mul -/
+Label: lem.fps.prod.irlv.cong-mul @statement_id stmt-src-lem.fps.prod.irlv.cong-mul
+-/
 theorem fps_coeff_mul_eq_of_both_coeff_eq (a b c d : PowerSeries K) (n : ℕ)
     (hab : ∀ m ≤ n, a.coeff m = b.coeff m)
     (hcd : ∀ m ≤ n, c.coeff m = d.coeff m) :

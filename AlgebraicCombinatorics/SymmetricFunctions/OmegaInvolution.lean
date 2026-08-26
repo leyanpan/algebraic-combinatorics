@@ -163,7 +163,8 @@ Similar to `esymmAlgHom`, we define an algebra homomorphism that sends
 /-- The `R`-algebra homomorphism from $R[x_1,\dots,x_n]$ to the symmetric subalgebra of
   $R[\{x_i \mid i ∈ σ\}]$ sending $x_i$ to the $(i+1)$-th complete homogeneous symmetric polynomial.
   
-  This is analogous to `MvPolynomial.esymmAlgHom` which sends $x_i$ to $e_{i+1}$. -/
+  This is analogous to `MvPolynomial.esymmAlgHom` which sends $x_i$ to $e_{i+1}$. @statement_id stmt-src-def.sf.hsymm-alg-hom
+-/
 noncomputable def hsymmAlgHom (σ : Type*) [Fintype σ] [DecidableEq σ] 
     (R : Type*) [CommRing R] (n : ℕ) :
     MvPolynomial (Fin n) R →ₐ[R] symmetricSubalgebra σ R :=
@@ -200,13 +201,15 @@ The definition uses the fundamental theorem of symmetric polynomials:
 since the e_k generate the symmetric subalgebra, we define ω by
 specifying ω(e_k) = h_k and extending algebraically.
 
-Note: For this definition to work, we need `Fintype.card σ = n`. -/
+Note: For this definition to work, we need `Fintype.card σ = n`. @statement_id stmt-src-def.sf.omega-involution
+-/
 noncomputable def omegaInvolution {σ : Type*} [Fintype σ] [DecidableEq σ] 
     {R : Type*} [CommRing R] {n : ℕ} (hn : Fintype.card σ = n) :
     symmetricSubalgebra σ R →ₐ[R] symmetricSubalgebra σ R :=
   (hsymmAlgHom σ R n).comp (esymmAlgEquiv σ R hn).symm.toAlgHom
 
-/-- The ω-involution maps e_k to h_k for 0 < k ≤ n. -/
+/-- The ω-involution maps e_k to h_k for 0 < k ≤ n. @statement_id stmt-src-thm.sf.omega-esymm
+-/
 theorem omegaInvolution_esymm_succ {σ : Type*} [Fintype σ] [DecidableEq σ] 
     {R : Type*} [CommRing R] {n : ℕ} (hn : Fintype.card σ = n) (k : ℕ) (hk : k < n) :
     (omegaInvolution hn ⟨esymm σ R (k + 1), esymm_isSymmetric σ R (k + 1)⟩ : 
@@ -261,7 +264,8 @@ The proof follows from `newtonGirard_eh` by reindexing (j ↦ n-j) and using:
 - Commutativity: h_j * e_{n-j} = e_{n-j} * h_j
 - Sign identity: (-1)^{n-j} * (-1)^n = (-1)^j (since (n-j+n) mod 2 = j mod 2)
 
-This identity is the key ingredient for proving `omegaInvolution_hsymm_succ`. -/
+This identity is the key ingredient for proving `omegaInvolution_hsymm_succ`. @statement_id stmt-src-thm.sf.newton-girard-he
+-/
 theorem newtonGirard_he {σ : Type*} [Fintype σ] [DecidableEq σ] 
     {R : Type*} [CommRing R] (n : ℕ) (hn : 0 < n) :
     ∑ j ∈ Finset.range (n + 1), (-1 : MvPolynomial σ R) ^ j * 
@@ -320,7 +324,8 @@ theorem newtonGirard_he {σ : Type*} [Fintype σ] [DecidableEq σ]
 This follows from isolating the j=0 term in `newtonGirard_eh_general`:
 ∑_{j=0}^n (-1)^j e_j h_{n-j} = 0
 ⟹ e_0 h_n + ∑_{j=1}^n (-1)^j e_j h_{n-j} = 0  (since e_0 = 1)
-⟹ h_n = -∑_{j=1}^n (-1)^j e_j h_{n-j} = ∑_{j=1}^n (-1)^{j+1} e_j h_{n-j} -/
+⟹ h_n = -∑_{j=1}^n (-1)^j e_j h_{n-j} = ∑_{j=1}^n (-1)^{j+1} e_j h_{n-j} @statement_id stmt-src-lem.sf.hsymm-recurrence
+-/
 theorem hsymm_recurrence_eh {σ : Type*} [Fintype σ] [DecidableEq σ]
     {R : Type*} [CommRing R] (n : ℕ) (hn : 0 < n) :
     hsymm σ R n = ∑ j ∈ Finset.Ico 1 (n + 1), (-1 : MvPolynomial σ R) ^ (j + 1) * 
@@ -354,7 +359,8 @@ theorem hsymm_recurrence_eh {σ : Type*} [Fintype σ] [DecidableEq σ]
 This follows from isolating the j=0 term in `newtonGirard_he`:
 ∑_{j=0}^n (-1)^j h_j e_{n-j} = 0
 ⟹ h_0 e_n + ∑_{j=1}^n (-1)^j h_j e_{n-j} = 0  (since h_0 = 1)
-⟹ e_n = -∑_{j=1}^n (-1)^j h_j e_{n-j} = ∑_{j=1}^n (-1)^{j+1} h_j e_{n-j} -/
+⟹ e_n = -∑_{j=1}^n (-1)^j h_j e_{n-j} = ∑_{j=1}^n (-1)^{j+1} h_j e_{n-j} @statement_id stmt-src-lem.sf.esymm-recurrence
+-/
 theorem esymm_recurrence_he {σ : Type*} [Fintype σ] [DecidableEq σ]
     {R : Type*} [CommRing R] (n : ℕ) (hn : 0 < n) :
     esymm σ R n = ∑ j ∈ Finset.Ico 1 (n + 1), (-1 : MvPolynomial σ R) ^ (j + 1) * 
@@ -396,7 +402,8 @@ theorem esymm_recurrence_he {σ : Type*} [Fintype σ] [DecidableEq σ]
     
     These can be used to express h_k in terms of e_k and p_k, and vice versa.
     Since ω(p_k) = (-1)^{k-1} p_k (which follows from the definition), we get
-    ω(h_k) = e_k. -/
+    ω(h_k) = e_k. @statement_id stmt-src-thm.sf.omega-hsymm
+-/
 theorem omegaInvolution_hsymm_succ {σ : Type*} [Fintype σ] [DecidableEq σ] 
     {R : Type*} [CommRing R] {n : ℕ} (hn : Fintype.card σ = n) (k : ℕ) (hk : k < n) :
     (omegaInvolution hn ⟨hsymm σ R (k + 1), hsymm_isSymmetric σ R (k + 1)⟩ : 
@@ -577,7 +584,8 @@ theorem omegaInvolution_hsymm_succ {σ : Type*} [Fintype σ] [DecidableEq σ]
 /-- The ω-involution is an involution: ω ∘ ω = id.
 
     This follows from ω(e_k) = h_k and ω(h_k) = e_k, since the e_k generate
-    the symmetric subalgebra. -/
+    the symmetric subalgebra. @statement_id stmt-src-thm.sf.omega-involutive
+-/
 theorem omegaInvolution_involutive {σ : Type*} [Fintype σ] [DecidableEq σ] 
     {R : Type*} [CommRing R] {n : ℕ} (hn : Fintype.card σ = n) :
     (omegaInvolution hn).comp (omegaInvolution hn) = AlgHom.id R _ := by
@@ -621,7 +629,8 @@ theorem omegaInvolution_involutive {σ : Type*} [Fintype σ] [DecidableEq σ]
       exact omegaInvolution_hsymm_succ hn i.val i.isLt
     rw [h3]
 
-/-- The ω-involution is bijective. -/
+/-- The ω-involution is bijective. @statement_id stmt-src-thm.sf.omega-bijective
+-/
 theorem omegaInvolution_bijective {σ : Type*} [Fintype σ] [DecidableEq σ] 
     {R : Type*} [CommRing R] {n : ℕ} (hn : Fintype.card σ = n) :
     Function.Bijective (omegaInvolution (R := R) hn) := by
@@ -636,7 +645,8 @@ theorem omegaInvolution_bijective {σ : Type*} [Fintype σ] [DecidableEq σ]
     use omegaInvolution hn y
     simp only [← AlgHom.comp_apply, omegaInvolution_involutive hn, AlgHom.id_apply]
 
-/-- The ω-involution as an algebra equivalence. -/
+/-- The ω-involution as an algebra equivalence. @statement_id stmt-src-def.sf.omega-equiv
+-/
 noncomputable def omegaInvolutionEquiv {σ : Type*} [Fintype σ] [DecidableEq σ] 
     {R : Type*} [CommRing R] {n : ℕ} (hn : Fintype.card σ = n) :
     symmetricSubalgebra σ R ≃ₐ[R] symmetricSubalgebra σ R :=
@@ -656,7 +666,8 @@ transforms h_k entries to e_k entries, while transforming s_{λ/μ} to s_{λᵗ/
     ω(det(h_{λᵢ - μⱼ - i + j})) = det(e_{λᵢ - μⱼ - i + j})
     
     Note: This requires showing that ω commutes with taking determinants,
-    which follows from ω being an algebra homomorphism. -/
+    which follows from ω being an algebra homomorphism. @statement_id stmt-src-lem.sf.omega-det-hsymm
+-/
 theorem omegaInvolution_det_hsymm {σ : Type*} [Fintype σ] [DecidableEq σ] 
     {R : Type*} [CommRing R] {n m : ℕ} (hn : Fintype.card σ = n)
     (M : Matrix (Fin m) (Fin m) (symmetricSubalgebra σ R)) :

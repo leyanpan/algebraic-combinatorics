@@ -80,15 +80,18 @@ for backwards compatibility. -/
 abbrev IsNPartition (lam : Fin N → ℕ) : Prop := _root_.IsNPartition lam
 
 /-- The zero N-tuple (0, 0, ..., 0). (def.sf.tuple-addition (a))
-    Note: This is definitionally equal to `(0 : Fin N → ℕ)` via Mathlib's Pi.instZero. -/
+    Note: This is definitionally equal to `(0 : Fin N → ℕ)` via Mathlib's Pi.instZero. @statement_id stmt-src-def.sf.tuple-addition
+-/
 abbrev zeroTuple : Fin N → ℕ := 0
 
 /-- Addition of N-tuples, defined entrywise. (def.sf.tuple-addition (b))
-    Note: This is definitionally equal to `(· + ·)` on `Fin N → ℕ` via Mathlib's Pi.instAdd. -/
+    Note: This is definitionally equal to `(· + ·)` on `Fin N → ℕ` via Mathlib's Pi.instAdd. @statement_id stmt-src-def.sf.tuple-addition
+-/
 abbrev addTuple (α β : Fin N → ℕ) : Fin N → ℕ := α + β
 
 /-- Subtraction of N-tuples, defined entrywise. Note: result is in ℤ.
-    (def.sf.tuple-addition (b)) -/
+    (def.sf.tuple-addition (b)) @statement_id stmt-src-def.sf.tuple-addition
+-/
 def subTuple (α β : Fin N → ℕ) : Fin N → ℤ := fun i => (α i : ℤ) - (β i : ℤ)
 
 -- Note: We use Mathlib's existing instances for Add and Zero on (Fin N → ℕ)
@@ -346,7 +349,8 @@ noncomputable instance skewYoungDiagram_fintype (lam mu : Fin N → ℕ) :
     **Example**: If N=5, then cont([[1,1,2],[4]]) = (2,1,0,1,0).
 
     **Key property** (eq.def.sf.content.xT=): x_T = x^(cont(T)) for any tableau T.
-    (Both sides equal ∏ᵢ xᵢ^(# of i's in T).) -/
+    (Both sides equal ∏ᵢ xᵢ^(# of i's in T).) @statement_id stmt-src-def.sf.content
+-/
 noncomputable def contentTableau {lam mu : Fin N → ℕ}
     (T : Tableau lam mu) : Fin N → ℕ := fun i =>
   -- Count how many cells have entry i
@@ -386,7 +390,8 @@ theorem contentTableau_nonneg {lam mu : Fin N → ℕ} (T : Tableau lam mu) (i :
 
 /-- If two tableaux have the same cells with value i (i.e., T' c = i ↔ T c = i for all c),
     then they have the same content at i. This is useful for proving that transformations
-    that don't affect certain values preserve the content at those values. -/
+    that don't affect certain values preserve the content at those values. @statement_id stmt-src-lem.sf.content-eq-of-iff
+-/
 theorem contentTableau_eq_of_iff {lam mu : Fin N → ℕ} (T T' : Tableau lam mu) (i : Fin N)
     (h : ∀ c, T' c = i ↔ T c = i) :
     contentTableau T' i = contentTableau T i := by
@@ -437,7 +442,8 @@ Formally speaking, this means the restriction of the map T to the set {(u,v) ∈
     in columns j, j+1, j+2, ... This is the formal definition of col_{≥j}(T).
 
     The domain is {(u,v) ∈ Y(λ/μ) | v ≥ j}, and the function returns T(u,v)
-    for each such cell. -/
+    for each such cell. @statement_id stmt-src-def.sf.col-tab
+-/
 def colGeq {lam mu : Fin N → ℕ} (T : Tableau lam mu) (j : ℕ) :
     {c : Fin N × ℕ // c ∈ skewYoungDiagram lam mu ∧ c.2 ≥ j} → Fin N :=
   fun ⟨c, hc⟩ => T ⟨c, hc.1⟩
@@ -590,7 +596,8 @@ for every positive integer j. -/
     Think of each entry i in T as a vote for candidate i. Starting with tally ν and counting votes
     column by column from right to left, the tally must remain weakly decreasing at every step.
     Since columns have distinct entries (strictly increasing), no candidate gains more than one
-    vote at a time. -/
+    vote at a time. @statement_id stmt-src-def.sf.yamanouchi
+-/
 def IsYamanouchi {lam mu : Fin N → ℕ}
     (nu : Fin N → ℕ) (T : Tableau lam mu) : Prop :=
   IsSemistandard T ∧
@@ -642,14 +649,16 @@ noncomputable def contentColGeqOneEquiv {lam mu : Fin N → ℕ}
   right_inv c := by simp
 
 /-- col_{≥1}(T) = T, i.e., the content of col_{≥1}(T) equals the content of T.
-    This is because all cells in the skew diagram have column index ≥ 1. -/
+    This is because all cells in the skew diagram have column index ≥ 1. @statement_id stmt-src-lem.sf.content-col-geq-one
+-/
 theorem contentColGeq_one_eq_contentTableau {lam mu : Fin N → ℕ}
     (T : Tableau lam mu) : contentColGeq T 1 = contentTableau T := by
   ext i
   simp only [contentColGeq, contentTableau]
   exact Nat.card_congr (contentColGeqOneEquiv T i)
 
-/-- contentColGeq is monotonic: cells in columns >= j+1 are a subset of cells in columns >= j. -/
+/-- contentColGeq is monotonic: cells in columns >= j+1 are a subset of cells in columns >= j. @statement_id stmt-src-lem.sf.content-col-geq-mono
+-/
 theorem contentColGeq_mono {lam mu : Fin N → ℕ} (T : Tableau lam mu) (j : ℕ) (i : Fin N) :
     contentColGeq T (j + 1) i ≤ contentColGeq T j i := by
   -- The key insight is that cells with col >= j+1 are a subset of cells with col >= j
@@ -1013,7 +1022,8 @@ theorem alternant_rho_eq_vandermonde :
   rw [sign_revPerm_eq']
   rw [units_neg_one_pow_coe']
 
-/-- If α has two equal entries, then a_α = 0. (lem.sf.alternant-0 (a)) -/
+/-- If α has two equal entries, then a_α = 0. (lem.sf.alternant-0 (a)) @statement_id stmt-src-lem.sf.alternant-0-lr
+-/
 theorem alternant_eq_zero_of_repeated {α : Fin N → ℕ}
     (h : ∃ i j : Fin N, i ≠ j ∧ α i = α j) :
     (alternant α : MvPolynomial (Fin N) R) = 0 := by
@@ -1042,7 +1052,8 @@ theorem alternant_eq_zero_of_repeated {α : Fin N → ℕ}
     intro σ _
     exact Equiv.swap_mul_involutive i j σ
 
-/-- Swapping two entries of α negates the alternant. (lem.sf.alternant-0 (b)) -/
+/-- Swapping two entries of α negates the alternant. (lem.sf.alternant-0 (b)) @statement_id stmt-src-lem.sf.alternant-0-lr
+-/
 theorem alternant_swap {α : Fin N → ℕ} {i j : Fin N} (hij : i ≠ j) :
     (alternant (α ∘ Equiv.swap i j) : MvPolynomial (Fin N) R) = -alternant α := by
   simp only [alternant]
@@ -1102,7 +1113,8 @@ variable {L : Type*} [CommRing L]
     if and only if every `x ∈ L` satisfying `a * x = 0` satisfies `x = 0`.
 
     This is the textbook definition. We show it's equivalent to Mathlib's `IsLeftRegular`.
-    In commutative rings, this is also equivalent to `IsRegular` and `IsRightRegular`. -/
+    In commutative rings, this is also equivalent to `IsRegular` and `IsRightRegular`. @statement_id stmt-src-def.cring.reg
+-/
 def IsRegularElement (a : L) : Prop := ∀ x : L, a * x = 0 → x = 0
 
 /-- The textbook definition of regular is equivalent to Mathlib's `IsLeftRegular`. -/
@@ -1180,7 +1192,8 @@ theorem IsRegularElement.mul {a b : L} (ha : IsRegularElement a) (hb : IsRegular
 
 /-- **Lemma (lem.cring.reg.cancel)**: Regular elements can be cancelled.
     Let L be a commutative ring. Let a, u, v ∈ L be such that a is regular.
-    Assume that au = av. Then u = v. -/
+    Assume that au = av. Then u = v. @statement_id stmt-src-lem.cring.reg.cancel
+-/
 theorem IsRegularElement.cancel {a u v : L} (ha : IsRegularElement a) (h : a * u = a * v) :
     u = v := by
   rw [isRegularElement_iff_isLeftRegular] at ha
@@ -1222,7 +1235,8 @@ lemma vandermonde_ne_zero [IsDomain R] : (vandermonde : MvPolynomial (Fin N) R) 
     (lem.sf.arho-reg)
 
     Note: This requires R to be an integral domain. In a non-integral domain,
-    the polynomial ring has zero divisors and regularity may fail. -/
+    the polynomial ring has zero divisors and regularity may fail. @statement_id stmt-src-lem.sf.arho-reg
+-/
 theorem alternant_rho_isRegular [IsDomain R] :
     _root_.IsRegular (alternant (rho N) : MvPolynomial (Fin N) R) := by
   rw [alternant_rho_eq_vandermonde]
@@ -1460,7 +1474,8 @@ noncomputable def rowCount {lam mu : Fin N → ℕ} (T : Tableau lam mu) (i : Fi
 
     **Note**: The original (incorrect) definition said "k above k", but in a semistandard tableau,
     entries strictly increase down columns, so you can't have the same value in vertically
-    adjacent cells. The correct definition is: k is paired with k+1 below it. -/
+    adjacent cells. The correct definition is: k is paired with k+1 below it. @statement_id stmt-src-def.sf.bk-forced-free
+-/
 def isForcedK {lam mu : Fin N → ℕ} (T : Tableau lam mu) (k : Fin N) (hk : k.val + 1 < N)
     (c : {c : Fin N × ℕ // c ∈ skewYoungDiagram lam mu}) : Prop :=
   T c = k ∧
@@ -1474,7 +1489,8 @@ def isForcedK {lam mu : Fin N → ℕ} (T : Tableau lam mu) (k : Fin N) (hk : k.
 
     **Note**: The original (incorrect) definition said "k+1 below k+1", but in a semistandard
     tableau, entries strictly increase down columns. The correct definition is: k+1 is paired
-    with k above it. -/
+    with k above it. @statement_id stmt-src-def.sf.bk-forced-free
+-/
 def isForcedKSucc {lam mu : Fin N → ℕ} (T : Tableau lam mu) (k : Fin N) (hk : k.val + 1 < N)
     (c : {c : Fin N × ℕ // c ∈ skewYoungDiagram lam mu}) : Prop :=
   T c = ⟨k.val + 1, hk⟩ ∧
@@ -1539,7 +1555,8 @@ noncomputable def freeKSuccCountUpTo {lam mu : Fin N → ℕ} (T : Tableau lam m
     - These are the rightmost free k's that don't have a (k+1) to match with
     
     Note: We compare freeKCountUpTo(c) with freeKSuccCount (total), not freeKSuccCountUpTo(c),
-    because a k can match with any (k+1) to its right, not just (k+1)'s up to its position. -/
+    because a k can match with any (k+1) to its right, not just (k+1)'s up to its position. @statement_id stmt-src-def.sf.bk-forced-free
+-/
 def isUnmatchedFreeK {lam mu : Fin N → ℕ} (T : Tableau lam mu) (k : Fin N) (hk : k.val + 1 < N)
     (c : {c : Fin N × ℕ // c ∈ skewYoungDiagram lam mu}) : Prop :=
   T c = k ∧ ¬isForcedK T k hk c ∧
@@ -1560,7 +1577,8 @@ def isUnmatchedFreeK {lam mu : Fin N → ℕ} (T : Tableau lam mu) (k : Fin N) (
     The matched pairs are: leftmost min(a,b) k's paired with rightmost min(a,b) (k+1)'s.
 
     Note: The previous (incorrect) definition used `freeKSuccCountUpTo > freeKCountUpTo`,
-    which marked RIGHTMOST (k+1)'s as unmatched — the wrong polarity. -/
+    which marked RIGHTMOST (k+1)'s as unmatched — the wrong polarity. @statement_id stmt-src-def.sf.bk-forced-free
+-/
 def isUnmatchedFreeKSucc {lam mu : Fin N → ℕ} (T : Tableau lam mu) (k : Fin N) (hk : k.val + 1 < N)
     (c : {c : Fin N × ℕ // c ∈ skewYoungDiagram lam mu}) : Prop :=
   T c = ⟨k.val + 1, hk⟩ ∧ ¬isForcedKSucc T k hk c ∧
@@ -1598,7 +1616,8 @@ def isMatchedFreeKSucc {lam mu : Fin N → ℕ} (T : Tableau lam mu) (k : Fin N)
 
     **Note**: The naive cell-by-cell swap (swapping ALL free entries) is INCORRECT
     because adjacent free k and free (k+1) would become (k+1, k), violating row-weak ordering.
-    The parenthesis-matching ensures only non-adjacent free entries get swapped. -/
+    The parenthesis-matching ensures only non-adjacent free entries get swapped. @statement_id stmt-src-def.sf.bk-involution
+-/
 noncomputable def benderKnuth {lam mu : Fin N → ℕ} (k : Fin N) (hk : k.val + 1 < N)
     (T : Tableau lam mu) (_hT : IsSemistandard T) : Tableau lam mu := by
   classical
@@ -2277,7 +2296,8 @@ private lemma benderKnuth_forced_kSucc' {lam mu : Fin N → ℕ} (k : Fin N) (hk
     intro h; exact h.2.1 hforced
   simp only [h_not_unmatched_k, h_not_unmatched_ksucc, ↓reduceIte, hval]
 
-/-- Forced k cells remain forced after Bender-Knuth. -/
+/-- Forced k cells remain forced after Bender-Knuth. @statement_id stmt-src-lem.sf.bk-forced-preserved
+-/
 lemma forced_k_preserved' {lam mu : Fin N → ℕ} (k : Fin N) (hk : k.val + 1 < N)
     (T : Tableau lam mu) (hT : IsSemistandard T)
     (c : {c : Fin N × ℕ // c ∈ skewYoungDiagram lam mu})
@@ -2291,7 +2311,8 @@ lemma forced_k_preserved' {lam mu : Fin N → ℕ} (k : Fin N) (hk : k.val + 1 <
   have hT'_below : T' c_below = ⟨k.val + 1, hk⟩ := benderKnuth_forced_kSucc' k hk T hT c_below hbelow_forced
   exact ⟨hT'c, c_below, h_col, h_row, hT'_below⟩
 
-/-- Forced (k+1) cells remain forced after Bender-Knuth. -/
+/-- Forced (k+1) cells remain forced after Bender-Knuth. @statement_id stmt-src-lem.sf.bk-forced-preserved
+-/
 lemma forced_kSucc_preserved' {lam mu : Fin N → ℕ} (k : Fin N) (hk : k.val + 1 < N)
     (T : Tableau lam mu) (hT : IsSemistandard T)
     (c : {c : Fin N × ℕ // c ∈ skewYoungDiagram lam mu})
@@ -4105,7 +4126,8 @@ private lemma freeKCount_benderKnuth {lam mu : Fin N → ℕ}
        at columns ≤ c.col are matched, so they stay as k in T')
     2. freeKCountUpTo T c.col ≤ freeKCount T (cumulative ≤ total)
     3. freeKSuccCount T' = freeKCount T (count swap under BK)
-    4. Combining: freeKCountUpTo T' c.col ≤ freeKCount T = freeKSuccCount T' -/
+    4. Combining: freeKCountUpTo T' c.col ≤ freeKCount T = freeKSuccCount T' @statement_id stmt-src-lem.sf.bk-matched-stays-matched
+-/
 lemma matched_k_stays_matched' {lam mu : Fin N → ℕ} (k : Fin N) (hk : k.val + 1 < N)
     (T : Tableau lam mu) (hT : IsSemistandard T)
     (c : {c : Fin N × ℕ // c ∈ skewYoungDiagram lam mu})
@@ -4259,6 +4281,7 @@ private lemma freeKCountUpTo_eq_freeKCountBefore_succ {lam mu : Fin N → ℕ} (
     simp only [Nat.lt_add_one_iff]
   simp only [h_eq]
 
+/-- @statement_id stmt-src-lem.sf.bk-matched-stays-matched -/
 lemma matched_kSucc_stays_matched' {lam mu : Fin N → ℕ} (k : Fin N) (hk : k.val + 1 < N)
     (T : Tableau lam mu) (hT : IsSemistandard T)
     (c : {c : Fin N × ℕ // c ∈ skewYoungDiagram lam mu})
@@ -4467,6 +4490,7 @@ lemma matched_kSucc_stays_matched' {lam mu : Fin N → ℕ} (k : Fin N) (hk : k.
       have h_ge := h_c_contributes
       omega
 
+/-- @statement_id stmt-src-lem.sf.bk-unmatched-becomes-unmatched -/
 lemma unmatched_k_becomes_unmatched_kSucc' {lam mu : Fin N → ℕ} (k : Fin N) (hk : k.val + 1 < N)
     (T : Tableau lam mu) (hT : IsSemistandard T)
     (c : {c : Fin N × ℕ // c ∈ skewYoungDiagram lam mu})
@@ -4892,6 +4916,7 @@ private lemma freeKSuccCount_after_BK_eq {lam mu : Fin N → ℕ} (k : Fin N) (h
     congr 1
   rw [h_card_eq, h_set_eq, h_matched_kSucc_eq_m]
 
+/-- @statement_id stmt-src-lem.sf.bk-unmatched-becomes-unmatched -/
 lemma unmatched_kSucc_becomes_unmatched_k' {lam mu : Fin N → ℕ} (k : Fin N) (hk : k.val + 1 < N)
     (T : Tableau lam mu) (hT : IsSemistandard T)
     (c : {c : Fin N × ℕ // c ∈ skewYoungDiagram lam mu})
@@ -4941,7 +4966,8 @@ lemma unmatched_kSucc_becomes_unmatched_k' {lam mu : Fin N → ℕ} (k : Fin N) 
     Case analysis on what T c₁ and T c₂ are, using:
     1. `not_unmatched_k_and_unmatched_kSucc`: Can't have unmatched k left of unmatched k+1
     2. `matched_k_propagates_left`: If c₂ is matched k, then c₁ (to the left) is also matched
-    3. `matched_kSucc_propagates_right`: If c₁ is matched k+1, then c₂ (to the right) is also matched -/
+    3. `matched_kSucc_propagates_right`: If c₁ is matched k+1, then c₂ (to the right) is also matched @statement_id stmt-src-lem.sf.bk-row-weak
+-/
 lemma benderKnuth_row_weak {lam mu : Fin N → ℕ}
     (hlam : IsNPartition lam) (hmu : IsNPartition mu)
     (k : Fin N) (hk : k.val + 1 < N)
@@ -5156,7 +5182,8 @@ lemma benderKnuth_row_weak {lam mu : Fin N → ℕ}
     Adjacent cells with k above and k+1 below form a forced pair, which is unchanged by BK.
     
     This lemma resolves the column-strict sorry in benderKnuth_involutive when partition
-    hypotheses are available. -/
+    hypotheses are available. @statement_id stmt-src-lem.sf.bk-column-strict
+-/
 lemma benderKnuth_column_strict {lam mu : Fin N → ℕ} 
     (hlam : IsNPartition lam) (hmu : IsNPartition mu)
     (k : Fin N) (hk : k.val + 1 < N)
@@ -5285,6 +5312,7 @@ lemma benderKnuth_column_strict {lam mu : Fin N → ℕ}
           simp only [h4, ↓reduceIte]
           exact hT_strict
 
+/-- @statement_id stmt-src-lem.sf.bk-involutive -/
 theorem benderKnuth_involutive {lam mu : Fin N → ℕ} 
     (hlam : IsNPartition lam) (hmu : IsNPartition mu)
     (k : Fin N) (hk : k.val + 1 < N)
@@ -5423,7 +5451,8 @@ theorem benderKnuth_involutive {lam mu : Fin N → ℕ}
       have h2' : T' c ≠ ⟨k.val + 1, hk⟩ := by rw [hT'c]; exact h2
       rw [benderKnuth_unchanged' k hk T' hT'_ss c h1' h2', hT'c]
 
-/-- The Bender-Knuth involution preserves semistandardness. -/
+/-- The Bender-Knuth involution preserves semistandardness. @statement_id stmt-src-lem.sf.bk-semistandard
+-/
 theorem benderKnuth_semistandard {lam mu : Fin N → ℕ} 
     (hlam : IsNPartition lam) (hmu : IsNPartition mu)
     (k : Fin N) (hk : k.val + 1 < N)
@@ -5555,7 +5584,8 @@ Similarly for cont(T')_{k+1} = cont(T)_k.
     while cont(BK_k(T))_i = cont(T)_i for i ≠ k, k+1.
 
     This is the key property that makes Bender-Knuth involutions useful for
-    proving symmetry of Schur polynomials. -/
+    proving symmetry of Schur polynomials. @statement_id stmt-src-lem.sf.bk-content-swap-lr
+-/
 theorem benderKnuth_content_swap {lam mu : Fin N → ℕ} (k : Fin N) (hk : k.val + 1 < N)
     (T : Tableau lam mu) (hT : IsSemistandard T) :
     let T' := benderKnuth k hk T hT
@@ -5758,7 +5788,8 @@ theorem benderKnuth_content_swap {lam mu : Fin N → ℕ} (k : Fin N) (hk : k.va
     omega
 
 /-- The monomial x_{BK_k(T)} equals s_k · x_T, where s_k swaps x_k and x_{k+1}.
-    This follows from benderKnuth_content_swap. -/
+    This follows from benderKnuth_content_swap. @statement_id stmt-src-lem.sf.bk-monomial
+-/
 theorem benderKnuth_monomial {lam mu : Fin N → ℕ} (k : Fin N) (hk : k.val + 1 < N)
     (T : Tableau lam mu) (hT : IsSemistandard T) :
     (monomialTableau (benderKnuth k hk T hT) : MvPolynomial (Fin N) R) =
@@ -5811,7 +5842,8 @@ Given a tableau T that is not ν-Yamanouchi:
 This involution has the property that the paired tableaux contribute opposite signs
 to the alternant sum, causing them to cancel. -/
 
-/-- When j is beyond all columns in the diagram, contentColGeq T j = 0. -/
+/-- When j is beyond all columns in the diagram, contentColGeq T j = 0. @statement_id stmt-src-lem.sf.content-col-geq-zero
+-/
 lemma contentColGeq_eq_zero_of_large {lam mu : Fin N → ℕ}
     (T : Tableau lam mu) (j : ℕ) (hj : ∀ i : Fin N, lam i < j) :
     contentColGeq T j = 0 := by
@@ -5843,7 +5875,8 @@ noncomputable instance isPartitionAtColumn_decidable {lam mu : Fin N → ℕ} (n
     This is important because for `j > maxCol`, `contentColGeq T j = 0`, so we're checking
     if `nu` itself is an N-partition. Without this, the lemma
     `violatorColumns_nonempty_of_not_yamanouchi` would fail when `nu` is not an N-partition
-    but `nu + contentColGeq T j` is an N-partition for all `j ≤ maxCol`. -/
+    but `nu + contentColGeq T j` is an N-partition for all `j ≤ maxCol`. @statement_id stmt-src-def.sf.stemb-violator-misstep
+-/
 noncomputable def violatorColumns {lam mu : Fin N → ℕ} (nu : Fin N → ℕ)
     (T : Tableau lam mu) : Finset ℕ :=
   let maxCol := Finset.sup Finset.univ lam
@@ -5855,7 +5888,8 @@ noncomputable def findViolatorColumn {lam mu : Fin N → ℕ} (nu : Fin N → �
     (T : Tableau lam mu) : Option ℕ :=
   if h : (violatorColumns nu T).Nonempty then some ((violatorColumns nu T).max' h) else none
 
-/-- Check if index k is a misstep: α_k < α_{k+1}. -/
+/-- Check if index k is a misstep: α_k < α_{k+1}. @statement_id stmt-src-def.sf.stemb-violator-misstep
+-/
 def isMisstep (α : Fin N → ℕ) (k : Fin N) : Prop :=
   ∃ h : k.val + 1 < N, α k < α ⟨k.val + 1, h⟩
 
@@ -5864,7 +5898,8 @@ instance isMisstep_decidable (α : Fin N → ℕ) (k : Fin N) : Decidable (isMis
   unfold isMisstep
   infer_instance
 
-/-- The set of misstep indices for a tuple α. -/
+/-- The set of misstep indices for a tuple α. @statement_id stmt-src-def.sf.stemb-violator-misstep
+-/
 noncomputable def misstepSet (α : Fin N → ℕ) : Finset (Fin N) :=
   Finset.univ.filter (fun k => isMisstep α k)
 
@@ -6601,7 +6636,8 @@ column j contains no cells with entry k. This is expressed as:
 - From β partition: β (k+1) ≤ β k, i.e., ν (k+1) + cont(col_{≥j+1}) (k+1) ≤ ν k + cont(col_{≥j+1}) k
 - From semistandard: cont(col_{≥j}) i ≤ cont(col_{≥j+1}) i + 1 (at most 1 entry per column)
 - From monotonicity: cont(col_{≥j+1}) i ≤ cont(col_{≥j}) i
-- Combining these constraints forces cont(col_{≥j}) k = cont(col_{≥j+1}) k -/
+- Combining these constraints forces cont(col_{≥j}) k = cont(col_{≥j+1}) k @statement_id stmt-src-lem.sf.column-j-no-k
+-/
 lemma column_j_no_k_at_max_violator {lam mu : Fin N → ℕ}
     (nu : Fin N → ℕ)
     (k : Fin N) (_hk : k.val + 1 < N)
@@ -6796,7 +6832,8 @@ private lemma cross_boundary_unmatched_k_not_eq_suffix_k {lam mu : Fin N → ℕ
     This is the correct definition that preserves row-weak ordering.
 
     The matching-based conditions ensure that only unmatched free entries are swapped,
-    preserving the row-weak property. See `benderKnuthPrefixMatching_row_weak_stembridge` below. -/
+    preserving the row-weak property. See `benderKnuthPrefixMatching_row_weak_stembridge` below. @statement_id stmt-src-def.sf.bk-prefix
+-/
 noncomputable def benderKnuthPrefixMatching {lam mu : Fin N → ℕ} (k : Fin N) (hk : k.val + 1 < N)
     (j : ℕ) (T : Tableau lam mu) (_hT : IsSemistandard T) : Tableau lam mu := by
   classical
@@ -7736,7 +7773,8 @@ private lemma benderKnuthPrefixMatching_column_strict {lam mu : Fin N → ℕ}
     `benderKnuthPrefixMatching_column_strict` to show that the resulting tableau is semistandard.
 
     The Stembridge context hypotheses (nu, hj_pos, hbeta, hk_misstep) are needed for the
-    row-weak part to handle the cross-boundary case. -/
+    row-weak part to handle the cross-boundary case. @statement_id stmt-src-lem.sf.bk-prefix-semistandard
+-/
 theorem benderKnuthPrefixMatching_semistandard_stembridge {lam mu : Fin N → ℕ}
     (hlam : IsNPartition lam) (hmu : IsNPartition mu)
     (nu : Fin N → ℕ)
@@ -7753,7 +7791,8 @@ theorem benderKnuthPrefixMatching_semistandard_stembridge {lam mu : Fin N → �
 
 /-- benderKnuthPrefixMatching preserves contentColGeq for columns >= j.
     Since benderKnuthPrefixMatching only modifies cells in columns < j, the content
-    in columns >= j is unchanged. -/
+    in columns >= j is unchanged. @statement_id stmt-src-lem.sf.bk-prefix-content-colgeq
+-/
 theorem benderKnuthPrefixMatching_contentColGeq {lam mu : Fin N → ℕ} (k : Fin N) (hk : k.val + 1 < N)
     (j : ℕ) (T : Tableau lam mu) (hT : IsSemistandard T) :
     contentColGeq (benderKnuthPrefixMatching k hk j T hT) j = contentColGeq T j := by
@@ -9170,7 +9209,8 @@ private lemma matchedFreeKSucc_stays_matched {lam mu : Fin N → ℕ}
     - The matching structure is exactly reversed
 
     **Note**: This requires the Stembridge context hypotheses to ensure the result is
-    semistandard, which is needed for the second application of `benderKnuthPrefixMatching`. -/
+    semistandard, which is needed for the second application of `benderKnuthPrefixMatching`. @statement_id stmt-src-lem.sf.bk-prefix-involutive-stembridge
+-/
 theorem benderKnuthPrefixMatching_involutive_stembridge {lam mu : Fin N → ℕ}
     (hlam : IsNPartition lam) (hmu : IsNPartition mu)
     (nu : Fin N → ℕ)
@@ -9459,7 +9499,8 @@ theorem benderKnuthPrefixMatching_involutive_stembridge {lam mu : Fin N → ℕ}
 The following lemmas establish the key properties needed for defining
 and proving properties of Stembridge's involution. -/
 
-/-- If α is not an N-partition, then there exists a misstep index. -/
+/-- If α is not an N-partition, then there exists a misstep index. @statement_id stmt-src-lem.sf.stemb-misstep-nonempty
+-/
 lemma not_isNPartition_iff_exists_misstep (α : Fin N → ℕ) :
     ¬IsNPartition α ↔ ∃ k : Fin N, isMisstep α k := by
   simp only [_root_.IsNPartition, isMisstep]
@@ -9537,7 +9578,8 @@ lemma not_isYamanouchi_iff {lam mu : Fin N → ℕ} {nu : Fin N → ℕ} {T : Ta
       push_neg
       exact hex
 
-/-- For a semistandard tableau T that is not ν-Yamanouchi, the violator columns set is nonempty. -/
+/-- For a semistandard tableau T that is not ν-Yamanouchi, the violator columns set is nonempty. @statement_id stmt-src-lem.sf.stemb-violator-nonempty
+-/
 lemma violatorColumns_nonempty_of_not_yamanouchi {lam mu : Fin N → ℕ} {nu : Fin N → ℕ}
     {T : Tableau lam mu} (hT : IsSemistandard T) (hnotYam : ¬IsYamanouchi nu T) :
     (violatorColumns nu T).Nonempty := by
@@ -9581,7 +9623,8 @@ lemma violatorColumns_nonempty_of_not_yamanouchi {lam mu : Fin N → ℕ} {nu : 
           rw [hzero_j, add_zero] at hnotPart
           exact hnotPart
 
-/-- The misstep set is nonempty when the tuple is not a partition. -/
+/-- The misstep set is nonempty when the tuple is not a partition. @statement_id stmt-src-lem.sf.stemb-misstep-nonempty
+-/
 lemma misstepSet_nonempty_of_not_partition {α : Fin N → ℕ} (h : ¬IsNPartition α) :
     (misstepSet α).Nonempty := by
   rw [not_isNPartition_iff_exists_misstep] at h
@@ -9601,7 +9644,8 @@ lemma violatorColumn_pos {lam mu : Fin N → ℕ} {nu : Fin N → ℕ} {T : Tabl
     
     Note: This lemma requires `hnu : IsNPartition nu` to handle the edge case where
     j = maxCol + 1 and contentColGeq T (j+1) = 0. In that case, we need to show
-    IsNPartition nu, which is given by hypothesis. -/
+    IsNPartition nu, which is given by hypothesis. @statement_id stmt-src-lem.sf.stemb-max-violator-preserved
+-/
 lemma max_violator_succ_isNPartition {lam mu : Fin N → ℕ} {nu : Fin N → ℕ}
     (hnu : IsNPartition nu)
     {T : Tableau lam mu} (_hT : IsSemistandard T)
@@ -9653,7 +9697,8 @@ lemma max_violator_succ_isNPartition {lam mu : Fin N → ℕ} {nu : Fin N → �
     valid values (Some j, Some k) follow from the non-Yamanouchi assumption.
 
     **Implementation**: Uses `violatorColumns_nonempty_of_not_yamanouchi` to find j,
-    `misstepSet_nonempty_of_not_partition` to find k, then applies `benderKnuthPrefixMatching k j T`. -/
+    `misstepSet_nonempty_of_not_partition` to find k, then applies `benderKnuthPrefixMatching k j T`. @statement_id stmt-src-def.sf.stemb-involution
+-/
 noncomputable def stembridgeInvolution {lam mu : Fin N → ℕ} (nu : Fin N → ℕ)
     (T : Tableau lam mu) (hT : IsSemistandard T) (hnotYam : ¬IsYamanouchi nu T) :
     Tableau lam mu := by
@@ -9943,7 +9988,8 @@ theorem stembridgeInvolutionMatching_contentColGeq {lam mu : Fin N → ℕ}
 
     To prove stembridgeInvolution T' = T:
     - BK_k is an involution (benderKnuthPrefixMatching_involutive_stembridge)
-    - Applying BK_k twice to columns 1, ..., j-1 returns the original -/
+    - Applying BK_k twice to columns 1, ..., j-1 returns the original @statement_id stmt-src-lem.sf.stemb-involutive
+-/
 theorem stembridgeInvolution_involutive {lam mu : Fin N → ℕ}
     (hlam : IsNPartition lam) (hmu : IsNPartition mu)
     (nu : Fin N → ℕ) (hnu : IsNPartition nu)
@@ -10046,7 +10092,8 @@ theorem stembridgeInvolution_involutive {lam mu : Fin N → ℕ}
   -- this equals benderKnuthPrefixMatching k hk j T' hT' = T, which is hT''_eq
   convert hT''_eq using 3
 
-/-- Stembridge's involution preserves semistandardness. -/
+/-- Stembridge's involution preserves semistandardness. @statement_id stmt-src-lem.sf.stemb-semistandard
+-/
 theorem stembridgeInvolution_semistandard {lam mu : Fin N → ℕ}
     (hlam : IsNPartition lam) (hmu : IsNPartition mu)
     (nu : Fin N → ℕ) (hnu : IsNPartition nu)
@@ -10055,7 +10102,8 @@ theorem stembridgeInvolution_semistandard {lam mu : Fin N → ℕ}
   obtain ⟨hT', _, _⟩ := stembridgeInvolution_involutive hlam hmu nu hnu T hT hnotYam
   exact hT'
 
-/-- Stembridge's involution maps non-Yamanouchi to non-Yamanouchi. -/
+/-- Stembridge's involution maps non-Yamanouchi to non-Yamanouchi. @statement_id stmt-src-lem.sf.stemb-not-yamanouchi
+-/
 theorem stembridgeInvolution_not_yamanouchi {lam mu : Fin N → ℕ}
     (hlam : IsNPartition lam) (hmu : IsNPartition mu)
     (nu : Fin N → ℕ) (hnu : IsNPartition nu)
@@ -10120,7 +10168,8 @@ private lemma forced_k_kSucc_prefix_bijection {lam mu : Fin N → ℕ}
     - prefix k' in T = (forced k' in prefix of T) + (free k' in prefix of T)
     - By forced bijection: #{forced k in prefix} = #{forced k' in prefix}
     - By count swap: #{free k in prefix of T'} = #{free k' in prefix of T}
-    - Therefore: prefix k in T' = prefix k' in T -/
+    - Therefore: prefix k in T' = prefix k' in T @statement_id stmt-src-lem.sf.bk-prefix-content-swap
+-/
 lemma benderKnuthPrefixMatching_content_swap {lam mu : Fin N → ℕ}
     (k : Fin N) (hk : k.val + 1 < N) (j : ℕ)
     (T : Tableau lam mu) (hT : IsSemistandard T) :
@@ -10540,7 +10589,8 @@ private lemma benderKnuthPrefixMatching_content_swap' {lam mu : Fin N → ℕ}
     the Stembridge involution applies BK_k to a prefix of T, which swaps the
     counts of k and k+1 in that prefix. Combined with the specific choice of
     the misstep index k, this results in the full expression being related
-    by a transposition. -/
+    by a transposition. @statement_id stmt-src-lem.sf.stemb-content-transposition
+-/
 theorem stembridgeInvolution_content_transposition {lam mu : Fin N → ℕ} (nu : Fin N → ℕ)
     (hnu : IsNPartition nu)
     (T : Tableau lam mu) (hT : IsSemistandard T) (hnotYam : ¬IsYamanouchi nu T) :
@@ -10869,7 +10919,8 @@ theorem stembridgeInvolution_content_transposition {lam mu : Fin N → ℕ} (nu 
     image under Stembridge's involution are negatives of each other.
 
     This is because cont(T') differs from cont(T) by swapping entries k and k+1,
-    and by alternant_swap, this negates the alternant. -/
+    and by alternant_swap, this negates the alternant. @statement_id stmt-src-lem.sf.stemb-sign-reversing
+-/
 theorem stembridgeInvolution_sign_reversing {lam mu : Fin N → ℕ} (nu : Fin N → ℕ)
     (hnu : IsNPartition nu)
     (T : Tableau lam mu) (hT : IsSemistandard T) (hnotYam : ¬IsYamanouchi nu T) :
@@ -10901,7 +10952,8 @@ private lemma has_repeated_of_comp_swap_eq {f : Fin N → ℕ} {k k' : Fin N} (h
     **Proof**: If T' = T, then by `stembridgeInvolution_content_transposition`:
     - `f = f ∘ swap k k'` where `f = nu + contentTableau T + rho N` and `k ≠ k'`
     - This means `f(k) = f(k')`, so `f` has repeated entries
-    - By `alternant_eq_zero_of_repeated`, the alternant is zero. -/
+    - By `alternant_eq_zero_of_repeated`, the alternant is zero. @statement_id stmt-src-lem.sf.stemb-fixed-point-zero
+-/
 theorem stembridgeInvolution_fixed_point_implies_alternant_zero {lam mu : Fin N → ℕ} (nu : Fin N → ℕ)
     (hnu : IsNPartition nu)
     (T : Tableau lam mu) (hT : IsSemistandard T) (hnotYam : ¬IsYamanouchi nu T)
@@ -11030,7 +11082,8 @@ private lemma isSymmetric_of_adjacent_swap_invariant (p : MvPolynomial (Fin N) R
     that swaps the content entries k and k+1. Since adjacent transpositions generate
     the symmetric group, this proves skewSchurPoly is invariant under all permutations.
 
-    The partition hypotheses are required for `benderKnuth_involutive_partition`. -/
+    The partition hypotheses are required for `benderKnuth_involutive_partition`. @statement_id stmt-src-thm.sf.skew-schur-symm-lr
+-/
 lemma skewSchurPoly_isSymmetric (lam mu : Fin N → ℕ)
     (hlam : IsNPartition lam) (hmu : IsNPartition mu) :
     (skewSchurPoly lam mu : MvPolynomial (Fin N) R).IsSymmetric := by
@@ -11092,7 +11145,8 @@ private lemma sum_xPow_content_comp {lam mu : Fin N → ℕ}
     2. The fact that alternant α = ∑_σ sign(σ) · x^(α ∘ σ)
     3. For symmetric p: alternant α * p = ∑_σ sign(σ) · rename σ⁻¹ (x^α * p)
 
-    The proof uses Bender-Knuth involutions to establish the symmetry of skewSchurPoly. -/
+    The proof uses Bender-Knuth involutions to establish the symmetry of skewSchurPoly. @statement_id stmt-src-lem.sf.alternant-mul-skew-schur
+-/
 lemma alternant_mul_skewSchurPoly_eq_sum {lam mu : Fin N → ℕ}
     (hlam : IsNPartition lam) (hmu : IsNPartition mu) (α : Fin N → ℕ) :
     (alternant α : MvPolynomial (Fin N) R) * skewSchurPoly lam mu =
@@ -11130,7 +11184,8 @@ lemma alternant_mul_skewSchurPoly_eq_sum {lam mu : Fin N → ℕ}
   rw [h]
 
 /-- The alternant sum over all semistandard tableaux equals the sum over Yamanouchi tableaux
-    plus the sum over non-Yamanouchi tableaux. -/
+    plus the sum over non-Yamanouchi tableaux. @statement_id stmt-src-lem.sf.alternant-sum-split
+-/
 lemma alternant_sum_split {lam mu nu : Fin N → ℕ} :
     ∑ T : {T : Tableau lam mu // IsSemistandard T},
       (alternant (nu + contentTableau T.val + rho N) : MvPolynomial (Fin N) R) =
@@ -11187,7 +11242,8 @@ lemma alternant_sum_split {lam mu nu : Fin N → ℕ} :
     · intro T hT; rfl
     · intro T _; rfl
 
-/-- The sum over non-Yamanouchi tableaux is zero (they cancel in pairs via the involution). -/
+/-- The sum over non-Yamanouchi tableaux is zero (they cancel in pairs via the involution). @statement_id stmt-src-lem.sf.non-yamanouchi-cancel
+-/
 lemma alternant_sum_non_yamanouchi_eq_zero {lam mu nu : Fin N → ℕ}
     (hlam : IsNPartition lam) (hmu : IsNPartition mu)
     (hnu : IsNPartition nu) :
@@ -11285,7 +11341,8 @@ lemma alternant_sum_non_yamanouchi_eq_zero {lam mu nu : Fin N → ℕ}
     4. Bender-Knuth involutions β_k on tableaux
     5. Properties of the involution (sign-reversing, fixed-point free on non-Yamanouchi)
 
-    Reference: [Stembridge, *A concise proof of the Littlewood-Richardson rule*, 2002] -/
+    Reference: [Stembridge, *A concise proof of the Littlewood-Richardson rule*, 2002] @statement_id stmt-src-lem.sf.stemb-lem
+-/
 theorem stembridgeLemma (lam mu nu : Fin N → ℕ)
     (hlam : IsNPartition lam) (hmu : IsNPartition mu) (hnu : IsNPartition nu) :
     (alternant (nu + rho N) : MvPolynomial (Fin N) R) * skewSchurPoly lam mu =
@@ -11318,7 +11375,8 @@ theorem stembridgeLemma (lam mu nu : Fin N → ℕ)
     This follows from the strict increase down columns: for any cell (i, j) in the
     diagram, all cells (0, j), (1, j), ..., (i-1, j) are also in the diagram
     (since lam is weakly decreasing), and the entries strictly increase down
-    the column, giving T(i, j) ≥ i. -/
+    the column, giving T(i, j) ≥ i. @statement_id stmt-src-lem.sf.tab-greater-i
+-/
 theorem tableau_entry_ge_row {lam : Fin N → ℕ} (hlam : IsNPartition lam)
     (T : Tableau lam zeroTuple) (hT : IsSemistandard T)
     (c : {c : Fin N × ℕ // c ∈ skewYoungDiagram lam zeroTuple}) :
@@ -11370,7 +11428,8 @@ theorem tableau_entry_ge_row {lam : Fin N → ℕ} (hlam : IsNPartition lam)
 def minimalisticTableau (lam : Fin N → ℕ) : Tableau lam zeroTuple :=
   fun c => c.val.1
 
-/-- The minimalistic tableau is semistandard. -/
+/-- The minimalistic tableau is semistandard. @statement_id stmt-src-lem.sf.minimalistic-semistandard
+-/
 theorem minimalisticTableau_semistandard (lam : Fin N → ℕ) :
     IsSemistandard (minimalisticTableau lam) := by
   constructor
@@ -11453,7 +11512,8 @@ private lemma contentColGeq_minimalisticTableau (lam : Fin N → ℕ) (j : ℕ) 
     The key insight is that for the minimalistic tableau, contentColGeq T j at row i
     counts cells (i, k) where j ≤ k ≤ lam i. This count equals lam i + 1 - j.
     Since lam is weakly decreasing (an N-partition), so is this count, hence
-    0 + contentColGeq T j is also weakly decreasing, i.e., an N-partition. -/
+    0 + contentColGeq T j is also weakly decreasing, i.e., an N-partition. @statement_id stmt-src-lem.sf.minimalistic-yamanouchi
+-/
 theorem minimalisticTableau_yamanouchi (lam : Fin N → ℕ) (hlam : IsNPartition lam) :
     IsYamanouchi zeroTuple (minimalisticTableau lam) := by
   constructor
@@ -11468,7 +11528,8 @@ theorem minimalisticTableau_yamanouchi (lam : Fin N → ℕ) (hlam : IsNPartitio
 
 /-- The content of the minimalistic tableau equals lam.
     This follows from contentColGeq_one_eq_contentTableau and contentColGeq_minimalisticTableau:
-    contentTableau T₀ = contentColGeq T₀ 1, and contentColGeq T₀ 1 i = lam i + 1 - 1 = lam i. -/
+    contentTableau T₀ = contentColGeq T₀ 1, and contentColGeq T₀ 1 i = lam i + 1 - 1 = lam i. @statement_id stmt-src-lem.sf.minimalistic-content
+-/
 theorem contentTableau_minimalisticTableau (lam : Fin N → ℕ) :
     contentTableau (minimalisticTableau lam) = lam := by
   rw [← contentColGeq_one_eq_contentTableau]
@@ -11477,7 +11538,8 @@ theorem contentTableau_minimalisticTableau (lam : Fin N → ℕ) :
   omega
 
 /-- Helper: for 0-Yamanouchi T of shape lam/0, the entry at the rightmost cell
-    of row i equals i. This is the key to proving uniqueness. -/
+    of row i equals i. This is the key to proving uniqueness. @statement_id stmt-src-lem.sf.yamanouchi-rightmost
+-/
 lemma yamanouchi_rightmost_entry {lam : Fin N → ℕ} (hlam : IsNPartition lam)
     (T : Tableau lam zeroTuple) (hT : IsYamanouchi zeroTuple T)
     (i : Fin N) (hi : lam i > 0) :
@@ -11579,7 +11641,8 @@ lemma yamanouchi_rightmost_entry {lam : Fin N → ℕ} (hlam : IsNPartition lam)
   omega
 
 /-- The minimalistic tableau is the unique 0-Yamanouchi semistandard tableau
-    of shape lam/0. (Observation 2 in proof) -/
+    of shape lam/0. (Observation 2 in proof) @statement_id stmt-src-lem.sf.minimalistic-unique
+-/
 theorem minimalisticTableau_unique (lam : Fin N → ℕ) (hlam : IsNPartition lam)
     (T : Tableau lam zeroTuple) (hT : IsYamanouchi zeroTuple T) :
     T = minimalisticTableau lam := by
@@ -11627,7 +11690,8 @@ theorem minimalisticTableau_unique (lam : Fin N → ℕ) (hlam : IsNPartition la
     3. The content of T₀ equals λ.
     4. Therefore: a_ρ · s_λ = a_{λ+ρ}
 
-    This is equivalent to: a_{λ+ρ} = a_ρ · s_λ. -/
+    This is equivalent to: a_{λ+ρ} = a_ρ · s_λ. @statement_id stmt-src-lem.sf.schur-alternant
+-/
 theorem schurPoly_eq_alternant_div (lam : Fin N → ℕ) (hlam : IsNPartition lam) :
     (alternant (lam + rho N) : MvPolynomial (Fin N) R) =
     alternant (rho N) * schurPoly lam := by
@@ -11698,7 +11762,8 @@ theorem schurPoly_eq_alternant_div (lam : Fin N → ℕ) (hlam : IsNPartition la
     (using lem.cring.reg.cancel) to obtain:
       s_ν · s_{λ/μ} = ∑_{T ν-Yamanouchi} s_{ν+cont(T)}
 
-    This completes the proof. -/
+    This completes the proof. @statement_id stmt-src-thm.sf.lr-zy
+-/
 theorem littlewoodRichardson [IsDomain R] (lam mu nu : Fin N → ℕ)
     (hlam : IsNPartition lam) (hmu : IsNPartition mu) (hnu : IsNPartition nu) :
     (schurPoly nu : MvPolynomial (Fin N) R) * skewSchurPoly lam mu =

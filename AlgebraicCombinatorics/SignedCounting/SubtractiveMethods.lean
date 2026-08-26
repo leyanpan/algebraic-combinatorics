@@ -56,11 +56,13 @@ of `[d]` occurs an even number of times in the tuple.
 occurs an even number of times. For example, the 4-tuple `(1,4,4,1)` is all-even
 since 1 appears twice and 4 appears twice.
 
-Label: Definition from Theorem `thm.cancel.all-even` -/
+Label: Definition from Theorem `thm.cancel.all-even` @statement_id stmt-src-def.cancel.all-even
+-/
 def IsAllEven {n d : ℕ} (x : Fin n → Fin d) : Prop :=
   ∀ k : Fin d, Even ((univ.filter fun i => x i = k).card)
 
-/-- The multiplicity of element `k` in tuple `x` -/
+/-- The multiplicity of element `k` in tuple `x` @statement_id stmt-src-def.cancel.multiplicity
+-/
 def multiplicity {n d : ℕ} (x : Fin n → Fin d) (k : Fin d) : ℕ :=
   (univ.filter fun i => x i = k).card
 
@@ -79,7 +81,8 @@ We represent sign tuples as functions `e : Fin d → ZMod 2`, where
 finite type structure. We then convert to ℤ when needed.
 -/
 
-/-- Convert a ZMod 2 value to a sign: 0 ↦ 1, 1 ↦ -1 -/
+/-- Convert a ZMod 2 value to a sign: 0 ↦ 1, 1 ↦ -1 @statement_id stmt-src-def.cancel.tosign
+-/
 def toSign (b : ZMod 2) : ℤ := if b = 0 then 1 else -1
 
 @[simp]
@@ -89,17 +92,20 @@ theorem toSign_zero : toSign 0 = 1 := rfl
 theorem toSign_one : toSign 1 = -1 := rfl
 
 /-- The product `e_{x_1} * e_{x_2} * ... * e_{x_n}` for a sign tuple `e` and
-index tuple `x` -/
+index tuple `x` @statement_id stmt-src-def.cancel.signproduct
+-/
 def signProduct {n d : ℕ} (e : Fin d → ZMod 2) (x : Fin n → Fin d) : ℤ :=
   ∏ i : Fin n, toSign (e (x i))
 
 /-! ### Helper lemmas about toSign and powers -/
 
-/-- The square of any sign is 1 -/
+/-- The square of any sign is 1 @statement_id stmt-src-lem.cancel.tosign-sq
+-/
 lemma toSign_sq (b : ZMod 2) : toSign b ^ 2 = 1 := by
   fin_cases b <;> simp [toSign]
 
-/-- Even powers of a sign equal 1 -/
+/-- Even powers of a sign equal 1 @statement_id stmt-src-lem.cancel.tosign-pow-even
+-/
 lemma toSign_pow_even (b : ZMod 2) (m : ℕ) (hm : Even m) : toSign b ^ m = 1 := by
   obtain ⟨k, hk⟩ := hm
   calc toSign b ^ m = toSign b ^ (2 * k) := by rw [hk, two_mul]
@@ -107,7 +113,8 @@ lemma toSign_pow_even (b : ZMod 2) (m : ℕ) (hm : Even m) : toSign b ^ m = 1 :=
     _ = 1 ^ k := by rw [toSign_sq]
     _ = 1 := one_pow k
 
-/-- Odd powers of a sign equal the sign itself -/
+/-- Odd powers of a sign equal the sign itself @statement_id stmt-src-lem.cancel.tosign-pow-odd
+-/
 lemma toSign_pow_odd (b : ZMod 2) (m : ℕ) (hm : Odd m) : toSign b ^ m = toSign b := by
   obtain ⟨k, hk⟩ := hm
   calc toSign b ^ m = toSign b ^ (2 * k + 1) := by rw [hk, two_mul]
@@ -115,14 +122,16 @@ lemma toSign_pow_odd (b : ZMod 2) (m : ℕ) (hm : Odd m) : toSign b ^ m = toSign
     _ = 1 ^ k * toSign b := by rw [toSign_sq]
     _ = toSign b := by ring
 
-/-- Adding 1 in ZMod 2 flips the sign -/
+/-- Adding 1 in ZMod 2 flips the sign @statement_id stmt-src-lem.cancel.tosign-add-one
+-/
 lemma toSign_add_one (b : ZMod 2) : toSign (b + 1) = -toSign b := by
   fin_cases b <;> decide
 
 /-- The product can be rewritten in terms of multiplicities:
 `∏_i e_{x_i} = ∏_k e_k^{m_k}` where `m_k` is the multiplicity of `k` in `x`.
 
-Label: Equation `pf.lem.cancel.all-even.l2.e=e` -/
+Label: Equation `pf.lem.cancel.all-even.l2.e=e` @statement_id stmt-src-lem.cancel.all-even.signproduct-eq-prod-pow
+-/
 theorem signProduct_eq_prod_pow {n d : ℕ} (e : Fin d → ZMod 2) (x : Fin n → Fin d) :
     signProduct e x = ∏ k : Fin d, (toSign (e k)) ^ (multiplicity x k) := by
   unfold signProduct multiplicity
@@ -151,7 +160,8 @@ This lemma establishes that:
 ```
 -/
 
-/-- The sum of entries of a sign tuple, as an integer -/
+/-- The sum of entries of a sign tuple, as an integer @statement_id stmt-src-def.cancel.signsum
+-/
 def signSum {d : ℕ} (e : Fin d → ZMod 2) : ℤ :=
   ∑ k : Fin d, toSign (e k)
 
@@ -161,7 +171,8 @@ over index tuples and sign tuples of the sign product.
 
 This follows from expanding `(∑_k e_k)^n` using the distributive law.
 
-Label: Lemma `lem.cancel.all-even.l1` -/
+Label: Lemma `lem.cancel.all-even.l1` @statement_id stmt-src-lem.cancel.all-even.l1
+-/
 theorem sum_signSum_pow_eq_sum_signProduct (n d : ℕ) :
     ∑ e : Fin d → ZMod 2, (signSum e)^n =
     ∑ x : Fin n → Fin d, ∑ e : Fin d → ZMod 2, signProduct e x := by
@@ -187,11 +198,13 @@ We define an involution on sign tuples that flips the sign at position `k`.
 This is used to show cancellation when the tuple has odd multiplicity at `k`.
 -/
 
-/-- The involution that flips the k-th sign: if `e_k = +1`, make it `-1`, and vice versa -/
+/-- The involution that flips the k-th sign: if `e_k = +1`, make it `-1`, and vice versa @statement_id stmt-src-def.cancel.flipsign
+-/
 def flipSign {d : ℕ} (k : Fin d) (e : Fin d → ZMod 2) : Fin d → ZMod 2 :=
   Function.update e k (e k + 1)
 
-/-- flipSign is an involution -/
+/-- flipSign is an involution @statement_id stmt-src-lem.cancel.flipsign-involutive
+-/
 lemma flipSign_involutive {d : ℕ} (k : Fin d) : Function.Involutive (flipSign k) := by
   intro e
   ext j
@@ -204,7 +217,8 @@ lemma flipSign_involutive {d : ℕ} (k : Fin d) : Function.Involutive (flipSign 
       _ = e j := by ring
   · rfl
 
-/-- flipSign produces a different tuple -/
+/-- flipSign produces a different tuple @statement_id stmt-src-lem.cancel.flipsign-ne
+-/
 lemma flipSign_ne {d : ℕ} (k : Fin d) (e : Fin d → ZMod 2) : flipSign k e ≠ e := by
   intro h
   have h1 : (flipSign k e) k = e k := by rw [h]
@@ -215,17 +229,20 @@ lemma flipSign_ne {d : ℕ} (k : Fin d) (e : Fin d → ZMod 2) : flipSign k e �
       _ = 0 := by ring
   exact one_ne_zero this
 
-/-- flipSign at position k gives e_k + 1 at position k -/
+/-- flipSign at position k gives e_k + 1 at position k @statement_id stmt-src-lem.cancel.flipsign-self
+-/
 lemma flipSign_self {d : ℕ} (k : Fin d) (e : Fin d → ZMod 2) :
     (flipSign k e) k = e k + 1 := by
   simp [flipSign]
 
-/-- flipSign at position k leaves other positions unchanged -/
+/-- flipSign at position k leaves other positions unchanged @statement_id stmt-src-lem.cancel.flipsign-ne-self
+-/
 lemma flipSign_ne_self {d : ℕ} (k j : Fin d) (e : Fin d → ZMod 2) (h : j ≠ k) :
     (flipSign k e) j = e j := by
   simp [flipSign, Function.update_of_ne h]
 
-/-- Key lemma: flipping sign k negates the sign product when k has odd multiplicity -/
+/-- Key lemma: flipping sign k negates the sign product when k has odd multiplicity @statement_id stmt-src-lem.cancel.signproduct-flipsign
+-/
 lemma signProduct_flipSign {n d : ℕ} (e : Fin d → ZMod 2) (x : Fin n → Fin d)
     (k : Fin d) (hk : Odd (multiplicity x k)) :
     signProduct (flipSign k e) x = -signProduct e x := by
@@ -251,7 +268,8 @@ The proof uses an involution argument: if some element `k` has odd
 multiplicity, flipping the sign of `e_k` negates the product, so
 terms cancel in pairs.
 
-Label: Lemma `lem.cancel.all-even.l2(a)` -/
+Label: Lemma `lem.cancel.all-even.l2(a)` @statement_id stmt-src-lem.cancel.all-even.l2
+-/
 theorem sum_signProduct_not_allEven {n d : ℕ} (x : Fin n → Fin d) (hx : ¬IsAllEven x) :
     ∑ e : Fin d → ZMod 2, signProduct e x = 0 := by
   -- There exists k with odd multiplicity
@@ -281,7 +299,8 @@ The proof: when all multiplicities are even, each `e_k^{m_k} = 1`
 (since `(±1)^{even} = 1`), so every sign product equals 1, and
 there are 2^d sign tuples.
 
-Label: Lemma `lem.cancel.all-even.l2(b)` -/
+Label: Lemma `lem.cancel.all-even.l2(b)` @statement_id stmt-src-lem.cancel.all-even.l2
+-/
 theorem sum_signProduct_allEven {n d : ℕ} (x : Fin n → Fin d) (hx : IsAllEven x) :
     ∑ e : Fin d → ZMod 2, signProduct e x = 2^d := by
   -- When all multiplicities are even, each signProduct equals 1
@@ -303,18 +322,21 @@ The number of all-even n-tuples in `[d]^n` equals
 `(1/2^d) ∑_{k=0}^d C(d,k) (d-2k)^n`.
 -/
 
-/-- The set of all-even tuples in `(Fin n → Fin d)` -/
+/-- The set of all-even tuples in `(Fin n → Fin d)` @statement_id stmt-src-def.cancel.alleventuples
+-/
 def allEvenTuples (n d : ℕ) : Finset (Fin n → Fin d) :=
   univ.filter IsAllEven
 
 /-- Bijection between sign tuples and subsets of `[d]`:
 A sign tuple `(e_1, ..., e_d) ∈ {1,-1}^d` corresponds to the set
-`{i ∈ [d] | e_i = -1}` of positions with -1. -/
+`{i ∈ [d] | e_i = -1}` of positions with -1. @statement_id stmt-src-def.cancel.signtupletosubset
+-/
 def signTupleToSubset {d : ℕ} (e : Fin d → ZMod 2) : Finset (Fin d) :=
   univ.filter fun k => e k = 1
 
 /-- For a sign tuple corresponding to subset S, the sum of entries
-equals `d - 2|S|`. -/
+equals `d - 2|S|`. @statement_id stmt-src-lem.cancel.signsum-eq-card
+-/
 theorem signSum_eq_card {d : ℕ} (e : Fin d → ZMod 2) :
     signSum e = d - 2 * (signTupleToSubset e).card := by
   unfold signSum signTupleToSubset
@@ -340,7 +362,8 @@ theorem signSum_eq_card {d : ℕ} (e : Fin d → ZMod 2) :
 /-! ### Bijection between sign tuples and subsets -/
 
 /-- Inverse of signTupleToSubset: given a subset S, produce the sign tuple
-where position k has value 1 (representing -1) iff k ∈ S -/
+where position k has value 1 (representing -1) iff k ∈ S @statement_id stmt-src-def.cancel.subsettosigntuple
+-/
 def subsetToSignTuple {d : ℕ} (S : Finset (Fin d)) : Fin d → ZMod 2 :=
   fun k => if k ∈ S then 1 else 0
 
@@ -360,19 +383,22 @@ lemma subsetToSignTuple_signTupleToSubset {d : ℕ} (e : Fin d → ZMod 2) :
   · have he : e k = 1 := Fin.ext h
     simp [he]
 
-/-- Equivalence between sign tuples and subsets of `[d]` -/
+/-- Equivalence between sign tuples and subsets of `[d]` @statement_id stmt-src-lem.cancel.signtupleequivsubset
+-/
 def signTupleEquivSubset (d : ℕ) : (Fin d → ZMod 2) ≃ Finset (Fin d) where
   toFun := signTupleToSubset
   invFun := subsetToSignTuple
   left_inv := subsetToSignTuple_signTupleToSubset
   right_inv := signTupleToSubset_subsetToSignTuple
 
-/-- For a subset S, the sign sum of the corresponding tuple equals d - 2|S| -/
+/-- For a subset S, the sign sum of the corresponding tuple equals d - 2|S| @statement_id stmt-src-lem.cancel.signsum-subsettosigntuple
+-/
 lemma signSum_subsetToSignTuple {d : ℕ} (S : Finset (Fin d)) :
     signSum (subsetToSignTuple S) = d - 2 * S.card := by
   rw [signSum_eq_card, signTupleToSubset_subsetToSignTuple]
 
-/-- Compute the double sum using lemma l2 -/
+/-- Compute the double sum using lemma l2 @statement_id stmt-src-lem.cancel.sum-signproduct-eq-alleven-count
+-/
 theorem sum_signProduct_eq_allEven_count (n d : ℕ) :
     ∑ x : Fin n → Fin d, ∑ e : Fin d → ZMod 2, signProduct e x =
     (allEvenTuples n d).card * 2^d := by
@@ -402,7 +428,8 @@ theorem sum_signProduct_eq_allEven_count (n d : ℕ) :
   rw [h3]
   simp [allEvenTuples, sum_const, mul_comm]
 
-/-- Rewrite sum over sign tuples as sum over subsets -/
+/-- Rewrite sum over sign tuples as sum over subsets @statement_id stmt-src-lem.cancel.sum-signsum-pow-eq-sum-subset
+-/
 theorem sum_signSum_pow_eq_sum_subset (n d : ℕ) :
     ∑ e : Fin d → ZMod 2, (signSum e)^n =
     ∑ S : Finset (Fin d), (d - 2 * S.card : ℤ)^n := by
@@ -411,7 +438,8 @@ theorem sum_signSum_pow_eq_sum_subset (n d : ℕ) :
   rw [signSum_eq_card]
   simp [signTupleEquivSubset]
 
-/-- Group sum over subsets by cardinality -/
+/-- Group sum over subsets by cardinality @statement_id stmt-src-lem.cancel.sum-subset-eq-sum-choose
+-/
 theorem sum_subset_eq_sum_choose (n d : ℕ) :
     ∑ S : Finset (Fin d), (d - 2 * S.card : ℤ)^n =
     ∑ k ∈ range (d + 1), d.choose k * (d - 2*k : ℤ)^n := by
@@ -450,7 +478,8 @@ This formula implies that `∑_{k=0}^d C(d,k) (d-2k)^n` is nonnegative
 and divisible by `2^d`, which is not obvious from the formula itself
 due to the alternating signs when `n` is odd.
 
-Label: Theorem `thm.cancel.all-even` -/
+Label: Theorem `thm.cancel.all-even` @statement_id stmt-src-thm.cancel.all-even
+-/
 theorem allEven_count_formula (n d : ℕ) :
     ((allEvenTuples n d).card : ℤ) * 2^d = ∑ k ∈ range (d + 1), d.choose k * (d - 2*k : ℤ)^n := by
   -- Connect via l1 and l2: LHS = ∑_x ∑_e signProduct e x = ∑_e (signSum e)^n = RHS
@@ -459,13 +488,15 @@ theorem allEven_count_formula (n d : ℕ) :
     rw [sum_signProduct_eq_allEven_count]
   rw [h1, ← sum_signSum_pow_eq_sum_signProduct, sum_signSum_pow_eq_sum_subset, sum_subset_eq_sum_choose]
 
-/-- Corollary: The sum `∑_{k=0}^d C(d,k) (d-2k)^n` is divisible by `2^d`. -/
+/-- Corollary: The sum `∑_{k=0}^d C(d,k) (d-2k)^n` is divisible by `2^d`. @statement_id stmt-src-cor.cancel.sum-choose-pow-dvd
+-/
 theorem sum_choose_pow_dvd_pow_two (n d : ℕ) :
     (2^d : ℤ) ∣ ∑ k ∈ range (d + 1), d.choose k * (d - 2*k : ℤ)^n := by
   rw [← allEven_count_formula n d]
   exact dvd_mul_left ((2 : ℤ)^d) ((allEvenTuples n d).card)
 
-/-- Corollary: The sum `∑_{k=0}^d C(d,k) (d-2k)^n` is nonnegative. -/
+/-- Corollary: The sum `∑_{k=0}^d C(d,k) (d-2k)^n` is nonnegative. @statement_id stmt-src-cor.cancel.sum-choose-pow-nonneg
+-/
 theorem sum_choose_pow_nonneg (n d : ℕ) :
     0 ≤ ∑ k ∈ range (d + 1), d.choose k * (d - 2*k : ℤ)^n := by
   rw [← allEven_count_formula]

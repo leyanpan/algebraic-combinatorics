@@ -93,13 +93,15 @@ to `α(β(x))`. In Mathlib, `(α * β) x = α (β x)`.
 
 /-- A permutation of a type `X` is a bijection from `X` to itself. (def.perm.perm (a))
 
-In Mathlib, this is `Equiv.Perm X := X ≃ X`, i.e., the type of equivalences from `X` to `X`. -/
+In Mathlib, this is `Equiv.Perm X := X ≃ X`, i.e., the type of equivalences from `X` to `X`. @statement_id stmt-src-def.perm.perm
+-/
 abbrev Permutation (X : Type*) := Equiv.Perm X
 
 /-- The symmetric group of a type `X` is the group of all permutations of `X`.
     (def.perm.perm (b))
 
-    In Mathlib, this is `Equiv.Perm X` with its natural `Group` instance. -/
+    In Mathlib, this is `Equiv.Perm X` with its natural `Group` instance. @statement_id stmt-src-def.perm.perm
+-/
 abbrev SymmetricGroup (X : Type*) := Equiv.Perm X
 
 /-! ### The n-th symmetric group (def.perm.Sn-iven)
@@ -120,7 +122,8 @@ In the textbook (def.perm.Sn-iven), `[n]` denotes `{1, 2, ..., n}`.
 In Lean, `Fin n` represents `{0, 1, ..., n-1}`.
 
 Both are n-element sets for n ≥ 0, so their symmetric groups are isomorphic.
-We use `Fin n` as it is the standard representation in Mathlib. -/
+We use `Fin n` as it is the standard representation in Mathlib. @statement_id stmt-src-def.perm.sn-iven
+-/
 abbrev bracketN (n : ℕ) := Fin n
 
 /-- The n-th symmetric group `S_n` is the group of permutations of `[n]`.
@@ -130,20 +133,23 @@ In the textbook, `S_n` is defined as `S_[n]`, the symmetric group of `[n] = {1, 
 In Lean, we represent this as `Equiv.Perm (Fin n)`, the group of permutations of
 `Fin n = {0, 1, ..., n-1}`.
 
-The size of `S_n` is `n!` (see `sn_card`). -/
+The size of `S_n` is `n!` (see `sn_card`). @statement_id stmt-src-def.perm.sn-iven
+-/
 abbrev Sn (n : ℕ) := Equiv.Perm (Fin n)
 
 -- Verify that the symmetric group is indeed a group (def.perm.perm (b))
 example {X : Type*} : Group (Equiv.Perm X) := inferInstance
 
-/-- The symmetric group of a finite type has `|X|!` elements. (def.perm.perm (b)) -/
+/-- The symmetric group of a finite type has `|X|!` elements. (def.perm.perm (b)) @statement_id stmt-src-def.perm.perm
+-/
 theorem symmetricGroup_card (X : Type*) [Fintype X] [DecidableEq X] :
     Fintype.card (Equiv.Perm X) = Nat.factorial (Fintype.card X) :=
   Fintype.card_perm
 
 /-- The symmetric group `S_n` has `n!` elements. (def.perm.Sn-iven)
 
-This is the key cardinality result: `|S_n| = n!` -/
+This is the key cardinality result: `|S_n| = n!` @statement_id stmt-src-def.perm.sn-iven
+-/
 theorem sn_card (n : ℕ) : Fintype.card (Sn n) = Nat.factorial n := by
   simp [Sn, symmetricGroup_card, Fintype.card_fin]
 
@@ -178,7 +184,8 @@ instance sn_decidableEq (n : ℕ) : DecidableEq (Sn n) := inferInstance
 In the textbook, `αβ` denotes the composition `α ∘ β`, which sends `x` to `α(β(x))`.
 In Mathlib, this is the group multiplication `α * β`. -/
 
-/-- The composition `α * β` sends `x` to `α(β(x))`. (def.perm.perm (c)) -/
+/-- The composition `α * β` sends `x` to `α(β(x))`. (def.perm.perm (c)) @statement_id stmt-src-def.perm.perm
+-/
 theorem perm_mul_apply {X : Type*} (α β : Equiv.Perm X) (x : X) :
     (α * β) x = α (β x) := rfl
 
@@ -213,7 +220,8 @@ theorem perm_pow_succ {X : Type*} (α : Equiv.Perm X) (n : ℕ) :
 theorem perm_pow_succ' {X : Type*} (α : Equiv.Perm X) (n : ℕ) :
     α ^ (n + 1) = α * α ^ n := pow_succ' α n
 
-/-- `α^(-1)` is the inverse of `α`. (def.perm.perm (d)) -/
+/-- `α^(-1)` is the inverse of `α`. (def.perm.perm (d)) @statement_id stmt-src-def.perm.perm
+-/
 theorem perm_zpow_neg_one {X : Type*} (α : Equiv.Perm X) : α ^ (-1 : ℤ) = α⁻¹ := zpow_neg_one α
 
 /-- The inverse satisfies `α * α⁻¹ = id`. -/
@@ -222,7 +230,8 @@ theorem perm_mul_inv {X : Type*} (α : Equiv.Perm X) : α * α⁻¹ = 1 := mul_i
 /-- The inverse satisfies `α⁻¹ * α = id`. -/
 theorem perm_inv_mul {X : Type*} (α : Equiv.Perm X) : α⁻¹ * α = 1 := inv_mul_cancel α
 
-/-- Applying `α^n` to `x` gives the n-fold application of `α`. -/
+/-- Applying `α^n` to `x` gives the n-fold application of `α`. @statement_id stmt-src-def.perm.perm
+-/
 theorem perm_pow_apply {X : Type*} (α : Equiv.Perm X) (n : ℕ) (x : X) :
     (α ^ n) x = (α^[n]) x := by
   induction n generalizing x with
@@ -244,7 +253,8 @@ from `S_X` to `S_Y`. -/
     from `Perm X` to `Perm Y`. (prop.perm.Sf)
 
     For each permutation `σ` of `X`, the map `f ∘ σ ∘ f⁻¹ : Y → Y` is a permutation of `Y`.
-    Furthermore, the map `S_f : S_X → S_Y, σ ↦ f ∘ σ ∘ f⁻¹` is a group isomorphism. -/
+    Furthermore, the map `S_f : S_X → S_Y, σ ↦ f ∘ σ ∘ f⁻¹` is a group isomorphism. @statement_id stmt-src-prop.perm.sf
+-/
 def symmetricGroup_conj_iso {X Y : Type*} (f : X ≃ Y) : Equiv.Perm X ≃* Equiv.Perm Y :=
   f.permCongrHom
 
@@ -287,7 +297,8 @@ theorem symmetricGroup_conj_iso_symm {X Y : Type*} (f : X ≃ Y) :
   ext σ y
   simp [symmetricGroup_conj_iso, Equiv.permCongrHom]
 
-/-- Symmetric groups of bijective sets are isomorphic. (Conclusion of prop.perm.Sf) -/
+/-- Symmetric groups of bijective sets are isomorphic. (Conclusion of prop.perm.Sf) @statement_id stmt-src-prop.perm.sf
+-/
 theorem symmetricGroup_iso_of_equiv {X Y : Type*} (f : X ≃ Y) :
     Nonempty (Equiv.Perm X ≃* Equiv.Perm Y) :=
   ⟨symmetricGroup_conj_iso f⟩
@@ -338,7 +349,8 @@ the "two-line notation" is essentially the graph of σ as a function. -/
       ⎛ 1      2      ...  n    ⎞
       ⎝ σ(1)  σ(2)  ...  σ(n)  ⎠
 
-    (def.perm.notations (a)) -/
+    (def.perm.notations (a)) @statement_id stmt-src-def.perm.notations
+-/
 def twoLineNotation {n : ℕ} (σ : Sn n) : List (Fin n × Fin n) :=
   (List.finRange n).map (fun i => (i, σ i))
 
@@ -392,7 +404,8 @@ since we can evaluate σ at any index. We provide explicit conversions. -/
     Note: We use 0-indexing (Fin n starts at 0), so this is [σ(0), σ(1), ..., σ(n-1)]
     rather than [σ(1), σ(2), ..., σ(n)] as in the textbook.
 
-    (def.perm.notations (b)) -/
+    (def.perm.notations (b)) @statement_id stmt-src-def.perm.notations
+-/
 def oneLineNotation {n : ℕ} (σ : Sn n) : List (Fin n) :=
   (List.finRange n).map σ
 
@@ -478,7 +491,8 @@ consider the underlying undirected graph structure. -/
     There is an edge between i and j iff σ(i) = j or σ(j) = i (and i ≠ j).
     This captures the "orbit structure" of the permutation.
 
-    (def.perm.notations (c)) -/
+    (def.perm.notations (c)) @statement_id stmt-src-def.perm.notations
+-/
 def cycleDigraph {n : ℕ} (σ : Sn n) : SimpleGraph (Fin n) where
   Adj i j := i ≠ j ∧ (σ i = j ∨ σ j = i)
   symm := by
@@ -506,7 +520,8 @@ private lemma zpow_apply_sigma_inv {n : ℕ} (σ : Sn n) (k : ℤ) (i : Fin n) :
   simp only [← zpow_neg_one]
   exact Equiv.Perm.zpow_apply_comm σ k (-1) (x := i)
 
-/-- The connected components of the cycle digraph correspond to the orbits of σ. -/
+/-- The connected components of the cycle digraph correspond to the orbits of σ. @statement_id stmt-src-lem.perm.cycledigraph.reachable
+-/
 theorem cycleDigraph_connected_iff {n : ℕ} (σ : Sn n) (i j : Fin n) :
     (cycleDigraph σ).Reachable i j ↔ ∃ k : ℤ, (σ ^ k) i = j := by
   rw [SimpleGraph.reachable_iff_reflTransGen]
@@ -596,37 +611,44 @@ In Mathlib, this is `Equiv.swap i j`. -/
     A transposition `t_{i,j}` is the permutation of `X` that:
     - sends `i` to `j` (see `transposition_apply_left`)
     - sends `j` to `i` (see `transposition_apply_right`)
-    - leaves all other elements unchanged (see `transposition_apply_of_ne_of_ne`) -/
+    - leaves all other elements unchanged (see `transposition_apply_of_ne_of_ne`) @statement_id stmt-src-def.perm.tij
+-/
 abbrev transposition {X : Type*} [DecidableEq X] (i j : X) : Equiv.Perm X := Equiv.swap i j
 
-/-- The transposition `t_{i,j}` sends `i` to `j`. (def.perm.tij) -/
+/-- The transposition `t_{i,j}` sends `i` to `j`. (def.perm.tij) @statement_id stmt-src-def.perm.tij
+-/
 @[simp]
 theorem transposition_apply_left {X : Type*} [DecidableEq X] (i j : X) :
     transposition i j i = j :=
   Equiv.swap_apply_left i j
 
-/-- The transposition `t_{i,j}` sends `j` to `i`. (def.perm.tij) -/
+/-- The transposition `t_{i,j}` sends `j` to `i`. (def.perm.tij) @statement_id stmt-src-def.perm.tij
+-/
 @[simp]
 theorem transposition_apply_right {X : Type*} [DecidableEq X] (i j : X) :
     transposition i j j = i :=
   Equiv.swap_apply_right i j
 
-/-- The transposition `t_{i,j}` leaves all other elements unchanged. (def.perm.tij) -/
+/-- The transposition `t_{i,j}` leaves all other elements unchanged. (def.perm.tij) @statement_id stmt-src-def.perm.tij
+-/
 theorem transposition_apply_of_ne_of_ne {X : Type*} [DecidableEq X] {i j x : X}
     (hi : x ≠ i) (hj : x ≠ j) : transposition i j x = x :=
   Equiv.swap_apply_of_ne_of_ne hi hj
 
-/-- Transpositions are symmetric: `t_{i,j} = t_{j,i}`. -/
+/-- Transpositions are symmetric: `t_{i,j} = t_{j,i}`. @statement_id stmt-src-lem.perm.tij.symm
+-/
 theorem transposition_symm {X : Type*} [DecidableEq X] (i j : X) :
     transposition i j = transposition j i :=
   Equiv.swap_comm i j
 
-/-- A transposition is its own inverse: `t_{i,j}⁻¹ = t_{i,j}`. -/
+/-- A transposition is its own inverse: `t_{i,j}⁻¹ = t_{i,j}`. @statement_id stmt-src-lem.perm.tij.inv
+-/
 theorem transposition_inv {X : Type*} [DecidableEq X] (i j : X) :
     (transposition i j)⁻¹ = transposition i j :=
   Equiv.symm_swap i j
 
-/-- A transposition squared is the identity: `t_{i,j}² = id`. -/
+/-- A transposition squared is the identity: `t_{i,j}² = id`. @statement_id stmt-src-lem.perm.tij.sq
+-/
 theorem transposition_sq_eq_one {X : Type*} [DecidableEq X] (i j : X) :
     transposition i j * transposition i j = 1 := by
   ext x
@@ -678,7 +700,8 @@ private lemma swapToPair_spec {X : Type*} [DecidableEq X] (σ : Equiv.Perm X) (h
 
 /-- The number of transpositions (2-cycles) in S_X is C(|X|, 2).
     This follows from the fact that each 2-element subset {i,j} of X gives rise to
-    exactly one transposition t_{i,j}. (Example after def.perm.cycs in source) -/
+    exactly one transposition t_{i,j}. (Example after def.perm.cycs in source) @statement_id stmt-src-lem.num_transpositions
+-/
 theorem num_transpositions (X : Type*) [DecidableEq X] [Fintype X] :
     ∃ (S : Finset (Equiv.Perm X)),
       (∀ σ ∈ S, σ.IsSwap) ∧
@@ -772,7 +795,8 @@ The simple transposition `s_i` swaps `i` and `i+1`. -/
     using a slightly different construction (with `castSucc`/`succ`). The equivalence is
     proven by `Equiv.Perm.simpleTransposition_eq_canonical`.
     
-    See the equivalence lemmas `simpleTransposition_eq_swap_*` below for other formulations. -/
+    See the equivalence lemmas `simpleTransposition_eq_swap_*` below for other formulations. @statement_id stmt-src-def.perm.si
+-/
 def simpleTransposition {n : ℕ} (i : Fin (n - 1)) : Sn n :=
   Equiv.swap ⟨i.val, Nat.lt_of_lt_of_le i.isLt (Nat.sub_le n 1)⟩
              ⟨i.val + 1, by omega⟩
@@ -780,25 +804,29 @@ def simpleTransposition {n : ℕ} (i : Fin (n - 1)) : Sn n :=
 /-- Notation for simple transposition. -/
 scoped notation "s[" i "]" => simpleTransposition i
 
-/-- Simple transposition `s_i` equals the transposition `t_{i,i+1}`. (def.perm.si) -/
+/-- Simple transposition `s_i` equals the transposition `t_{i,i+1}`. (def.perm.si) @statement_id stmt-src-def.perm.si
+-/
 theorem simpleTransposition_eq_transposition {n : ℕ} (i : Fin (n - 1)) :
     simpleTransposition i = transposition
       ⟨i.val, Nat.lt_of_lt_of_le i.isLt (Nat.sub_le n 1)⟩
       ⟨i.val + 1, by omega⟩ := rfl
 
-/-- Simple transposition `s_i` sends `i` to `i+1`. (def.perm.si) -/
+/-- Simple transposition `s_i` sends `i` to `i+1`. (def.perm.si) @statement_id stmt-src-def.perm.si
+-/
 @[simp]
 theorem simpleTransposition_apply_self {n : ℕ} (i : Fin (n - 1)) :
     simpleTransposition i ⟨i.val, Nat.lt_of_lt_of_le i.isLt (Nat.sub_le n 1)⟩ = ⟨i.val + 1, by omega⟩ := by
   simp [simpleTransposition]
 
-/-- Simple transposition `s_i` sends `i+1` to `i`. (def.perm.si) -/
+/-- Simple transposition `s_i` sends `i+1` to `i`. (def.perm.si) @statement_id stmt-src-def.perm.si
+-/
 @[simp]
 theorem simpleTransposition_apply_succ {n : ℕ} (i : Fin (n - 1)) :
     simpleTransposition i ⟨i.val + 1, by omega⟩ = ⟨i.val, Nat.lt_of_lt_of_le i.isLt (Nat.sub_le n 1)⟩ := by
   simp [simpleTransposition]
 
-/-- Simple transposition `s_i` fixes any `k ≠ i, i+1`. (def.perm.si) -/
+/-- Simple transposition `s_i` fixes any `k ≠ i, i+1`. (def.perm.si) @statement_id stmt-src-def.perm.si
+-/
 theorem simpleTransposition_apply_of_ne {n : ℕ} (i : Fin (n - 1)) (k : Fin n)
     (hi : k.val ≠ i.val) (hi1 : k.val ≠ i.val + 1) :
     simpleTransposition i k = k := by
@@ -807,7 +835,8 @@ theorem simpleTransposition_apply_of_ne {n : ℕ} (i : Fin (n - 1)) (k : Fin n)
   · intro h; rw [Fin.ext_iff] at h; exact hi h
   · intro h; rw [Fin.ext_iff] at h; exact hi1 h
 
-/-- The support of a simple transposition is exactly {i, i+1}. (def.perm.si) -/
+/-- The support of a simple transposition is exactly {i, i+1}. (def.perm.si) @statement_id stmt-src-lem.perm.si.support
+-/
 theorem simpleTransposition_support {n : ℕ} (i : Fin (n - 1)) :
     (simpleTransposition i).support = {⟨i.val, Nat.lt_of_lt_of_le i.isLt (Nat.sub_le n 1)⟩,
                                         ⟨i.val + 1, by omega⟩} := by
@@ -817,7 +846,8 @@ theorem simpleTransposition_support {n : ℕ} (i : Fin (n - 1)) :
   rw [Fin.ext_iff] at h
   simp at h
 
-/-- Simple transpositions are swaps (i.e., 2-cycles). (def.perm.si) -/
+/-- Simple transpositions are swaps (i.e., 2-cycles). (def.perm.si) @statement_id stmt-src-lem.perm.si.isswap
+-/
 theorem simpleTransposition_isSwap {n : ℕ} (i : Fin (n - 1)) :
     (simpleTransposition i).IsSwap := by
   use ⟨i.val, Nat.lt_of_lt_of_le i.isLt (Nat.sub_le n 1)⟩
@@ -826,13 +856,15 @@ theorem simpleTransposition_isSwap {n : ℕ} (i : Fin (n - 1)) :
   · intro h; rw [Fin.ext_iff] at h; simp at h
   · rfl
 
-/-- Simple transpositions are cycles (2-cycles). (def.perm.si) -/
+/-- Simple transpositions are cycles (2-cycles). (def.perm.si) @statement_id stmt-src-lem.perm.si.iscycle
+-/
 theorem simpleTransposition_isCycle {n : ℕ} (i : Fin (n - 1)) :
     (simpleTransposition i).IsCycle := by
   apply Equiv.Perm.IsSwap.isCycle
   exact simpleTransposition_isSwap i
 
-/-- The support of a simple transposition has cardinality 2. (def.perm.si) -/
+/-- The support of a simple transposition has cardinality 2. (def.perm.si) @statement_id stmt-src-lem.perm.si.support
+-/
 theorem simpleTransposition_support_card {n : ℕ} (i : Fin (n - 1)) :
     (simpleTransposition i).support.card = 2 := by
   rw [simpleTransposition_support]
@@ -841,7 +873,8 @@ theorem simpleTransposition_support_card {n : ℕ} (i : Fin (n - 1)) :
   rw [Fin.ext_iff] at h
   simp at h
 
-/-- Simple transposition is not the identity (for n ≥ 2). (def.perm.si) -/
+/-- Simple transposition is not the identity (for n ≥ 2). (def.perm.si) @statement_id stmt-src-lem.perm.si.ne_one
+-/
 theorem simpleTransposition_ne_one {n : ℕ} (i : Fin (n - 1)) :
     simpleTransposition i ≠ 1 := by
   intro h
@@ -851,7 +884,8 @@ theorem simpleTransposition_ne_one {n : ℕ} (i : Fin (n - 1)) :
 
 /-! ## Properties of simple transpositions (prop.perm.si.rules) -/
 
-/-- Simple transpositions are involutions: `s_i² = id`. (prop.perm.si.rules (a)) -/
+/-- Simple transpositions are involutions: `s_i² = id`. (prop.perm.si.rules (a)) @statement_id stmt-src-prop.perm.si.rules
+-/
 theorem simpleTransposition_sq_eq_one {n : ℕ} (i : Fin (n - 1)) :
     s[i] * s[i] = 1 := by
   simp only [simpleTransposition]
@@ -863,7 +897,8 @@ theorem simpleTransposition_inv {n : ℕ} (i : Fin (n - 1)) :
     s[i]⁻¹ = s[i] := by
   simp [simpleTransposition]
 
-/-- Simple transpositions commute when `|i - j| > 1`. (prop.perm.si.rules (b)) -/
+/-- Simple transpositions commute when `|i - j| > 1`. (prop.perm.si.rules (b)) @statement_id stmt-src-prop.perm.si.rules
+-/
 theorem simpleTransposition_comm {n : ℕ} (i j : Fin (n - 1))
     (h : (i : ℕ) + 1 < j ∨ (j : ℕ) + 1 < i) :
     s[i] * s[j] = s[j] * s[i] := by
@@ -900,7 +935,8 @@ theorem simpleTransposition_comm {n : ℕ} (i j : Fin (n - 1))
           exact hx2 heq
   exact hdisj.commute.eq
 
-/-- The braid relation: `s_i s_{i+1} s_i = s_{i+1} s_i s_{i+1}`. (prop.perm.si.rules (c)) -/
+/-- The braid relation: `s_i s_{i+1} s_i = s_{i+1} s_i s_{i+1}`. (prop.perm.si.rules (c)) @statement_id stmt-src-prop.perm.si.rules
+-/
 theorem simpleTransposition_braid {n : ℕ} (i : Fin (n - 2)) :
     let i' : Fin (n - 1) := ⟨i.val, by omega⟩
     let i1 : Fin (n - 1) := ⟨i.val + 1, by omega⟩
@@ -1000,11 +1036,13 @@ when a permutation is a cycle. -/
     (def.perm.cycs)
     
     This is the constructive definition from the textbook. In Mathlib,
-    this is `List.formPerm`. -/
+    this is `List.formPerm`. @statement_id stmt-src-def.perm.cycs
+-/
 def cyc {X : Type*} [DecidableEq X] (l : List X) : Equiv.Perm X := l.formPerm
 
 /-- The cycle `cyc [i, j]` equals the transposition `swap i j`.
-    This shows that 2-cycles are exactly transpositions. -/
+    This shows that 2-cycles are exactly transpositions. @statement_id stmt-src-lem.perm.cycs.pair
+-/
 theorem cyc_pair {X : Type*} [DecidableEq X] (i j : X) : cyc [i, j] = Equiv.swap i j :=
   List.formPerm_pair i j
 
@@ -1018,7 +1056,8 @@ theorem cyc_singleton {X : Type*} [DecidableEq X] (x : X) : cyc [x] = 1 :=
   List.formPerm_singleton x
 
 /-- The cycle applied to an element not in the list returns the element unchanged.
-    This is the "otherwise" case in def.perm.cycs. -/
+    This is the "otherwise" case in def.perm.cycs. @statement_id stmt-src-def.perm.cycs
+-/
 theorem cyc_apply_of_not_mem {X : Type*} [DecidableEq X] {l : List X} {x : X} (h : x ∉ l) :
     cyc l x = x :=
   List.formPerm_apply_of_notMem h
@@ -1028,13 +1067,15 @@ theorem cyc_apply_cons_cons {X : Type*} [DecidableEq X] (x y : X) (l : List X) :
     cyc (x :: y :: l) = Equiv.swap x y * cyc (y :: l) :=
   List.formPerm_cons_cons x y l
 
-/-- If the list has no duplicates and length ≥ 2, then `cyc l` is a cycle in the sense of IsCycle. -/
+/-- If the list has no duplicates and length ≥ 2, then `cyc l` is a cycle in the sense of IsCycle. @statement_id stmt-src-lem.perm.cycs.iscycle
+-/
 theorem cyc_isCycle {X : Type*} [DecidableEq X] {l : List X} (hl : l.Nodup) (hn : 2 ≤ l.length) : 
     (cyc l).IsCycle :=
   List.isCycle_formPerm hl hn
 
 /-- For a list with no duplicates and `x` in the list, `cyc l x` is the next element in the list
-    (wrapping around at the end). -/
+    (wrapping around at the end). @statement_id stmt-src-lem.perm.cycs.next
+-/
 theorem cyc_apply_eq_next {X : Type*} [DecidableEq X] {l : List X} (hl : l.Nodup) {x : X}
     (hx : x ∈ l) : cyc l x = l.next x hx :=
   List.formPerm_apply_mem_eq_next hl x hx
@@ -1044,7 +1085,8 @@ theorem cyc_support_subset {X : Type*} [DecidableEq X] [Fintype X] {l : List X} 
     (cyc l).support ⊆ l.toFinset :=
   List.support_formPerm_le l
 
-/-- For a nodup list with length ≥ 2, the support of `cyc l` equals `l.toFinset`. -/
+/-- For a nodup list with length ≥ 2, the support of `cyc l` equals `l.toFinset`. @statement_id stmt-src-lem.perm.cycs.support
+-/
 theorem cyc_support_eq_toFinset {X : Type*} [DecidableEq X] [Fintype X] {l : List X}
     (hl : l.Nodup) (hn : 2 ≤ l.length) : (cyc l).support = l.toFinset := by
   apply List.support_formPerm_of_nodup _ hl
@@ -1054,7 +1096,8 @@ theorem cyc_support_eq_toFinset {X : Type*} [DecidableEq X] [Fintype X] {l : Lis
 
 /-- Cyclic rotation of the list doesn't change the cycle.
     This formalizes the textbook statement that 
-    `cyc_{i₁,i₂,...,iₖ} = cyc_{i₂,i₃,...,iₖ,i₁} = ... = cyc_{iₖ,i₁,...,iₖ₋₁}`. -/
+    `cyc_{i₁,i₂,...,iₖ} = cyc_{i₂,i₃,...,iₖ,i₁} = ... = cyc_{iₖ,i₁,...,iₖ₋₁}`. @statement_id stmt-src-lem.perm.cycs.rotate
+-/
 theorem cyc_rotate {X : Type*} [DecidableEq X] {l : List X} (hl : l.Nodup) (n : ℕ) :
     cyc (l.rotate n) = cyc l :=
   List.formPerm_rotate l hl n
@@ -1066,14 +1109,16 @@ theorem cyc_rotate_one {X : Type*} [DecidableEq X] {l : List X} (hl : l.Nodup) :
 
 /-- The cycle sends `l[j]` to `l[(j+1) % l.length]` for a nodup list.
     This is the formal statement of def.perm.cycs from the textbook:
-    "cyc_{i₁,...,iₖ}(p) = i_{j+1} if p = i_j for some j ∈ {1,...,k}" -/
+    "cyc_{i₁,...,iₖ}(p) = i_{j+1} if p = i_j for some j ∈ {1,...,k}" @statement_id stmt-src-def.perm.cycs
+-/
 theorem cyc_apply_getElem {X : Type*} [DecidableEq X] {l : List X} (hl : l.Nodup) (j : ℕ)
     (hj : j < l.length) :
     cyc l (l[j]) = l[(j + 1) % l.length]'(Nat.mod_lt _ (Nat.zero_lt_of_lt hj)) :=
   List.formPerm_apply_getElem l hl j hj
 
 /-- For k-cycles with k ≥ 2 distinct elements, the cycle uniquely determines the elements
-    up to cyclic rotation. This is stated in the solution to exe.perm.cyc.how-many-kcyc. -/
+    up to cyclic rotation. This is stated in the solution to exe.perm.cyc.how-many-kcyc. @statement_id stmt-src-lem.perm.cycs.eq_iff
+-/
 theorem cyc_eq_cyc_iff_isRotated {X : Type*} [DecidableEq X] {l l' : List X} (hl : l.Nodup)
     (hl' : l'.Nodup) (hlen : 2 ≤ l.length) (_hlen' : 2 ≤ l'.length) :
     cyc l = cyc l' ↔ l ~r l' := by
@@ -1095,7 +1140,8 @@ abbrev IsCycle {X : Type*} (σ : Equiv.Perm X) : Prop := Equiv.Perm.IsCycle σ
 abbrev cycleSupport {X : Type*} [DecidableEq X] [Fintype X] (σ : Equiv.Perm X) : Finset X :=
   σ.support
 
-/-- A 2-cycle is exactly a transposition. (Example after def.perm.cycs) -/
+/-- A 2-cycle is exactly a transposition. (Example after def.perm.cycs) @statement_id stmt-src-lem.perm.cycs.2cycle_is_transposition
+-/
 theorem cycle_eq_transposition {X : Type*} [DecidableEq X] [Fintype X] {σ : Equiv.Perm X}
     (hσ : σ.IsCycle) (hcard : σ.support.card = 2) :
     ∃ i j : X, i ≠ j ∧ σ = Equiv.swap i j := by
@@ -1194,6 +1240,7 @@ Equivalent characterizations:
 - `IsInvolution σ ↔ σ⁻¹ = σ` (see `isInvolution_iff_eq_inv`)
 - `IsInvolution σ ↔ Function.Involutive σ` (see `isInvolution_iff_involutive`)
 - `IsInvolution σ ↔ ∀ x, σ (σ x) = x` (see `isInvolution_iff_forall`)
+@statement_id stmt-src-def.perm.invol
 -/
 def IsInvolution {X : Type*} (σ : Equiv.Perm X) : Prop := σ * σ = 1
 
@@ -1209,7 +1256,8 @@ theorem IsInvolution.eq_inv {X : Type*} {σ : Equiv.Perm X} (h : IsInvolution σ
   simp only [mul_inv_cancel]
   exact h.symm
 
-/-- Characterization: σ is an involution iff σ⁻¹ = σ. -/
+/-- Characterization: σ is an involution iff σ⁻¹ = σ. @statement_id stmt-src-def.perm.invol
+-/
 theorem isInvolution_iff_eq_inv {X : Type*} {σ : Equiv.Perm X} :
     IsInvolution σ ↔ σ⁻¹ = σ := by
   constructor
@@ -1219,7 +1267,8 @@ theorem isInvolution_iff_eq_inv {X : Type*} {σ : Equiv.Perm X} :
     calc σ * σ = σ * σ⁻¹ := by rw [h]
       _ = 1 := mul_inv_cancel σ
 
-/-- Characterization: σ is an involution iff it is involutive as a function. -/
+/-- Characterization: σ is an involution iff it is involutive as a function. @statement_id stmt-src-def.perm.invol
+-/
 theorem isInvolution_iff_involutive {X : Type*} {σ : Equiv.Perm X} :
     IsInvolution σ ↔ Function.Involutive σ := by
   constructor
@@ -1232,7 +1281,8 @@ theorem isInvolution_iff_involutive {X : Type*} {σ : Equiv.Perm X} :
     simp only [Equiv.Perm.coe_mul, Function.comp_apply, Equiv.Perm.coe_one, id_eq]
     exact h x
 
-/-- Characterization: σ is an involution iff σ(σ(x)) = x for all x. -/
+/-- Characterization: σ is an involution iff σ(σ(x)) = x for all x. @statement_id stmt-src-def.perm.invol
+-/
 theorem isInvolution_iff_forall {X : Type*} {σ : Equiv.Perm X} :
     IsInvolution σ ↔ ∀ x, σ (σ x) = x :=
   isInvolution_iff_involutive
@@ -1246,7 +1296,8 @@ theorem IsInvolution.apply_apply {X : Type*} {σ : Equiv.Perm X} (h : IsInvoluti
 theorem isInvolution_one {X : Type*} : IsInvolution (1 : Equiv.Perm X) := by
   simp [IsInvolution]
 
-/-- Any transposition is an involution. -/
+/-- Any transposition is an involution. @statement_id stmt-src-lem.perm.invol.transposition
+-/
 theorem isInvolution_transposition {X : Type*} [DecidableEq X] (i j : X) :
     IsInvolution (transposition i j) :=
   transposition_sq_eq_one i j
@@ -1256,7 +1307,8 @@ theorem isInvolution_simpleTransposition {n : ℕ} (i : Fin (n - 1)) :
     IsInvolution (simpleTransposition i) :=
   simpleTransposition_sq_eq_one i
 
-/-- The order of an involution divides 2. -/
+/-- The order of an involution divides 2. @statement_id stmt-src-lem.perm.invol.orderof_dvd_two
+-/
 theorem IsInvolution.orderOf_dvd_two {X : Type*} [Fintype X] {σ : Equiv.Perm X} (h : IsInvolution σ) :
     orderOf σ ∣ 2 := by
   have h2 : σ ^ 2 = 1 := by simpa [sq] using h
@@ -1274,7 +1326,8 @@ theorem IsInvolution.eq_one_iff_orderOf_eq_one {X : Type*} {σ : Equiv.Perm X}
   · intro h'; rw [h']; exact orderOf_one
   · intro h'; exact orderOf_eq_one_iff.mp h'
 
-/-- A nontrivial involution has order exactly 2. -/
+/-- A nontrivial involution has order exactly 2. @statement_id stmt-src-lem.perm.invol.orderof_eq_two
+-/
 theorem IsInvolution.orderOf_eq_two_of_ne_one {X : Type*} [Fintype X] {σ : Equiv.Perm X}
     (h : IsInvolution σ) (hne : σ ≠ 1) : orderOf σ = 2 := by
   have hdvd := h.orderOf_dvd_two
@@ -1282,7 +1335,8 @@ theorem IsInvolution.orderOf_eq_two_of_ne_one {X : Type*} [Fintype X] {σ : Equi
   · exact (hne (orderOf_eq_one_iff.mp h1)).elim
   · exact h2
 
-/-- A k-cycle with k > 2 is never an involution. -/
+/-- A k-cycle with k > 2 is never an involution. @statement_id stmt-src-lem.perm.invol.not_cycle_gt_two
+-/
 theorem not_isInvolution_of_cycle_gt_two {X : Type*} [DecidableEq X] [Fintype X]
     {σ : Equiv.Perm X} (hσ : σ.IsCycle) (hcard : 2 < σ.support.card) :
     ¬IsInvolution σ := by
@@ -1299,7 +1353,8 @@ theorem not_isInvolution_of_cycle_gt_two {X : Type*} [DecidableEq X] [Fintype X]
   omega
 
 /-- Products of disjoint transpositions are involutions.
-    (This is stated informally in the source after def.perm.invol) -/
+    (This is stated informally in the source after def.perm.invol) @statement_id stmt-src-lem.perm.invol.disjoint_transpositions
+-/
 theorem isInvolution_of_disjoint_transpositions {X : Type*} [DecidableEq X]
     {pairs : List (X × X)}
     (hdisjoint : pairs.Pairwise (fun p q => p.1 ≠ q.1 ∧ p.1 ≠ q.2 ∧ p.2 ≠ q.1 ∧ p.2 ≠ q.2))
@@ -1359,7 +1414,8 @@ private lemma swapToPair_mem_support {X : Type*} [DecidableEq X] [Fintype X]
   simp only [hsupp, mem_insert, mem_singleton, true_or, or_true, and_self]
 
 /-- The cycle digraph of an involution consists of 1-cycles and 2-cycles.
-    (Stated informally at the end of the source) -/
+    (Stated informally at the end of the source) @statement_id stmt-src-lem.perm.invol.cycle_structure
+-/
 theorem involution_cycle_structure {X : Type*} [DecidableEq X] [Fintype X]
     {σ : Equiv.Perm X} (h : IsInvolution σ) :
     ∀ c ∈ σ.cycleFactorsFinset, (c : Equiv.Perm X).support.card ≤ 2 := by
@@ -1406,7 +1462,8 @@ theorem involution_cycle_structure {X : Type*} [DecidableEq X] [Fintype X]
   · omega
 
 /-- An involution of a finite set is a product of disjoint transpositions.
-    (Stated informally in the source) -/
+    (Stated informally in the source) @statement_id stmt-src-lem.perm.invol.is_product_of_disjoint_transpositions
+-/
 theorem involution_is_product_of_disjoint_transpositions {X : Type*} [DecidableEq X] [Fintype X]
     {σ : Equiv.Perm X} (h : IsInvolution σ) :
     ∃ pairs : List (X × X),

@@ -96,7 +96,8 @@ inherited from the canonical definition via the `abbrev` below.
     (i.e., `i ≤ j → parts j ≤ parts i`).
 
     All basic operations (`size`, `length`, `zero`, etc.) and lemmas are inherited
-    from the canonical `_root_.NPartition` definition in `NPartition.lean`. -/
+    from the canonical `_root_.NPartition` definition in `NPartition.lean`. @statement_id stmt-src-def.sf.npar
+-/
 abbrev NPartition (N : ℕ) := _root_.NPartition N
 
 namespace NPartition
@@ -394,7 +395,8 @@ private lemma filter_nonzero_eq_take (f : Fin N → ℕ) (hf : Antitone f) :
     - Forward: pad partition with zeros to get N-partition
     - Backward: remove trailing zeros from N-partition to get partition
 
-    Note: We state this as an `Equiv` which is the proper way to express a bijection in Mathlib. -/
+    Note: We state this as an `Equiv` which is the proper way to express a bijection in Mathlib. @statement_id stmt-src-prop.sf.npar-as-par
+-/
 noncomputable def equivPartition (n : ℕ) :
     {p : Nat.Partition n // Multiset.card p.parts ≤ N} ≃
     {mu : NPartition N // mu.size = n} where
@@ -537,12 +539,14 @@ end NPartition
 -/
 
 /-- The monomial x^a = x₁^{a₁} x₂^{a₂} ⋯ x_N^{a_N} for a tuple a ∈ ℕ^N.
-    (Definition def.sf.sort (a)) -/
+    (Definition def.sf.sort (a)) @statement_id stmt-src-def.sf.sort
+-/
 noncomputable def monomialExp (a : Fin N → ℕ) : MvPolynomial (Fin N) R :=
   ∏ i, X i ^ a i
 
 /-- Sort a tuple in weakly decreasing order to get an N-partition.
-    (Definition def.sf.sort (b)) -/
+    (Definition def.sf.sort (b)) @statement_id stmt-src-def.sf.sort
+-/
 def sortTuple (a : Fin N → ℕ) : NPartition N where
   parts := fun i =>
     let sorted := (Finset.univ.val.map a).sort (· ≥ ·)
@@ -562,20 +566,23 @@ def sortTuple (a : Fin N → ℕ) : NPartition N where
 ### API for monomialExp (Definition def.sf.sort (a))
 -/
 
-/-- `monomialExp` equals the Mathlib monomial with the given exponent. -/
+/-- `monomialExp` equals the Mathlib monomial with the given exponent. @statement_id stmt-src-lem.sf.monomialexp-eq-monomial
+-/
 theorem monomialExp_eq_monomial (a : Fin N → ℕ) :
     (monomialExp a : MvPolynomial (Fin N) R) = monomial (Finsupp.equivFunOnFinite.symm a) 1 := by
   simp only [monomialExp, monomial_eq, Finsupp.prod_pow]
   congr 1 with i
   simp [Finsupp.equivFunOnFinite]
 
-/-- Coefficient of the monomial x^a in monomialExp a is 1. -/
+/-- Coefficient of the monomial x^a in monomialExp a is 1. @statement_id stmt-src-lem.sf.monomialexp-coeff
+-/
 @[simp]
 theorem monomialExp_coeff_self (a : Fin N → ℕ) :
     coeff (Finsupp.equivFunOnFinite.symm a) (monomialExp a : MvPolynomial (Fin N) R) = 1 := by
   rw [monomialExp_eq_monomial, coeff_monomial, if_pos rfl]
 
-/-- Coefficient of a different monomial in monomialExp a is 0. -/
+/-- Coefficient of a different monomial in monomialExp a is 0. @statement_id stmt-src-lem.sf.monomialexp-coeff
+-/
 theorem monomialExp_coeff_ne (a b : Fin N → ℕ) (h : a ≠ b) :
     coeff (Finsupp.equivFunOnFinite.symm b) (monomialExp a : MvPolynomial (Fin N) R) = 0 := by
   rw [monomialExp_eq_monomial, coeff_monomial]
@@ -585,7 +592,8 @@ theorem monomialExp_coeff_ne (a b : Fin N → ℕ) (h : a ≠ b) :
   apply h
   exact Finsupp.equivFunOnFinite.symm.injective heq
 
-/-- The total degree of monomialExp a is the sum of entries of a (when nonzero). -/
+/-- The total degree of monomialExp a is the sum of entries of a (when nonzero). @statement_id stmt-src-lem.sf.monomialexp-degree
+-/
 theorem monomialExp_totalDegree [Nontrivial R] (a : Fin N → ℕ) :
     (monomialExp a : MvPolynomial (Fin N) R).totalDegree = ∑ i, a i := by
   rw [monomialExp_eq_monomial]
@@ -594,12 +602,14 @@ theorem monomialExp_totalDegree [Nontrivial R] (a : Fin N → ℕ) :
   rw [← Finset.sum_filter_add_sum_filter_not (s := Finset.univ) (p := fun x => a x = 0)]
   simp
 
-/-- monomialExp 0 is 1. -/
+/-- monomialExp 0 is 1. @statement_id stmt-src-lem.sf.monomialexp-multiplicative
+-/
 @[simp]
 theorem monomialExp_zero : (monomialExp (0 : Fin N → ℕ) : MvPolynomial (Fin N) R) = 1 := by
   simp [monomialExp]
 
-/-- monomialExp is multiplicative in the exponent. -/
+/-- monomialExp is multiplicative in the exponent. @statement_id stmt-src-lem.sf.monomialexp-multiplicative
+-/
 theorem monomialExp_add (a b : Fin N → ℕ) :
     (monomialExp (a + b) : MvPolynomial (Fin N) R) = monomialExp a * monomialExp b := by
   simp only [monomialExp, Pi.add_apply, pow_add]
@@ -654,11 +664,13 @@ theorem sortTuple_sum_eq (a : Fin N → ℕ) :
   rw [h2]
   simp [Finset.sum_eq_multiset_sum]
 
-/-- The size of sortTuple a equals the sum of entries of a. -/
+/-- The size of sortTuple a equals the sum of entries of a. @statement_id stmt-src-lem.sf.sort-size
+-/
 theorem sortTuple_size (a : Fin N → ℕ) : (sortTuple a).size = ∑ i, a i :=
   sortTuple_sum_eq a
 
-/-- If a tuple is already antitone (weakly decreasing), sorting doesn't change it. -/
+/-- If a tuple is already antitone (weakly decreasing), sorting doesn't change it. @statement_id stmt-src-lem.sf.sort-antitone
+-/
 theorem sortTuple_of_antitone (a : Fin N → ℕ) (ha : Antitone a) :
     (sortTuple a).parts = a := by
   ext i
@@ -690,13 +702,15 @@ theorem sortTuple_of_antitone (a : Fin N → ℕ) (ha : Antitone a) :
   show ((Finset.univ.val.map a).sort (· ≥ ·)).get ⟨i.val, hi_lt⟩ = a i
   rw [List.get_of_eq hsort_eq, List.get_ofFn, Fin.cast_mk]
 
-/-- Sorting an NPartition's parts returns the same NPartition. -/
+/-- Sorting an NPartition's parts returns the same NPartition. @statement_id stmt-src-lem.sf.sort-npartition
+-/
 theorem sortTuple_of_NPartition (mu : NPartition N) :
     sortTuple mu.parts = mu := by
   ext
   exact congrFun (sortTuple_of_antitone mu.parts mu.antitone) _
 
-/-- Sorting is idempotent: sorting an already sorted tuple gives the same tuple. -/
+/-- Sorting is idempotent: sorting an already sorted tuple gives the same tuple. @statement_id stmt-src-lem.sf.sort-idempotent
+-/
 theorem sortTuple_idempotent (a : Fin N → ℕ) :
     sortTuple (sortTuple a).parts = sortTuple a :=
   sortTuple_of_NPartition (sortTuple a)
@@ -713,7 +727,8 @@ This is witnessed by `sortTuple_of_NPartition`.
 -/
 
 /-- Two tuples have the same sort if and only if one is a permutation of the other.
-    (Two tuples have the same multiset of values iff they sort to the same N-partition.) -/
+    (Two tuples have the same multiset of values iff they sort to the same N-partition.) @statement_id stmt-src-lem.sf.sort-eq-iff
+-/
 theorem sortTuple_eq_iff (a b : Fin N → ℕ) :
     sortTuple a = sortTuple b ↔
     (Finset.univ.val.map a) = (Finset.univ.val.map b) := by
@@ -811,7 +826,8 @@ private lemma map_comp_perm_eq (a : Fin N → ℕ) (σ : Perm (Fin N)) :
 
 /-- Sorting is invariant under permutation of the input tuple.
     This is the key insight: sortTuple (a ∘ σ) = sortTuple a for any permutation σ,
-    because sorting only depends on the multiset of values, not their order. -/
+    because sorting only depends on the multiset of values, not their order. @statement_id stmt-src-lem.sf.sort-perm-invariant
+-/
 lemma sortTuple_comp_perm (a : Fin N → ℕ) (σ : Perm (Fin N)) :
     sortTuple (a ∘ σ) = sortTuple a := by
   ext i
@@ -838,7 +854,8 @@ private lemma rename_monomialExp (σ : Perm (Fin N)) (a : Fin N → ℕ) :
 -/
 
 /-- The set of tuples a ∈ ℕ^N with sort(a) = μ and entries bounded by μ.size.
-    This is a finite set since entries are bounded. -/
+    This is a finite set since entries are bounded. @statement_id stmt-src-def.sf.sortpreimage
+-/
 def sortPreimage (mu : NPartition N) : Finset (Fin N → ℕ) :=
   (Fintype.piFinset (fun _ => Finset.range (mu.size + 1))).filter
     (fun a => sortTuple a = mu)
@@ -848,7 +865,8 @@ def sortPreimage (mu : NPartition N) : Finset (Fin N → ℕ) :=
 
     m_μ = ∑_{a ∈ ℕ^N : sort(a) = μ} x^a
 
-    This is the sum of all monomials whose exponent tuple sorts to μ. -/
+    This is the sum of all monomials whose exponent tuple sorts to μ. @statement_id stmt-src-def.sf.m
+-/
 noncomputable def monomialSymm (mu : NPartition N) : MvPolynomial (Fin N) R :=
   ∑ a ∈ sortPreimage mu, monomialExp a
 
@@ -876,7 +894,8 @@ private lemma mem_sortPreimage_comp_perm' {a : Fin N → ℕ} {mu : NPartition N
     The proof uses the fact that:
     1. rename σ (monomialExp a) = monomialExp (a ∘ σ⁻¹)
     2. sortTuple (a ∘ σ) = sortTuple a for any permutation σ
-    3. Therefore the sum over sortPreimage μ is invariant under rename σ -/
+    3. Therefore the sum over sortPreimage μ is invariant under rename σ @statement_id stmt-src-lem.sf.m-symmetric
+-/
 theorem monomialSymm_isSymmetric (mu : NPartition N) :
     (monomialSymm mu : MvPolynomial (Fin N) R).IsSymmetric := by
   intro σ
@@ -898,7 +917,8 @@ theorem monomialSymm_isSymmetric (mu : NPartition N) :
     (fun a _ => rfl)
 
 /-- The parts of an N-partition belong to its sortPreimage.
-    This is because sorting an already sorted (antitone) tuple gives the same tuple. -/
+    This is because sorting an already sorted (antitone) tuple gives the same tuple. @statement_id stmt-src-lem.sf.parts-mem-sortpreimage
+-/
 lemma parts_mem_sortPreimage (mu : NPartition N) : mu.parts ∈ sortPreimage mu := by
   simp only [sortPreimage, Finset.mem_filter, Fintype.mem_piFinset]
   constructor
@@ -909,7 +929,8 @@ lemma parts_mem_sortPreimage (mu : NPartition N) : mu.parts ∈ sortPreimage mu 
   · exact sortTuple_of_NPartition mu
 
 /-- The coefficient of x^{μ.parts} in m_μ is 1.
-    This is because μ.parts is the unique element of sortPreimage μ that equals μ.parts. -/
+    This is because μ.parts is the unique element of sortPreimage μ that equals μ.parts. @statement_id stmt-src-lem.sf.m-coeff-self
+-/
 lemma monomialSymm_coeff_self (mu : NPartition N) :
     coeff (Finsupp.equivFunOnFinite.symm mu.parts) (monomialSymm mu : MvPolynomial (Fin N) R) = 1 := by
   simp only [monomialSymm]
@@ -928,7 +949,8 @@ lemma monomialSymm_coeff_self (mu : NPartition N) :
 
 /-- The coefficient of x^{μ.parts} in m_ν is 0 when μ ≠ ν.
     This is because the only monomial in m_ν with exponent sorting to ν must have
-    exponent ν.parts (when looking at the sorted exponent), not μ.parts. -/
+    exponent ν.parts (when looking at the sorted exponent), not μ.parts. @statement_id stmt-src-lem.sf.m-coeff-ne
+-/
 lemma monomialSymm_coeff_ne (mu nu : NPartition N) (h : mu ≠ nu) :
     coeff (Finsupp.equivFunOnFinite.symm mu.parts) (monomialSymm nu : MvPolynomial (Fin N) R) = 0 := by
   simp only [monomialSymm]
@@ -950,7 +972,8 @@ lemma monomialSymm_coeff_ne (mu nu : NPartition N) (h : mu ≠ nu) :
     (Proposition prop.sf.ehp-through-m)
 -/
 
-/-- The N-partition (1, 1, ..., 1, 0, 0, ..., 0) with n ones and N-n zeros. -/
+/-- The N-partition (1, 1, ..., 1, 0, 0, ..., 0) with n ones and N-n zeros. @statement_id stmt-src-def.sf.ehp-through-m.onesthenzeros
+-/
 def onesThenZeros (n : ℕ) (_hn : n ≤ N) : NPartition N where
   parts := fun i => if i.val < n then 1 else 0
   antitone := by
@@ -962,7 +985,8 @@ def onesThenZeros (n : ℕ) (_hn : n ≤ N) : NPartition N where
     · exact Nat.zero_le _
     · exact le_refl 0
 
-/-- The N-partition (n, 0, 0, ..., 0) with n in the first position and zeros elsewhere. -/
+/-- The N-partition (n, 0, 0, ..., 0) with n in the first position and zeros elsewhere. @statement_id stmt-src-def.sf.ehp-through-m.singletonpartition
+-/
 def singletonPartition (n : ℕ) (_hN : 0 < N) : NPartition N where
   parts := fun i => if i.val = 0 then n else 0
   antitone := by
@@ -1391,7 +1415,8 @@ private lemma prod_subset_eq_monomialExp (S : Finset (Fin N)) :
     and each such product equals X^{χ_S} where χ_S is the indicator function of S.
     All indicator functions of n-element subsets sort to the same N-partition (1,...,1,0,...,0).
 
-    Label: prop.sf.ehp-through-m.a -/
+    Label: prop.sf.ehp-through-m.a @statement_id stmt-src-prop.sf.ehp-through-m
+-/
 theorem elem_symm_eq_monomialSymm [DecidableEq (Fin N)] (n : ℕ) (hn : n ≤ N) :
     esymm (Fin N) R n = monomialSymm (onesThenZeros n hn) := by
   -- esymm n = ∑_{S : |S| = n} ∏_{i ∈ S} X_i
@@ -1418,7 +1443,8 @@ theorem elem_symm_eq_monomialSymm [DecidableEq (Fin N)] (n : ℕ) (hn : n ≤ N)
     exact prod_subset_eq_monomialExp S
 
 /-- The set of N-partitions of a given size, as a finite set.
-    This is finite because each entry is bounded by the size. -/
+    This is finite because each entry is bounded by the size. @statement_id stmt-src-def.sf.npartitionsofsize
+-/
 def NPartitionsOfSize (n : ℕ) : Finset (NPartition N) :=
   (Fintype.piFinset (fun _ => Finset.range (n + 1))).image
     (fun f => sortTuple f) |>.filter (fun mu => mu.size = n)
@@ -1463,7 +1489,8 @@ theorem finite_of_size (n : ℕ) : Set.Finite { μ : NPartition N | μ.size = n 
     corresponds to a monomial X^f. Sorting partitions these tuples by their N-partition,
     so hsymm n = ∑_{|μ| = n} m_μ.
 
-    Label: prop.sf.ehp-through-m.b -/
+    Label: prop.sf.ehp-through-m.b @statement_id stmt-src-prop.sf.ehp-through-m
+-/
 theorem homog_symm_eq_sum_monomialSymm [DecidableEq (Fin N)] (n : ℕ) :
     hsymm (Fin N) R n = ∑ mu ∈ NPartitionsOfSize n, monomialSymm mu := by
   -- hsymm n = ∑_{s : Sym (Fin N) n} (s.1.map X).prod
@@ -1567,7 +1594,8 @@ theorem homog_symm_eq_sum_monomialSymm [DecidableEq (Fin N)] (n : ℕ) :
     When n > 0, the sortPreimage of (n, 0, ..., 0) consists exactly of the N single
     tuples (0,...,0,n,0,...,0), giving the bijection needed for the proof.
 
-    Label: prop.sf.ehp-through-m.c -/
+    Label: prop.sf.ehp-through-m.c @statement_id stmt-src-prop.sf.ehp-through-m
+-/
 theorem power_sum_eq_monomialSymm [DecidableEq (Fin N)] (n : ℕ) (hn : n ≠ 0) (hN : 0 < N) :
     psum (Fin N) R n = monomialSymm (singletonPartition n hN) := by
   -- psum n = ∑ i, X i ^ n
@@ -1611,10 +1639,12 @@ theorem power_sum_eq_monomialSymm [DecidableEq (Fin N)] (n : ℕ) (hn : n ≠ 0)
     - `psum 0 = ∑ i, X i ^ 0 = N` (constant polynomial)
     - `monomialSymm (singletonPartition 0 hN) = 1` (single monomial x^0 = 1)
 
-    These are equal only when N = 1. -/
+    These are equal only when N = 1. @statement_id stmt-src-lem.sf.psum-zero
+-/
 theorem psum_zero_eq_N : psum (Fin N) R 0 = N := by
   simp only [psum, pow_zero, Finset.sum_const, Finset.card_fin, nsmul_eq_mul, mul_one]
 
+/-- @statement_id stmt-src-lem.sf.m-zero-partition -/
 theorem monomialSymm_zero_partition_eq_one (hN : 0 < N) :
     monomialSymm (R := R) (singletonPartition 0 hN) = 1 := by
   -- The zero partition (0, 0, ..., 0) has sortPreimage = {(0, 0, ..., 0)}
@@ -1674,7 +1704,8 @@ theorem monomialSymm_zero_partition_eq_one (hN : 0 < N) :
 
     [x₁^{a₁} x₂^{a₂} ⋯ x_N^{a_N}](σ · f) = [x₁^{a_{σ(1)}} x₂^{a_{σ(2)}} ⋯ x_N^{a_{σ(N)}}] f
 
-    Label: prop.sf.sigma-pol-coeff -/
+    Label: prop.sf.sigma-pol-coeff @statement_id stmt-src-prop.sf.sigma-pol-coeff
+-/
 theorem sigma_coeff_permute (sigma : Perm (Fin N)) (f : MvPolynomial (Fin N) R)
     (a : Fin N → ℕ) :
     coeff (Finsupp.equivFunOnFinite.symm a) (rename sigma f) =
@@ -1731,7 +1762,8 @@ theorem sigma_coeff_permute (sigma : Perm (Fin N)) (f : MvPolynomial (Fin N) R)
 /-- The monomial symmetric polynomials are linearly independent.
     (Theorem thm.sf.m-basis (a), linear independence part)
 
-    Label: thm.sf.m-basis.a.indep -/
+    Label: thm.sf.m-basis.a.indep @statement_id stmt-src-thm.sf.m-basis
+-/
 theorem monomialSymm_linearIndependent (S : Finset (NPartition N)) :
     LinearIndependent R (fun mu : S => (monomialSymm mu.val : MvPolynomial (Fin N) R)) := by
   rw [Fintype.linearIndependent_iffₛ]
@@ -1764,7 +1796,8 @@ theorem monomialSymm_linearIndependent (S : Finset (NPartition N)) :
   exact key
 
 /-- Key: coeff is constant on orbits for symmetric polynomials.
-    If f is symmetric and σ is a permutation, then coeff (σ · d) f = coeff d f. -/
+    If f is symmetric and σ is a permutation, then coeff (σ · d) f = coeff d f. @statement_id stmt-src-lem.sf.coeff-perm-symmetric
+-/
 lemma coeff_perm_eq_of_symmetric (f : MvPolynomial (Fin N) R) (hf : f.IsSymmetric)
     (d : Fin N →₀ ℕ) (σ : Perm (Fin N)) :
     coeff (Finsupp.mapDomain σ d) f = coeff d f := by
@@ -1774,7 +1807,8 @@ lemma coeff_perm_eq_of_symmetric (f : MvPolynomial (Fin N) R) (hf : f.IsSymmetri
   rw [h1] at key
   exact key
 
-/-- For symmetric f, support is closed under permutation. -/
+/-- For symmetric f, support is closed under permutation. @statement_id stmt-src-lem.sf.support-closed-perm
+-/
 lemma support_closed_under_perm (f : MvPolynomial (Fin N) R) (hf : f.IsSymmetric)
     (d : Fin N →₀ ℕ) (hd : d ∈ f.support) (σ : Perm (Fin N)) :
     Finsupp.mapDomain σ d ∈ f.support := by
@@ -1801,11 +1835,13 @@ private lemma sum_partition {α β M : Type*} [DecidableEq α] [DecidableEq β] 
     simp only [hx1]
     exact hne
 
-/-- sortTupleFinsupp applied to a Finsupp. -/
+/-- sortTupleFinsupp applied to a Finsupp. @statement_id stmt-src-def.sf.sorttuplefinsupp
+-/
 noncomputable def sortTupleFinsupp (d : Fin N →₀ ℕ) : NPartition N :=
   sortTuple (Finsupp.equivFunOnFinite d)
 
-/-- sortTupleFinsupp is invariant under permutation. -/
+/-- sortTupleFinsupp is invariant under permutation. @statement_id stmt-src-lem.sf.sorttuplefinsupp-perm
+-/
 lemma sortTupleFinsupp_perm (d : Fin N →₀ ℕ) (σ : Perm (Fin N)) :
     sortTupleFinsupp (Finsupp.mapDomain σ d) = sortTupleFinsupp d := by
   unfold sortTupleFinsupp
@@ -1928,7 +1964,8 @@ private lemma sortTuple_eq_implies_multiset_eq (a b : Fin N → ℕ)
     and symmetric polynomials have permutation-invariant coefficients.
 
     The proof requires the combinatorial fact that equal sorted multisets implies
-    the existence of a permutation relating the two tuples. -/
+    the existence of a permutation relating the two tuples. @statement_id stmt-src-lem.sf.coeff-same-sort
+-/
 lemma coeff_eq_of_same_sort (f : MvPolynomial (Fin N) R) (hf : f.IsSymmetric)
     (d₁ d₂ : Fin N →₀ ℕ) (h : sortTupleFinsupp d₁ = sortTupleFinsupp d₂) :
     coeff d₁ f = coeff d₂ f := by
@@ -1958,7 +1995,8 @@ lemma coeff_eq_of_same_sort (f : MvPolynomial (Fin N) R) (hf : f.IsSymmetric)
     3. Factoring out the common coefficient from each group
     4. Showing that the sum of monomials in each group equals monomialSymm μ
 
-    Label: thm.sf.m-basis.a.span -/
+    Label: thm.sf.m-basis.a.span @statement_id stmt-src-thm.sf.m-basis
+-/
 theorem monomialSymm_spans :
     ∀ f : MvPolynomial (Fin N) R, f.IsSymmetric →
     f ∈ Submodule.span R (Set.range (fun mu : NPartition N => monomialSymm mu)) := by
@@ -2097,7 +2135,8 @@ theorem monomialSymm_spans :
     f = ∑_μ ([x₁^{μ₁} x₂^{μ₂} ⋯ x_N^{μ_N}] f) m_μ
     (Theorem thm.sf.m-basis (b))
 
-    Label: thm.sf.m-basis.b -/
+    Label: thm.sf.m-basis.b @statement_id stmt-src-thm.sf.m-basis
+-/
 theorem symm_eq_sum_coeff_monomialSymm (f : MvPolynomial (Fin N) R) (hf : f.IsSymmetric)
     (S : Finset (NPartition N)) (hS : ∀ mu : NPartition N, mu.size ≤ f.totalDegree → mu ∈ S) :
     f = ∑ mu ∈ S, (coeff (Finsupp.equivFunOnFinite.symm mu.parts) f) • monomialSymm mu := by
@@ -2184,7 +2223,8 @@ theorem symm_eq_sum_coeff_monomialSymm (f : MvPolynomial (Fin N) R) (hf : f.IsSy
 
     𝒮_n = {homogeneous symmetric polynomials of degree n}
 
-    Label: thm.sf.m-basis.c -/
+    Label: thm.sf.m-basis.c @statement_id stmt-src-thm.sf.m-basis.c
+-/
 def symmHomogeneous (N : ℕ) (R : Type*) [CommSemiring R] (n : ℕ) :
     Submodule R (MvPolynomial (Fin N) R) where
   carrier := {f | f.IsSymmetric ∧ f.IsHomogeneous n}
@@ -2210,7 +2250,8 @@ private lemma monomialExp_isHomogeneous (a : Fin N → ℕ) :
   convert h2 using 1
   ring
 
-/-- The monomial symmetric polynomial m_μ is homogeneous of degree |μ|. -/
+/-- The monomial symmetric polynomial m_μ is homogeneous of degree |μ|. @statement_id stmt-src-lem.sf.m-homogeneous
+-/
 lemma monomialSymm_isHomogeneous (mu : NPartition N) :
     (monomialSymm mu : MvPolynomial (Fin N) R).IsHomogeneous mu.size := by
   simp only [monomialSymm]
@@ -2232,7 +2273,8 @@ private lemma homogeneousComponent_monomialSymm (mu : NPartition N) (n : ℕ) :
 /-- The monomial symmetric polynomials of size n span 𝒮_n.
     (Theorem thm.sf.m-basis (d), spanning part)
 
-    Label: thm.sf.m-basis.d.span -/
+    Label: thm.sf.m-basis.d.span @statement_id stmt-src-thm.sf.m-basis
+-/
 theorem monomialSymm_homogeneous_spans (n : ℕ) :
     ∀ f ∈ symmHomogeneous N R n,
     f ∈ Submodule.span R (Set.range (fun mu : {nu : NPartition N // nu.size = n} =>
@@ -2275,7 +2317,8 @@ theorem monomialSymm_homogeneous_spans (n : ℕ) :
     This follows from the fact that no two m_μ share any monomials, and each m_μ
     contains at least one monomial.
 
-    Label: thm.sf.m-basis.d.indep -/
+    Label: thm.sf.m-basis.d.indep @statement_id stmt-src-thm.sf.m-basis
+-/
 theorem monomialSymm_homogeneous_linearIndependent (n : ℕ) :
     LinearIndependent R (fun mu : {nu : NPartition N // nu.size = n} =>
       (monomialSymm mu.val : MvPolynomial (Fin N) R)) := by
@@ -2370,7 +2413,8 @@ private noncomputable def monomialSymmRestricted (n : ℕ) :
     This combines linear independence (`monomialSymm_homogeneous_linearIndependent`)
     and spanning (`monomialSymm_homogeneous_spans`).
 
-    Label: thm.sf.m-basis.d -/
+    Label: thm.sf.m-basis.d @statement_id stmt-src-thm.sf.m-basis
+-/
 noncomputable def monomialSymm_basis_homogeneous (n : ℕ) :
     Module.Basis {nu : NPartition N // nu.size = n} R (symmHomogeneous N R n) := by
   let v := monomialSymmRestricted (R := R) (N := N) n

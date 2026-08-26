@@ -58,7 +58,8 @@ For the logarithm, we define it via the standard series log(1+x) = ∑_{n≥1} (
 
 /-- The logarithm series: log(1+x) = x - x²/2 + x³/3 - x⁴/4 + ...
     This is `\overline{log}` in the source notation.
-    Label: def.fps.logbar -/
+    Label: def.fps.logbar @statement_id stmt-src-def.fps.logseries
+-/
 noncomputable def logSeries : K⟦X⟧ :=
   PowerSeries.mk fun n => if n = 0 then 0 else algebraMap ℚ K ((-1 : ℚ)^(n-1) / n)
 
@@ -68,14 +69,16 @@ theorem coeff_logSeries (n : ℕ) :
     coeff n (logSeries (K := K)) = if n = 0 then 0 else algebraMap ℚ K ((-1 : ℚ)^(n-1) / n) := by
   simp [logSeries, coeff_mk]
 
-/-- The constant term of the log series is 0 -/
+/-- The constant term of the log series is 0 @statement_id stmt-src-lem.fps.constantcoeff-logseries
+-/
 @[simp]
 theorem constantCoeff_logSeries : constantCoeff (logSeries (K := K)) = 0 := by
   rw [← coeff_zero_eq_constantCoeff_apply, coeff_logSeries]
   simp
 
 /-- Key lemma: coeff k (logSeries^m) = 0 for m > k.
-    This follows from logSeries having constant term 0. -/
+    This follows from logSeries having constant term 0. @statement_id stmt-src-lem.fps.coeff-logseries-pow-eq-zero
+-/
 theorem coeff_logSeries_pow_eq_zero_of_gt (k m : ℕ) (h : k < m) :
     coeff k ((logSeries (K := K))^m) = 0 := by
   apply coeff_of_lt_order
@@ -83,7 +86,8 @@ theorem coeff_logSeries_pow_eq_zero_of_gt (k m : ℕ) (h : k < m) :
     _ ≤ order ((logSeries (K := K))^m) := le_order_pow_of_constantCoeff_eq_zero m constantCoeff_logSeries
 
 omit [Algebra ℚ K] in
-/-- Helper: (c • g)^m = c^m • g^m -/
+/-- Helper: (c • g)^m = c^m • g^m @statement_id stmt-src-lem.fps.smul-pow-eq-pow-smul
+-/
 theorem smul_pow_eq_pow_smul (c : K) (g : K⟦X⟧) (m : ℕ) :
     (c • g)^m = c^m • g^m := by
   induction m with
@@ -111,7 +115,8 @@ This is the domain on which non-integer powers are defined.
 
     Note: This is definitionally equivalent to membership in `PowerSeries₁` from ExpLog.lean:
     `HasConstantTermOne f ↔ f ∈ PowerSeries₁`. The `Prop` form is used here for convenience
-    in hypotheses, while `PowerSeries₁` (a `Set`) is used in ExpLog.lean for subgroup structures. -/
+    in hypotheses, while `PowerSeries₁` (a `Set`) is used in ExpLog.lean for subgroup structures. @statement_id stmt-src-def.fps.hasconstanttermone
+-/
 def HasConstantTermOne (f : K⟦X⟧) : Prop := constantCoeff f = 1
 
 /-- `HasConstantTermOne f` is equivalent to membership in `PowerSeries₁`.
@@ -154,10 +159,12 @@ omit [Algebra ℚ K] in
 theorem hasConstantTermOne_one : HasConstantTermOne (1 : K⟦X⟧) := hasConstantTermOne_one'
 
 omit [Algebra ℚ K] in
+/-- @statement_id stmt-src-lem.fps.hasconstanttermone-mul -/
 theorem hasConstantTermOne_mul {f g : K⟦X⟧} (hf : HasConstantTermOne f) (hg : HasConstantTermOne g) :
     HasConstantTermOne (f * g) := hasConstantTermOne_mul' hf hg
 
 omit [Algebra ℚ K] in
+/-- @statement_id stmt-src-lem.fps.hasconstanttermone-one-add-x -/
 theorem hasConstantTermOne_one_add_X : HasConstantTermOne (1 + X : K⟦X⟧) := hasConstantTermOne_one_add_X'
 
 omit [Algebra ℚ K] in
@@ -173,11 +180,13 @@ Since f has constant term 1, f-1 has constant term 0, so the substitution is wel
 
 /-- The Log map: Log(f) = log_series(f-1) = logSeries.subst (f-1)
     This is well-defined when f has constant term 1.
-    Label: def.fps.Exp-Log-maps -/
+    Label: def.fps.Exp-Log-maps @statement_id stmt-src-def.fps.fpslog
+-/
 noncomputable def fpsLog (f : K⟦X⟧) : K⟦X⟧ :=
   (logSeries (K := K)).subst (f - 1)
 
-/-- Log(1) = 0 -/
+/-- Log(1) = 0 @statement_id stmt-src-lem.fps.fpslog-one
+-/
 @[simp]
 theorem fpsLog_one : fpsLog (1 : K⟦X⟧) = 0 := by
   unfold fpsLog
@@ -199,7 +208,8 @@ theorem fpsLog_one : fpsLog (1 : K⟦X⟧) = 0 := by
     · simp [hd]
   · exact PowerSeries.HasSubst.zero'
 
-/-- The constant term of Log(f) is 0 when f has constant term 1 -/
+/-- The constant term of Log(f) is 0 when f has constant term 1 @statement_id stmt-src-lem.fps.constantcoeff-fpslog
+-/
 theorem constantCoeff_fpsLog {f : K⟦X⟧} (hf : HasConstantTermOne f) :
     constantCoeff (fpsLog f) = 0 := by
   unfold fpsLog
@@ -217,11 +227,13 @@ For g ∈ K⟦X⟧₀ (constant term 0), we define Exp(g) by substituting g into
 
 /-- The Exp map: Exp(g) = exp(g) = (exp K).subst g
     This is well-defined when g has constant term 0.
-    Label: def.fps.Exp-Log-maps -/
+    Label: def.fps.Exp-Log-maps @statement_id stmt-src-def.fps.fpsexp
+-/
 noncomputable def fpsExp (g : K⟦X⟧) : K⟦X⟧ :=
   (exp K).subst g
 
-/-- Exp(0) = 1 -/
+/-- Exp(0) = 1 @statement_id stmt-src-lem.fps.fpsexp-zero
+-/
 @[simp]
 theorem fpsExp_zero : fpsExp (0 : K⟦X⟧) = 1 := by
   unfold fpsExp
@@ -239,7 +251,8 @@ theorem fpsExp_zero : fpsExp (0 : K⟦X⟧) = 1 := by
   rw [finsum_eq_sum_of_support_subset _ h2]
   simp
 
-/-- Exp(g) has constant term 1 when g has constant term 0 -/
+/-- Exp(g) has constant term 1 when g has constant term 0 @statement_id stmt-src-lem.fps.hasconstanttermone-fpsexp
+-/
 theorem hasConstantTermOne_fpsExp {g : K⟦X⟧} (hg : constantCoeff g = 0) :
     HasConstantTermOne (fpsExp g) := by
   unfold HasConstantTermOne fpsExp
@@ -291,7 +304,8 @@ theorem hasConstantTermOne_fpsExp {g : K⟦X⟧} (hg : constantCoeff g = 0) :
 
     **Mathlib note**: Mathlib's `exp_mul_exp_eq_exp_add` proves this for the special case
     where x = a • X and y = b • X (i.e., rescaling). The general case requires the
-    derivative characterization or coefficient comparison. -/
+    derivative characterization or coefficient comparison. @statement_id stmt-src-thm.fps.fpsexp-add
+-/
 theorem fpsExp_add {x y : K⟦X⟧} (hx : constantCoeff x = 0) (hy : constantCoeff y = 0) :
     fpsExp (x + y) = fpsExp x * fpsExp y := by
   -- Create PowerSeries₀ subtypes
@@ -441,7 +455,8 @@ private theorem derivative_logSeries_subst_mul_f {f : K⟦X⟧} (hf : HasConstan
     Log(fg) = Log(Exp(Log f) * Exp(Log g)) = Log(Exp(Log f + Log g)) = Log f + Log g.
 
     **Dependency**: This proof requires either the derivative characterization
-    or the inverse property `Exp_Log_inverse` from ExpLog.lean. -/
+    or the inverse property `Exp_Log_inverse` from ExpLog.lean. @statement_id stmt-src-thm.fps.fpslog-mul
+-/
 theorem fpsLog_mul {f g : K⟦X⟧} (hf : HasConstantTermOne f) (hg : HasConstantTermOne g) :
     fpsLog (f * g) = fpsLog f + fpsLog g := by
   apply derivative_ext_Q
@@ -510,24 +525,28 @@ This definition:
 
 /-- The c-th power of an FPS f with constant term 1.
     f^c := Exp(c * Log(f)) = exp.subst (c * log_series.subst (f-1))
-    Label: def.fps.power-c -/
+    Label: def.fps.power-c @statement_id stmt-src-def.fps.power-c
+-/
 noncomputable def fpsPow (f : K⟦X⟧) (c : K) : K⟦X⟧ :=
   fpsExp (c • fpsLog f)
 
 /-- Notation for non-integer powers (when needed) -/
 scoped notation:80 f " ^ᶠ " c:81 => fpsPow f c
 
-/-- f^0 = 1 for any f with constant term 1 -/
+/-- f^0 = 1 for any f with constant term 1 @statement_id stmt-src-lem.fps.fpspow-zero
+-/
 @[simp]
 theorem fpsPow_zero (f : K⟦X⟧) : f ^ᶠ (0 : K) = 1 := by
   simp only [fpsPow, zero_smul, fpsExp_zero]
 
-/-- 1^c = 1 for any c -/
+/-- 1^c = 1 for any c @statement_id stmt-src-lem.fps.one-fpspow
+-/
 @[simp]
 theorem one_fpsPow (c : K) : (1 : K⟦X⟧) ^ᶠ c = 1 := by
   simp only [fpsPow, fpsLog_one, smul_zero, fpsExp_zero]
 
-/-- f^c has constant term 1 when f has constant term 1 -/
+/-- f^c has constant term 1 when f has constant term 1 @statement_id stmt-src-lem.fps.hasconstanttermone-fpspow
+-/
 theorem hasConstantTermOne_fpsPow {f : K⟦X⟧} (hf : HasConstantTermOne f) (c : K) :
     HasConstantTermOne (f ^ᶠ c) := by
   apply hasConstantTermOne_fpsExp
@@ -551,7 +570,8 @@ For any a, b ∈ K and f, g ∈ K⟦X⟧₁:
            = Exp(a • Log f) * Exp(b • Log f)  [by fpsExp_add]
            = f^a * f^b
 
-    **Dependency**: Requires `fpsExp_add`. -/
+    **Dependency**: Requires `fpsExp_add`. @statement_id stmt-src-thm.fps.power-c.rules
+-/
 theorem fpsPow_add {f : K⟦X⟧} (hf : HasConstantTermOne f) (a b : K) :
     f ^ᶠ (a + b) = (f ^ᶠ a) * (f ^ᶠ b) := by
   unfold fpsPow
@@ -561,7 +581,8 @@ theorem fpsPow_add {f : K⟦X⟧} (hf : HasConstantTermOne f) (a b : K) :
   · rw [constantCoeff_smul, constantCoeff_fpsLog hf, smul_zero]
 
 /-- Rule of exponents: (fg)^a = f^a * g^a
-    Label: eq.sec.gf.nips.rules-of-exps (second rule) -/
+    Label: eq.sec.gf.nips.rules-of-exps (second rule) @statement_id stmt-src-thm.fps.power-c.rules
+-/
 theorem fpsPow_mul {f g : K⟦X⟧} (hf : HasConstantTermOne f) (hg : HasConstantTermOne g) (a : K) :
     (f * g) ^ᶠ a = (f ^ᶠ a) * (g ^ᶠ a) := by
   unfold fpsPow
@@ -591,7 +612,8 @@ theorem fpsPow_mul {f g : K⟦X⟧} (hf : HasConstantTermOne f) (hg : HasConstan
            = f^{ab}
 
     **Dependency**: Requires the inverse property `fpsLog (fpsExp g) = g`
-    for g with constant term 0. This is proved in ExpLog.lean as `Log_Exp`. -/
+    for g with constant term 0. This is proved in ExpLog.lean as `Log_Exp`. @statement_id stmt-src-thm.fps.power-c.rules
+-/
 theorem fpsPow_pow {f : K⟦X⟧} (hf : HasConstantTermOne f) (a b : K) :
     (f ^ᶠ a) ^ᶠ b = f ^ᶠ (a * b) := by
   unfold fpsPow
@@ -648,24 +670,28 @@ and the `logbar`/`Log`/`Exp` definitions from ExpLog.lean. This allows us to use
 the `Exp_Log` theorem to prove `fpsPow_one`.
 -/
 
-/-- Our logSeries equals PowerSeries.logbar from ExpLog.lean -/
+/-- Our logSeries equals PowerSeries.logbar from ExpLog.lean @statement_id stmt-src-lem.fps.logseries-eq-logbar
+-/
 theorem logSeries_eq_logbar : logSeries (K := K) = logbar K := by
   ext n
   simp only [coeff_logSeries, coeff_logbar]
 
-/-- fpsLog f equals (Log f).val when f has constant term 1 -/
+/-- fpsLog f equals (Log f).val when f has constant term 1 @statement_id stmt-src-lem.fps.fpslog-eq-log-val
+-/
 theorem fpsLog_eq_Log_val {f : K⟦X⟧} (hf : HasConstantTermOne f) :
     fpsLog f = (Log ⟨f, hf⟩).val := by
   simp only [fpsLog, Log_val, logSeries_eq_logbar]
 
-/-- fpsExp g equals (Exp g').val when g has constant term 0 -/
+/-- fpsExp g equals (Exp g').val when g has constant term 0 @statement_id stmt-src-lem.fps.fpsexp-eq-exp-val
+-/
 theorem fpsExp_eq_Exp_val {g : K⟦X⟧} (hg : constantCoeff g = 0) :
     fpsExp g = (Exp ⟨g, hg⟩).val := by
   simp only [fpsExp, Exp_val]
 
 /-- f^1 = f for any f with constant term 1.
     This follows from the Exp-Log inverse property: Exp(Log(f)) = f.
-    Label: (implicit in def.fps.power-c consistency) -/
+    Label: (implicit in def.fps.power-c consistency) @statement_id stmt-src-lem.fps.fpspow-one
+-/
 theorem fpsPow_one {f : K⟦X⟧} (hf : HasConstantTermOne f) : f ^ᶠ (1 : K) = f := by
   unfold fpsPow
   simp only [one_smul]
@@ -681,14 +707,16 @@ theorem fpsPow_one {f : K⟦X⟧} (hf : HasConstantTermOne f) : f ^ᶠ (1 : K) =
 
 /-- The constant term of f^c is 1 when f has constant term 1.
     This is a simp-friendly version of `hasConstantTermOne_fpsPow`.
-    Label: def.fps.power-c (property) -/
+    Label: def.fps.power-c (property) @statement_id stmt-src-lem.fps.constantcoeff-fpspow
+-/
 @[simp]
 theorem constantCoeff_fpsPow {f : K⟦X⟧} (hf : HasConstantTermOne f) (c : K) :
     constantCoeff (f ^ᶠ c) = 1 := hasConstantTermOne_fpsPow hf c
 
 /-- f^(-c) = (f^c)⁻¹ for f with constant term 1 (over a field).
     This extends the rules of exponents to negative powers.
-    Label: def.fps.power-c (negative power property) -/
+    Label: def.fps.power-c (negative power property) @statement_id stmt-src-lem.fps.fpspow-neg
+-/
 theorem fpsPow_neg {K' : Type*} [Field K'] [Algebra ℚ K'] {f : K'⟦X⟧}
     (hf : HasConstantTermOne f) (c : K') :
     f ^ᶠ (-c) = (f ^ᶠ c)⁻¹ := by
@@ -984,7 +1012,8 @@ private noncomputable def coeffExpPoly (k : ℕ) : Polynomial ℚ :=
 
 omit [BinomialRing K] [CharZero K] in
 /-- coeffExpPoly k evaluated at c equals coeff k (fpsExp (c • logSeries)).
-    This is the key lemma showing the LHS coefficient is a polynomial function. -/
+    This is the key lemma showing the LHS coefficient is a polynomial function. @statement_id stmt-src-lem.fps.coeff-fpspow-eq-coeffexppoly-eval
+-/
 theorem coeff_fpsPow_eq_coeffExpPoly_eval (k : ℕ) (c : K) :
     coeff k ((exp K).subst (c • logSeries (K := K))) =
     ((coeffExpPoly k).map (algebraMap ℚ K)).eval c := by
@@ -1033,7 +1062,8 @@ theorem coeff_fpsPow_eq_coeffExpPoly_eval (k : ℕ) (c : K) :
 
 
 /-- Ring.choose c k equals the evaluation of choosePoly.map at c.
-    This is the key lemma showing Ring.choose is a polynomial function. -/
+    This is the key lemma showing Ring.choose is a polynomial function. @statement_id stmt-src-lem.fps.ring-choose-eq-choosepoly-eval
+-/
 theorem Ring_choose_eq_choosePoly_eval (k : ℕ) (c : K) :
     Ring.choose c k = ((choosePoly k).map (algebraMap ℚ K)).eval c := by
   simp only [choosePoly, Polynomial.map_smul, Polynomial.eval_smul, smul_eq_mul]
@@ -1058,7 +1088,8 @@ theorem Ring_choose_eq_choosePoly_eval (k : ℕ) (c : K) :
   rw [h6, h5]
 
 omit [BinomialRing K] in
-/-- Key: if two polynomial evaluations agree on all naturals, the polynomials are equal -/
+/-- Key: if two polynomial evaluations agree on all naturals, the polynomials are equal @statement_id stmt-src-lem.fps.poly-eq-of-nat-eval-eq
+-/
 theorem poly_eq_of_nat_eval_eq (p q : Polynomial ℚ)
     (h : ∀ n : ℕ, (p.map (algebraMap ℚ K)).eval (n : K) = (q.map (algebraMap ℚ K)).eval (n : K)) :
     p = q := by
@@ -1078,7 +1109,8 @@ private lemma coeff_one_add_X_mul (f : K⟦X⟧) (k : ℕ) :
   rw [mul_comm, coeff_succ_mul_X]
 
 omit [Algebra ℚ K] [CharZero K] in
-/-- Pascal identity for Ring.choose: C(c, k+1) = C(c-1, k) + C(c-1, k+1) -/
+/-- Pascal identity for Ring.choose: C(c, k+1) = C(c-1, k) + C(c-1, k+1) @statement_id stmt-src-lem.fps.ring-choose-pascal
+-/
 lemma Ring_choose_pascal (c : K) (k : ℕ) :
     Ring.choose c (k + 1) = Ring.choose (c - 1) k + Ring.choose (c - 1) (k + 1) := by
   have h := Ring.choose_succ_succ (c - 1) k
@@ -1087,7 +1119,8 @@ lemma Ring_choose_pascal (c : K) (k : ℕ) :
 
 omit [BinomialRing K] in
 omit [CharZero K] in
-/-- Pascal identity for fpsPow coefficients: coeff (k+1) ((1+X)^c) = coeff k ((1+X)^(c-1)) + coeff (k+1) ((1+X)^(c-1)) -/
+/-- Pascal identity for fpsPow coefficients: coeff (k+1) ((1+X)^c) = coeff k ((1+X)^(c-1)) + coeff (k+1) ((1+X)^(c-1)) @statement_id stmt-src-lem.fps.fpspow-coeff-pascal
+-/
 lemma fpsPow_coeff_pascal (c : K) (k : ℕ) :
     coeff (k + 1) ((1 + X : K⟦X⟧) ^ᶠ c) =
     coeff k ((1 + X : K⟦X⟧) ^ᶠ (c - 1)) + coeff (k + 1) ((1 + X : K⟦X⟧) ^ᶠ (c - 1)) := by
@@ -1123,7 +1156,8 @@ lemma fpsPow_coeff_pascal (c : K) (k : ℕ) :
     3. By the polynomial identity trick: two polynomials (over ℚ) that agree on all
        natural numbers must be equal. Hence the coefficients agree for all `c ∈ K`.
 
-    Label: thm.fps.gen-newton -/
+    Label: thm.fps.gen-newton @statement_id stmt-src-thm.fps.gen-newton
+-/
 theorem generalizedNewtonBinomial (c : K) :
     (1 + X : K⟦X⟧) ^ᶠ c = binomialSeries K c := by
   -- We prove by showing both sides have the same coefficients.
@@ -1228,7 +1262,8 @@ theorem generalizedNewtonBinomial (c : K) :
         rw [hpoly]
 
 /-- Corollary: coefficient of x^k in (1+x)^c is C(c,k)
-    Label: thm.fps.gen-newton (coefficient form) -/
+    Label: thm.fps.gen-newton (coefficient form) @statement_id stmt-src-cor.fps.coeff-one-add-x-fpspow
+-/
 theorem coeff_one_add_X_fpsPow (c : K) (k : ℕ) :
     coeff k ((1 + X : K⟦X⟧) ^ᶠ c) = Ring.choose c k := by
   rw [generalizedNewtonBinomial]
@@ -1388,7 +1423,8 @@ The proof uses generating functions:
 
 /-- The anti-Newton binomial formula: (1+x)^{-n} = ∑_{i ∈ ℕ} (-1)^i C(n+i-1, i) x^i
     This is a consequence of the generalized Newton formula.
-    Label: prop.fps.anti-newton-binom -/
+    Label: prop.fps.anti-newton-binom @statement_id stmt-src-thm.fps.antinewtonbinomial
+-/
 theorem antiNewtonBinomial (n : K) :
     (1 + X : K⟦X⟧) ^ᶠ (-n) = PowerSeries.mk fun i =>
       (-1 : K)^i * Ring.choose (n + i - 1) i := by
@@ -1411,7 +1447,8 @@ We prove the identity using generating functions:
 
 omit [Algebra ℚ K] [CharZero K] in
 /-- (1-x)^{-n} has coefficient C(n+k-1, k) at position k.
-    This is rescale (-1) applied to (1+x)^{-n}. -/
+    This is rescale (-1) applied to (1+x)^{-n}. @statement_id stmt-src-lem.fps.one-sub-x-pow-neg-coeff
+-/
 theorem one_sub_X_pow_neg_coeff (n : K) (k : ℕ) :
     coeff k (rescale (-1 : K) (binomialSeries K (-n))) = Ring.choose (n + k - 1) k := by
   rw [coeff_rescale, binomialSeries_coeff, smul_eq_mul, mul_one]
@@ -1428,15 +1465,18 @@ theorem one_sub_X_pow_neg_coeff (n : K) (k : ℕ) :
     _ = 1 * Ring.choose (n + k - 1) k := by rw [h2]
     _ = Ring.choose (n + k - 1) k := by ring
 
-/-- The series f = ∑_i C(n+i-1, i) x^{2i} used in the proof -/
+/-- The series f = ∑_i C(n+i-1, i) x^{2i} used in the proof @statement_id stmt-src-def.fps.f-series-g-series
+-/
 noncomputable def f_series' (n : K) : K⟦X⟧ :=
   mk fun m => if Even m then Ring.choose (n + ((m/2 : ℕ) : K) - 1) (m/2) else 0
 
-/-- The series g = (1+x)^n = binomialSeries K n -/
+/-- The series g = (1+x)^n = binomialSeries K n @statement_id stmt-src-def.fps.f-series-g-series
+-/
 noncomputable def g_series' (n : K) : K⟦X⟧ := binomialSeries K n
 
 omit [Algebra ℚ K] [CharZero K] in
-/-- The coefficient of x^k in f * g equals the LHS of the binomial identity -/
+/-- The coefficient of x^k in f * g equals the LHS of the binomial identity @statement_id stmt-src-lem.fps.coeff-f-mul-g
+-/
 theorem coeff_f_mul_g' (n : K) (k : ℕ) :
     coeff k (f_series' n * g_series' n) =
     ∑ i ∈ range (k / 2 + 1), Ring.choose (n + i - 1) i * Ring.choose n (k - 2*i) := by
@@ -1542,7 +1582,8 @@ private lemma one_sub_X_pow_mul_one_add_X_pow' (N : ℕ) :
 
 omit [Algebra ℚ K] [BinomialRing K] [CharZero K] in
 /-- The product (invOneSubPow K N).val * rescale (-1) (invOneSubPow K N).val
-    times (1 - X²)^N equals 1. This shows the product is the inverse of (1 - X²)^N. -/
+    times (1 - X²)^N equals 1. This shows the product is the inverse of (1 - X²)^N. @statement_id stmt-src-lem.fps.invonesubpow-mul-rescale-inv
+-/
 lemma invOneSubPow_mul_rescale_mul_one_sub_sq_pow' (N : ℕ) :
     (invOneSubPow K N).val * rescale (-1 : K) (invOneSubPow K N).val * (1 - X^2)^N = 1 := by
   rw [← one_sub_X_pow_mul_one_add_X_pow']
@@ -1579,7 +1620,8 @@ private lemma expand_one_sub_X : expand 2 two_ne_zero (1 - X : K⟦X⟧) = 1 - X
 
 omit [Algebra ℚ K] [BinomialRing K] [CharZero K] in
 /-- expand 2 (invOneSubPow K N).val = (1 - X²)^{-N}, i.e., the inverse of (1 - X²)^N.
-    This follows from expand 2 being a ring homomorphism that maps (1 - X) to (1 - X²). -/
+    This follows from expand 2 being a ring homomorphism that maps (1 - X) to (1 - X²). @statement_id stmt-src-lem.fps.expand-invonesubpow-inv
+-/
 lemma expand_invOneSubPow_eq_inv_one_sub_X_sq (N : ℕ) :
     expand 2 two_ne_zero ((invOneSubPow K N).val) * (1 - X^2)^N = 1 := by
   have h1 : (1 - X^2 : K⟦X⟧)^N = expand 2 two_ne_zero ((1 - X)^N) := by
@@ -1599,7 +1641,8 @@ omit [Algebra ℚ K] [BinomialRing K] [CharZero K] in
     - The product: by invOneSubPow_mul_rescale_mul_one_sub_sq_pow'
     - The expand: by expand_invOneSubPow_eq_inv_one_sub_X_sq
 
-    Since the inverse is unique (when it exists), they must be equal. -/
+    Since the inverse is unique (when it exists), they must be equal. @statement_id stmt-src-lem.fps.product-eq-expand
+-/
 lemma product_eq_expand_invOneSubPow (N : ℕ) :
     (invOneSubPow K N).val * rescale (-1 : K) ((invOneSubPow K N).val) =
     expand 2 two_ne_zero ((invOneSubPow K N).val) := by
@@ -1637,7 +1680,8 @@ lemma product_eq_expand_invOneSubPow (N : ℕ) :
 omit [Algebra ℚ K] [BinomialRing K] [CharZero K] in
 /-- For natural N ≥ 1, the coefficient of X^{2m} in the product
     (invOneSubPow K N).val * rescale (-1) (invOneSubPow K N).val is Nat.choose (N+m-1) m.
-    This follows from the product being (1-X²)^{-N}. -/
+    This follows from the product being (1-X²)^{-N}. @statement_id stmt-src-lem.fps.coeff-invonesubpow-product-even
+-/
 lemma coeff_invOneSubPow_product_even' (N m : ℕ) (hN : 0 < N) :
     coeff (m + m) ((invOneSubPow K N).val * rescale (-1 : K) (invOneSubPow K N).val) =
     (Nat.choose (N + m - 1) m : K) := by
@@ -1834,7 +1878,8 @@ The proof uses the factorization (1-x²) = (1-x)(1+x):
   (1-x²)^{-n} * (1+x)^n = (1-x)^{-n} * (1+x)^{-n} * (1+x)^n = (1-x)^{-n}
 
 Note: This requires showing that f_series' n represents (1-x²)^{-n}, which
-follows from the anti-Newton binomial formula with the substitution x → -x². -/
+follows from the anti-Newton binomial formula with the substitution x → -x². @statement_id stmt-src-lem.fps.key-product-identity
+-/
 theorem key_product_identity' (n : K) :
     f_series' n * g_series' n = rescale (-1 : K) (binomialSeries K (-n)) := by
   -- The proof uses the algebraic identity:
@@ -2259,7 +2304,8 @@ This is proved using generating functions and the generalized Newton formula.
 Note: The sum is restricted to i ≤ k/2 (equivalently, 2i ≤ k) because when 2i > k,
 the binomial coefficient C(n, k-2i) should be 0 (as k-2i would be negative).
 Using ℕ subtraction directly would incorrectly give C(n, 0) = 1 for those terms.
-Label: prop.binom.nCk-2i-qedmo.CN -/
+Label: prop.binom.nCk-2i-qedmo.CN @statement_id stmt-src-prop.binom.nck-2i-qedmo.cn
+-/
 theorem binomialIdentity (n : K) (k : ℕ) :
     ∑ i ∈ range (k / 2 + 1), Ring.choose (n + i - 1) i * Ring.choose n (k - 2*i) =
     Ring.choose (n + k - 1) k := by
@@ -2277,7 +2323,8 @@ Our definition of f^c agrees with the standard definition when c is a natural nu
 omit [BinomialRing K] in
 /-- For natural number exponents, fpsPow agrees with the standard power.
     This shows our definition is consistent with integer powers.
-    Label: (consistency claim after def.fps.power-c) -/
+    Label: (consistency claim after def.fps.power-c) @statement_id stmt-src-lem.fps.fpspow-nat
+-/
 theorem fpsPow_nat {f : K⟦X⟧} (hf : HasConstantTermOne f) (n : ℕ) :
     f ^ᶠ (n : K) = f ^ n := by
   induction n with
@@ -2288,7 +2335,8 @@ theorem fpsPow_nat {f : K⟦X⟧} (hf : HasConstantTermOne f) (n : ℕ) :
 omit [BinomialRing K] in
 /-- For integer exponents, fpsPow agrees with the standard power (when f is invertible).
     For negative integers, this requires f to be invertible (which holds when constantCoeff f ≠ 0).
-    Label: (consistency claim after def.fps.power-c) -/
+    Label: (consistency claim after def.fps.power-c) @statement_id stmt-src-lem.fps.fpspow-int
+-/
 theorem fpsPow_int {K' : Type*} [Field K'] [Algebra ℚ K'] {f : K'⟦X⟧}
     (hf : HasConstantTermOne f) (n : ℤ) :
     f ^ᶠ (n : K') = if n ≥ 0 then f ^ n.toNat else (f ^ (-n).toNat)⁻¹ := by
@@ -2350,7 +2398,8 @@ This is formalized in Mathlib as polynomial equality from infinitely many roots.
     coerced to R. Without this assumption, the theorem is false: for example, in `ZMod 2`,
     the polynomial `x(x-1)` evaluates to 0 at all natural numbers but is nonzero.
 
-    Label: (polynomial identity trick in proof of thm.fps.gen-newton) -/
+    Label: (polynomial identity trick in proof of thm.fps.gen-newton) @statement_id stmt-src-thm.fps.polynomial-identity-trick
+-/
 theorem polynomial_identity_trick {R : Type*} [CommRing R] [IsDomain R] [CharZero R]
     (p : Polynomial R) (h : ∀ n : ℕ, p.eval (n : R) = 0) : p = 0 := by
   apply Polynomial.eq_zero_of_infinite_isRoot

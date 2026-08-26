@@ -126,15 +126,18 @@ section CommRingBasics
 variable {K : Type*} [CommRing K]
 
 /-- **Commutativity of addition** (Axiom 1 in def.alg.commring):
-    `a + b = b + a` for all `a, b ∈ K`. -/
+    `a + b = b + a` for all `a, b ∈ K`. @statement_id stmt-src-def.alg.commring
+-/
 theorem commRing_add_comm (a b : K) : a + b = b + a := add_comm a b
 
 /-- **Associativity of addition** (Axiom 2 in def.alg.commring):
-    `a + (b + c) = (a + b) + c` for all `a, b, c ∈ K`. -/
+    `a + (b + c) = (a + b) + c` for all `a, b, c ∈ K`. @statement_id stmt-src-def.alg.commring
+-/
 theorem commRing_add_assoc (a b c : K) : a + (b + c) = (a + b) + c := (add_assoc a b c).symm
 
 /-- **Neutrality of zero** (Axiom 3 in def.alg.commring):
-    `a + 0 = a` for all `a ∈ K`. -/
+    `a + 0 = a` for all `a ∈ K`. @statement_id stmt-src-def.alg.commring
+-/
 theorem commRing_add_zero (a : K) : a + 0 = a := add_zero a
 
 /-- **Neutrality of zero** (Axiom 3 in def.alg.commring):
@@ -142,22 +145,26 @@ theorem commRing_add_zero (a : K) : a + 0 = a := add_zero a
 theorem commRing_zero_add (a : K) : 0 + a = a := zero_add a
 
 /-- **Subtraction undoes addition** (Axiom 4 in def.alg.commring):
-    `a + b = c ↔ a = c - b` for all `a, b, c ∈ K`. -/
+    `a + b = c ↔ a = c - b` for all `a, b, c ∈ K`. @statement_id stmt-src-def.alg.commring
+-/
 theorem commRing_sub_iff_add (a b c : K) : a + b = c ↔ a = c - b := by
   constructor
   · intro h; rw [← h, add_sub_cancel_right]
   · intro h; rw [h, sub_add_cancel]
 
 /-- **Commutativity of multiplication** (Axiom 5 in def.alg.commring):
-    `a * b = b * a` for all `a, b ∈ K`. -/
+    `a * b = b * a` for all `a, b ∈ K`. @statement_id stmt-src-def.alg.commring
+-/
 theorem commRing_mul_comm (a b : K) : a * b = b * a := mul_comm a b
 
 /-- **Associativity of multiplication** (Axiom 6 in def.alg.commring):
-    `a * (b * c) = (a * b) * c` for all `a, b, c ∈ K`. -/
+    `a * (b * c) = (a * b) * c` for all `a, b, c ∈ K`. @statement_id stmt-src-def.alg.commring
+-/
 theorem commRing_mul_assoc (a b c : K) : a * (b * c) = (a * b) * c := (mul_assoc a b c).symm
 
 /-- **Distributivity** (Axiom 7 in def.alg.commring):
-    `a * (b + c) = a * b + a * c` for all `a, b, c ∈ K`. -/
+    `a * (b + c) = a * b + a * c` for all `a, b, c ∈ K`. @statement_id stmt-src-def.alg.commring
+-/
 theorem commRing_left_distrib (a b c : K) : a * (b + c) = a * b + a * c := mul_add a b c
 
 /-- **Distributivity** (Axiom 7 in def.alg.commring):
@@ -165,7 +172,8 @@ theorem commRing_left_distrib (a b c : K) : a * (b + c) = a * b + a * c := mul_a
 theorem commRing_right_distrib (a b c : K) : (a + b) * c = a * c + b * c := add_mul a b c
 
 /-- **Neutrality of one** (Axiom 8 in def.alg.commring):
-    `a * 1 = a` for all `a ∈ K`. -/
+    `a * 1 = a` for all `a ∈ K`. @statement_id stmt-src-def.alg.commring
+-/
 theorem commRing_mul_one (a : K) : a * 1 = a := mul_one a
 
 /-- **Neutrality of one** (Axiom 8 in def.alg.commring):
@@ -173,7 +181,8 @@ theorem commRing_mul_one (a : K) : a * 1 = a := mul_one a
 theorem commRing_one_mul (a : K) : 1 * a = a := one_mul a
 
 /-- **Annihilation** (Axiom 9 in def.alg.commring):
-    `a * 0 = 0` for all `a ∈ K`. -/
+    `a * 0 = 0` for all `a ∈ K`. @statement_id stmt-src-def.alg.commring
+-/
 theorem commRing_mul_zero (a : K) : a * 0 = 0 := mul_zero a
 
 /-- **Annihilation** (Axiom 9 in def.alg.commring):
@@ -232,39 +241,49 @@ section StandardRules
 
 variable {K : Type*} [CommRing K]
 
-/-- Negation distributes over addition: `-(a + b) = (-a) + (-b)`. -/
+/-- Negation distributes over addition: `-(a + b) = (-a) + (-b)`. @statement_id stmt-src-lem.commring.neg-add
+-/
 theorem neg_add_distrib (a b : K) : -(a + b) = -a + -b := neg_add a b
 
-/-- Double negation: `-(-a) = a`. -/
+/-- Double negation: `-(-a) = a`. @statement_id stmt-src-lem.commring.neg-neg
+-/
 theorem neg_neg_eq (a : K) : -(-a) = a := neg_neg a
 
-/-- Scalar multiplication by integers distributes: `(n + m) • a = n • a + m • a`. -/
+/-- Scalar multiplication by integers distributes: `(n + m) • a = n • a + m • a`. @statement_id stmt-src-lem.commring.add-zsmul
+-/
 theorem add_zsmul_distrib (a : K) (n m : ℤ) : (n + m) • a = n • a + m • a := by rw [add_smul]
 
-/-- Scalar multiplication by integers is associative: `(n * m) • a = n • (m • a)`. -/
+/-- Scalar multiplication by integers is associative: `(n * m) • a = n • (m • a)`. @statement_id stmt-src-lem.commring.mul-zsmul
+-/
 theorem mul_zsmul_assoc (a : K) (n m : ℤ) : (n * m) • a = n • (m • a) := by rw [mul_smul]
 
-/-- Multiplication distributes over subtraction: `a * (b - c) = a * b - a * c`. -/
+/-- Multiplication distributes over subtraction: `a * (b - c) = a * b - a * c`. @statement_id stmt-src-lem.commring.mul-sub
+-/
 theorem mul_sub_distrib (a b c : K) : a * (b - c) = a * b - a * c := mul_sub a b c
 
-/-- Power of a product: `(a * b)^n = a^n * b^n`. -/
+/-- Power of a product: `(a * b)^n = a^n * b^n`. @statement_id stmt-src-lem.commring.mul-pow
+-/
 theorem mul_pow_eq (a b : K) (n : ℕ) : (a * b) ^ n = a ^ n * b ^ n := mul_pow a b n
 
-/-- Power addition rule: `a^(n+m) = a^n * a^m`. -/
+/-- Power addition rule: `a^(n+m) = a^n * a^m`. @statement_id stmt-src-lem.commring.pow-add
+-/
 theorem pow_add_eq (a : K) (n m : ℕ) : a ^ (n + m) = a ^ n * a ^ m := pow_add a n m
 
-/-- Power multiplication rule: `a^(n*m) = (a^n)^m`. -/
+/-- Power multiplication rule: `a^(n*m) = (a^n)^m`. @statement_id stmt-src-lem.commring.pow-mul
+-/
 theorem pow_mul_eq (a : K) (n m : ℕ) : a ^ (n * m) = (a ^ n) ^ m := pow_mul a n m
 
 /-- **The Binomial Theorem** (mentioned in def.alg.commring):
     `(a + b)^n = ∑_{k=0}^n C(n,k) * a^k * b^(n-k)`.
 
-    In Mathlib, this is `add_pow` from `Mathlib.Data.Nat.Choose.Sum`. -/
+    In Mathlib, this is `add_pow` from `Mathlib.Data.Nat.Choose.Sum`. @statement_id stmt-src-thm.commring.binomial
+-/
 theorem binomial_theorem (a b : K) (n : ℕ) :
     (a + b) ^ n = ∑ k ∈ Finset.range (n + 1), a ^ k * b ^ (n - k) * (n.choose k) :=
   add_pow a b n
 
-/-- Variant of the binomial theorem with subtraction. -/
+/-- Variant of the binomial theorem with subtraction. @statement_id stmt-src-lem.commring.binomial-sub
+-/
 theorem binomial_theorem_sub (a b : K) (n : ℕ) :
     (a - b) ^ n = ∑ m ∈ Finset.range (n + 1), (-1) ^ (m + n) * a ^ m * b ^ (n - m) * n.choose m :=
   sub_pow a b n
@@ -296,47 +315,57 @@ variable {K : Type*} [CommRing K]
 variable {M : Type*} [AddCommGroup M] [Module K M]
 
 /-- **Commutativity of addition** (Axiom 1 in def.alg.module):
-    `a + b = b + a` for all `a, b ∈ M`. -/
+    `a + b = b + a` for all `a, b ∈ M`. @statement_id stmt-src-def.alg.module
+-/
 theorem module_add_comm (a b : M) : a + b = b + a := add_comm a b
 
 /-- **Associativity of addition** (Axiom 2 in def.alg.module):
-    `a + (b + c) = (a + b) + c` for all `a, b, c ∈ M`. -/
+    `a + (b + c) = (a + b) + c` for all `a, b, c ∈ M`. @statement_id stmt-src-def.alg.module
+-/
 theorem module_add_assoc (a b c : M) : a + (b + c) = (a + b) + c := (add_assoc a b c).symm
 
 /-- **Neutrality of zero** (Axiom 3 in def.alg.module):
-    `a + 0 = a` for all `a ∈ M`. -/
+    `a + 0 = a` for all `a ∈ M`. @statement_id stmt-src-def.alg.module
+-/
 theorem module_add_zero (a : M) : a + 0 = a := add_zero a
 
 /-- **Subtraction undoes addition** (Axiom 4 in def.alg.module):
-    `a + b = c ↔ a = c - b` for all `a, b, c ∈ M`. -/
+    `a + b = c ↔ a = c - b` for all `a, b, c ∈ M`. @statement_id stmt-src-def.alg.module
+-/
 theorem module_sub_iff_add (a b c : M) : a + b = c ↔ a = c - b := by
   constructor
   · intro h; rw [← h, add_sub_cancel_right]
   · intro h; rw [h, sub_add_cancel]
 
 /-- **Associativity of scaling** (Axiom 5 in def.alg.module):
-    `u • (v • a) = (u * v) • a` for all `u, v ∈ K` and `a ∈ M`. -/
+    `u • (v • a) = (u * v) • a` for all `u, v ∈ K` and `a ∈ M`. @statement_id stmt-src-def.alg.module
+-/
 theorem module_smul_assoc (u v : K) (a : M) : u • (v • a) = (u * v) • a := by
   rw [mul_smul]
 
 /-- **Left distributivity** (Axiom 6 in def.alg.module):
-    `u • (a + b) = u • a + u • b` for all `u ∈ K` and `a, b ∈ M`. -/
+    `u • (a + b) = u • a + u • b` for all `u ∈ K` and `a, b ∈ M`. @statement_id stmt-src-def.alg.module
+-/
 theorem module_smul_add (u : K) (a b : M) : u • (a + b) = u • a + u • b := smul_add u a b
 
 /-- **Right distributivity** (Axiom 7 in def.alg.module):
-    `(u + v) • a = u • a + v • a` for all `u, v ∈ K` and `a ∈ M`. -/
+    `(u + v) • a = u • a + v • a` for all `u, v ∈ K` and `a ∈ M`. @statement_id stmt-src-def.alg.module
+-/
 theorem module_add_smul (u v : K) (a : M) : (u + v) • a = u • a + v • a := add_smul u v a
 
 /-- **Neutrality of one** (Axiom 8 in def.alg.module):
-    `1 • a = a` for all `a ∈ M`. -/
+    `1 • a = a` for all `a ∈ M`. @statement_id stmt-src-def.alg.module
+-/
 theorem module_one_smul (a : M) : (1 : K) • a = a := one_smul K a
 
 /-- **Left annihilation** (Axiom 9 in def.alg.module):
-    `0 • a = 0` for all `a ∈ M`. -/
+    `0 • a = 0` for all `a ∈ M`. @statement_id stmt-src-def.alg.module
+-/
 theorem module_zero_smul (a : M) : (0 : K) • a = 0 := zero_smul K a
 
 /-- **Right annihilation** (Axiom 10 in def.alg.module):
-    `u • 0 = 0` for all `u ∈ K`. -/
+    `u • 0 = 0` for all `u ∈ K`. @statement_id stmt-src-def.alg.module
+-/
 theorem module_smul_zero (u : K) : u • (0 : M) = 0 := smul_zero u
 
 /-!
@@ -352,21 +381,26 @@ The following theorems show the equivalence between these approaches.
 
 /-- **Additive inverse via scaling** (Note in def.alg.module):
     The additive inverse of `a` can be constructed as `(-1) • a`.
-    This shows why modules don't need explicit negation in their axioms. -/
+    This shows why modules don't need explicit negation in their axioms. @statement_id stmt-src-lem.module.neg-one-smul
+-/
 theorem module_neg_eq_neg_one_smul (a : M) : -a = (-1 : K) • a := by
   rw [neg_one_smul]
 
-/-- Subtraction can be expressed as addition of the negation. -/
+/-- Subtraction can be expressed as addition of the negation. @statement_id stmt-src-lem.module.sub-eq-add-neg
+-/
 theorem module_sub_eq_add_neg (a b : M) : a - b = a + (-b) := sub_eq_add_neg a b
 
-/-- Subtraction can be expressed using scaling by `-1`. -/
+/-- Subtraction can be expressed using scaling by `-1`. @statement_id stmt-src-lem.module.sub-eq-add-neg-one-smul
+-/
 theorem module_sub_eq_add_neg_one_smul (a b : M) : a - b = a + (-1 : K) • b := by
   rw [neg_one_smul, sub_eq_add_neg]
 
-/-- Negation distributes over addition in a module. -/
+/-- Negation distributes over addition in a module. @statement_id stmt-src-lem.module.neg-add
+-/
 theorem module_neg_add (a b : M) : -(a + b) = -a + -b := neg_add a b
 
-/-- Double negation in a module. -/
+/-- Double negation in a module. @statement_id stmt-src-lem.module.neg-neg
+-/
 theorem module_neg_neg (a : M) : -(-a) = a := neg_neg a
 
 end ModuleBasics
@@ -407,21 +441,25 @@ section FiniteSumsProducts
 variable {K : Type*} [CommRing K]
 variable {S : Type*}
 
-/-- Finite sums can be split over disjoint sets. -/
+/-- Finite sums can be split over disjoint sets. @statement_id stmt-src-lem.commring.sum-disjoint
+-/
 theorem sum_disjoint_union [DecidableEq S] {X Y : Finset S} (hXY : Disjoint X Y) (f : S → K) :
     ∑ s ∈ X ∪ Y, f s = ∑ s ∈ X, f s + ∑ s ∈ Y, f s :=
   Finset.sum_union hXY
 
-/-- Finite sums distribute over addition. -/
+/-- Finite sums distribute over addition. @statement_id stmt-src-lem.commring.sum-add
+-/
 theorem sum_add_distrib' {T : Finset S} (f g : S → K) :
     ∑ s ∈ T, (f s + g s) = ∑ s ∈ T, f s + ∑ s ∈ T, g s :=
   Finset.sum_add_distrib
 
-/-- Empty sum equals zero. -/
+/-- Empty sum equals zero. @statement_id stmt-src-lem.commring.sum-empty
+-/
 theorem sum_empty (f : S → K) : ∑ _s ∈ (∅ : Finset S), f _s = 0 :=
   Finset.sum_empty
 
-/-- Empty product equals one. -/
+/-- Empty product equals one. @statement_id stmt-src-lem.commring.prod-empty
+-/
 theorem prod_empty (f : S → K) : ∏ _s ∈ (∅ : Finset S), f _s = 1 :=
   Finset.prod_empty
 
@@ -463,7 +501,8 @@ in a commutative ring).
 -/
 
 /-- **Definition def.commring.inverse (a)**: `b` is an inverse of `a` if `a * b = 1`.
-    In a commutative ring, this is equivalent to `b * a = 1`. -/
+    In a commutative ring, this is equivalent to `b * a = 1`. @statement_id stmt-src-def.commring.inverse
+-/
 def IsInverse (a b : L) : Prop := a * b = 1
 
 /-- In a commutative ring, `IsInverse a b` is symmetric: if `a * b = 1`, then `b * a = 1`. -/
@@ -482,7 +521,8 @@ theorem not_isInverse_zero_of_nontrivial [Nontrivial L] (b : L) : ¬IsInverse (0
   simp [IsInverse]
 
 /-- If `a` has an inverse, then `a * b = 1` implies `b` is that inverse.
-    Label: thm.commring.inverse-uni -/
+    Label: thm.commring.inverse-uni @statement_id stmt-src-lem.commring.inverse-uni
+-/
 theorem isInverse_unique {a b c : L} (hab : IsInverse a b) (hac : IsInverse a c) : b = c := by
   have hab' : a * b = 1 := hab
   have hac' : a * c = 1 := hac
@@ -500,10 +540,12 @@ An element `a` is **invertible** (or a **unit**) if it has an inverse.
 -/
 
 /-- **Definition def.commring.inverse (b)**: `a` is invertible if there exists `b` with `a * b = 1`.
-    In Mathlib, this is `IsUnit a`. -/
+    In Mathlib, this is `IsUnit a`. @statement_id stmt-src-def.commring.invertible
+-/
 def IsInvertible (a : L) : Prop := ∃ b : L, IsInverse a b
 
-/-- `IsInvertible` is equivalent to Mathlib's `IsUnit`. -/
+/-- `IsInvertible` is equivalent to Mathlib's `IsUnit`. @statement_id stmt-src-lem.commring.invertible-iff-isunit
+-/
 theorem isInvertible_iff_isUnit (a : L) : IsInvertible a ↔ IsUnit a := by
   constructor
   · intro ⟨b, hab⟩
@@ -520,7 +562,8 @@ theorem not_isInvertible_zero [Nontrivial L] : ¬IsInvertible (0 : L) := by
   intro ⟨b, hb⟩
   exact not_isInverse_zero_of_nontrivial b hb
 
-/-- The product of two invertible elements is invertible. -/
+/-- The product of two invertible elements is invertible. @statement_id stmt-src-lem.commring.invertible-mul
+-/
 theorem isInvertible_mul {a b : L} (ha : IsInvertible a) (hb : IsInvertible b) :
     IsInvertible (a * b) := by
   rw [isInvertible_iff_isUnit] at *
@@ -545,7 +588,8 @@ theorem int_isUnit_iff (n : ℤ) : IsUnit n ↔ n = 1 ∨ n = -1 := Int.isUnit_i
 theorem field_isUnit_of_ne_zero {F : Type*} [Field F] {a : F} (ha : a ≠ 0) : IsUnit a :=
   IsUnit.mk0 a ha
 
-/-- In a field, `a` is invertible iff `a ≠ 0`. -/
+/-- In a field, `a` is invertible iff `a ≠ 0`. @statement_id stmt-src-lem.commring.field-isunit
+-/
 theorem field_isUnit_iff {F : Type*} [Field F] {a : F} : IsUnit a ↔ a ≠ 0 := by
   constructor
   · intro ha h
@@ -645,7 +689,8 @@ In Mathlib, for a unit `u : Lˣ` and element `b : L`:
 
     Note: This is equivalent to `AlgebraicCombinatorics.divByUnit` in `DividingFPS.lean`.
     Both definitions exist for pedagogical reasons: this file provides foundational
-    ring theory, while `DividingFPS.lean` focuses on FPS-specific applications. -/
+    ring theory, while `DividingFPS.lean` focuses on FPS-specific applications. @statement_id stmt-src-def.commring.fraction
+-/
 def fraction (b : L) (u : Lˣ) : L := b * (u⁻¹ : Lˣ)
 
 /-- Bridge lemma: `fraction` is definitionally equal to `divByUnit`.
@@ -654,7 +699,8 @@ theorem fraction_eq_divByUnit (b : L) (u : Lˣ) :
     fraction b u = AlgebraicCombinatorics.divByUnit b u := rfl
 
 /-- Alternative characterization: `b/a = c` iff `b = c * a`.
-    Label: def.commring.fracs (b) -/
+    Label: def.commring.fracs (b) @statement_id stmt-src-lem.commring.fraction-eq-iff
+-/
 theorem fraction_eq_iff (b c : L) (u : Lˣ) : fraction b u = c ↔ b = c * u := by
   simp only [fraction]
   constructor
@@ -691,7 +737,8 @@ In Mathlib, for `u : Lˣ`, integer powers are defined via `zpow`:
 
 /-- For a unit, `u^(-n) = (u⁻¹)^n` for any natural number `n`.
     This is the definition of negative powers.
-    Label: def.commring.fracs (c) -/
+    Label: def.commring.fracs (c) @statement_id stmt-src-lem.commring.unit-zpow-neg
+-/
 theorem unit_zpow_neg (u : Lˣ) (n : ℕ) : u ^ (-(n : ℤ)) = (u⁻¹ : Lˣ) ^ n := by
   simp [zpow_neg, zpow_natCast]
 
@@ -704,7 +751,8 @@ theorem unit_zpow_neg_one (u : Lˣ) : u ^ (-1 : ℤ) = u⁻¹ := zpow_neg_one u
 example (u : Lˣ) (n : ℤ) : Lˣ := u ^ n
 
 /-- Power addition rule extends to integer exponents: `u^(m+n) = u^m * u^n`.
-    Label: def.commring.fracs (c) -/
+    Label: def.commring.fracs (c) @statement_id stmt-src-lem.commring.unit-zpow-add
+-/
 theorem unit_zpow_add (u : Lˣ) (m n : ℤ) : u ^ (m + n) = u ^ m * u ^ n := zpow_add u m n
 
 /-- Power of power rule for integer exponents: `(u^m)^n = u^(m*n)`.

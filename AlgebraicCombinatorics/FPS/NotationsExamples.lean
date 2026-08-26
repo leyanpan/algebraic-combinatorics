@@ -142,7 +142,8 @@ This is the fundamental definition of the binomial coefficient.
 In Mathlib, this is expressed using the descending Pochhammer symbol:
 `(descPochhammer ℤ n).smeval r = n.factorial • Ring.choose r n`
 
-For fields of characteristic zero, we can write this as a division. -/
+For fields of characteristic zero, we can write this as a division. @statement_id stmt-src-def.binom.binom
+-/
 theorem binom_def_formula {K : Type*} [Field K] [CharZero K] (r : K) (n : ℕ) :
     Ring.choose r n = (descPochhammer ℤ n).smeval r / n.factorial := by
   have h : (n.factorial : K) ≠ 0 := Nat.cast_ne_zero.mpr (Nat.factorial_ne_zero n)
@@ -164,7 +165,8 @@ theorem descPochhammer_eq_descFactorial (n k : ℕ) :
 /-- The binomial coefficient satisfies the factorial formula:
 $$n! \cdot \binom{r}{n} = r(r-1)(r-2)\cdots(r-n+1)$$
 
-This is `Ring.descPochhammer_eq_factorial_smul_choose` in Mathlib. -/
+This is `Ring.descPochhammer_eq_factorial_smul_choose` in Mathlib. @statement_id stmt-src-lem.binom.factorial_smul
+-/
 theorem binom_factorial_smul {R : Type*} [CommRing R] [BinomialRing R] [NatPowAssoc R]
     (r : R) (n : ℕ) :
     n.factorial • Ring.choose r n = (descPochhammer ℤ n).smeval r :=
@@ -173,34 +175,39 @@ theorem binom_factorial_smul {R : Type*} [CommRing R] [BinomialRing R] [NatPowAs
 /-- For natural numbers, `Ring.choose` agrees with `Nat.choose`:
 $$\binom{n}{k} = \text{Nat.choose } n\, k$$
 
-This is `Ring.choose_natCast` in Mathlib. -/
+This is `Ring.choose_natCast` in Mathlib. @statement_id stmt-src-lem.binom.natcast
+-/
 theorem binom_natCast {R : Type*} [CommRing R] [BinomialRing R] [NatPowAssoc R]
     (n k : ℕ) : Ring.choose (n : R) k = Nat.choose n k :=
   Ring.choose_natCast n k
 
 /-- Base case: $\binom{r}{0} = 1$ for any $r$.
 
-This follows from the definition: the empty product $r(r-1)\cdots(r-0+1)$ equals $1$. -/
+This follows from the definition: the empty product $r(r-1)\cdots(r-0+1)$ equals $1$. @statement_id stmt-src-lem.binom.zero_right
+-/
 theorem binom_zero_right {R : Type*} [CommRing R] [BinomialRing R] [NatPowAssoc R]
     (r : R) : Ring.choose r 0 = 1 :=
   Ring.choose_zero_right r
 
 /-- For $k > 0$, we have $\binom{0}{k} = 0$.
 
-This follows from the definition: the product $0 \cdot (-1) \cdot (-2) \cdots$ has a factor of $0$. -/
+This follows from the definition: the product $0 \cdot (-1) \cdot (-2) \cdots$ has a factor of $0$. @statement_id stmt-src-lem.binom.zero_left_pos
+-/
 theorem binom_zero_left_pos {R : Type*} [CommRing R] [BinomialRing R] [NatPowAssoc R]
     {k : ℕ} (hk : 0 < k) : Ring.choose (0 : R) k = 0 :=
   Ring.choose_zero_pos R hk
 
 /-- First case: $\binom{r}{1} = r$.
 
-This follows from the definition: $\frac{r}{1!} = r$. -/
+This follows from the definition: $\frac{r}{1!} = r$. @statement_id stmt-src-lem.binom.one_right
+-/
 theorem binom_one_right {R : Type*} [CommRing R] [BinomialRing R] [NatPowAssoc R]
     (r : R) : Ring.choose r 1 = r := by
   rw [Ring.choose_one_right', npow_one]
 
 /-- Example \ref{exa.binom.-1choosek}: For any $k \in \mathbb{N}$,
-$\binom{-1}{k} = (-1)^k$. -/
+$\binom{-1}{k} = (-1)^k$. @statement_id stmt-src-lem.binom.neg_one
+-/
 theorem binom_neg_one (k : ℕ) : Ring.choose (-1 : ℤ) k = (-1 : ℤ) ^ k := by
   rw [Ring.choose_neg, show (1 : ℤ) + ↑k - 1 = ↑k by ring, Ring.choose_natCast, Nat.choose_self]
   simp [Units.smul_def, Int.coe_negOnePow_natCast]
@@ -208,12 +215,14 @@ theorem binom_neg_one (k : ℕ) : Ring.choose (-1 : ℤ) k = (-1 : ℤ) ^ k := b
 /-- The factorial formula for binomial coefficients: For $n, k \in \mathbb{N}$ with $k \leq n$,
 $$\binom{n}{k} = \frac{n!}{k!(n-k)!}$$
 
-This is `Nat.choose_eq_factorial_div_factorial` in Mathlib (Equation \eqref{eq.binom.fac-form}). -/
+This is `Nat.choose_eq_factorial_div_factorial` in Mathlib (Equation \eqref{eq.binom.fac-form}). @statement_id stmt-src-lem.binom.fac-form
+-/
 theorem binom_factorial_formula {n k : ℕ} (h : k ≤ n) :
     n.choose k = n.factorial / (k.factorial * (n - k).factorial) :=
   Nat.choose_eq_factorial_div_factorial h
 
-/-- The product of odd numbers 1·3·5·...·(2n-1) equals the double factorial (2n-1)‼. -/
+/-- The product of odd numbers 1·3·5·...·(2n-1) equals the double factorial (2n-1)‼. @statement_id stmt-src-lem.binom.prod_odd_eq_doublefactorial
+-/
 lemma prod_odd_eq_doubleFactorial (n : ℕ) :
     ∏ i ∈ range n, (2 * i + 1) = (2 * n - 1)‼ := by
   induction n with
@@ -239,7 +248,8 @@ private lemma factorial_two_mul' (n : ℕ) : (2 * n).factorial = (2 * n)‼ * (2
     rw [h]
     exact factorial_eq_mul_doubleFactorial (2 * m + 1)
 
-/-- n! divides the product (1·3·5·...·(2n-1)) · 2^n. -/
+/-- n! divides the product (1·3·5·...·(2n-1)) · 2^n. @statement_id stmt-src-lem.binom.factorial_dvd_prod_odd_mul_pow
+-/
 lemma factorial_dvd_prod_odd_mul_pow (n : ℕ) :
     n.factorial ∣ (∏ i ∈ range n, (2 * i + 1)) * 2 ^ n := by
   have h_fact : (2 * n).factorial = 2 ^ n * n.factorial * (2 * n - 1)‼ := by
@@ -263,7 +273,8 @@ lemma factorial_dvd_prod_odd_mul_pow (n : ℕ) :
 /-- Example \ref{exa.binom.2n-choose-n}: For $n \in \mathbb{N}$,
 $$\binom{2n}{n} = \frac{1 \cdot 3 \cdot 5 \cdots (2n-1)}{n!} \cdot 2^n$$
 
-This relates the central binomial coefficient to double factorials. -/
+This relates the central binomial coefficient to double factorials. @statement_id stmt-src-lem.binom.2n-choose-n
+-/
 theorem binom_two_n_n_eq (n : ℕ) :
     (2 * n).choose n = (∏ i ∈ range n, (2 * i + 1)) * 2 ^ n / n.factorial := by
   induction n with
@@ -300,7 +311,8 @@ Note: For natural numbers, we need $m > 0$ because when $m = 0$ and $n = 1$,
 the LHS is $\binom{0}{1} = 0$ but the RHS (with Nat subtraction) becomes
 $\binom{0}{0} + \binom{0}{1} = 1 + 0 = 1$.
 
-This is `Nat.choose_eq_choose_pred_add` in Mathlib. -/
+This is `Nat.choose_eq_choose_pred_add` in Mathlib. @statement_id stmt-src-lem.binom.pascal_nat
+-/
 theorem pascal_identity (m n : ℕ) (hn : 0 < n) (hm : 0 < m) :
     m.choose n = (m - 1).choose (n - 1) + (m - 1).choose n := by
   exact Nat.choose_eq_choose_pred_add hm hn
@@ -309,7 +321,8 @@ theorem pascal_identity (m n : ℕ) (hn : 0 < n) (hm : 0 < m) :
 $$\binom{m}{n} = \binom{m-1}{n-1} + \binom{m-1}{n}$$
 
 This version works for any element $m$ in a binomial ring and any positive natural number $n$.
-This is `Ring.choose_succ_succ` in Mathlib, rewritten in the form matching the TeX source. -/
+This is `Ring.choose_succ_succ` in Mathlib, rewritten in the form matching the TeX source. @statement_id stmt-src-prop.binom.rec
+-/
 theorem pascal_identity_ring {R : Type*} [CommRing R] [BinomialRing R] [NatPowAssoc R]
     (m : R) (n : ℕ) (hn : 0 < n) :
     Ring.choose m n = Ring.choose (m - 1) (n - 1) + Ring.choose (m - 1) n := by
@@ -323,7 +336,8 @@ theorem pascal_identity_ring {R : Type*} [CommRing R] [BinomialRing R] [NatPowAs
 $$\binom{r+1}{k+1} = \binom{r}{k} + \binom{r}{k+1}$$
 
 This is the fundamental recurrence for generalized binomial coefficients.
-This is `Ring.choose_succ_succ` in Mathlib. -/
+This is `Ring.choose_succ_succ` in Mathlib. @statement_id stmt-src-lem.binom.pascal_succ
+-/
 theorem pascal_identity_succ {R : Type*} [CommRing R] [BinomialRing R] [NatPowAssoc R]
     (r : R) (k : ℕ) :
     Ring.choose (r + 1) (k + 1) = Ring.choose r k + Ring.choose r (k + 1) :=
@@ -348,19 +362,22 @@ theorem pascal_identity_rat (m : ℚ) (n : ℕ) (hn : 0 < n) :
 /-- Proposition \ref{prop.binom.0}: Let $m, n \in \mathbb{N}$ with $m < n$.
 Then $\binom{m}{n} = 0$.
 
-This is `Nat.choose_eq_zero_of_lt` in Mathlib. -/
+This is `Nat.choose_eq_zero_of_lt` in Mathlib. @statement_id stmt-src-prop.binom.0
+-/
 theorem binom_zero_of_lt {m n : ℕ} (h : m < n) : m.choose n = 0 :=
   Nat.choose_eq_zero_of_lt h
 
 /-- Theorem \ref{thm.binom.sym} (Symmetry of Binomial Coefficients):
 Let $n \in \mathbb{N}$ and $k \in \mathbb{R}$. Then $\binom{n}{k} = \binom{n}{n-k}$.
 
-For natural numbers $k \leq n$, this is `Nat.choose_symm`. -/
+For natural numbers $k \leq n$, this is `Nat.choose_symm`. @statement_id stmt-src-thm.binom.sym
+-/
 theorem binom_symm {n k : ℕ} (h : k ≤ n) : n.choose k = n.choose (n - k) :=
   (Nat.choose_symm h).symm
 
 /-- Symmetry of binomial coefficients when $n = a + b$.
-This is a useful variant: $\binom{a+b}{a} = \binom{a+b}{b}$. -/
+This is a useful variant: $\binom{a+b}{a} = \binom{a+b}{b}$. @statement_id stmt-src-lem.binom.symm_add
+-/
 @[simp]
 theorem binom_symm_add (a b : ℕ) : (a + b).choose a = (a + b).choose b :=
   Nat.choose_symm_add
@@ -370,7 +387,8 @@ theorem binom_symm_of_eq_add {n a b : ℕ} (h : n = a + b) : n.choose a = n.choo
   Nat.choose_symm_of_eq_add h
 
 /-- Symmetry of generalized binomial coefficients for `Ring.choose` when the first
-argument is a natural number. This extends `binom_symm` to binomial rings. -/
+argument is a natural number. This extends `binom_symm` to binomial rings. @statement_id stmt-src-lem.binom.symm_ring
+-/
 theorem binom_symm_ring {R : Type*} [CommRing R] [BinomialRing R] [NatPowAssoc R]
     (n k : ℕ) (h : k ≤ n) : Ring.choose (n : R) k = Ring.choose (n : R) (n - k) := by
   simp only [Ring.choose_natCast]
@@ -394,7 +412,8 @@ Binet's formula is proved there as `Real.coe_fib_eq`.
 
 /-- The Fibonacci sequence.
 
-**Mathlib note**: This is definitionally equal to `Nat.fib` in Mathlib. -/
+**Mathlib note**: This is definitionally equal to `Nat.fib` in Mathlib. @statement_id stmt-src-def.fib.fibonacci
+-/
 def fibonacci : ℕ → ℕ := Nat.fib
 
 /-- Our definition of `fibonacci` is definitionally equal to `Nat.fib`. -/
@@ -402,12 +421,14 @@ theorem fibonacci_eq_nat_fib (n : ℕ) : fibonacci n = Nat.fib n := rfl
 
 /-- The golden ratio $\phi_+ = \frac{1 + \sqrt{5}}{2}$.
 
-**Mathlib note**: This is equal to `Real.goldenRatio` in Mathlib. -/
+**Mathlib note**: This is equal to `Real.goldenRatio` in Mathlib. @statement_id stmt-src-def.fib.golden_ratio_plus
+-/
 noncomputable def goldenRatioPlus : ℝ := (1 + Real.sqrt 5) / 2
 
 /-- The conjugate golden ratio $\phi_- = \frac{1 - \sqrt{5}}{2}$.
 
-**Mathlib note**: This is equal to `Real.goldenConj` in Mathlib. -/
+**Mathlib note**: This is equal to `Real.goldenConj` in Mathlib. @statement_id stmt-src-def.fib.golden_ratio_minus
+-/
 noncomputable def goldenRatioMinus : ℝ := (1 - Real.sqrt 5) / 2
 
 /-- Our `goldenRatioPlus` equals Mathlib's `Real.goldenRatio`. -/
@@ -418,7 +439,8 @@ theorem goldenRatioMinus_eq : goldenRatioMinus = Real.goldenConj := rfl
 
 /-- The generating function of the Fibonacci sequence is $\frac{x}{1-x-x^2}$.
 
-Equation \eqref{eq.sec.gf.exas.1.Fx=1}. -/
+Equation \eqref{eq.sec.gf.exas.1.Fx=1}. @statement_id stmt-src-thm.fib.gf
+-/
 theorem fibonacci_gf : (PowerSeries.mk (fun n => (fibonacci n : ℚ)) : PowerSeries ℚ) =
     (PowerSeries.X : PowerSeries ℚ) * ((1 : PowerSeries ℚ) - PowerSeries.X - PowerSeries.X ^ 2)⁻¹ := by
   let F := PowerSeries.mk (fun n => (Nat.fib n : ℚ))
@@ -477,7 +499,8 @@ theorem fibonacci_gf : (PowerSeries.mk (fun n => (fibonacci n : ℚ)) : PowerSer
 $$f_n = \frac{1}{\sqrt{5}} \left( \phi_+^n - \phi_-^n \right)$$
 where $\phi_\pm = \frac{1 \pm \sqrt{5}}{2}$ are the golden ratios.
 
-**Mathlib note**: This is proved as `Real.coe_fib_eq` in Mathlib. -/
+**Mathlib note**: This is proved as `Real.coe_fib_eq` in Mathlib. @statement_id stmt-src-thm.fib.binet
+-/
 theorem fibonacci_binet (n : ℕ) :
     (fibonacci n : ℝ) = (goldenRatioPlus ^ n - goldenRatioMinus ^ n) / Real.sqrt 5 := by
   simp only [fibonacci_eq_nat_fib, goldenRatioPlus_eq, goldenRatioMinus_eq]
@@ -507,7 +530,8 @@ Here we represent 1 as `true` and 0 as `false`.
 
 **Mathlib note**: This is an alternative representation to Mathlib's `DyckWord` structure,
 which uses a `DyckStep` enum with constructors `U` (up) and `D` (down). The two representations
-are equivalent via the bijection sending `true` to `U` and `false` to `D`. -/
+are equivalent via the bijection sending `true` to `U` and `false` to `D`. @statement_id stmt-src-def.catalan.dyck
+-/
 def isDyckWord (w : List Bool) : Prop :=
   w.count true = w.count false ∧
   ∀ k : ℕ, k ≤ w.length →
@@ -516,7 +540,8 @@ def isDyckWord (w : List Bool) : Prop :=
 /-- The Catalan numbers, defined as $c_n = \frac{1}{n+1}\binom{2n}{n}$.
 
 **Mathlib note**: This is equivalent to Mathlib's `catalan`, which is defined recursively.
-The equivalence is proved by `catalan_eq_mathlib_catalan`. -/
+The equivalence is proved by `catalan_eq_mathlib_catalan`. @statement_id stmt-src-def.catalan.catalan
+-/
 def catalan (n : ℕ) : ℕ := (2 * n).choose n / (n + 1)
 
 /-- Our explicit definition of `catalan` equals Mathlib's recursive `catalan`.
@@ -543,7 +568,8 @@ theorem catalan_three : catalan 3 = 5 := by rfl
 
 /-- The Catalan recurrence relation:
 $$c_n = \sum_{k=0}^{n-1} c_k c_{n-1-k}$$
-for $n \geq 1$, with $c_0 = 1$. -/
+for $n \geq 1$, with $c_0 = 1$. @statement_id stmt-src-thm.catalan.recurrence
+-/
 theorem catalan_recurrence (n : ℕ) (hn : 0 < n) :
     catalan n = ∑ k ∈ range n, catalan k * catalan (n - 1 - k) := by
   -- Convert to Mathlib's catalan
@@ -557,7 +583,8 @@ theorem catalan_recurrence (n : ℕ) (hn : 0 < n) :
   exact (Finset.sum_range (fun i => _root_.catalan i * _root_.catalan (m - i))).symm
 
 /-- Equation \eqref{eq.sec.gf.exas.cn=1/(n+1)}: The explicit formula for Catalan numbers:
-$$c_n = \frac{1}{n+1} \binom{2n}{n}$$ -/
+$$c_n = \frac{1}{n+1} \binom{2n}{n}$$ @statement_id stmt-src-lem.catalan.explicit
+-/
 theorem catalan_explicit (n : ℕ) : catalan n = (2 * n).choose n / (n + 1) := by
   rfl
 
@@ -567,7 +594,8 @@ $$c_n = \binom{2n}{n} - \binom{2n}{n-1}$$
 Note: For $n = 0$, this becomes $1 - \binom{0}{-1} = 1 - 0 = 1$, which is correct since
 $\binom{m}{k} = 0$ when $k < 0$ (or equivalently, when $k$ is not a natural number).
 In Lean's `Nat.choose`, we have `0.choose (0 - 1) = 0.choose 0 = 1` due to subtraction
-truncation, so this theorem requires $n > 0$. -/
+truncation, so this theorem requires $n > 0$. @statement_id stmt-src-lem.catalan.as_diff
+-/
 theorem catalan_as_diff {n : ℕ} (hn : 0 < n) :
     catalan n = (2 * n).choose n - (2 * n).choose (n - 1) := by
   -- Key identity: (2n).choose (n-1) * (n+1) = (2n).choose n * n
@@ -590,7 +618,8 @@ theorem catalan_as_diff {n : ℕ} (hn : 0 < n) :
   simp
 
 /-- The generating function of the Catalan numbers satisfies
-$C(x) = 1 + x \cdot C(x)^2$. -/
+$C(x) = 1 + x \cdot C(x)^2$. @statement_id stmt-src-thm.catalan.gf_equation
+-/
 theorem catalan_gf_equation :
     let C := PowerSeries.mk (fun n => (catalan n : ℚ))
     C = 1 + PowerSeries.X * C ^ 2 := by
@@ -619,7 +648,8 @@ theorem catalan_gf_equation :
 /-- Recurrence relation for Ring.choose at 1/2:
 $(n + 1) \cdot \binom{1/2}{n+1} = (1/2 - n) \cdot \binom{1/2}{n}$.
 
-This follows from the descending Pochhammer formula for binomial coefficients. -/
+This follows from the descending Pochhammer formula for binomial coefficients. @statement_id stmt-src-lem.catalan.choose_half_recurrence
+-/
 lemma choose_half_recurrence (n : ℕ) :
     (n + 1 : ℚ) * Ring.choose (1/2 : ℚ) (n + 1) = (1/2 - n) * Ring.choose (1/2 : ℚ) n := by
   have h := Ring.descPochhammer_eq_factorial_smul_choose (1/2 : ℚ) (n + 1)
@@ -639,7 +669,8 @@ lemma choose_half_recurrence (n : ℕ) :
 
 /-- Key identity: $\binom{1/2}{n+1} \cdot (-4)^{n+1} \cdot (n+1) = -2 \cdot \binom{2n}{n}$.
 
-This relates the binomial coefficient at 1/2 to the central binomial coefficient. -/
+This relates the binomial coefficient at 1/2 to the central binomial coefficient. @statement_id stmt-src-lem.catalan.a_eq_neg_two_centralbinom
+-/
 lemma A_eq_neg_two_centralBinom (n : ℕ) :
     Ring.choose (1/2 : ℚ) (n + 1) * (-4 : ℚ)^(n + 1) * (n + 1) = -2 * Nat.centralBinom n := by
   induction n with
@@ -704,7 +735,8 @@ lemma A_eq_neg_two_centralBinom (n : ℕ) :
       _ = -2 * Nat.centralBinom (n + 1) := step6
 
 /-- The key coefficient identity for the Catalan generating function:
-$\binom{1/2}{n+1} \cdot (-4)^{n+1} = -2 \cdot c_n$. -/
+$\binom{1/2}{n+1} \cdot (-4)^{n+1} = -2 \cdot c_n$. @statement_id stmt-src-lem.catalan.choose_half_neg4_pow
+-/
 lemma choose_half_neg4_pow_eq (n : ℕ) :
     Ring.choose (1/2 : ℚ) (n + 1) * (-4 : ℚ)^(n + 1) = -2 * catalan n := by
   have h := A_eq_neg_two_centralBinom n
@@ -734,7 +766,8 @@ $2x \cdot C(x) = 1 - \sqrt{1 - 4x}$ to avoid division by $x$ in power series
 The square root $\sqrt{1 - 4x}$ is represented by the binomial series
 $\sum_{n \geq 0} \binom{1/2}{n} (-4x)^n = \sum_{n \geq 0} \binom{1/2}{n} (-4)^n x^n$.
 
-Equation \eqref{eq.sec.gf.exas.2.-}. -/
+Equation \eqref{eq.sec.gf.exas.2.-}. @statement_id stmt-src-thm.catalan.gf_explicit
+-/
 theorem catalan_gf_explicit :
     (2 : ℚ) • (PowerSeries.mk (fun n => (catalan n : ℚ)) * PowerSeries.X) =
       (1 : PowerSeries ℚ) - PowerSeries.mk (fun n => Ring.choose (1/2 : ℚ) n * (-4 : ℚ)^n) := by
@@ -767,7 +800,8 @@ $$\binom{a+b}{n} = \sum_{k=0}^{n} \binom{a}{k} \binom{b}{n-k}$$
 
 **Mathlib note**: Mathlib's `Nat.add_choose_eq` uses `∑ ij ∈ antidiagonal n` instead of
 `∑ k ∈ range (n + 1)`. The two formulations are equivalent via
-`Finset.sum_antidiagonal_eq_sum_range_succ_mk`. This version matches the source material. -/
+`Finset.sum_antidiagonal_eq_sum_range_succ_mk`. This version matches the source material. @statement_id stmt-src-thm.vandermonde
+-/
 theorem vandermonde_convolution (a b n : ℕ) :
     (a + b).choose n = ∑ k ∈ range (n + 1), a.choose k * b.choose (n - k) := by
   rw [Nat.add_choose_eq, Finset.Nat.sum_antidiagonal_eq_sum_range_succ_mk]
@@ -782,7 +816,8 @@ Consider the sequence $(a_0, a_1, a_2, \ldots)$ defined by:
 Using generating functions, we can show that $a_n = 2^{n+1} - (n+1)$.
 -/
 
-/-- The sequence defined by $a_0 = 1$ and $a_{n+1} = 2a_n + n$. -/
+/-- The sequence defined by $a_0 = 1$ and $a_{n+1} = 2a_n + n$. @statement_id stmt-src-def.recurrence.seq
+-/
 def exampleRecurrence : ℕ → ℕ
   | 0 => 1
   | n + 1 => 2 * exampleRecurrence n + n
@@ -799,7 +834,8 @@ theorem exampleRecurrence_one : exampleRecurrence 1 = 2 := rfl
 @[simp]
 theorem exampleRecurrence_two : exampleRecurrence 2 = 5 := rfl
 
-/-- The explicit formula: $a_n = 2^{n+1} - (n+1)$. -/
+/-- The explicit formula: $a_n = 2^{n+1} - (n+1)$. @statement_id stmt-src-thm.recurrence.explicit
+-/
 theorem exampleRecurrence_explicit (n : ℕ) :
     exampleRecurrence n = 2 ^ (n + 1) - (n + 1) := by
   induction n with
@@ -820,7 +856,8 @@ These are helper results about power series used in the examples above.
 
 /-- The geometric series: $\frac{1}{1-x} = 1 + x + x^2 + x^3 + \cdots$
 
-Equation \eqref{eq.sec.gf.exas.1.1/1-x}. -/
+Equation \eqref{eq.sec.gf.exas.1.1/1-x}. @statement_id stmt-src-lem.gf.geometric_series
+-/
 theorem geometric_series :
     (1 - PowerSeries.X : PowerSeries ℚ)⁻¹ = PowerSeries.mk (fun _ => (1 : ℚ)) := by
   rw [PowerSeries.inv_eq_iff_mul_eq_one]
@@ -874,7 +911,8 @@ private lemma one_sub_smul_X_mul_geom (α : ℚ) :
 
 /-- Generalized geometric series: $\frac{1}{1-\alpha x} = \sum_{k \geq 0} \alpha^k x^k$
 
-Equation \eqref{eq.sec.gf.exas.1.1/1-ax}. -/
+Equation \eqref{eq.sec.gf.exas.1.1/1-ax}. @statement_id stmt-src-lem.gf.geometric_series_scaled
+-/
 theorem geometric_series_scaled (α : ℚ) :
     (1 - α • PowerSeries.X : PowerSeries ℚ)⁻¹ = PowerSeries.mk (fun n => α ^ n) := by
   have hconst : PowerSeries.constantCoeff (1 - α • PowerSeries.X : PowerSeries ℚ) ≠ 0 := by simp
@@ -883,7 +921,8 @@ theorem geometric_series_scaled (α : ℚ) :
 
 /-- The derivative of $\frac{1}{1-x}$ is $\frac{1}{(1-x)^2}$.
 
-Equation \eqref{eq.sec.gf.exas.4.1/(1-x)2}. -/
+Equation \eqref{eq.sec.gf.exas.4.1/(1-x)2}. @statement_id stmt-src-lem.gf.deriv_inv_one_minus_x
+-/
 theorem deriv_inv_one_minus_x :
     (PowerSeries.derivative ℚ) ((1 - PowerSeries.X : PowerSeries ℚ)⁻¹) =
       (1 - PowerSeries.X : PowerSeries ℚ)⁻¹ ^ 2 := by
@@ -892,7 +931,8 @@ theorem deriv_inv_one_minus_x :
 
 /-- The power series $\sum_{n \geq 0} (n+1) x^n = \frac{1}{(1-x)^2}$.
 
-Equation \eqref{eq.sec.gf.exas.4.1/(1-x)2}. -/
+Equation \eqref{eq.sec.gf.exas.4.1/(1-x)2}. @statement_id stmt-src-lem.gf.sum_n_plus_one_pow
+-/
 theorem sum_n_plus_one_pow :
     PowerSeries.mk (fun n => (n + 1 : ℚ)) = (1 - PowerSeries.X : PowerSeries ℚ)⁻¹ ^ 2 := by
   -- First show that invOneSubPow ℚ 2 has the right coefficients
@@ -917,7 +957,8 @@ theorem sum_n_plus_one_pow :
 
 /-- The power series $\sum_{n \geq 1} n x^n = \frac{x}{(1-x)^2}$.
 
-Equation \eqref{eq.sec.gf.exas.4.x/(1-x)2}. -/
+Equation \eqref{eq.sec.gf.exas.4.x/(1-x)2}. @statement_id stmt-src-lem.gf.sum_n_pow
+-/
 theorem sum_n_pow :
     PowerSeries.mk (fun n => (n : ℚ)) = PowerSeries.X * (1 - PowerSeries.X : PowerSeries ℚ)⁻¹ ^ 2 := by
   rw [← sum_n_plus_one_pow]

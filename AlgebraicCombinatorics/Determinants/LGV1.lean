@@ -105,7 +105,8 @@ The entire digraph is denoted by ℤ² and called the "integer lattice" or "inte
 
 /-- A point on the integer lattice ℤ².
     The vertices of the integer lattice are pairs of integers.
-    Label: def.lgv.lattice -/
+    Label: def.lgv.lattice @statement_id stmt-src-def.lgv.lattice
+-/
 abbrev LatticePoint := ℤ × ℤ
 
 /-- The x-coordinate of a lattice point. -/
@@ -137,13 +138,15 @@ vertex `p` to vertex `q` if and only if `q` is obtained from `p` by either:
 
 /-- The adjacency relation for the integer lattice digraph.
     There is an arc from p to q iff q is one step east or north of p.
-    Label: eq.def.lgv.lattice.east, eq.def.lgv.lattice.north -/
+    Label: eq.def.lgv.lattice.east, eq.def.lgv.lattice.north @statement_id stmt-src-def.lgv.lattice
+-/
 def IntegerLatticeAdj (p q : LatticePoint) : Prop :=
   q = (p.1 + 1, p.2) ∨ q = (p.1, p.2 + 1)
 
 /-- The integer lattice as a digraph.
     This is the digraph with vertex set ℤ² and arcs (i,j) → (i+1,j) and (i,j) → (i,j+1).
-    Label: def.lgv.lattice -/
+    Label: def.lgv.lattice @statement_id stmt-src-def.lgv.lattice
+-/
 def integerLattice : Digraph LatticePoint where
   Adj := IntegerLatticeAdj
 
@@ -237,7 +240,8 @@ it easier to work with path concatenation and step counting.
     This type is equivalent to `LGV.LatticeStep'` defined in LGV2.lean.
     The equivalence is provided by `latticeStepEquiv : LatticeStep ≃ LGV.LatticeStep'`.
     
-    Label: eq.def.lgv.lattice.east, eq.def.lgv.lattice.north -/
+    Label: eq.def.lgv.lattice.east, eq.def.lgv.lattice.north @statement_id stmt-src-def.lgv.lattice
+-/
 inductive LatticeStep : Type
   | east : LatticeStep  -- (i,j) → (i+1,j)
   | north : LatticeStep -- (i,j) → (i,j+1)
@@ -278,7 +282,8 @@ def LatticePath.endpoint (path : LatticePath) (start : LatticePoint) : LatticePo
     LatticePath.endpoint (s :: path) start = LatticePath.endpoint path (s.apply start) := by
   simp [endpoint, List.foldl_cons]
 
-/-- The endpoint of appended paths: endpoint(p1 ++ p2, A) = endpoint(p2, endpoint(p1, A)). -/
+/-- The endpoint of appended paths: endpoint(p1 ++ p2, A) = endpoint(p2, endpoint(p1, A)). @statement_id stmt-src-lem.lgv.endpoint-append
+-/
 theorem LatticePath.endpoint_append (path1 path2 : LatticePath) (start : LatticePoint) :
     LatticePath.endpoint (path1 ++ path2) start =
     LatticePath.endpoint path2 (LatticePath.endpoint path1 start) := by
@@ -351,7 +356,8 @@ def LatticePath.isPathFromTo (path : LatticePath) (a b : LatticePoint) : Prop :=
   path.endpoint a = b
 
 /-- If a path goes from A to B, then take n goes from A to an intermediate point,
-    and drop n goes from that point to B. -/
+    and drop n goes from that point to B. @statement_id stmt-src-lem.lgv.path-take-drop
+-/
 theorem LatticePath.isPathFromTo_take_drop (path : LatticePath) (n : ℕ) (A B : LatticePoint)
     (h : LatticePath.isPathFromTo path A B) :
     let mid := LatticePath.endpoint (path.take n) A
@@ -364,7 +370,8 @@ theorem LatticePath.isPathFromTo_take_drop (path : LatticePath) (n : ℕ) (A B :
     rw [endpoint_append] at key
     rw [key, h]
 
-/-- If head goes A→v and tail goes v→B, then head ++ tail goes A→B. -/
+/-- If head goes A→v and tail goes v→B, then head ++ tail goes A→B. @statement_id stmt-src-lem.lgv.path-append
+-/
 theorem LatticePath.isPathFromTo_append (head tail : LatticePath) (A v B : LatticePoint)
     (hhead : LatticePath.isPathFromTo head A v) (htail : LatticePath.isPathFromTo tail v B) :
     LatticePath.isPathFromTo (head ++ tail) A B := by
@@ -376,7 +383,8 @@ lemma LatticeStep.coordSum_apply (s : LatticeStep) (p : LatticePoint) :
     (s.apply p).coordSum = p.coordSum + 1 := by
   cases s <;> simp [LatticeStep.apply, LatticePoint.coordSum] <;> ring
 
-/-- The coordinate sum increases by the step count along any path. -/
+/-- The coordinate sum increases by the step count along any path. @statement_id stmt-src-lem.lgv.coordsum-endpoint
+-/
 lemma LatticePath.coordSum_endpoint (path : LatticePath) (start : LatticePoint) :
     (path.endpoint start).coordSum = start.coordSum + path.stepCount := by
   induction path generalizing start with
@@ -404,7 +412,8 @@ This follows from:
 -/
 
 /-- Observation 1: Any path from (a,b) to (c,d) has exactly c+d-a-b steps.
-    Label: pf.prop.lgv.1-paths.ct.o1 -/
+    Label: pf.prop.lgv.1-paths.ct.o1 @statement_id stmt-src-lem.lgv.path-step-count
+-/
 theorem path_stepCount_eq (path : LatticePath) (a b c d : ℤ)
     (h : path.isPathFromTo (a, b) (c, d)) :
     (path.stepCount : ℤ) = c + d - a - b := by
@@ -414,7 +423,8 @@ theorem path_stepCount_eq (path : LatticePath) (a b c d : ℤ)
   rw [h] at hsum
   omega
 
-/-- Helper: The x-coordinate of the endpoint equals start.x + eastStepCount. -/
+/-- Helper: The x-coordinate of the endpoint equals start.x + eastStepCount. @statement_id stmt-src-lem.lgv.endpoint-x
+-/
 theorem endpoint_x_eq (path : LatticePath) (start : LatticePoint) :
     (path.endpoint start).1 = start.1 + path.eastStepCount := by
   induction path generalizing start with
@@ -437,7 +447,8 @@ theorem endpoint_x_eq (path : LatticePath) (start : LatticePoint) :
       rw [ih]
 
 /-- Observation 2: Any path from (a,b) to (c,d) has exactly c-a east steps.
-    Label: pf.prop.lgv.1-paths.ct.o2 -/
+    Label: pf.prop.lgv.1-paths.ct.o2 @statement_id stmt-src-lem.lgv.path-step-count
+-/
 theorem path_eastStepCount_eq (path : LatticePath) (a b c d : ℤ)
     (h : path.isPathFromTo (a, b) (c, d)) :
     (path.eastStepCount : ℤ) = c - a := by
@@ -490,7 +501,8 @@ private lemma length_eq_count_sum (path : LatticePath) :
 def pathsFromTo (a b : LatticePoint) : Set LatticePath :=
   { path | path.isPathFromTo a b }
 
-/-- The set of paths from a to b is finite. -/
+/-- The set of paths from a to b is finite. @statement_id stmt-src-lem.lgv.paths-finite
+-/
 theorem pathsFromTo_finite (a b : LatticePoint) : (pathsFromTo a b).Finite := by
   -- If b.1 < a.1 or b.2 < a.2, there are no paths
   by_cases h : a.1 ≤ b.1 ∧ a.2 ≤ b.2
@@ -550,7 +562,8 @@ theorem pathsFromTo_finite (a b : LatticePoint) : (pathsFromTo a b).Finite := by
 /-- The number of paths from (a,b) to (c,d).
     This equals C(c+d-a-b, c-a) when c ≥ a and d ≥ b, and 0 otherwise.
     (Proposition prop.lgv.1-paths.ct)
-    Label: prop.lgv.1-paths.ct -/
+    Label: prop.lgv.1-paths.ct @statement_id stmt-src-prop.lgv.1-paths.ct
+-/
 def numPaths (a b : LatticePoint) : ℕ :=
   if a.1 ≤ b.1 ∧ a.2 ≤ b.2 then
     ((b.1 - a.1) + (b.2 - a.2)).toNat.choose (b.1 - a.1).toNat
@@ -855,7 +868,8 @@ private lemma pathsWithMEastSteps_eq_toFinset (m n : ℕ)
     The proof uses a bijection between lattice paths from a to b and subsets of
     {0, ..., m+n-1} of size m, where m = (b.1 - a.1).toNat and n = (b.2 - a.2).toNat.
     A path corresponds to choosing which m positions (out of m+n total steps) are east steps.
-    The number of such choices is C(m+n, m). -/
+    The number of such choices is C(m+n, m). @statement_id stmt-src-prop.lgv.1-paths.ct
+-/
 theorem numPaths_eq_card (a b : LatticePoint)
     (hfin : (pathsFromTo a b).Finite) :
     numPaths a b = hfin.toFinset.card := by
@@ -895,7 +909,8 @@ theorem numPaths_eq_card (a b : LatticePoint)
     have hempty := pathsFromTo_empty' a b hle
     simp only [hempty, Set.Finite.toFinset_empty, Finset.card_empty]
 
-/-- No paths exist when c+d < a+b. -/
+/-- No paths exist when c+d < a+b. @statement_id stmt-src-prop.lgv.1-paths.ct
+-/
 theorem no_paths_when_sum_decreases (a b : LatticePoint)
     (h : b.coordSum < a.coordSum) : pathsFromTo a b = ∅ := by
   ext path
@@ -918,16 +933,19 @@ A path tuple is intersecting (ipat) if some two paths share a vertex.
 -/
 
 /-- A k-vertex is a k-tuple of lattice points.
-    Label: def.lgv.path-tups (a) -/
+    Label: def.lgv.path-tups (a) @statement_id stmt-src-def.lgv.path-tups
+-/
 abbrev kVertex (k : ℕ) := Fin k → LatticePoint
 
 /-- Permute a k-vertex by a permutation σ.
-    Label: def.lgv.path-tups (b) -/
+    Label: def.lgv.path-tups (b) @statement_id stmt-src-def.lgv.path-tups
+-/
 def kVertex.permute {k : ℕ} (v : kVertex k) (σ : Equiv.Perm (Fin k)) : kVertex k :=
   fun i => v (σ i)
 
 /-- A path tuple from k-vertex A to k-vertex B.
-    Label: def.lgv.path-tups (c) -/
+    Label: def.lgv.path-tups (c) @statement_id stmt-src-def.lgv.path-tups
+-/
 structure PathTuple (k : ℕ) (A B : kVertex k) where
   /-- The i-th path in the tuple -/
   paths : Fin k → LatticePath
@@ -940,12 +958,14 @@ def PathTuple.verticesOf {k : ℕ} {A B : kVertex k} (pt : PathTuple k A B)
   { p | p ∈ (pt.paths i).vertices (A i) }
 
 /-- A path tuple is non-intersecting (nipat) if no two distinct paths share a vertex.
-    Label: def.lgv.path-tups (d) -/
+    Label: def.lgv.path-tups (d) @statement_id stmt-src-def.lgv.path-tups
+-/
 def PathTuple.isNonIntersecting {k : ℕ} {A B : kVertex k} (pt : PathTuple k A B) : Prop :=
   ∀ i j, i ≠ j → Disjoint (pt.verticesOf i) (pt.verticesOf j)
 
 /-- A path tuple is intersecting (ipat) if it is not non-intersecting.
-    Label: def.lgv.path-tups (e) -/
+    Label: def.lgv.path-tups (e) @statement_id stmt-src-def.lgv.path-tups
+-/
 def PathTuple.isIntersecting {k : ℕ} {A B : kVertex k} (pt : PathTuple k A B) : Prop :=
   ¬pt.isNonIntersecting
 
@@ -961,7 +981,8 @@ def nipatsFromTo {k : ℕ} (A B : kVertex k) : Set (PathTuple k A B) :=
 def ipatsFromTo {k : ℕ} (A B : kVertex k) : Set (PathTuple k A B) :=
   { pt | pt.isIntersecting }
 
-/-- The set of path tuples from A to B is finite (follows from finiteness of paths). -/
+/-- The set of path tuples from A to B is finite (follows from finiteness of paths). @statement_id stmt-src-lem.lgv.pathtup-finite
+-/
 theorem pathTuplesFromTo_finite {k : ℕ} (A B : kVertex k) :
     (pathTuplesFromTo A B).Finite := by
   have h_paths_finite : {f : Fin k → LatticePath | ∀ i, f i ∈ pathsFromTo (A i) (B i)}.Finite :=
@@ -976,12 +997,14 @@ theorem pathTuplesFromTo_finite {k : ℕ} (A B : kVertex k) :
   rw [h_eq]
   exact h_paths_finite.preimage h_inj.injOn
 
-/-- The set of nipats from A to B is finite (subset of finite set). -/
+/-- The set of nipats from A to B is finite (subset of finite set). @statement_id stmt-src-lem.lgv.nipats-finite
+-/
 theorem nipatsFromTo_finite {k : ℕ} (A B : kVertex k) :
     (nipatsFromTo A B).Finite := by
   exact (pathTuplesFromTo_finite A B).subset (Set.subset_univ _)
 
-/-- The set of ipats from A to B is finite (subset of finite set). -/
+/-- The set of ipats from A to B is finite (subset of finite set). @statement_id stmt-src-lem.lgv.ipats-finite
+-/
 theorem ipatsFromTo_finite {k : ℕ} (A B : kVertex k) :
     (ipatsFromTo A B).Finite := by
   exact (pathTuplesFromTo_finite A B).subset (Set.subset_univ _)
@@ -1005,11 +1028,13 @@ This maps (σ, ipat) to (σ * swap(i,j), ipat') where:
 Since every ipat has at least one crowded point, the involution has no fixed points.
 -/
 
-/-- A vertex is crowded in a path tuple if it appears in at least two paths -/
+/-- A vertex is crowded in a path tuple if it appears in at least two paths @statement_id stmt-src-def.lgv.crowded
+-/
 def PathTuple.isCrowded {k : ℕ} {A B : kVertex k} (pt : PathTuple k A B) (v : LatticePoint) : Prop :=
   ∃ i j : Fin k, i ≠ j ∧ v ∈ pt.verticesOf i ∧ v ∈ pt.verticesOf j
 
-/-- An intersecting path tuple has at least one crowded vertex -/
+/-- An intersecting path tuple has at least one crowded vertex @statement_id stmt-src-lem.lgv.ipat-iff-crowded
+-/
 theorem PathTuple.isIntersecting_iff_exists_crowded {k : ℕ} {A B : kVertex k} (pt : PathTuple k A B) :
     pt.isIntersecting ↔ ∃ v, pt.isCrowded v := by
   unfold isIntersecting isNonIntersecting isCrowded
@@ -1024,12 +1049,14 @@ theorem PathTuple.isIntersecting_iff_exists_crowded {k : ℕ} {A B : kVertex k} 
     rw [Set.not_disjoint_iff]
     exact ⟨v, hvi, hvj⟩
 
-/-- The set of path indices that have a crowded vertex (shared with another path) -/
+/-- The set of path indices that have a crowded vertex (shared with another path) @statement_id stmt-src-def.lgv.crowded
+-/
 noncomputable def PathTuple.crowdedPathIndices {k : ℕ} {A B : kVertex k} (pt : PathTuple k A B) : Finset (Fin k) :=
   @Finset.filter _ (fun i => ∃ j : Fin k, i ≠ j ∧ ¬Disjoint (pt.verticesOf i) (pt.verticesOf j)) 
     (Classical.decPred _) Finset.univ
 
-/-- An intersecting path tuple has nonempty crowdedPathIndices -/
+/-- An intersecting path tuple has nonempty crowdedPathIndices @statement_id stmt-src-lem.lgv.ipat-iff-crowded
+-/
 theorem PathTuple.isIntersecting_iff_crowdedPathIndices_nonempty {k : ℕ} {A B : kVertex k}
     (pt : PathTuple k A B) :
     pt.isIntersecting ↔ pt.crowdedPathIndices.Nonempty := by
@@ -1050,7 +1077,8 @@ theorem PathTuple.isIntersecting_iff_crowdedPathIndices_nonempty {k : ℕ} {A B 
     This is the smallest index i such that path i shares a vertex with some other path.
     
     This is a key component of the sign-reversing involution for general k:
-    the involution swaps tails at the first crowded vertex on this path. -/
+    the involution swaps tails at the first crowded vertex on this path. @statement_id stmt-src-def.lgv.crowded
+-/
 noncomputable def PathTuple.minCrowdedPathIndex {k : ℕ} {A B : kVertex k} 
     (pt : PathTuple k A B) (hip : pt.isIntersecting) : Fin k :=
   (pt.crowdedPathIndices.min' (pt.isIntersecting_iff_crowdedPathIndices_nonempty.mp hip))
@@ -1067,7 +1095,8 @@ lemma PathTuple.minCrowdedPathIndex_le {k : ℕ} {A B : kVertex k}
     pt.minCrowdedPathIndex hip ≤ i :=
   Finset.min'_le _ _ hi
 
-/-- The crowded vertices on a specific path: vertices that appear in multiple paths -/
+/-- The crowded vertices on a specific path: vertices that appear in multiple paths @statement_id stmt-src-def.lgv.crowded
+-/
 def PathTuple.crowdedVerticesOnPath {k : ℕ} {A B : kVertex k} 
     (pt : PathTuple k A B) (i : Fin k) : Set LatticePoint :=
   { v | v ∈ pt.verticesOf i ∧ ∃ j : Fin k, i ≠ j ∧ v ∈ pt.verticesOf j }
@@ -1136,13 +1165,15 @@ The proof uses a sign-reversing involution on intersecting path tuples
 that exchanges the tails of two intersecting paths.
 -/
 
-/-- The path count matrix for two source and target points. -/
+/-- The path count matrix for two source and target points. @statement_id stmt-src-def.lgv.signed-pathtup2
+-/
 def pathMatrix2 (A A' B B' : LatticePoint) : Matrix (Fin 2) (Fin 2) ℤ :=
   !![numPaths A B, numPaths A B';
      numPaths A' B, numPaths A' B']
 
 /-- Number of nipats from (A,A') to (B,B').
-    Defined as the cardinality of the set of non-intersecting path tuples. -/
+    Defined as the cardinality of the set of non-intersecting path tuples. @statement_id stmt-src-def.lgv.signed-pathtup2
+-/
 noncomputable def numNipats2 (A A' B B' : LatticePoint) : ℕ :=
   let AB : kVertex 2 := ![A, A']
   let BB : kVertex 2 := ![B, B']
@@ -1155,7 +1186,8 @@ theorem pathMatrix2_det (A A' B B' : LatticePoint) :
   simp only [pathMatrix2, det_fin_two, Matrix.of_apply, Matrix.cons_val_zero, Matrix.cons_val_one]
 
 /-- A path tuple from (A,A') to (B,B') or (B',B) with a sign.
-    Sign is +1 for (B,B') and -1 for (B',B). -/
+    Sign is +1 for (B,B') and -1 for (B',B). @statement_id stmt-src-def.lgv.signed-pathtup2
+-/
 structure SignedPathTuple2 (A A' B B' : LatticePoint) where
   /-- The first path -/
   path0 : LatticePath
@@ -1168,11 +1200,13 @@ structure SignedPathTuple2 (A A' B B' : LatticePoint) where
   /-- Path 1 goes from A' to its destination -/
   valid1 : path1.isPathFromTo A' (if toBB' then B' else B)
 
-/-- The sign of a signed path tuple. -/
+/-- The sign of a signed path tuple. @statement_id stmt-src-def.lgv.signed-pathtup2
+-/
 def SignedPathTuple2.sign {A A' B B' : LatticePoint} (spt : SignedPathTuple2 A A' B B') : ℤ :=
   if spt.toBB' then 1 else -1
 
-/-- Check if a signed path tuple is intersecting (the two paths share a vertex). -/
+/-- Check if a signed path tuple is intersecting (the two paths share a vertex). @statement_id stmt-src-def.lgv.signed-pathtup2
+-/
 def SignedPathTuple2.isIntersecting {A A' B B' : LatticePoint}
     (spt : SignedPathTuple2 A A' B B') : Prop :=
   ∃ v, v ∈ spt.path0.vertices A ∧ v ∈ spt.path1.vertices A'
@@ -1198,14 +1232,16 @@ after swapping tails, the same point is still the first intersection.
 -/
 
 /-- The index of the first intersection point in path0's vertices.
-    This is the smallest index i such that (path0.vertices A)[i] ∈ path1.vertices A'. -/
+    This is the smallest index i such that (path0.vertices A)[i] ∈ path1.vertices A'. @statement_id stmt-src-lem.lgv.first-intersection-idx
+-/
 noncomputable def firstIntersectionIdx {A A' B B' : LatticePoint}
     (spt : SignedPathTuple2 A A' B B') (_h : spt.isIntersecting) : ℕ :=
   let verts0 := spt.path0.vertices A
   let verts1 := spt.path1.vertices A'
   verts0.findIdx (fun v => decide (v ∈ verts1))
 
-/-- The index of the first intersection point is valid (less than the length of path0's vertices). -/
+/-- The index of the first intersection point is valid (less than the length of path0's vertices). @statement_id stmt-src-lem.lgv.first-intersection-idx
+-/
 lemma firstIntersectionIdx_lt {A A' B B' : LatticePoint}
     (spt : SignedPathTuple2 A A' B B') (h : spt.isIntersecting) :
     firstIntersectionIdx spt h < (spt.path0.vertices A).length := by
@@ -1215,21 +1251,24 @@ lemma firstIntersectionIdx_lt {A A' B B' : LatticePoint}
   simp [hv1]
 
 /-- The first intersection point of two intersecting paths.
-    This is the first vertex (by index in path0) that is shared by both paths. -/
+    This is the first vertex (by index in path0) that is shared by both paths. @statement_id stmt-src-lem.lgv.first-intersection-props
+-/
 noncomputable def firstIntersection {A A' B B' : LatticePoint}
     (spt : SignedPathTuple2 A A' B B') (h : spt.isIntersecting) : LatticePoint :=
   let idx := firstIntersectionIdx spt h
   let verts0 := spt.path0.vertices A
   verts0[idx]'(firstIntersectionIdx_lt spt h)
 
-/-- The first intersection point is in path0's vertices. -/
+/-- The first intersection point is in path0's vertices. @statement_id stmt-src-lem.lgv.first-intersection-props
+-/
 lemma firstIntersection_mem_path0 {A A' B B' : LatticePoint}
     (spt : SignedPathTuple2 A A' B B') (h : spt.isIntersecting) :
     firstIntersection spt h ∈ spt.path0.vertices A := by
   unfold firstIntersection
   apply List.getElem_mem
 
-/-- The first intersection point is in path1's vertices. -/
+/-- The first intersection point is in path1's vertices. @statement_id stmt-src-lem.lgv.first-intersection-props
+-/
 lemma firstIntersection_mem_path1 {A A' B B' : LatticePoint}
     (spt : SignedPathTuple2 A A' B B') (h : spt.isIntersecting) :
     firstIntersection spt h ∈ spt.path1.vertices A' := by
@@ -1268,7 +1307,8 @@ private lemma findIdx_le_of_getElem {α : Type*} (l : List α) (p : α → Bool)
     the same point v is still the first intersection because:
     1. The head of path0 (indices 0..idx) is unchanged
     2. v is at index idx in both the original and swapped paths
-    3. No earlier vertex in path0's head is in path1's vertices (by minimality of findIdx) -/
+    3. No earlier vertex in path0's head is in path1's vertices (by minimality of findIdx) @statement_id stmt-src-lem.lgv.first-intersection-props
+-/
 lemma firstIntersection_is_first {A A' B B' : LatticePoint}
     (spt : SignedPathTuple2 A A' B B') (h : spt.isIntersecting) :
     let v := firstIntersection spt h
@@ -1301,7 +1341,8 @@ lemma firstIntersection_is_first {A A' B B' : LatticePoint}
     exact hnotfound
 
 
-/-- Split a path at a vertex, returning (head, tail) where head ends at v and tail starts at v. -/
+/-- Split a path at a vertex, returning (head, tail) where head ends at v and tail starts at v. @statement_id stmt-src-lem.lgv.2paths.signedipat
+-/
 noncomputable def splitPathAt (path : LatticePath) (start v : LatticePoint)
     (_hv : v ∈ path.vertices start) : LatticePath × LatticePath :=
   -- Find the index where v occurs
@@ -1789,7 +1830,8 @@ private lemma findIdx_beq_eq_firstIntersectionIdx {A A' B B' : LatticePoint}
 
     Note: We use `firstIntersection` instead of `Classical.choose` to ensure the
     involution is truly involutive. The key property is that after swapping tails,
-    the same point v is still the first intersection point. -/
+    the same point v is still the first intersection point. @statement_id stmt-src-lem.lgv.2paths.signedipat
+-/
 noncomputable def ipatInvolution {A A' B B' : LatticePoint}
     (spt : SignedPathTuple2 A A' B B')
     (h : spt.isIntersecting) : SignedPathTuple2 A A' B B' :=
@@ -1862,14 +1904,16 @@ noncomputable def ipatInvolution {A A' B B' : LatticePoint}
 private theorem sign_flip (b : Bool) : (if !b then (1 : ℤ) else -1) = -(if b then 1 else -1) := by
   cases b <;> simp
 
-/-- The involution is sign-reversing. -/
+/-- The involution is sign-reversing. @statement_id stmt-src-lem.lgv.2paths.signedipat
+-/
 theorem ipatInvolution_sign {A A' B B' : LatticePoint}
     (spt : SignedPathTuple2 A A' B B') (h : spt.isIntersecting) :
     (ipatInvolution spt h).sign = -spt.sign := by
   simp only [ipatInvolution, SignedPathTuple2.sign]
   exact sign_flip spt.toBB'
 
-/-- The involution preserves being intersecting. -/
+/-- The involution preserves being intersecting. @statement_id stmt-src-lem.lgv.2paths.signedipat
+-/
 theorem ipatInvolution_isIntersecting {A A' B B' : LatticePoint}
     (spt : SignedPathTuple2 A A' B B') (h : spt.isIntersecting) :
     (ipatInvolution spt h).isIntersecting := by
@@ -1909,7 +1953,8 @@ theorem ipatInvolution_isIntersecting {A A' B B' : LatticePoint}
     2. v is at index idx in both the original and new path0's vertices
     3. No earlier vertex in head0 is in path1's vertices (by minimality)
 
-    This lemma is essential for proving that the involution is involutive. -/
+    This lemma is essential for proving that the involution is involutive. @statement_id stmt-src-lem.lgv.first-intersection-preserved
+-/
 lemma firstIntersection_preserved {A A' B B' : LatticePoint}
     (spt : SignedPathTuple2 A A' B B') (h : spt.isIntersecting)
     (h' : (ipatInvolution spt h).isIntersecting) :
@@ -2073,7 +2118,8 @@ private lemma SignedPathTuple2.ext' {A A' B B' : LatticePoint}
     **Proof strategy:**
     - Use `firstIntersection_preserved` to show v' = v
     - Use `findIdx_beq_eq_firstIntersectionIdx` and `findIdx_beq_newPath1_eq` to show idx0' = idx0 and idx1' = idx1
-    - Apply List.take_append_drop to reconstruct the original paths -/
+    - Apply List.take_append_drop to reconstruct the original paths @statement_id stmt-src-lem.lgv.2paths.signedipat
+-/
 theorem ipatInvolution_involutive {A A' B B' : LatticePoint}
     (spt : SignedPathTuple2 A A' B B') (h : spt.isIntersecting) :
     let spt' := ipatInvolution spt h
@@ -2178,7 +2224,8 @@ theorem ipatInvolution_involutive {A A' B B' : LatticePoint}
   exact SignedPathTuple2.ext' h_second_path0 h_second_path1 h_second_toBB'
 
 
-/-- The set of signed path tuples is finite. -/
+/-- The set of signed path tuples is finite. @statement_id stmt-src-lem.lgv.signed-pathtup2-finite
+-/
 theorem signedPathTuples2_finite (A A' B B' : LatticePoint) :
     (signedPathTuples2 A A' B B').Finite := by
   let S0 := pathsFromTo A B ∪ pathsFromTo A B'
@@ -2208,17 +2255,20 @@ theorem signedPathTuples2_finite (A A' B B' : LatticePoint) :
   have hfin_image : (f '' signedPathTuples2 A A' B B').Finite := hfin_target.subset hrange
   exact Set.Finite.of_finite_image hfin_image f_inj.injOn
 
-/-- The set of non-intersecting signed path tuples is finite. -/
+/-- The set of non-intersecting signed path tuples is finite. @statement_id stmt-src-lem.lgv.signed-pathtup2-finite
+-/
 theorem signedNipats2_finite (A A' B B' : LatticePoint) :
     (signedNipats2 A A' B B').Finite :=
   (signedPathTuples2_finite A A' B B').subset (Set.subset_univ _)
 
-/-- The set of intersecting signed path tuples is finite. -/
+/-- The set of intersecting signed path tuples is finite. @statement_id stmt-src-lem.lgv.signed-pathtup2-finite
+-/
 theorem signedIpats2_finite (A A' B B' : LatticePoint) :
     (signedIpats2 A A' B B').Finite :=
   (signedPathTuples2_finite A A' B B').subset (Set.subset_univ _)
 
-/-- The sum over all signed path tuples equals the difference of path tuple counts. -/
+/-- The sum over all signed path tuples equals the difference of path tuple counts. @statement_id stmt-src-lem.lgv.2paths.partition
+-/
 theorem sum_signedPathTuples2 (A A' B B' : LatticePoint)
     (hfin : (signedPathTuples2 A A' B B').Finite) :
     ∑ spt ∈ hfin.toFinset, spt.sign =
@@ -2354,7 +2404,8 @@ theorem sum_signedPathTuples2 (A A' B B' : LatticePoint)
   push_cast
   ring
 
-/-- The sum over intersecting path tuples is zero (by sign-reversing involution). -/
+/-- The sum over intersecting path tuples is zero (by sign-reversing involution). @statement_id stmt-src-lem.lgv.2paths.ipatcancel
+-/
 theorem sum_signedIpats2_eq_zero (A A' B B' : LatticePoint)
     (hfin : (signedIpats2 A A' B B').Finite) :
     ∑ spt ∈ hfin.toFinset, spt.sign = 0 := by
@@ -2506,7 +2557,8 @@ private lemma signedNipats2_false_ncard_eq (A A' B B' : LatticePoint) :
     apply PathTuple.ext'
     funext i; fin_cases i <;> rfl
 
-/-- The sum over non-intersecting path tuples equals the difference of nipat counts. -/
+/-- The sum over non-intersecting path tuples equals the difference of nipat counts. @statement_id stmt-src-lem.lgv.2paths.partition
+-/
 theorem sum_signedNipats2 (A A' B B' : LatticePoint)
     (hfin : (signedNipats2 A A' B B').Finite) :
     ∑ spt ∈ hfin.toFinset, spt.sign =
@@ -2613,7 +2665,8 @@ private lemma sum_partition (A A' B B' : LatticePoint) :
     2. By product rule, this equals #pathTuples(→(B,B')) - #pathTuples(→(B',B))
     3. Define signed path tuples with sign +1 for (B,B') and -1 for (B',B)
     4. The involution exchanges tails at the first intersection, flipping the sign
-    5. By Lemma lem.sign.cancel2, ipats cancel, leaving only nipats -/
+    5. By Lemma lem.sign.cancel2, ipats cancel, leaving only nipats @statement_id stmt-src-prop.lgv.2paths.count
+-/
 theorem lgv_two_paths (A A' B B' : LatticePoint) :
     (pathMatrix2 A A' B B').det =
       numNipats2 A A' B B' - numNipats2 A A' B' B := by
@@ -2657,11 +2710,13 @@ This means:
 Under these conditions, #nipats from (A,A') to (B',B) = 0.
 -/
 
-/-- Point p is weakly northwest of point q. -/
+/-- Point p is weakly northwest of point q. @statement_id stmt-src-prop.lgv.jordan-2
+-/
 def isWeaklyNorthwestOf (p q : LatticePoint) : Prop :=
   p.x ≤ q.x ∧ p.y ≥ q.y
 
-/-- Helper: If a path exists from a to b, then a.1 ≤ b.1 and a.2 ≤ b.2. -/
+/-- Helper: If a path exists from a to b, then a.1 ≤ b.1 and a.2 ≤ b.2. @statement_id stmt-src-lem.lgv.path-coords-nondecreasing
+-/
 lemma path_coords_nondecreasing (path : LatticePath) (a b : LatticePoint)
     (h : path.isPathFromTo a b) : a.1 ≤ b.1 ∧ a.2 ≤ b.2 := by
   induction path generalizing a with
@@ -2734,7 +2789,8 @@ lemma vertices_cons_subset (s : LatticeStep) (rest : LatticePath) (start : Latti
     crossed by path p' from A' to B, since A' is northwest of A and B' is
     northwest of B.
 
-    Reference: https://math.stackexchange.com/questions/2870640/ -/
+    Reference: https://math.stackexchange.com/questions/2870640/ @statement_id stmt-src-prop.lgv.jordan-2
+-/
 theorem baby_jordan_curve (A A' B B' : LatticePoint)
     (hA : isWeaklyNorthwestOf A' A) (hB : isWeaklyNorthwestOf B' B)
     (p : LatticePath) (p' : LatticePath)
@@ -2863,7 +2919,8 @@ theorem baby_jordan_curve (A A' B B' : LatticePoint)
 termination_by p.length + p'.length
 
 /-- Under NW conditions, there are no nipats from (A,A') to (B',B).
-    Label: prop.lgv.jordan-2 -/
+    Label: prop.lgv.jordan-2 @statement_id stmt-src-prop.lgv.jordan-2
+-/
 theorem no_nipats_under_nw (A A' B B' : LatticePoint)
     (hA : isWeaklyNorthwestOf A' A) (hB : isWeaklyNorthwestOf B' B) :
     numNipats2 A A' B' B = 0 := by
@@ -2917,7 +2974,8 @@ Propositions prop.lgv.2paths.count and prop.lgv.jordan-2.
     This ratio is ≥ 1 because (k+1)(n-k+1) - k(n-k) = n + 1 ≥ 0.
 
     Combinatorial proof (via LGV): Define lattice points A=(1,0), A'=(0,1),
-    B=(k+1, n-k), B'=(k, n-k+1). Then det(path matrix) = #nipats ≥ 0. -/
+    B=(k+1, n-k), B'=(k, n-k+1). Then det(path matrix) = #nipats ≥ 0. @statement_id stmt-src-cor.lgv.binom-unimod
+-/
 theorem binom_log_concave (n k : ℕ) (hk : 1 ≤ k) :
     n.choose k * n.choose k ≥ n.choose (k - 1) * n.choose (k + 1) := by
   by_cases hkn : n < k
@@ -3087,17 +3145,20 @@ theorem prod_numPaths_eq_pathTuples_ncard {k : ℕ} (A B : kVertex k) :
   funext i
   exact numPaths_eq_ncard (A i) (B i)
 
-/-- The path count matrix for k source and target vertices. -/
+/-- The path count matrix for k source and target vertices. @statement_id stmt-src-def.lgv.pathmatrixk
+-/
 def pathMatrixK {k : ℕ} (A B : kVertex k) : Matrix (Fin k) (Fin k) ℤ :=
   Matrix.of fun i j => numPaths (A i) (B j)
 
 /-- Number of nipats from A to σ(B).
-    Defined as the cardinality of the set of non-intersecting path tuples. -/
+    Defined as the cardinality of the set of non-intersecting path tuples. @statement_id stmt-src-def.lgv.pathmatrixk
+-/
 noncomputable def numNipatsK {k : ℕ} (A B : kVertex k) (σ : Equiv.Perm (Fin k)) : ℕ :=
   (nipatsFromTo A (B.permute σ)).ncard
 
 /-- Number of ipats from A to σ(B).
-    Defined as the cardinality of the set of intersecting path tuples. -/
+    Defined as the cardinality of the set of intersecting path tuples. @statement_id stmt-src-def.lgv.pathmatrixk
+-/
 noncomputable def numIpatsK {k : ℕ} (A B : kVertex k) (σ : Equiv.Perm (Fin k)) : ℕ :=
   (ipatsFromTo A (B.permute σ)).ncard
 
@@ -3122,7 +3183,8 @@ The intersection property is preserved at each step, so:
     
     This is a definitional equivalence: both types have the same structure
     (two constructors `east` and `north`), so the equivalence is trivial.
-    The equivalence preserves the `apply` function: `latticeStepEquiv_apply`. -/
+    The equivalence preserves the `apply` function: `latticeStepEquiv_apply`. @statement_id stmt-src-lem.lgv.step-equiv
+-/
 def latticeStepEquiv : LatticeStep ≃ LGV.LatticeStep' where
   toFun s := match s with
     | LatticeStep.east => LGV.LatticeStep'.east
@@ -3138,15 +3200,18 @@ theorem latticeStepEquiv_apply (s : LatticeStep) (p : LatticePoint) :
     (latticeStepEquiv s).apply p = s.apply p := by
   cases s <;> rfl
 
-/-- Map a LatticePath to a LatticePath' -/
+/-- Map a LatticePath to a LatticePath' @statement_id stmt-src-lem.lgv.step-equiv
+-/
 def latticePathToLatticePath' (path : LatticePath) : LGV.LatticePath' :=
   path.map latticeStepEquiv
 
-/-- Map a LatticePath' to a LatticePath -/
+/-- Map a LatticePath' to a LatticePath @statement_id stmt-src-lem.lgv.step-equiv
+-/
 def latticePath'ToLatticePath (path : LGV.LatticePath') : LatticePath :=
   path.map latticeStepEquiv.symm
 
-/-- The path mapping preserves endpoints -/
+/-- The path mapping preserves endpoints @statement_id stmt-src-lem.lgv.step-equiv
+-/
 theorem latticePathToLatticePath'_endpoint (path : LatticePath) (start : LatticePoint) :
     LGV.LatticePath'.endpoint (latticePathToLatticePath' path) start = path.endpoint start := by
   induction path generalizing start with
@@ -3297,6 +3362,7 @@ private theorem pathTuple_isIntersecting_iff_LGVPathTuple {k : ℕ} {A B : kVert
   rw [pathTuple_isIntersecting_iff_latticePath'Tuple]
   exact LGV.latticePath'Tuple_isIntersecting_iff _
 
+/-- @statement_id stmt-src-lem.lgv.numipats-eq-ipatfinset -/
 theorem numIpatsK_eq_ipatFinset_card {k : ℕ} (A B : kVertex k) (σ : Equiv.Perm (Fin k)) :
     numIpatsK A B σ = (LGV.ipatFinset LGV.integerLattice_pathFinite A (LGV.permuteKVertex σ B)).card := by
   -- Unfold definitions
@@ -3522,7 +3588,8 @@ lemma lgv_involution_cancellation {k : ℕ} (A B : kVertex k) :
     2. Rewriting in terms of path tuples to σ(B)
     3. A sign-reversing involution that cancels intersecting path tuples
 
-    Label: prop.lgv.kpaths.count -/
+    Label: prop.lgv.kpaths.count @statement_id stmt-src-prop.lgv.kpaths.count
+-/
 theorem lgv_k_paths {k : ℕ} (A B : kVertex k) :
     (pathMatrixK A B).det =
       ∑ σ : Equiv.Perm (Fin k), (Equiv.Perm.sign σ : ℤ) * (numNipatsK A B σ : ℤ) := by
