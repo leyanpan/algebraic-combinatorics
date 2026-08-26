@@ -67,16 +67,19 @@ We define acceptable sets (subsets of `{0, 1, ..., n-1}` with size at most `m`)
 and the partner operation (symmetric difference with `{0}`).
 -/
 
-/-- The finset of acceptable sets: subsets of `Finset.range n` with cardinality at most `m`. -/
+/-- The finset of acceptable sets: subsets of `Finset.range n` with cardinality at most `m`. @statement_id stmt-src-def.acceptablesets
+-/
 def acceptableSets (n m : ℕ) : Finset (Finset ℕ) :=
   (Finset.range n).powerset.filter (fun I => I.card ≤ m)
 
 /-- The partner of a finite set `I` is `I △ {0}` (symmetric difference with singleton 0).
-If `0 ∈ I`, this removes 0; if `0 ∉ I`, this adds 0. -/
+If `0 ∈ I`, this removes 0; if `0 ∉ I`, this adds 0. @statement_id stmt-src-def.partner
+-/
 def partner (I : Finset ℕ) : Finset ℕ :=
   symmDiff I {0}
 
-/-- The partner operation is an involution. -/
+/-- The partner operation is an involution. @statement_id stmt-src-lem.partner_partner
+-/
 theorem partner_partner (I : Finset ℕ) : partner (partner I) = I := by
   simp only [partner, symmDiff_symmDiff_cancel_right]
 
@@ -110,7 +113,8 @@ theorem partner_card (I : Finset ℕ) :
     · simp
     · simp [h]
 
-/-- The sign of a finite set is `(-1)^|I|`. -/
+/-- The sign of a finite set is `(-1)^|I|`. @statement_id stmt-src-def.setsign
+-/
 def setSign (I : Finset ℕ) : ℤ :=
   (-1 : ℤ) ^ I.card
 
@@ -135,7 +139,8 @@ theorem partner_empty : partner ∅ = {0} := by
 theorem partner_singleton_zero : partner {0} = ∅ := by
   simp only [partner, symmDiff_self, bot_eq_empty]
 
-/-- The partner has opposite sign. -/
+/-- The partner has opposite sign. @statement_id stmt-src-lem.partner_sign
+-/
 theorem partner_sign (I : Finset ℕ) : setSign (partner I) = -setSign I := by
   simp only [setSign, partner]
   by_cases h : 0 ∈ I
@@ -192,6 +197,7 @@ Note: We state this for natural numbers with `n ≥ 1`. The source states it for
 but by the polynomial identity principle, it suffices to prove it for positive integers.
 The hypothesis `n ≥ 1` is necessary because natural number subtraction gives
 `(0 - 1) = 0`, which would make the RHS incorrect when `n = 0` and `m ≥ 1`.
+@statement_id stmt-src-prop.binom.nhs
 -/
 theorem negHockeyStick (n m : ℕ) (hn : 0 < n) :
     ∑ k ∈ Finset.range (m + 1), ((-1 : ℤ) ^ k * (n.choose k)) =
@@ -227,6 +233,7 @@ with no 2-torsion (i.e., `2a = 0 → a = 0`). If `f : X → X` is a bijection sa
 `sign(f(I)) = -sign(I)` for all `I ∈ X`, then `∑_{I ∈ A} sign(I) = ∑_{I ∈ A \ X} sign(I)`.
 
 This version requires `R` to have no 2-torsion (e.g., `R = ℤ`, `ℚ`, `ℝ`).
+@statement_id stmt-src-lem.sign.cancel1
 -/
 theorem sign_cancel1 [NoZeroSMulDivisors ℕ R]
     (A : Finset α) (X : Finset α) (hXA : X ⊆ A)
@@ -271,6 +278,7 @@ If `f : X → X` is an involution with no fixed points satisfying
 `sign(f(I)) = -sign(I)` for all `I ∈ X`, then `∑_{I ∈ A} sign(I) = ∑_{I ∈ A \ X} sign(I)`.
 
 This version works for any additive abelian group (no 2-torsion requirement).
+@statement_id stmt-src-lem.sign.cancel2
 -/
 theorem sign_cancel2
     (A : Finset α) (X : Finset α) (hXA : X ⊆ A)
@@ -302,6 +310,7 @@ and furthermore `sign(I) = 0` for all fixed points `I` of `f`,
 then `∑_{I ∈ A} sign(I) = ∑_{I ∈ A \ X} sign(I)`.
 
 This is the most general version, allowing fixed points as long as they have sign 0.
+@statement_id stmt-src-lem.sign.cancel3
 -/
 theorem sign_cancel3
     (A : Finset α) (X : Finset α) (hXA : X ⊆ A)
@@ -345,7 +354,8 @@ when exactly one of them is present.
 -/
 
 /-- Switch `i` with `i+1` in a set: if exactly one of `{i, i+1}` is in `S`,
-replace it with the other; otherwise leave `S` unchanged. -/
+replace it with the other; otherwise leave `S` unchanged. @statement_id stmt-src-def.switch
+-/
 def switch (i : ℕ) (S : Finset ℕ) : Finset ℕ :=
   if (S ∩ {i, i + 1}).card = 1 then
     symmDiff S {i, i + 1}
@@ -371,14 +381,16 @@ private lemma symmDiff_inter_pair_card (i : ℕ) (S : Finset ℕ)
       exact ⟨Or.inr ⟨hpair, hS⟩, hpair⟩
   rw [key, Finset.card_sdiff, h, Finset.card_pair (Nat.succ_ne_self i |>.symm)]
 
-/-- The switch operation is an involution. -/
+/-- The switch operation is an involution. @statement_id stmt-src-lem.switch_involution
+-/
 theorem switch_switch (i : ℕ) (S : Finset ℕ) : switch i (switch i S) = S := by
   unfold switch
   by_cases h1 : (S ∩ {i, i + 1}).card = 1
   · simp only [h1, ↓reduceIte, symmDiff_inter_pair_card i S h1, symmDiff_symmDiff_cancel_right]
   · simp only [h1, ↓reduceIte]
 
-/-- Switching preserves cardinality. -/
+/-- Switching preserves cardinality. @statement_id stmt-src-lem.switch_card
+-/
 theorem switch_card (i : ℕ) (S : Finset ℕ) : (switch i S).card = S.card := by
   unfold switch
   split_ifs with h
@@ -441,7 +453,8 @@ We define it combinatorially using the sum over k-element subsets formula:
 `AlgebraicCombinatorics.qBinomial n k X` from `QBinomialBasic.lean` when the latter
 is evaluated as a polynomial. The equivalence follows from `qBinomial_eq_sum_subsets`.
 This definition uses 0-indexed sets `{0, 1, ..., n-1}` while `QBinomialBasic` uses
-1-indexed sets `{1, 2, ..., n}` in its subset formula, but both are equivalent. -/
+1-indexed sets `{1, 2, ..., n}` in its subset formula, but both are equivalent. @statement_id stmt-src-def.qbinomial
+-/
 noncomputable def qBinomial (n k : ℕ) : Polynomial ℤ :=
   ∑ S ∈ (Finset.range n).powerset.filter (fun S => S.card = k),
     Polynomial.X ^ (S.sum id - (Finset.range k).sum id)
@@ -482,7 +495,8 @@ variable {K : Type*} [CommRing K]
 /-- An element `ω` is a *d-th root of unity* if `ω^d = 1`. (def.root-of-unity.prim (a))
 
 This is the condition for membership in `rootsOfUnity d K` when `ω` is a unit.
-For fields, we can state this directly without the unit requirement. -/
+For fields, we can state this directly without the unit requirement. @statement_id stmt-src-def.root-of-unity.prim
+-/
 def IsRootOfUnity (ω : K) (d : ℕ) : Prop := ω ^ d = 1
 
 /-- A d-th root of unity satisfies `ω^d = 1`. -/
@@ -518,7 +532,8 @@ theorem IsPrimitiveRoot.pow_ne_one' {ω : K} {d : ℕ} (h : IsPrimitiveRoot ω d
 variable [IsDomain K]
 
 omit [IsDomain K] in
-/-- `-1` is a primitive 2nd root of unity in any integral domain where `-1 ≠ 1`. -/
+/-- `-1` is a primitive 2nd root of unity in any integral domain where `-1 ≠ 1`. @statement_id stmt-src-lem.neg_one_isprimitiveroot_two
+-/
 theorem neg_one_isPrimitiveRoot_two (h : (-1 : K) ≠ 1) : IsPrimitiveRoot (-1 : K) 2 := by
   refine IsPrimitiveRoot.mk_of_lt (-1) (by norm_num) (by ring) ?_
   intro l hl hlt
@@ -573,7 +588,8 @@ If `ω` is a primitive d-th root of unity with `d > 1`, then
 This is the key identity that enables cancellation in sums involving roots of unity.
 It generalizes `1 + (-1) = 0` (the case `d = 2`).
 
-This is `IsPrimitiveRoot.geom_sum_eq_zero` from Mathlib, included here for documentation. -/
+This is `IsPrimitiveRoot.geom_sum_eq_zero` from Mathlib, included here for documentation. @statement_id stmt-src-lem.primitiveroot_geom_sum
+-/
 theorem primitiveRoot_geom_sum_eq_zero {ω : K} {d : ℕ} (hω : IsPrimitiveRoot ω d)
     (hd : 1 < d) : ∑ i ∈ Finset.range d, ω ^ i = 0 :=
   hω.geom_sum_eq_zero hd
@@ -594,7 +610,8 @@ theorem pow_mod_primitiveRoot {K : Type*} [CommRing K] {ω : K} {d : ℕ}
   conv_lhs => rw [← Nat.div_add_mod n d, pow_add, pow_mul]
   simp [hω.pow_eq_one]
 
-/-- q-binomial at q=1 gives ordinary binomial coefficient -/
+/-- q-binomial at q=1 gives ordinary binomial coefficient @statement_id stmt-src-lem.qbinomial_eval_one
+-/
 theorem qBinomial_eval_one (n k : ℕ) : (qBinomial n k).eval 1 = n.choose k := by
   simp only [qBinomial, Polynomial.eval_finset_sum, Polynomial.eval_pow, Polynomial.eval_X, one_pow]
   -- Each term evaluates to 1, so we're counting the number of terms
@@ -603,7 +620,8 @@ theorem qBinomial_eval_one (n k : ℕ) : (qBinomial n k).eval 1 = n.choose k := 
   rw [← powersetCard_eq_filter, card_powersetCard, card_range]
   simp
 
-/-- q-binomial is 0 when k > n -/
+/-- q-binomial is 0 when k > n @statement_id stmt-src-lem.qbinomial_eq_zero_of_lt
+-/
 theorem qBinomial_eq_zero_of_lt (n k : ℕ) (h : n < k) : qBinomial n k = 0 := by
   simp only [qBinomial]
   apply Finset.sum_eq_zero
@@ -613,7 +631,8 @@ theorem qBinomial_eq_zero_of_lt (n k : ℕ) (h : n < k) : qBinomial n k = 0 := b
   simp only [Finset.card_range] at this
   omega
 
-/-- q-binomial boundary case: [n choose 0]_q = 1 -/
+/-- q-binomial boundary case: [n choose 0]_q = 1 @statement_id stmt-src-lem.qbinomial_zero_right
+-/
 theorem qBinomial_zero_right (n : ℕ) : qBinomial n 0 = 1 := by
   simp only [qBinomial]
   have h : (Finset.range n).powerset.filter (fun S => S.card = 0) = {∅} := by
@@ -625,7 +644,8 @@ theorem qBinomial_zero_right (n : ℕ) : qBinomial n 0 = 1 := by
   rw [h, Finset.sum_singleton]
   simp
 
-/-- q-binomial boundary case: [n choose n]_q = 1 -/
+/-- q-binomial boundary case: [n choose n]_q = 1 @statement_id stmt-src-lem.qbinomial_self
+-/
 theorem qBinomial_self (n : ℕ) : qBinomial n n = 1 := by
   simp only [qBinomial]
   have h : (Finset.range n).powerset.filter (fun S => S.card = n) = {Finset.range n} := by
@@ -726,6 +746,7 @@ monotone function definition in `QBinomialBasic.lean`.
 The key bijection: for a k-subset S = {s₀ < s₁ < ... < sₖ₋₁} of {0,...,n-1},
 define f(i) = sᵢ - i. This is a monotone function Fin k → Fin (n-k+1), and
 ∑ᵢ f(i) = ∑ᵢ sᵢ - ∑ᵢ i = S.sum id - (range k).sum id.
+@statement_id stmt-src-lem.qbinomial_eq_canonical
 -/
 theorem qBinomial_eq_canonical (n k : ℕ) :
     qBinomial n k = AlgebraicCombinatorics.qBinomialPoly n k := by
@@ -884,7 +905,8 @@ where blocks are consecutive intervals of size d.
 -/
 
 /-- A subset S of [n] is d-blocky if for each complete d-block {id, id+1, ..., id+d-1}
-contained in [n], the set S either contains all elements or none of the elements. -/
+contained in [n], the set S either contains all elements or none of the elements. @statement_id stmt-src-def.isdblocky
+-/
 def IsDBlocky (d n : ℕ) (S : Finset ℕ) : Prop :=
   S ⊆ Finset.range n ∧
   ∀ i < n / d,
@@ -894,11 +916,13 @@ instance decidableIsDBlocky (d n : ℕ) (S : Finset ℕ) : Decidable (IsDBlocky 
   unfold IsDBlocky
   infer_instance
 
-/-- The set of k-element subsets of [n]. -/
+/-- The set of k-element subsets of [n]. @statement_id stmt-src-def.ksubsets
+-/
 def kSubsets (n k : ℕ) : Finset (Finset ℕ) :=
   (Finset.range n).powersetCard k
 
-/-- The set of d-blocky k-element subsets of [n]. -/
+/-- The set of d-blocky k-element subsets of [n]. @statement_id stmt-src-def.blockysubsets
+-/
 def blockySubsets (d n k : ℕ) : Finset (Finset ℕ) :=
   (kSubsets n k).filter (fun S => IsDBlocky d n S)
 
@@ -2577,7 +2601,8 @@ More precisely: partition non-blocky k-element subsets into equivalence classes
 where two sets are equivalent if they differ only by cyclic shifts within blocks.
 Each equivalence class has size m where 1 < m and m | d, and the sum of ω^(sum S)
 over each class is 0 because the sums form an arithmetic progression with common
-difference d/m, and ω^(d/m) is a primitive m-th root of unity. -/
+difference d/m, and ω^(d/m) is a primitive m-th root of unity. @statement_id stmt-src-lem.nonblocky_contributions_cancel
+-/
 theorem nonBlocky_contributions_cancel {K : Type*} [Field K] {ω : K} {d : ℕ}
     (hω : IsPrimitiveRoot ω d) (hd : 1 < d) (n k : ℕ) :
     ∑ S ∈ (kSubsets n k).filter (fun S => ¬IsDBlocky d n S),
@@ -3057,7 +3082,8 @@ This gives a bijection with pairs from
   (Finset.range (n/d)).powersetCard (k/d) × (Finset.range (n%d)).powersetCard (k%d)
 which has cardinality (n/d).choose(k/d) * (n%d).choose(k%d).
 
-When k%d > n%d, no such subsets exist (can't choose k%d elements from n%d available). -/
+When k%d > n%d, no such subsets exist (can't choose k%d elements from n%d available). @statement_id stmt-src-lem.blocky_subsets_count
+-/
 theorem blocky_subsets_count (d n k : ℕ) (hd : 0 < d) :
     (blockySubsets d n k).card =
     if k % d ≤ n % d then (n / d).choose (k / d) * (n % d).choose (k % d) else 0 := by
@@ -3459,7 +3485,8 @@ For blocky subsets, the contribution factors because:
 1. Complete blocks contribute d*d*i + d*(d-1)/2 each, and since ω^d = 1,
    the ω^{d*d*i} part is always 1.
 2. The partial block contributes independently.
-3. The bijection with (block indices, partial elements) pairs allows factoring. -/
+3. The bijection with (block indices, partial elements) pairs allows factoring. @statement_id stmt-src-lem.blocky_sum_eq
+-/
 theorem blocky_sum_eq {K : Type*} [Field K] {ω : K} {d : ℕ}
     (hω : IsPrimitiveRoot ω d) (hd : 0 < d) (n k : ℕ) :
     ∑ S ∈ blockySubsets d n k, ω ^ (S.sum id - (Finset.range k).sum id) =
@@ -4152,6 +4179,7 @@ A k-element subset S of {0,...,n-1} can be decomposed into:
 For subsets that don't respect the block structure, we can define a d-cycle that
 permutes related subsets, and the sum of ω^(exponent) over each cycle is zero.
 The remaining terms correspond to "blocky" subsets, giving the product formula.
+@statement_id stmt-src-thm.sign.q-lucas
 -/
 theorem qLucas {K : Type*} [Field K] (d : ℕ) (hd : 0 < d) (ω : K)
     (hω : IsPrimitiveRoot ω d) (n k : ℕ) :
@@ -4371,6 +4399,7 @@ The base cases are:
 Therefore:
 - If `Even n ∧ Odd k`: result is `(n/2 choose k/2) * 0 = 0`
 - Otherwise: result is `(n/2 choose k/2) * 1 = (n/2 choose k/2)`
+@statement_id stmt-src-thm.qbinom_neg_one
 -/
 theorem qBinom_neg_one (n k : ℕ) :
     (qBinomial n k).eval (-1) =
@@ -4478,7 +4507,8 @@ the sum of signs of acceptable sets equals `(-1)^m * C(n-1, m)`.
 m-element subsets of `{0, ..., n-1}` that do not contain 0.
 
 Note: We require `0 < n` because when `n = 0`, the partner of `∅` is `{0}` which
-is not in `range 0`, but `∅.card = 0` may not equal `m`. -/
+is not in `range 0`, but `∅.card = 0` may not equal `m`. @statement_id stmt-src-thm.acceptable_nonacceptablepartner_iff
+-/
 theorem acceptable_nonAcceptablePartner_iff (n m : ℕ) (hn : 0 < n) (I : Finset ℕ)
     (hI : I ∈ acceptableSets n m) :
     partner I ∉ acceptableSets n m ↔ (0 ∉ I ∧ I.card = m) := by
@@ -4676,7 +4706,8 @@ private lemma sum_fixedSets (n m : ℕ) (hn : 0 < n) :
         rw [card_fixedSets n m hn]
         ring
 
-/-- The sum of signs of all acceptable sets equals `(-1)^m * C(n-1, m)`. -/
+/-- The sum of signs of all acceptable sets equals `(-1)^m * C(n-1, m)`. @statement_id stmt-src-thm.sum_signs_acceptable
+-/
 theorem sum_signs_acceptable (n m : ℕ) (hn : 0 < n) :
     ∑ I ∈ acceptableSets n m, setSign I =
     (-1 : ℤ) ^ m * ((n - 1).choose m) := by

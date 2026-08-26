@@ -184,7 +184,8 @@ lemma Path.subpath_length {D : SimpleDigraph V} (p : Path D) (i j : ℕ) (hij : 
 omit [DecidableEq V] in
 /-- In an acyclic digraph, all vertices on a path are distinct.
     This follows from the fact that if a vertex appears twice, we could extract
-    a cycle (a path from that vertex back to itself). -/
+    a cycle (a path from that vertex back to itself). @statement_id stmt-src-lem.lgv.path-vertices-nodup
+-/
 lemma Path.vertices_nodup_of_acyclic {D : SimpleDigraph V} (hac : D.IsAcyclic) 
     (p : Path D) : p.vertices.Nodup := by
   rw [List.nodup_iff_injective_getElem]
@@ -1625,6 +1626,7 @@ private lemma concat_splitAt_vertices_eq {D : SimpleDigraph V} (p : SimpleDigrap
   simp only [h1]
   exact List.take_append_drop _ _
 
+/-- @statement_id stmt-src-lem.lgv.exchangetails.involutive -/
 lemma exchangeTails_involutive {D : SimpleDigraph V} (_hac : D.IsAcyclic)
     (p q : SimpleDigraph.Path D) (v : V)
     (hv_p : v ∈ p.vertices) (hv_q : v ∈ q.vertices) :
@@ -1753,7 +1755,8 @@ lemma exchangeTails_head_eq {D : SimpleDigraph V} (_hac : D.IsAcyclic)
 
     **Status:** Now that `exchangeTails` is defined, the proof follows from
     multiplicativity of `pathWeight` and commutativity of multiplication in K.
-    The proof requires showing pathWeight is multiplicative over path concatenation. -/
+    The proof requires showing pathWeight is multiplicative over path concatenation. @statement_id stmt-src-lem.lgv.exchangetails.weight
+-/
 theorem exchangeTails_weight {D : SimpleDigraph V}
     (w : ArcWeight D K) (p q : SimpleDigraph.Path D) (v : V)
     (hv_p : v ∈ p.vertices) (hv_q : v ∈ q.vertices) :
@@ -2218,7 +2221,8 @@ noncomputable def signReversing {D : SimpleDigraph V} (_hac : D.IsAcyclic) {k : 
     ⟨sp.1 * Equiv.swap i j, ⟨newPaths, h_starts, h_finishes⟩⟩
 
 /-- The signReversing map preserves the intersecting property.
-    The crowded point v at indices i and j is preserved in the exchanged paths. -/
+    The crowded point v at indices i and j is preserved in the exchanged paths. @statement_id stmt-src-lem.lgv.signreversing.isintersecting
+-/
 lemma signReversing_isIntersecting {D : SimpleDigraph V} (hac : D.IsAcyclic) {k : ℕ}
     {A B : kVertex V k}
     (sp : pathTupleWithPerm (D := D) A B)
@@ -3069,6 +3073,7 @@ lemma signReversing_canonical_eq {D : SimpleDigraph V} (hac : D.IsAcyclic) {k : 
   cases h_vert_heq
   rfl
 
+/-- @statement_id stmt-src-lem.lgv.signreversing.involutive -/
 theorem signReversing_involutive {D : SimpleDigraph V} (hac : D.IsAcyclic) {k : ℕ}
     {A B : kVertex V k}
     (sp : pathTupleWithPerm (D := D) A B)
@@ -3242,7 +3247,8 @@ theorem signReversing_involutive {D : SimpleDigraph V} (hac : D.IsAcyclic) {k : 
 
 /-- The permutation of signReversing is the original permutation composed with a transposition.
     This captures the essential structural property of the sign-reversing involution:
-    when we exchange tails at indices i and j, we compose σ with the transposition (i j). -/
+    when we exchange tails at indices i and j, we compose σ with the transposition (i j). @statement_id stmt-src-lem.lgv.signreversing.perm
+-/
 theorem signReversing_perm {D : SimpleDigraph V} (hac : D.IsAcyclic) {k : ℕ}
     {A B : kVertex V k}
     (sp : pathTupleWithPerm (D := D) A B)
@@ -3257,7 +3263,8 @@ theorem signReversing_perm {D : SimpleDigraph V} (hac : D.IsAcyclic) {k : ℕ}
 /-- The paths of signReversing are obtained by exchanging tails at indices i and j.
     This captures the essential structural property of the sign-reversing involution
     for the paths: paths at indices i and j have their tails exchanged at the crowded
-    point v, while all other paths remain unchanged. -/
+    point v, while all other paths remain unchanged. @statement_id stmt-src-lem.lgv.signreversing.paths
+-/
 theorem signReversing_paths {D : SimpleDigraph V} (hac : D.IsAcyclic) {k : ℕ}
     {A B : kVertex V k}
     (sp : pathTupleWithPerm (D := D) A B)
@@ -3285,7 +3292,8 @@ theorem signReversing_paths {D : SimpleDigraph V} (hac : D.IsAcyclic) {k : ℕ}
     show (signReversing hac sp hip).2.paths l = sp.2.paths l
     conv_lhs => unfold signReversing; rw [h_data]; simp only [hl_ne_i, dite_false, hl_ne_j]
 
-/-- The sign-reversing map flips the sign -/
+/-- The sign-reversing map flips the sign @statement_id stmt-src-lem.lgv.signreversing.sign
+-/
 theorem signReversing_sign {D : SimpleDigraph V} (hac : D.IsAcyclic) {k : ℕ}
     {A B : kVertex V k}
     (sp : pathTupleWithPerm (D := D) A B)
@@ -3298,7 +3306,8 @@ theorem signReversing_sign {D : SimpleDigraph V} (hac : D.IsAcyclic) {k : ℕ}
   rw [heq, Equiv.Perm.sign_mul, Equiv.Perm.sign_swap hij]
   exact mul_neg_one (Equiv.Perm.sign sp.1)
 
-/-- The sign-reversing map preserves weight -/
+/-- The sign-reversing map preserves weight @statement_id stmt-src-lem.lgv.signreversing.weight
+-/
 theorem signReversing_weight {D : SimpleDigraph V} (hac : D.IsAcyclic) {k : ℕ}
     {A B : kVertex V k} (w : ArcWeight D K)
     (sp : pathTupleWithPerm (D := D) A B)
@@ -3340,7 +3349,8 @@ theorem signReversing_weight {D : SimpleDigraph V} (hac : D.IsAcyclic) {k : ℕ}
     rw [h_rest l hl.2.1 hl.1]
   rw [h1, h2, h_ij, h3]
 
-/-- The sign-reversing map has no fixed points (since it always flips the sign) -/
+/-- The sign-reversing map has no fixed points (since it always flips the sign) @statement_id stmt-src-lem.lgv.signreversing.nofixedpoints
+-/
 theorem signReversing_no_fixed_points {D : SimpleDigraph V} (hac : D.IsAcyclic) {k : ℕ}
     {A B : kVertex V k}
     (sp : pathTupleWithPerm (D := D) A B)
@@ -3454,7 +3464,8 @@ theorem nipatFinset_union_ipatFinset_eq {V : Type*} [DecidableEq V] {D : SimpleD
     · exact Or.inl h
     · exact Or.inr h
 
-/-- The product of path weights equals the sum over path tuples -/
+/-- The product of path weights equals the sum over path tuples @statement_id stmt-src-lem.lgv.prod-pathweightsum
+-/
 theorem prod_pathWeightSum_eq_sum_pathTupleWeight {V : Type*} [DecidableEq V] {D : SimpleDigraph V}
     (hpf : D.IsPathFinite) {k : ℕ} (w : ArcWeight D K) (A B : kVertex V k) :
     ∏ j, pathWeightSum hpf w (A j) (B j) = 
@@ -3553,7 +3564,8 @@ theorem mem_ipatWithPermFinset_iff {V : Type*} [DecidableEq V] {D : SimpleDigrap
     The total sum is therefore 0.
     
     Note: This works in any CommRing K, including characteristic 2, because we're
-    summing pairs that each contribute 0, not just showing 2x = 0. -/
+    summing pairs that each contribute 0, not just showing 2x = 0. @statement_id stmt-src-lem.lgv.sum-ipat-zero
+-/
 theorem sum_ipatWithPerm_signed_weight_eq_zero {V : Type*} [DecidableEq V] {D : SimpleDigraph V}
     (hpf : D.IsPathFinite) (hac : D.IsAcyclic) {k : ℕ} (w : ArcWeight D K) 
     (A B : kVertex V k) :
@@ -3699,7 +3711,8 @@ theorem sum_allPathTupleWithPerm_eq_sum_nipat_add_sum_ipat {V : Type*} [Decidabl
       (Equiv.Perm.sign sp.1 : K) * pathTupleWeight w sp.2.paths := by
   rw [← nipatWithPermFinset_union_ipatWithPermFinset_sum hpf A B]
 
-/-- The sum over nipats with permutation equals the sum over permutations of nipatWeightSum -/
+/-- The sum over nipats with permutation equals the sum over permutations of nipatWeightSum @statement_id stmt-src-lem.lgv.sum-nipat-eq
+-/
 theorem sum_nipatWithPerm_eq_sum_nipatWeightSum {V : Type*} [DecidableEq V] 
     {D : SimpleDigraph V} (hpf : D.IsPathFinite) {k : ℕ} (w : ArcWeight D K) 
     (A B : kVertex V k) :
@@ -3735,7 +3748,8 @@ theorem sum_nipatWithPerm_eq_sum_nipatWeightSum {V : Type*} [DecidableEq V]
         intro σ _
         simp only [nipatWeightSum, Units.smul_def, zsmul_eq_mul]
 
-/-- The determinant can be written as a sum over all path tuples with permutation -/
+/-- The determinant can be written as a sum over all path tuples with permutation @statement_id stmt-src-lem.lgv.det-eq-sum-all
+-/
 theorem det_eq_sum_allPathTupleWithPerm {V : Type*} [DecidableEq V] {D : SimpleDigraph V}
     (hpf : D.IsPathFinite) {k : ℕ} (w : ArcWeight D K) (A B : kVertex V k) :
     (pathWeightMatrix hpf w A B).det =
@@ -3806,7 +3820,8 @@ theorem det_eq_sum_allPathTupleWithPerm {V : Type*} [DecidableEq V] {D : SimpleD
     3. Thus det(M) = ∑_σ (-1)^σ ∑_{𝐩 : 𝐀 → σ(𝐁)} w(𝐩)
     4. Split the inner sum into nipats and ipats
     5. The sign-reversing involution on ipats shows ∑_{ipats} (-1)^σ w(𝐩) = 0
-    6. Only nipats remain: det(M) = ∑_σ (-1)^σ ∑_{𝐩 nipat from 𝐀 to σ(𝐁)} w(𝐩) -/
+    6. Only nipats remain: det(M) = ∑_σ (-1)^σ ∑_{𝐩 nipat from 𝐀 to σ(𝐁)} w(𝐩) @statement_id stmt-src-thm.lgv.kpaths.wt-dg
+-/
 theorem lgv_weighted_digraph {V : Type*} [DecidableEq V] {D : SimpleDigraph V}
     (hpf : D.IsPathFinite) (hac : D.IsAcyclic) {k : ℕ}
     (w : ArcWeight D K) (A B : kVertex V k) :
@@ -3832,7 +3847,8 @@ theorem lgv_weighted_digraph {V : Type*} [DecidableEq V] {D : SimpleDigraph V}
     when two paths intersect, exchange their tails at the first intersection point.
     This changes the sign (via the permutation) but preserves the weight.
 
-    This is a special case of `lgv_weighted_digraph` for the integer lattice. -/
+    This is a special case of `lgv_weighted_digraph` for the integer lattice. @statement_id stmt-src-thm.lgv.kpaths.wt
+-/
 theorem lgv_weighted_lattice {k : ℕ} (w : ArcWeight integerLattice K)
     (A B : kVertex (ℤ × ℤ) k) :
     (pathWeightMatrix integerLattice_pathFinite w A B).det =
@@ -3893,7 +3909,8 @@ lemma discrete_ivt_aux (n : ℕ) : ∀ (a b : ℤ) (f : ℤ → ℤ),
 
 /-- Discrete intermediate value theorem for integers.
     If f : ℤ → ℤ satisfies |f(n+1) - f(n)| ≤ 1 for all n in [a, b),
-    and f(a) ≥ 0 and f(b) ≤ 0, then there exists c in [a, b] with f(c) = 0. -/
+    and f(a) ≥ 0 and f(b) ≤ 0, then there exists c in [a, b] with f(c) = 0. @statement_id stmt-src-lem.lgv.discrete-ivt
+-/
 lemma discrete_ivt {a b : ℤ} (hab : a ≤ b) (f : ℤ → ℤ)
     (hf : ∀ n : ℤ, a ≤ n → n < b → |f (n + 1) - f n| ≤ 1)
     (hfa : 0 ≤ f a) (hfb : f b ≤ 0) :
@@ -3914,7 +3931,8 @@ lemma discrete_ivt {a b : ℤ} (hab : a ≤ b) (f : ℤ → ℤ)
     At each sum s in the overlap, path p has x-coordinate x_p(s) and p' has x_p'(s).
     At s_lo = max(A.1+A.2, A'.1+A'.2): x_p ≥ x_p' (because A.1 ≥ A'.1 and A.2 ≤ A'.2).
     At s_hi = min(B'.1+B'.2, B.1+B.2): x_p ≤ x_p' (because B'.1 ≤ B.1 and B'.2 ≥ B.2).
-    By discrete IVT, there exists s where x_p(s) = x_p'(s), so the vertices coincide. -/
+    By discrete IVT, there exists s where x_p(s) = x_p'(s), so the vertices coincide. @statement_id stmt-src-lem.lgv.baby-jordan
+-/
 theorem baby_jordan {A A' B B' : ℤ × ℤ}
     (hxA : xCoord A' ≤ xCoord A) (hyA : yCoord A ≤ yCoord A')
     (hxB : xCoord B' ≤ xCoord B) (hyB : yCoord B ≤ yCoord B')
@@ -4175,7 +4193,8 @@ theorem baby_jordan {A A' B B' : ℤ × ℤ}
     exact List.get_mem p'.vertices ⟨(s - A'.1 - A'.2).toNat, hp'_idx_lt⟩
 
 /-- A monotone bijection on Fin k is the identity.
-    This is used to show that if σ ≠ id, then σ is not monotone. -/
+    This is used to show that if σ ≠ id, then σ is not monotone. @statement_id stmt-src-lem.lgv.monotone-perm-eq-id
+-/
 lemma monotone_perm_eq_id {k : ℕ} (σ : Equiv.Perm (Fin k))
     (h : ∀ i j : Fin k, i < j → σ i ≤ σ j) : σ = Equiv.refl (Fin k) := by
   cases k with
@@ -4218,7 +4237,8 @@ lemma monotone_perm_eq_id {k : ℕ} (σ : Equiv.Perm (Fin k))
     simp only [Equiv.refl_apply]
     exact congrArg Fin.val (main i.val i rfl)
 
-/-- When σ ≠ id, there are no nipats from 𝐀 to σ(𝐁) under the sorting conditions -/
+/-- When σ ≠ id, there are no nipats from 𝐀 to σ(𝐁) under the sorting conditions @statement_id stmt-src-lem.lgv.no-nipats-nonid
+-/
 theorem no_nipats_nonidentity {k : ℕ} (A B : kVertex (ℤ × ℤ) k)
     (hxA : xDecreasing A) (hyA : yIncreasing A)
     (hxB : xDecreasing B) (hyB : yIncreasing B)
@@ -4271,7 +4291,8 @@ theorem permuteKVertex_refl {V : Type*} {k : ℕ} (B : kVertex V k) :
     - y(B₁) ≤ y(B₂) ≤ ⋯ ≤ y(Bₖ)
 
     The LGV formula simplifies to:
-    det((∑_{p : Aᵢ → Bⱼ} w(p))_{i,j}) = ∑_{𝐩 nipat from 𝐀 to 𝐁} w(𝐩) -/
+    det((∑_{p : Aᵢ → Bⱼ} w(p))_{i,j}) = ∑_{𝐩 nipat from 𝐀 to 𝐁} w(𝐩) @statement_id stmt-src-cor.lgv.kpaths.wt-np
+-/
 theorem lgv_nonpermutable {k : ℕ} (w : ArcWeight integerLattice K)
     (A B : kVertex (ℤ × ℤ) k)
     (hxA : xDecreasing A) (hyA : yIncreasing A)
@@ -4370,7 +4391,8 @@ private lemma binom_fkg_core (A B C D : ℕ) (hAB : B ≤ A) (hCD : D ≤ C) (hC
 /-- The FKG inequality for binomial coefficients:
     C(a,c) * C(b,d) ≥ C(a,d) * C(b,c) when a ≥ b and c ≥ d.
 
-    This handles all cases including when some choose values are zero. -/
+    This handles all cases including when some choose values are zero. @statement_id stmt-src-lem.lgv.binom-fkg
+-/
 lemma binom_2x2_ineq (a b c d : ℕ) (hab : b ≤ a) (hcd : d ≤ c) :
     (a.choose d : ℤ) * (b.choose c) ≤ (a.choose c) * (b.choose d) := by
   by_cases hca : c > a
@@ -4932,7 +4954,8 @@ private lemma eastStepsToPath_pathToEastSteps_vertices (a b : ℕ) (p : SimpleDi
     - A path from (0, -a) to (b, -b) has exactly a steps (coordinate sum goes from -a to 0)
     - A path has exactly b east-steps (x-coordinate goes from 0 to b)
     - A path is uniquely determined by which of its a steps are east-steps
-    - This gives a bijection to b-element subsets of Fin a -/
+    - This gives a bijection to b-element subsets of Fin a @statement_id stmt-src-lem.lgv.paths-equiv-powersetcard
+-/
 noncomputable def paths_equiv_powersetCard (a b : ℕ) :
     (pathsFromTo integerLattice integerLattice_pathFinite (0, -(a : ℤ)) (b, -(b : ℤ))) ≃
       (Finset.powersetCard b (Finset.univ : Finset (Fin a))) := by
@@ -4976,7 +4999,8 @@ noncomputable def paths_equiv_powersetCard (a b : ℕ) :
     exact pathToEastSteps_eastStepsToPath a b S hS
 
 /-- The number of paths from (0, -a) to (b, -b) in the integer lattice equals C(a, b).
-    This follows from Proposition prop.lgv.1-paths.ct. -/
+    This follows from Proposition prop.lgv.1-paths.ct. @statement_id stmt-src-lem.lgv.paths-count-eq-choose
+-/
 theorem paths_count_eq_choose (a b : ℕ) :
     (pathsFromTo integerLattice integerLattice_pathFinite (0, -(a : ℤ)) (b, -(b : ℤ))).card =
       a.choose b := by
@@ -5029,7 +5053,8 @@ theorem pathWeightSum_unitArcWeight (u v : ℤ × ℤ) :
   simp only [pathWeightSum, pathWeight_unitArcWeight, Finset.sum_const]
   simp
 
-/-- The binomial matrix equals pathWeightMatrix with unit weight -/
+/-- The binomial matrix equals pathWeightMatrix with unit weight @statement_id stmt-src-lem.lgv.binom-matrix-eq
+-/
 theorem binom_matrix_eq_pathWeightMatrix {k : ℕ} (a b : Fin k → ℕ) :
     (Matrix.of fun i j => ((a i).choose (b j) : ℤ)) =
     pathWeightMatrix integerLattice_pathFinite unitArcWeight (binomLatticeA a) (binomLatticeB b) := by
@@ -5095,7 +5120,8 @@ theorem sum_ipatWithPerm_eq_sum_ipatFinset_card {k : ℕ} (A B : kVertex (ℤ ×
     for each ipat (σ, pt), swap tails at the first intersection point to get
     (σ * swap i j, pt'), which has opposite sign but the same weight (= 1).
     
-    This lemma is the key step needed to complete LGV1.lean's `lgv_involution_cancellation`. -/
+    This lemma is the key step needed to complete LGV1.lean's `lgv_involution_cancellation`. @statement_id stmt-src-lem.lgv.sum-signed-ipat-card-zero
+-/
 theorem sum_signed_ipatFinset_card_eq_zero {k : ℕ} (A B : kVertex (ℤ × ℤ) k) :
     ∑ σ : Equiv.Perm (Fin k), (Equiv.Perm.sign σ : ℤ) * 
       (ipatFinset integerLattice_pathFinite A (permuteKVertex σ B)).card = 0 := by
@@ -5103,6 +5129,7 @@ theorem sum_signed_ipatFinset_card_eq_zero {k : ℕ} (A B : kVertex (ℤ × ℤ)
   exact sum_ipatWithPerm_signed_weight_eq_zero integerLattice_pathFinite integerLattice_acyclic 
     unitArcWeight A B
 
+/-- @statement_id stmt-src-cor.lgv.binom-det-nonneg -/
 theorem binom_det_nonneg {k : ℕ} (a b : Fin k → ℕ)
     (ha : ∀ i j : Fin k, i ≤ j → a j ≤ a i)
     (hb : ∀ i j : Fin k, i ≤ j → b j ≤ b i) :
@@ -5301,7 +5328,8 @@ private lemma dyckDigraph_path_ext (p q : SimpleDigraph.Path dyckDigraph)
     3. The y-coordinate is bounded: 0 ≤ y ≤ u.2 + n at each vertex
     4. Each path is determined by its vertex sequence, which is a function Fin n → box
     5. Since box is finite and n is finite, there are finitely many such functions
-    6. The map from paths to vertex sequences is injective, so paths are finite -/
+    6. The map from paths to vertex sequences is injective, so paths are finite @statement_id stmt-src-lem.lgv.dyck-pathfinite
+-/
 theorem dyckDigraph_pathFinite : dyckDigraph.IsPathFinite := by
   intro u v
   by_cases h : v.1 < u.1
@@ -5374,7 +5402,8 @@ theorem dyckDigraph_pathFinite : dyckDigraph.IsPathFinite := by
         exact heqi
     exact Finite.of_injective f hinj
 
-/-- The Dyck digraph is acyclic -/
+/-- The Dyck digraph is acyclic @statement_id stmt-src-lem.lgv.dyck-acyclic
+-/
 theorem dyckDigraph_acyclic : dyckDigraph.IsAcyclic := by
   intro p hcycle
   by_contra hne
@@ -5532,7 +5561,8 @@ private lemma dyckPath_y_eq_count_diff_int (p : SimpleDigraph.Path dyckDigraph) 
     **Note:** This definition requires substantial infrastructure to prove well-formedness.
     The key properties are:
     - count_U_eq_count_D: follows from start.2 = 0 = finish.2
-    - count_D_le_count_U: follows from y ≥ 0 throughout the path (Dyck condition) -/
+    - count_D_le_count_U: follows from y ≥ 0 throughout the path (Dyck condition) @statement_id stmt-src-lem.lgv.dyck-path-bijection
+-/
 def dyckPathToWord (p : SimpleDigraph.Path dyckDigraph) (hstart : p.start = (0, 0))
     (hfinish : p.finish.2 = 0) : DyckWord where
   toList := dyckPathToSteps p
@@ -5631,7 +5661,8 @@ lemma dyckWord_y_pos_before_D (w : DyckWord) (i : ℕ) (hi : i < w.toList.length
 /-- Convert a DyckWord to a Dyck path from (0, 0) to (2n, 0) where n = semilength.
 
     **Note:** The vertices are constructed as (i, y_i) where y_i = #U - #D in the first i steps.
-    The Dyck word conditions ensure y_i ≥ 0 and the path stays in the valid region. -/
+    The Dyck word conditions ensure y_i ≥ 0 and the path stays in the valid region. @statement_id stmt-src-lem.lgv.dyck-path-bijection
+-/
 def dyckWordToPath (w : DyckWord) : SimpleDigraph.Path dyckDigraph where
   vertices := dyckWordToVertices w
   nonempty := dyckWordToVertices_nonempty w
@@ -5897,7 +5928,8 @@ private lemma dyckPathToWord_dyckWordToPath (w : DyckWord) :
     1. dyckPathToWord is well-defined (DyckWord conditions satisfied) ✓
     2. dyckWordToPath is well-defined (arc validity) ✓
     3. The maps are inverses (bijection) ✓
-    4. dyckPathToWord maps paths from (0,0) to (2n,0) to words of semilength n ✓ -/
+    4. dyckPathToWord maps paths from (0,0) to (2n,0) to words of semilength n ✓ @statement_id stmt-src-lem.lgv.dyck-paths-eq-catalan
+-/
 theorem dyck_paths_eq_catalan (n : ℕ) :
     (pathsFromTo dyckDigraph dyckDigraph_pathFinite (0, 0) (2 * n, 0)).card = catalan n := by
   -- Build equivalence between paths and DyckWords with semilength n
@@ -6009,7 +6041,8 @@ lemma translatePath_injective (d : ℤ) : Function.Injective (translatePath d) :
 
 /-- The number of Dyck paths from (-2i, 0) to (2j, 0) equals catalan(i+j).
     This follows from translation invariance: shifting by 2i gives a bijection
-    with paths from (0, 0) to (2(i+j), 0), which equal catalan(i+j) by `dyck_paths_eq_catalan`. -/
+    with paths from (0, 0) to (2(i+j), 0), which equal catalan(i+j) by `dyck_paths_eq_catalan`. @statement_id stmt-src-lem.lgv.dyck-paths-shifted
+-/
 theorem dyck_paths_shifted_eq_catalan (i j : ℕ) :
     (pathsFromTo dyckDigraph dyckDigraph_pathFinite (-(2 * i : ℤ), 0) (2 * j, 0)).card =
       catalan (i + j) := by
@@ -6055,7 +6088,8 @@ theorem dyck_paths_shifted_eq_catalan (i j : ℕ) :
     _ = catalan (i + j) := dyck_paths_eq_catalan (i + j)
 
 /-- The Catalan Hankel matrix equals the path weight matrix for the Dyck digraph.
-    Entry (i,j) = catalan(i+j) = number of Dyck paths from (-2i, 0) to (2j, 0). -/
+    Entry (i,j) = catalan(i+j) = number of Dyck paths from (-2i, 0) to (2j, 0). @statement_id stmt-src-lem.lgv.catalan-hankel-eq-pwm
+-/
 theorem catalanHankelMatrix_eq_pathWeightMatrix (k : ℕ) :
     catalanHankelMatrix k =
     pathWeightMatrix dyckDigraph_pathFinite dyckUnitArcWeight
@@ -6096,7 +6130,8 @@ theorem catalan_hankel_det_general (n : ℕ) : (catalanHankelMatrix (n + 8)).det
     - There is exactly one non-intersecting path tuple from 𝐀 to 𝐁
       (the nested Dyck paths).
     - For non-identity permutations σ, there are no nipats from 𝐀 to σ(𝐁).
-    - By LGV, det = 1 · 1 = 1. -/
+    - By LGV, det = 1 · 1 = 1. @statement_id stmt-src-cor.lgv.catalan-hankel-det-0
+-/
 theorem catalan_hankel_det (k : ℕ) : (catalanHankelMatrix k).det = 1 := by
   match k with
   | 0 => exact catalan_hankel_det_zero
@@ -6219,12 +6254,14 @@ lemma nestedDyckVertices_arcs_valid (n : ℕ) :
     · have h1 : min i (4 * n - i) = 4 * n - i := Nat.min_eq_right (by omega)
       rw [h1]; omega
 
-/-- The nested Dyck path from (-2n, 0) to (2n, 0) -/
+/-- The nested Dyck path from (-2n, 0) to (2n, 0) @statement_id stmt-src-lem.lgv.nesteddyckpath
+-/
 def nestedDyckPath (n : ℕ) : SimpleDigraph.Path dyckDigraph where
   vertices := nestedDyckVertices n
   nonempty := nestedDyckVertices_nonempty n
   arcs_valid := nestedDyckVertices_arcs_valid n
 
+/-- @statement_id stmt-src-lem.lgv.nesteddyckpath -/
 lemma nestedDyckPath_start (n : ℕ) : (nestedDyckPath n).start = (-(2 * (n : ℤ)), 0) := by
   unfold SimpleDigraph.Path.start nestedDyckPath
   simp only [List.head_eq_getElem]
@@ -6232,6 +6269,7 @@ lemma nestedDyckPath_start (n : ℕ) : (nestedDyckPath n).start = (-(2 * (n : �
   rw [nestedDyckVertices_getElem n 0 (by rw [hlen]; omega)]
   simp
 
+/-- @statement_id stmt-src-lem.lgv.nesteddyckpath -/
 lemma nestedDyckPath_finish (n : ℕ) : (nestedDyckPath n).finish = ((2 * (n : ℤ)), 0) := by
   unfold SimpleDigraph.Path.finish nestedDyckPath
   simp only [List.getLast_eq_getElem]
@@ -6251,7 +6289,8 @@ lemma nestedDyckPath_vertex_mem (n : ℕ) (v : ℤ × ℕ) (hv : v ∈ (nestedDy
   obtain ⟨⟨i, hi⟩, rfl⟩ := hv
   exact ⟨i, by omega, rfl⟩
 
-/-- Different nested Dyck paths don't share any vertices -/
+/-- Different nested Dyck paths don't share any vertices @statement_id stmt-src-lem.lgv.nesteddyckpath-disjoint
+-/
 lemma nestedDyckPath_disjoint (n m : ℕ) (hnm : n ≠ m) :
     ¬pathsIntersect (nestedDyckPath n) (nestedDyckPath m) := by
   intro ⟨v, hvn, hvm⟩
@@ -6508,7 +6547,8 @@ private lemma nestedDyckPath_mid_y (n : ℕ) :
     **Uniqueness**: Any nipat must equal the canonical one because:
     - In the Dyck digraph, paths from (-2i, 0) to (2i, 0) must have length 4i
     - For non-intersection with outer paths, inner paths must stay "inside"
-    - The only way to do this is the nested structure -/
+    - The only way to do this is the nested structure @statement_id stmt-src-lem.lgv.catalan-unique-nipat
+-/
 theorem catalan_unique_nipat (k : ℕ) :
     let A : kVertex (ℤ × ℕ) k := fun i => (-2 * (i : ℤ), 0)
     let B : kVertex (ℤ × ℕ) k := fun i => (2 * (i : ℤ), 0)
@@ -6983,7 +7023,8 @@ theorem SimpleDigraph.Path.ext_vertices' (p q : SimpleDigraph.Path integerLattic
        - Given consecutive vertices u, v, the step is east iff v.1 = u.1 + 1
     3. By induction on the path length, equal vertex lists imply equal step sequences
     
-    This is a key lemma for the bridge between LGV1 and LGV2 path representations. -/
+    This is a key lemma for the bridge between LGV1 and LGV2 path representations. @statement_id stmt-src-lem.lgv.topath-injective
+-/
 theorem LatticePath'.toPath_injective (start : ℤ × ℤ) :
     Function.Injective (fun path => LatticePath'.toPath path start) := by
   intro p1 p2 h
@@ -7106,7 +7147,8 @@ theorem verticesToSteps'_toVertices (vs : List (ℤ × ℤ)) (hne : vs ≠ [])
 /-- toPath is surjective: every SimpleDigraph.Path comes from a LatticePath'.
     
     This completes the bijection between step-based and vertex-based path representations.
-    Together with `toPath_injective`, this shows that the two representations are equivalent. -/
+    Together with `toPath_injective`, this shows that the two representations are equivalent. @statement_id stmt-src-lem.lgv.topath-surjective
+-/
 theorem LatticePath'.toPath_surjective (start : ℤ × ℤ) :
     ∀ p : SimpleDigraph.Path integerLattice, p.start = start → 
       ∃ path : LatticePath', LatticePath'.toPath path start = p := by
@@ -7123,7 +7165,8 @@ theorem LatticePath'.toPath_surjective (start : ℤ × ℤ) :
 /-- The bijection between LatticePath' and SimpleDigraph.Path starting at a fixed point.
     
     This establishes that the two path representations are equivalent, which is the key
-    step needed to bridge LGV1.lean's counting results with LGV2.lean's weighted results. -/
+    step needed to bridge LGV1.lean's counting results with LGV2.lean's weighted results. @statement_id stmt-src-lem.lgv.latticepath-equiv
+-/
 noncomputable def latticePath'Equiv (start : ℤ × ℤ) :
     LatticePath' ≃ { p : SimpleDigraph.Path integerLattice // p.start = start } where
   toFun path := ⟨LatticePath'.toPath path start, LatticePath'.toPath_start path start⟩
@@ -7260,7 +7303,8 @@ theorem latticePath'TupleToPathTuple_vertices {k : ℕ} {A B : kVertex (ℤ × �
     ((latticePath'TupleToPathTuple pt).paths i).vertices = 
     LatticePath'.toVertices (pt.paths i) (A i) := rfl
 
-/-- The intersection property is preserved by the bijection -/
+/-- The intersection property is preserved by the bijection @statement_id stmt-src-lem.lgv.latticepath-tuple-intersecting
+-/
 theorem latticePath'Tuple_isIntersecting_iff {k : ℕ} {A B : kVertex (ℤ × ℤ) k}
     (pt : LatticePath'Tuple k A B) :
     pt.isIntersecting ↔ (latticePath'TupleToPathTuple pt).isIntersecting := by

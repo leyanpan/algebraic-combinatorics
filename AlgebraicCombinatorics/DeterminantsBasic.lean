@@ -114,7 +114,8 @@ theorem det_eq_sum_sign_prod (A : Matrix (Fin n) (Fin n) K) :
     det A = ∑_{σ ∈ Sₙ} (-1)^σ · ∏_{i=1}^n A_{i,σ(i)}
 
     The Mathlib definition uses A(σ(i), i) rather than A(i, σ(i)), but these
-    are equivalent by substituting σ ↦ σ⁻¹. -/
+    are equivalent by substituting σ ↦ σ⁻¹. @statement_id stmt-src-def.det.det
+-/
 theorem det_eq_sum_sign_prod_textbook (A : Matrix (Fin n) (Fin n) K) :
     A.det = ∑ σ : Equiv.Perm (Fin n), Equiv.Perm.sign σ • ∏ i, A i (σ i) := by
   rw [Matrix.det_apply]
@@ -138,21 +139,25 @@ For n = 2: det [[a, b], [a', b']] = a·b' - b·a'
 For n = 3: The 6-term expansion over S₃
 -/
 
-/-- Determinant of 0×0 matrix is 1 -/
+/-- Determinant of 0×0 matrix is 1 @statement_id stmt-src-lem.det.fin-zero
+-/
 theorem det_fin_zero' (A : Matrix (Fin 0) (Fin 0) K) : A.det = 1 :=
   Matrix.det_isEmpty
 
-/-- Determinant of 1×1 matrix is its single entry -/
+/-- Determinant of 1×1 matrix is its single entry @statement_id stmt-src-lem.det.fin-one
+-/
 theorem det_fin_one' (A : Matrix (Fin 1) (Fin 1) K) : A.det = A 0 0 :=
   Matrix.det_unique A
 
-/-- Determinant of 2×2 matrix: ad - bc -/
+/-- Determinant of 2×2 matrix: ad - bc @statement_id stmt-src-lem.det.fin-two
+-/
 theorem det_fin_two' (A : Matrix (Fin 2) (Fin 2) K) :
     A.det = A 0 0 * A 1 1 - A 0 1 * A 1 0 :=
   Matrix.det_fin_two A
 
 /-- The determinant of the identity matrix is 1.
-    This is a basic API lemma for working with determinants. -/
+    This is a basic API lemma for working with determinants. @statement_id stmt-src-lem.det.one-eq-one
+-/
 @[simp]
 theorem det_one_eq_one : det (1 : Matrix (Fin n) (Fin n) K) = 1 :=
   Matrix.det_one
@@ -161,7 +166,8 @@ theorem det_one_eq_one : det (1 : Matrix (Fin n) (Fin n) K) = 1 :=
     This is a basic API lemma for working with determinants.
 
     Note: For n = 0, the zero matrix is the empty matrix, and det(∅) = 1
-    by convention (empty product). -/
+    by convention (empty product). @statement_id stmt-src-lem.det.zero-eq-zero
+-/
 @[simp]
 theorem det_zero_eq_zero (hn : 0 < n) : det (0 : Matrix (Fin n) (Fin n) K) = 0 := by
   apply Matrix.det_eq_zero_of_row_eq_zero ⟨0, hn⟩
@@ -215,7 +221,8 @@ private lemma exists_middle_to_middle (σ : Equiv.Perm (Fin 5)) :
 
     More precisely: if A_{i,j} = 0 whenever i, j ∈ {1, 2, 3} (0-indexed),
     then det A = 0. This is because any permutation σ must have some
-    i ∈ {1,2,3} with σ(i) ∈ {1,2,3} by pigeonhole. -/
+    i ∈ {1,2,3} with σ(i) ∈ {1,2,3} by pigeonhole. @statement_id stmt-src-lem.det.hollow-core
+-/
 theorem det_hollow_core_eq_zero (A : Matrix (Fin 5) (Fin 5) K)
     (hA : ∀ i j : Fin 5, i.val ∈ ({1, 2, 3} : Set ℕ) → j.val ∈ ({1, 2, 3} : Set ℕ) →
       A i j = 0) : A.det = 0 := by
@@ -253,7 +260,8 @@ lemma outerProductMatrix_apply (x y : Fin n → K) (i j : Fin n) :
 
     The proof uses a sign-reversing involution: multiply by a fixed transposition.
     For n ≥ 2, we can pick two distinct elements and their transposition t.
-    Then σ ↦ t * σ pairs up permutations with opposite signs. -/
+    Then σ ↦ t * σ pairs up permutations with opposite signs. @statement_id stmt-src-lem.det.sum-sign-zero
+-/
 theorem sum_sign_eq_zero (hn : 2 ≤ n) :
     ∑ σ : Equiv.Perm (Fin n), (Equiv.Perm.sign σ : K) = 0 := by
   -- We use the involution σ ↦ σ * swap 0 1
@@ -290,7 +298,8 @@ theorem sum_sign_eq_zero (hn : 2 ≤ n) :
     simp
 
 /-- Determinant of outer product matrix is 0 for n ≥ 2.
-    Label: prop.det.xiyj -/
+    Label: prop.det.xiyj @statement_id stmt-src-prop.det.xiyj
+-/
 theorem det_outerProduct_eq_zero (x y : Fin n → K) (hn : 2 ≤ n) :
     (outerProductMatrix x y).det = 0 := by
   -- outerProductMatrix is the same as vecMulVec
@@ -301,7 +310,8 @@ theorem det_outerProduct_eq_zero (x y : Fin n → K) (hn : 2 ≤ n) :
   exact det_vecMulVec x y
 
 /-- Corollary: Matrix with all entries equal has det = 0 for n ≥ 2.
-    Label: eq.prop.det.xiyj.cor-x -/
+    Label: eq.prop.det.xiyj.cor-x @statement_id stmt-src-lem.det.const-matrix-zero
+-/
 theorem det_const_matrix_eq_zero (c : K) (hn : 2 ≤ n) :
     (Matrix.of fun _ _ : Fin n => c).det = 0 := by
   have h : Nontrivial (Fin n) := Fin.nontrivial_iff_two_le.mpr hn
@@ -343,7 +353,8 @@ def sumMatrix_factorB (y : Fin n → K) : Matrix (Fin n) (Fin n) K :=
     else if i.val = 1 then y j
     else 0
 
-/-- The matrix A in the factorization has a zero column when n ≥ 3 (column index 2). -/
+/-- The matrix A in the factorization has a zero column when n ≥ 3 (column index 2). @statement_id stmt-src-lem.det.summatrix-factora-zero-col
+-/
 lemma sumMatrix_factorA_has_zero_col (x : Fin n → K) (hn : 3 ≤ n) :
     ∀ i, (sumMatrix_factorA x) i ⟨2, by omega⟩ = 0 := by
   intro i
@@ -352,12 +363,14 @@ lemma sumMatrix_factorA_has_zero_col (x : Fin n → K) (hn : 3 ≤ n) :
   have h2 : ¬ (2 : ℕ) = 1 := by omega
   simp only [h1, ite_false, h2]
 
-/-- The determinant of the factor matrix A is 0 when n ≥ 3. -/
+/-- The determinant of the factor matrix A is 0 when n ≥ 3. @statement_id stmt-src-lem.det.det-summatrix-factora-zero
+-/
 lemma det_sumMatrix_factorA_eq_zero (x : Fin n → K) (hn : 3 ≤ n) :
     (sumMatrix_factorA x).det = 0 :=
   det_eq_zero_of_column_eq_zero ⟨2, by omega⟩ (sumMatrix_factorA_has_zero_col x hn)
 
-/-- The matrix (x_i + y_j) factors as A * B where A = sumMatrix_factorA and B = sumMatrix_factorB. -/
+/-- The matrix (x_i + y_j) factors as A * B where A = sumMatrix_factorA and B = sumMatrix_factorB. @statement_id stmt-src-lem.det.summatrix-eq-factora-mul-factorb
+-/
 lemma sumMatrix_eq_factorA_mul_factorB (x y : Fin n → K) (hn : 2 ≤ n) :
     sumMatrix x y = sumMatrix_factorA x * sumMatrix_factorB y := by
   ext i j
@@ -405,7 +418,8 @@ lemma sumMatrix_eq_factorA_mul_factorB (x y : Fin n → K) (hn : 2 ≤ n) :
 /-- Determinant of sum matrix is 0 for n ≥ 3.
     Label: prop.det.xi+yj
 
-    The proof uses matrix factorization: (x_i + y_j) = A * B where A has a zero column. -/
+    The proof uses matrix factorization: (x_i + y_j) = A * B where A has a zero column. @statement_id stmt-src-prop.det.xi-yj
+-/
 theorem det_sumMatrix_eq_zero (x y : Fin n → K) (hn : 3 ≤ n) :
     (sumMatrix x y).det = 0 := by
   rw [sumMatrix_eq_factorA_mul_factorB x y (by omega : 2 ≤ n)]
@@ -421,7 +435,8 @@ det(A^T) = det(A)
 -/
 
 /-- Transposes preserve determinants.
-    Label: thm.det.transp -/
+    Label: thm.det.transp @statement_id stmt-src-thm.det.transp
+-/
 theorem det_transpose' (A : Matrix (Fin n) (Fin n) K) : Aᵀ.det = A.det :=
   det_transpose A
 
@@ -432,14 +447,16 @@ If A is upper-triangular or lower-triangular, then det A = ∏ᵢ Aᵢᵢ.
 -/
 
 /-- Determinant of upper triangular matrix is product of diagonal.
-    Label: thm.det.triang -/
+    Label: thm.det.triang @statement_id stmt-src-thm.det.triang
+-/
 theorem det_upperTriangular (A : Matrix (Fin n) (Fin n) K)
     (hA : ∀ i j, j < i → A i j = 0) : A.det = ∏ i, A i i := by
   have h : Matrix.BlockTriangular A id := fun i j hij => hA i j hij
   exact Matrix.det_of_upperTriangular h
 
 /-- Determinant of lower triangular matrix is product of diagonal.
-    Label: thm.det.triang -/
+    Label: thm.det.triang @statement_id stmt-src-thm.det.triang
+-/
 theorem det_lowerTriangular (A : Matrix (Fin n) (Fin n) K)
     (hA : ∀ i j, i < j → A i j = 0) : A.det = ∏ i, A i i := by
   have h : Matrix.BlockTriangular Aᵀ id := fun i j hij => by
@@ -448,7 +465,8 @@ theorem det_lowerTriangular (A : Matrix (Fin n) (Fin n) K)
   rw [← det_transpose A]
   exact Matrix.det_of_upperTriangular h
 
-/-- Determinant of diagonal matrix is product of diagonal entries -/
+/-- Determinant of diagonal matrix is product of diagonal entries @statement_id stmt-src-lem.det.diagonal
+-/
 theorem det_diagonal' (d : Fin n → K) :
     (Matrix.diagonal d).det = ∏ i, d i :=
   Matrix.det_diagonal
@@ -466,7 +484,8 @@ theorem det_diagonal' (d : Fin n → K) :
 -/
 
 /-- (a) Swapping two rows multiplies determinant by -1.
-    Label: thm.det.rowop (a) -/
+    Label: thm.det.rowop (a) @statement_id stmt-src-thm.det.rowop
+-/
 theorem det_swap_rows (A : Matrix (Fin n) (Fin n) K) (i j : Fin n) (hij : i ≠ j) :
     (Matrix.of (A ∘ Equiv.swap i j)).det = -A.det := by
   have h : Matrix.of (A ∘ Equiv.swap i j) = A.submatrix (Equiv.swap i j) id := rfl
@@ -474,19 +493,22 @@ theorem det_swap_rows (A : Matrix (Fin n) (Fin n) K) (i j : Fin n) (hij : i ≠ 
   simp
 
 /-- (b) A matrix with a zero row has determinant 0.
-    Label: thm.det.rowop (b) -/
+    Label: thm.det.rowop (b) @statement_id stmt-src-thm.det.rowop
+-/
 theorem det_zero_row (A : Matrix (Fin n) (Fin n) K) (i : Fin n)
     (hi : ∀ j, A i j = 0) : A.det = 0 :=
   det_eq_zero_of_row_eq_zero i hi
 
 /-- (c) A matrix with two equal rows has determinant 0.
-    Label: thm.det.rowop (c) -/
+    Label: thm.det.rowop (c) @statement_id stmt-src-thm.det.rowop
+-/
 theorem det_eq_rows (A : Matrix (Fin n) (Fin n) K) (i j : Fin n) (hij : i ≠ j)
     (hrows : A i = A j) : A.det = 0 := by
   exact det_zero_of_row_eq hij hrows
 
 /-- (d) Scaling a row by λ scales the determinant by λ.
-    Label: thm.det.rowop (d) -/
+    Label: thm.det.rowop (d) @statement_id stmt-src-thm.det.rowop
+-/
 theorem det_scale_row (A : Matrix (Fin n) (Fin n) K) (i : Fin n) (c : K) :
     (A.updateRow i (c • A i)).det = c * A.det := by
   have h := Matrix.det_updateRow_smul A i c (A i)
@@ -495,19 +517,22 @@ theorem det_scale_row (A : Matrix (Fin n) (Fin n) K) (i : Fin n) (c : K) :
   exact h
 
 /-- (e) Adding one row to another preserves determinant (special case of (f)).
-    Label: thm.det.rowop (e) -/
+    Label: thm.det.rowop (e) @statement_id stmt-src-thm.det.rowop
+-/
 theorem det_add_row (A : Matrix (Fin n) (Fin n) K) (i j : Fin n) (hij : i ≠ j) :
     (A.updateRow i (A i + A j)).det = A.det := by
   exact det_updateRow_add_self A hij
 
 /-- (f) Adding λ times one row to another preserves determinant.
-    Label: thm.det.rowop (f) -/
+    Label: thm.det.rowop (f) @statement_id stmt-src-thm.det.rowop
+-/
 theorem det_add_smul_row (A : Matrix (Fin n) (Fin n) K) (i j : Fin n) (hij : i ≠ j) (c : K) :
     (A.updateRow i (A i + c • A j)).det = A.det := by
   exact Matrix.det_updateRow_add_smul_self A hij c
 
 /-- (g) Multilinearity: determinant is additive in row k.
-    Label: thm.det.rowop (g) -/
+    Label: thm.det.rowop (g) @statement_id stmt-src-thm.det.rowop
+-/
 theorem det_row_add (A B C : Matrix (Fin n) (Fin n) K) (k : Fin n)
     (hk : C k = A k + B k) (hother : ∀ i, i ≠ k → C i = A i ∧ A i = B i) :
     C.det = A.det + B.det := by
@@ -540,7 +565,8 @@ using det(A^T) = det(A).
 -/
 
 /-- (a) Swapping two columns multiplies determinant by -1.
-    Label: thm.det.colop (a) -/
+    Label: thm.det.colop (a) @statement_id stmt-src-thm.det.colop
+-/
 theorem det_swap_cols (A : Matrix (Fin n) (Fin n) K) (i j : Fin n) (hij : i ≠ j) :
     (A.submatrix id (Equiv.swap i j)).det = -A.det := by
   have h1 : (A.submatrix id (Equiv.swap i j)).transpose = A.transpose.submatrix (Equiv.swap i j) id := by
@@ -550,13 +576,15 @@ theorem det_swap_cols (A : Matrix (Fin n) (Fin n) K) (i j : Fin n) (hij : i ≠ 
   simp [Matrix.det_transpose]
 
 /-- A matrix with a zero column has determinant 0.
-    Label: thm.det.colop (b) -/
+    Label: thm.det.colop (b) @statement_id stmt-src-thm.det.colop
+-/
 theorem det_zero_col (A : Matrix (Fin n) (Fin n) K) (j : Fin n)
     (hj : ∀ i, A i j = 0) : A.det = 0 :=
   det_eq_zero_of_column_eq_zero j hj
 
 /-- (c) A matrix with two equal columns has determinant 0.
-    Label: thm.det.colop (c) -/
+    Label: thm.det.colop (c) @statement_id stmt-src-thm.det.colop
+-/
 theorem det_eq_cols (A : Matrix (Fin n) (Fin n) K) (i j : Fin n) (hij : i ≠ j)
     (hcols : ∀ k, A k i = A k j) : A.det = 0 := by
   rw [← det_transpose]
@@ -565,7 +593,8 @@ theorem det_eq_cols (A : Matrix (Fin n) (Fin n) K) (i j : Fin n) (hij : i ≠ j)
   simp [Matrix.transpose_apply, hcols k]
 
 /-- Scaling a column by λ scales the determinant by λ.
-    Label: thm.det.colop (d) -/
+    Label: thm.det.colop (d) @statement_id stmt-src-thm.det.colop
+-/
 theorem det_scale_col (A : Matrix (Fin n) (Fin n) K) (j : Fin n) (c : K) :
     (Matrix.of fun i k => if k = j then c * A i k else A i k).det = c * A.det := by
   have h1 : (Matrix.of fun i k => if k = j then c * A i k else A i k) =
@@ -579,13 +608,15 @@ theorem det_scale_col (A : Matrix (Fin n) (Fin n) K) (j : Fin n) (c : K) :
   rw [h1, h2, det_updateCol_smul, h3]
 
 /-- (e) Adding one column to another preserves determinant (special case of (f)).
-    Label: thm.det.colop (e) -/
+    Label: thm.det.colop (e) @statement_id stmt-src-thm.det.colop
+-/
 theorem det_add_col (A : Matrix (Fin n) (Fin n) K) (i j : Fin n) (hij : i ≠ j) :
     (A.updateCol i (fun k => A k i + A k j)).det = A.det := by
   exact det_updateCol_add_self A hij
 
 /-- (f) Adding λ times one column to another preserves determinant.
-    Label: thm.det.colop (f) -/
+    Label: thm.det.colop (f) @statement_id stmt-src-thm.det.colop
+-/
 theorem det_add_smul_col (A : Matrix (Fin n) (Fin n) K) (i j : Fin n) (hij : i ≠ j) (c : K) :
     (A.updateCol i (fun k => A k i + c * A k j)).det = A.det := by
   have h : (fun k => A k i + c * A k j) = (fun k => A k i + (c • fun k => A k j) k) := by
@@ -594,7 +625,8 @@ theorem det_add_smul_col (A : Matrix (Fin n) (Fin n) K) (i j : Fin n) (hij : i �
   exact Matrix.det_updateCol_add_smul_self A hij c
 
 /-- (g) Multilinearity: determinant is additive in column k.
-    Label: thm.det.colop (g) -/
+    Label: thm.det.colop (g) @statement_id stmt-src-thm.det.colop
+-/
 theorem det_col_add (A B C : Matrix (Fin n) (Fin n) K) (k : Fin n)
     (hk : ∀ i, C i k = A i k + B i k) (hother : ∀ i j, j ≠ k → C i j = A i j ∧ A i j = B i j) :
     C.det = A.det + B.det := by
@@ -624,13 +656,15 @@ the determinant gets multiplied by sign(τ).
 -/
 
 /-- Permuting rows multiplies determinant by sign of permutation.
-    Label: eq.cor.det.sig-row-col.row -/
+    Label: eq.cor.det.sig-row-col.row @statement_id stmt-src-cor.det.sig-row-col
+-/
 theorem det_permute_rows (A : Matrix (Fin n) (Fin n) K) (τ : Equiv.Perm (Fin n)) :
     (A.submatrix τ id).det = Equiv.Perm.sign τ * A.det :=
   Matrix.det_permute τ A
 
 /-- Permuting columns multiplies determinant by sign of permutation.
-    Label: eq.cor.det.sig-row-col.col -/
+    Label: eq.cor.det.sig-row-col.col @statement_id stmt-src-cor.det.sig-row-col
+-/
 theorem det_permute_cols (A : Matrix (Fin n) (Fin n) K) (τ : Equiv.Perm (Fin n)) :
     (A.submatrix id τ).det = Equiv.Perm.sign τ * A.det := by
   have h1 : (A.submatrix id τ).transpose = A.transpose.submatrix τ id := by
@@ -646,7 +680,8 @@ det(AB) = det(A) · det(B)
 -/
 
 /-- Multiplicativity of determinant.
-    Label: thm.det.detAB -/
+    Label: thm.det.detAB @statement_id stmt-src-thm.det.detab
+-/
 theorem det_mul' (A B : Matrix (Fin n) (Fin n) K) : (A * B).det = A.det * B.det :=
   det_mul A B
 
@@ -658,13 +693,15 @@ the determinant by ∏ᵢ dᵢ.
 -/
 
 /-- Scaling row i by d_i multiplies determinant by ∏ d_i.
-    Label: eq.cor.det.scale-row-col.row -/
+    Label: eq.cor.det.scale-row-col.row @statement_id stmt-src-cor.det.scale-row-col
+-/
 theorem det_scale_rows (A : Matrix (Fin n) (Fin n) K) (d : Fin n → K) :
     (Matrix.of fun i j => d i * A i j).det = (∏ i, d i) * A.det := by
   exact det_mul_column d A
 
 /-- Scaling column j by d_j multiplies determinant by ∏ d_j.
-    Label: eq.cor.det.scale-row-col.col -/
+    Label: eq.cor.det.scale-row-col.col @statement_id stmt-src-cor.det.scale-row-col
+-/
 theorem det_scale_cols (A : Matrix (Fin n) (Fin n) K) (d : Fin n → K) :
     (Matrix.of fun i j => d j * A i j).det = (∏ j, d j) * A.det :=
   det_mul_row d A

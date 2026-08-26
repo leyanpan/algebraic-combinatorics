@@ -61,7 +61,8 @@ variable {R : Type*} [CommSemiring R]
 This corresponds to Definition `def.fps.xneq` in the source text.
 
 We say `XnEquiv n f g` to mean that for all m ∈ {0, 1, ..., n},
-we have `[x^m] f = [x^m] g`. -/
+we have `[x^m] f = [x^m] g`. @statement_id stmt-src-def.fps.xneq
+-/
 def XnEquiv (n : ℕ) (f g : R⟦X⟧) : Prop :=
   ∀ m ≤ n, coeff m f = coeff m g
 
@@ -71,31 +72,37 @@ notation:50 f " ≡[x^" n "] " g => XnEquiv n f g
 
 /-! ### Basic properties: Equivalence relation (Theorem thm.fps.xneq.props (a)) -/
 
-/-- x^n-equivalence is reflexive. -/
+/-- x^n-equivalence is reflexive. @statement_id stmt-src-lem.fps.xneq.refl
+-/
 theorem XnEquiv.refl (n : ℕ) (f : R⟦X⟧) : XnEquiv n f f :=
   fun _ _ => rfl
 
-/-- x^n-equivalence is symmetric. -/
+/-- x^n-equivalence is symmetric. @statement_id stmt-src-lem.fps.xneq.symm
+-/
 theorem XnEquiv.symm {n : ℕ} {f g : R⟦X⟧} (h : XnEquiv n f g) : XnEquiv n g f :=
   fun m hm => (h m hm).symm
 
-/-- x^n-equivalence is transitive. -/
+/-- x^n-equivalence is transitive. @statement_id stmt-src-lem.fps.xneq.trans
+-/
 theorem XnEquiv.trans {n : ℕ} {f g h : R⟦X⟧} (hfg : XnEquiv n f g) (hgh : XnEquiv n g h) :
     XnEquiv n f h :=
   fun m hm => (hfg m hm).trans (hgh m hm)
 
-/-- x^n-equivalence is an equivalence relation (Theorem `thm.fps.xneq.props` (a)). -/
+/-- x^n-equivalence is an equivalence relation (Theorem `thm.fps.xneq.props` (a)). @statement_id stmt-src-thm.fps.xneq.props
+-/
 theorem XnEquiv.equivalence (n : ℕ) : Equivalence (XnEquiv n : R⟦X⟧ → R⟦X⟧ → Prop) :=
   ⟨XnEquiv.refl n, fun h => h.symm, fun h1 h2 => h1.trans h2⟩
 
-/-- x^n-equivalence implies x^m-equivalence for m ≤ n. -/
+/-- x^n-equivalence implies x^m-equivalence for m ≤ n. @statement_id stmt-src-lem.fps.xneq.of-le
+-/
 theorem XnEquiv.of_le {m n : ℕ} (hmn : m ≤ n) {f g : R⟦X⟧} (h : XnEquiv n f g) : XnEquiv m f g :=
   fun k hk => h k (hk.trans hmn)
 
 /-! ### Simp lemmas for basic cases -/
 
 /-- x^0-equivalence is equivalent to having equal constant coefficients.
-This is a useful simplification lemma for the base case of x^n-equivalence. -/
+This is a useful simplification lemma for the base case of x^n-equivalence. @statement_id stmt-src-lem.fps.xneq.zero-iff
+-/
 @[simp]
 theorem XnEquiv_zero_iff (f g : R⟦X⟧) :
     XnEquiv 0 f g ↔ constantCoeff f = constantCoeff g := by
@@ -116,24 +123,28 @@ theorem XnEquiv_self (n : ℕ) (f : R⟦X⟧) : XnEquiv n f f := XnEquiv.refl n 
 
 /-! ### Algebraic properties (Theorem thm.fps.xneq.props (b), (c)) -/
 
-/-- x^n-equivalence is preserved by addition (Theorem `thm.fps.xneq.props` (b), eq.thm.fps.xneq.props.b.+). -/
+/-- x^n-equivalence is preserved by addition (Theorem `thm.fps.xneq.props` (b), eq.thm.fps.xneq.props.b.+). @statement_id stmt-src-thm.fps.xneq.props
+-/
 theorem XnEquiv.add {n : ℕ} {a b c d : R⟦X⟧} (hab : XnEquiv n a b) (hcd : XnEquiv n c d) :
     XnEquiv n (a + c) (b + d) := fun m hm => by
   simp only [map_add]
   rw [hab m hm, hcd m hm]
 
-/-- x^n-equivalence is preserved by subtraction (Theorem `thm.fps.xneq.props` (b), eq.thm.fps.xneq.props.b.-). -/
+/-- x^n-equivalence is preserved by subtraction (Theorem `thm.fps.xneq.props` (b), eq.thm.fps.xneq.props.b.-). @statement_id stmt-src-thm.fps.xneq.props
+-/
 theorem XnEquiv.sub {R : Type*} [CommRing R] {n : ℕ} {a b c d : R⟦X⟧}
     (hab : XnEquiv n a b) (hcd : XnEquiv n c d) : XnEquiv n (a - c) (b - d) := fun m hm => by
   simp only [map_sub]
   rw [hab m hm, hcd m hm]
 
-/-- x^n-equivalence is preserved by scalar multiplication (Theorem `thm.fps.xneq.props` (c)). -/
+/-- x^n-equivalence is preserved by scalar multiplication (Theorem `thm.fps.xneq.props` (c)). @statement_id stmt-src-thm.fps.xneq.props
+-/
 theorem XnEquiv.smul {n : ℕ} {a b : R⟦X⟧} (hab : XnEquiv n a b) (r : R) :
     XnEquiv n (r • a) (r • b) := fun m hm => by
   simp only [coeff_smul, hab m hm]
 
-/-- x^n-equivalence is preserved by multiplication (Theorem `thm.fps.xneq.props` (b), eq.thm.fps.xneq.props.b.*). -/
+/-- x^n-equivalence is preserved by multiplication (Theorem `thm.fps.xneq.props` (b), eq.thm.fps.xneq.props.b.*). @statement_id stmt-src-thm.fps.xneq.props
+-/
 theorem XnEquiv.mul {n : ℕ} {a b c d : R⟦X⟧} (hab : XnEquiv n a b) (hcd : XnEquiv n c d) :
     XnEquiv n (a * c) (b * d) := fun m hm => by
   simp only [coeff_mul]
@@ -146,7 +157,8 @@ theorem XnEquiv.mul {n : ℕ} {a b c d : R⟦X⟧} (hab : XnEquiv n a b) (hcd : 
 
 /-! ### Inversion (Theorem thm.fps.xneq.props (d)) -/
 
-/-- x^n-equivalence is preserved by negation. -/
+/-- x^n-equivalence is preserved by negation. @statement_id stmt-src-lem.fps.xneq.neg
+-/
 theorem XnEquiv.neg {R : Type*} [CommRing R] {n : ℕ} {a b : R⟦X⟧}
     (hab : XnEquiv n a b) : XnEquiv n (-a) (-b) := fun m hm => by
   simp only [map_neg, hab m hm]
@@ -155,7 +167,8 @@ theorem XnEquiv.neg {R : Type*} [CommRing R] {n : ℕ} {a b : R⟦X⟧}
 (Theorem `thm.fps.xneq.props` (d)).
 
 The proof proceeds by strong induction on the coefficient index, using the formula
-for coefficients of the inverse. -/
+for coefficients of the inverse. @statement_id stmt-src-thm.fps.xneq.props
+-/
 theorem XnEquiv.invOfUnit {R : Type*} [CommRing R] {n : ℕ} {a b : R⟦X⟧}
     (ua : Rˣ) (ub : Rˣ) (ha : constantCoeff a = ua) (hb : constantCoeff b = ub)
     (hab : XnEquiv n a b) : XnEquiv n (invOfUnit a ua) (invOfUnit b ub) := by
@@ -190,7 +203,8 @@ theorem XnEquiv.invOfUnit {R : Type*} [CommRing R] {n : ℕ} {a b : R⟦X⟧}
         · rfl
 
 /-- x^n-equivalence is preserved by inversion for FPS over a field
-(Theorem `thm.fps.xneq.props` (d)). -/
+(Theorem `thm.fps.xneq.props` (d)). @statement_id stmt-src-thm.fps.xneq.props
+-/
 theorem XnEquiv.inv {K : Type*} [Field K] {n : ℕ} {a b : K⟦X⟧}
     (ha : constantCoeff a ≠ 0) (hb : constantCoeff b ≠ 0)
     (hab : XnEquiv n a b) : XnEquiv n a⁻¹ b⁻¹ := by
@@ -203,7 +217,8 @@ theorem XnEquiv.inv {K : Type*} [Field K] {n : ℕ} {a b : K⟦X⟧}
   exact XnEquiv.invOfUnit ua ub rfl rfl hab
 
 /-- Variant of `XnEquiv.invOfUnit` where the units may be different but their values agree.
-This is useful when working with limits where we have different units for each term. -/
+This is useful when working with limits where we have different units for each term. @statement_id stmt-src-lem.fps.xneq.invofunit-prime
+-/
 theorem XnEquiv.invOfUnit' {R : Type*} [CommRing R] {n : ℕ} {f g : R⟦X⟧} (u v : Rˣ)
     (huv : (u : R) = (v : R))
     (hfg : XnEquiv n f g) : XnEquiv n (PowerSeries.invOfUnit f u) (PowerSeries.invOfUnit g v) := by
@@ -227,7 +242,8 @@ theorem XnEquiv.invOfUnit' {R : Type*} [CommRing R] {n : ℕ} {f g : R⟦X⟧} (
           rw [hfg i hi, ih j hj hj']
         · rfl
 
-/-- x^n-equivalence is preserved by division (Theorem `thm.fps.xneq.props` (e)). -/
+/-- x^n-equivalence is preserved by division (Theorem `thm.fps.xneq.props` (e)). @statement_id stmt-src-thm.fps.xneq.props
+-/
 theorem XnEquiv.div {R : Type*} [CommRing R] {n : ℕ} {a b c d : R⟦X⟧}
     (hab : XnEquiv n a b) (hcd : XnEquiv n c d)
     (u : Rˣ) (hu : constantCoeff c = u)
@@ -245,7 +261,8 @@ theorem XnEquiv.div {R : Type*} [CommRing R] {n : ℕ} {a b c d : R⟦X⟧}
 
 variable {ι : Type*}
 
-/-- x^n-equivalence is preserved by finite sums (Theorem `thm.fps.xneq.props` (f), eq.thm.fps.xneq.props.e.+). -/
+/-- x^n-equivalence is preserved by finite sums (Theorem `thm.fps.xneq.props` (f), eq.thm.fps.xneq.props.e.+). @statement_id stmt-src-thm.fps.xneq.props
+-/
 theorem XnEquiv.sum [DecidableEq ι] {n : ℕ} {s : Finset ι} {a b : ι → R⟦X⟧}
     (h : ∀ i ∈ s, XnEquiv n (a i) (b i)) : XnEquiv n (∑ i ∈ s, a i) (∑ i ∈ s, b i) := by
   induction s using Finset.induction_on with
@@ -258,7 +275,8 @@ theorem XnEquiv.sum [DecidableEq ι] {n : ℕ} {s : Finset ι} {a b : ι → R�
     · exact h x (mem_insert_self x s)
     · exact ih (fun i hi' => h i (mem_insert_of_mem hi'))
 
-/-- x^n-equivalence is preserved by finite products (Theorem `thm.fps.xneq.props` (f), eq.thm.fps.xneq.props.e.*). -/
+/-- x^n-equivalence is preserved by finite products (Theorem `thm.fps.xneq.props` (f), eq.thm.fps.xneq.props.e.*). @statement_id stmt-src-thm.fps.xneq.props
+-/
 theorem XnEquiv.prod [DecidableEq ι] {n : ℕ} {s : Finset ι} {a b : ι → R⟦X⟧}
     (h : ∀ i ∈ s, XnEquiv n (a i) (b i)) : XnEquiv n (∏ i ∈ s, a i) (∏ i ∈ s, b i) := by
   induction s using Finset.induction_on with
@@ -283,7 +301,8 @@ f ≡ g [mod X^(n+1)] if and only if the FPS f - g is a multiple of X^(n+1).
 Two FPS f and g satisfy f ≡ g [mod X^(n+1)] if and only if X^(n+1) divides f - g.
 
 This is the main characterization theorem that connects the coefficient-wise
-definition of x^n-equivalence to the divisibility formulation. -/
+definition of x^n-equivalence to the divisibility formulation. @statement_id stmt-src-prop.fps.xneq-multiple
+-/
 theorem xnEquiv_iff_dvd {R : Type*} [CommRing R] {n : ℕ} {f g : R⟦X⟧} :
     XnEquiv n f g ↔ (X : R⟦X⟧) ^ (n + 1) ∣ f - g := by
   rw [PowerSeries.X_pow_dvd_iff]
@@ -304,14 +323,16 @@ f ≡ g [mod X^(n+1)] iff f - g is a multiple of X^(n+1).
 
 This is definitionally equal to `xnEquiv_iff_dvd` since divisibility is defined
 as the existence of such a quotient. The explicit existential form is sometimes
-more convenient to work with. -/
+more convenient to work with. @statement_id stmt-src-lem.fps.xneq-multiple.alt
+-/
 theorem xnEquiv_iff_sub_eq_mul_X_pow {R : Type*} [CommRing R] {n : ℕ} {f g : R⟦X⟧} :
     XnEquiv n f g ↔ ∃ q : R⟦X⟧, f - g = X ^ (n + 1) * q := by
   rw [xnEquiv_iff_dvd]; rfl
 
 /-! ### Truncation characterization -/
 
-/-- x^n-equivalence is equivalent to having equal truncations. -/
+/-- x^n-equivalence is equivalent to having equal truncations. @statement_id stmt-src-lem.fps.xneq.trunc
+-/
 theorem xnEquiv_iff_trunc {n : ℕ} {f g : R⟦X⟧} :
     XnEquiv n f g ↔ trunc (n + 1) f = trunc (n + 1) g := by
   constructor
@@ -327,7 +348,8 @@ theorem xnEquiv_iff_trunc {n : ℕ} {f g : R⟦X⟧} :
     simp only [coeff_trunc, hm', ↓reduceIte] at this
     exact this
 
-/-- Every FPS is x^n-equivalent to some polynomial (Example (d) in the source). -/
+/-- Every FPS is x^n-equivalent to some polynomial (Example (d) in the source). @statement_id stmt-src-lem.fps.xneq.exists-poly
+-/
 theorem exists_polynomial_xnEquiv (n : ℕ) (f : R⟦X⟧) :
     ∃ p : R[X], XnEquiv n f p := by
   use trunc (n + 1) f
@@ -337,7 +359,8 @@ theorem exists_polynomial_xnEquiv (n : ℕ) (f : R⟦X⟧) :
 
 /-! ### Powers -/
 
-/-- x^n-equivalence is preserved by powers. -/
+/-- x^n-equivalence is preserved by powers. @statement_id stmt-src-lem.fps.xneq.pow
+-/
 theorem XnEquiv.pow {n : ℕ} {a b : R⟦X⟧} (hab : XnEquiv n a b) (k : ℕ) :
     XnEquiv n (a ^ k) (b ^ k) := by
   induction k with
@@ -351,7 +374,8 @@ theorem XnEquiv.pow {n : ℕ} {a b : R⟦X⟧} (hab : XnEquiv n a b) (k : ℕ) :
 /-! ### Composition (Proposition prop.fps.xneq.comp) -/
 
 /-- Coefficients of f^k are zero for indices < k when constantCoeff f = 0.
-This is a key lemma for proving that composition preserves x^n-equivalence. -/
+This is a key lemma for proving that composition preserves x^n-equivalence. @statement_id stmt-src-lem.fps.coeff-pow-zero
+-/
 lemma coeff_pow_eq_zero_of_lt_of_constantCoeff_eq_zero {R : Type*} [CommRing R]
     {f : R⟦X⟧} (hf : constantCoeff f = 0) {m k : ℕ} (hmk : m < k) : coeff m (f ^ k) = 0 := by
   apply coeff_of_lt_order
@@ -368,7 +392,8 @@ The proof follows the sketch in the source text:
 1. Write a = ∑ aᵢ xⁱ and b = ∑ bᵢ xⁱ
 2. For i ≤ n: aᵢ = bᵢ (by hab) and c^i ≡ d^i [mod X^(n+1)] (by XnEquiv.pow)
 3. For i > n: [x^m](c^i) = [x^m](d^i) = 0 for all m ≤ n (since constantCoeff = 0)
-4. Therefore a ∘ c ≡ b ∘ d [mod X^(n+1)] -/
+4. Therefore a ∘ c ≡ b ∘ d [mod X^(n+1)] @statement_id stmt-src-prop.fps.xneq.comp
+-/
 theorem XnEquiv.comp {R : Type*} [CommRing R] {n : ℕ} {a b c d : R⟦X⟧}
     (hab : XnEquiv n a b) (hcd : XnEquiv n c d)
     (hc : constantCoeff c = 0) (hd : constantCoeff d = 0) :
@@ -401,7 +426,8 @@ theorem XnEquiv.comp {R : Type*} [CommRing R] {n : ℕ} {a b c d : R⟦X⟧}
 
 /-! ### Connection to equality -/
 
-/-- Two FPS are equal iff they are x^n-equivalent for all n. -/
+/-- Two FPS are equal iff they are x^n-equivalent for all n. @statement_id stmt-src-lem.fps.eq-iff-forall-xneq
+-/
 theorem eq_iff_forall_xnEquiv {f g : R⟦X⟧} : f = g ↔ ∀ n, XnEquiv n f g := by
   constructor
   · intro h n

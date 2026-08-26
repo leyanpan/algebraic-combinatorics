@@ -84,7 +84,8 @@ coefficients are zero.
 -/
 
 /-- A power series is a polynomial if it has finite support, i.e., only finitely many
-nonzero coefficients. This corresponds to Definition 7.5.1 (def.fps.pol) in the source. -/
+nonzero coefficients. This corresponds to Definition 7.5.1 (def.fps.pol) in the source. @statement_id stmt-src-def.fps.pol
+-/
 def IsPolynomial (f : PowerSeries K) : Prop :=
   {n : ℕ | PowerSeries.coeff n f ≠ 0}.Finite
 
@@ -94,7 +95,8 @@ theorem isPolynomial_iff_finite_support (f : PowerSeries K) :
     IsPolynomial f ↔ {n : ℕ | PowerSeries.coeff n f ≠ 0}.Finite :=
   Iff.rfl
 
-/-- The image of a polynomial under `toPowerSeries` is a polynomial (in the FPS sense). -/
+/-- The image of a polynomial under `toPowerSeries` is a polynomial (in the FPS sense). @statement_id stmt-src-lem.fps.pol.of-polynomial
+-/
 theorem isPolynomial_of_polynomial (p : K[X]) : IsPolynomial (p : PowerSeries K) := by
   simp only [IsPolynomial]
   have h : {n : ℕ | PowerSeries.coeff n (p : PowerSeries K) ≠ 0} ⊆ ↑p.support := by
@@ -106,7 +108,8 @@ theorem isPolynomial_of_polynomial (p : K[X]) : IsPolynomial (p : PowerSeries K)
   exact Set.Finite.subset p.support.finite_toSet h
 
 /-- For a polynomial power series, there exists a degree bound such that all coefficients
-beyond this bound are zero. This is an equivalent characterization of polynomials. -/
+beyond this bound are zero. This is an equivalent characterization of polynomials. @statement_id stmt-src-lem.fps.pol.degree-bound
+-/
 theorem isPolynomial_iff_exists_degree_bound (f : PowerSeries K) :
     IsPolynomial f ↔ ∃ N : ℕ, ∀ n ≥ N, PowerSeries.coeff n f = 0 := by
   constructor
@@ -130,7 +133,8 @@ theorem isPolynomial_iff_exists_degree_bound (f : PowerSeries K) :
     exact hn (hN n h)
 
 /-- A power series is a polynomial iff it equals the coercion of some polynomial.
-This provides the key equivalence between `IsPolynomial` and Mathlib's `Polynomial` type. -/
+This provides the key equivalence between `IsPolynomial` and Mathlib's `Polynomial` type. @statement_id stmt-src-lem.fps.pol.exists-polynomial
+-/
 theorem isPolynomial_iff_exists_polynomial (f : PowerSeries K) :
     IsPolynomial f ↔ ∃ p : K[X], f = p := by
   constructor
@@ -150,12 +154,14 @@ theorem isPolynomial_iff_exists_polynomial (f : PowerSeries K) :
     exact isPolynomial_of_polynomial p
 
 /-- Convert a polynomial power series to its corresponding polynomial.
-This requires a proof that the power series is a polynomial. -/
+This requires a proof that the power series is a polynomial. @statement_id stmt-src-def.fps.pol.topolynomial
+-/
 noncomputable def toPolynomial (f : PowerSeries K) (hf : IsPolynomial f) : K[X] :=
   (isPolynomial_iff_exists_degree_bound f).mp hf |>.choose |> fun N => PowerSeries.trunc N f
 
 /-- The polynomial corresponding to a polynomial power series coerces back to the original.
-This shows that `toPolynomial` is a left inverse of the coercion from polynomials. -/
+This shows that `toPolynomial` is a left inverse of the coercion from polynomials. @statement_id stmt-src-lem.fps.pol.coe-topolynomial
+-/
 theorem coe_toPolynomial (f : PowerSeries K) (hf : IsPolynomial f) :
     (toPolynomial f hf : PowerSeries K) = f := by
   simp only [toPolynomial]
@@ -168,7 +174,8 @@ theorem coe_toPolynomial (f : PowerSeries K) (hf : IsPolynomial f) :
   · push_neg at hn
     exact (hN n hn).symm
 
-/-- Converting a polynomial to a power series and back gives the original polynomial. -/
+/-- Converting a polynomial to a power series and back gives the original polynomial. @statement_id stmt-src-lem.fps.pol.topolynomial-coe
+-/
 theorem toPolynomial_coe (p : K[X]) :
     toPolynomial (p : PowerSeries K) (isPolynomial_of_polynomial p) = p := by
   apply Polynomial.coe_injective K
@@ -179,7 +186,8 @@ theorem toPolynomial_coe (p : K[X]) :
 Theorem 7.5.2 (thm.fps.pol.ring): The set K[x] is a subring of K[[x]].
 -/
 
-/-- The zero power series is a polynomial. -/
+/-- The zero power series is a polynomial. @statement_id stmt-src-lem.fps.pol.zero
+-/
 @[simp]
 theorem isPolynomial_zero : IsPolynomial (0 : PowerSeries K) := by
   simp only [IsPolynomial]
@@ -189,7 +197,8 @@ theorem isPolynomial_zero : IsPolynomial (0 : PowerSeries K) := by
   rw [this]
   exact Set.finite_empty
 
-/-- The constant power series 1 is a polynomial. -/
+/-- The constant power series 1 is a polynomial. @statement_id stmt-src-lem.fps.pol.one
+-/
 @[simp]
 theorem isPolynomial_one : IsPolynomial (1 : PowerSeries K) := by
   have h : (1 : PowerSeries K) = ((1 : K[X]) : PowerSeries K) := by
@@ -200,7 +209,8 @@ theorem isPolynomial_one : IsPolynomial (1 : PowerSeries K) := by
   exact isPolynomial_of_polynomial (1 : K[X])
 
 /-- The sum of two polynomial power series is a polynomial.
-This is part of Theorem 7.5.2 (thm.fps.pol.ring). -/
+This is part of Theorem 7.5.2 (thm.fps.pol.ring). @statement_id stmt-src-lem.fps.pol.add
+-/
 theorem isPolynomial_add {f g : PowerSeries K} (hf : IsPolynomial f) (hg : IsPolynomial g) :
     IsPolynomial (f + g) := by
   simp only [IsPolynomial] at *
@@ -216,7 +226,8 @@ theorem isPolynomial_add {f g : PowerSeries K} (hf : IsPolynomial f) (hg : IsPol
   exact Set.Finite.subset (Set.Finite.union hf hg) h
 
 /-- The negation of a polynomial power series is a polynomial.
-This is part of Theorem 7.5.2 (thm.fps.pol.ring). -/
+This is part of Theorem 7.5.2 (thm.fps.pol.ring). @statement_id stmt-src-lem.fps.pol.neg
+-/
 theorem isPolynomial_neg {f : PowerSeries K} (hf : IsPolynomial f) : IsPolynomial (-f) := by
   simp only [IsPolynomial] at *
   convert hf using 1
@@ -224,14 +235,16 @@ theorem isPolynomial_neg {f : PowerSeries K} (hf : IsPolynomial f) : IsPolynomia
   simp only [Set.mem_setOf_eq, map_neg, neg_ne_zero]
 
 /-- The difference of two polynomial power series is a polynomial.
-This is part of Theorem 7.5.2 (thm.fps.pol.ring). -/
+This is part of Theorem 7.5.2 (thm.fps.pol.ring). @statement_id stmt-src-lem.fps.pol.sub
+-/
 theorem isPolynomial_sub {f g : PowerSeries K} (hf : IsPolynomial f) (hg : IsPolynomial g) :
     IsPolynomial (f - g) := by
   rw [sub_eq_add_neg]
   exact isPolynomial_add hf (isPolynomial_neg hg)
 
 /-- The product of two polynomial power series is a polynomial.
-This is the main content of Theorem 7.5.2 (thm.fps.pol.ring). -/
+This is the main content of Theorem 7.5.2 (thm.fps.pol.ring). @statement_id stmt-src-lem.fps.pol.mul
+-/
 theorem isPolynomial_mul {f g : PowerSeries K} (hf : IsPolynomial f) (hg : IsPolynomial g) :
     IsPolynomial (f * g) := by
   simp only [IsPolynomial] at *
@@ -275,7 +288,8 @@ theorem isPolynomial_mul {f g : PowerSeries K} (hf : IsPolynomial f) (hg : IsPol
   exact Set.Finite.subset hS h
 
 /-- Scalar multiplication of a polynomial power series is a polynomial.
-This is part of Theorem 7.5.2 (thm.fps.pol.ring). -/
+This is part of Theorem 7.5.2 (thm.fps.pol.ring). @statement_id stmt-src-lem.fps.pol.smul
+-/
 theorem isPolynomial_smul {f : PowerSeries K} (c : K) (hf : IsPolynomial f) :
     IsPolynomial (c • f) := by
   simp only [IsPolynomial] at *
@@ -301,7 +315,8 @@ These two properties together mean that K[x] forms a K-subalgebra of K[[x]].
 /-- The set of polynomial power series forms a K-subalgebra of K[[x]].
 This is Theorem 7.5.2 (thm.fps.pol.ring) in the source:
 K[x] is a subring of K[[x]] (closed under +, -, *, contains 0 and 1)
-and a K-submodule (closed under + and scalar multiplication). -/
+and a K-submodule (closed under + and scalar multiplication). @statement_id stmt-src-thm.fps.pol.ring
+-/
 def polynomialSubalgebra : Subalgebra K (PowerSeries K) where
   carrier := {f | IsPolynomial f}
   mul_mem' := isPolynomial_mul
@@ -321,12 +336,14 @@ def polynomialSubalgebra : Subalgebra K (PowerSeries K) where
 
 /-- The underlying subring of the polynomial subalgebra.
 This is the "subring" part of Theorem 7.5.2 (thm.fps.pol.ring):
-K[x] is closed under +, -, *, and contains 0 and 1. -/
+K[x] is closed under +, -, *, and contains 0 and 1. @statement_id stmt-src-thm.fps.pol.ring
+-/
 def polynomialSubring : Subring (PowerSeries K) := polynomialSubalgebra.toSubring
 
 /-- The underlying K-submodule of the polynomial subalgebra.
 This is the "K-submodule" part of Theorem 7.5.2 (thm.fps.pol.ring):
-K[x] is closed under + and scalar multiplication by elements of K. -/
+K[x] is closed under + and scalar multiplication by elements of K. @statement_id stmt-src-thm.fps.pol.ring
+-/
 def polynomialSubmodule : Submodule K (PowerSeries K) := polynomialSubalgebra.toSubmodule
 
 /-- Membership in the polynomial subalgebra is equivalent to being a polynomial.
@@ -368,52 +385,64 @@ section RingBasics
 variable {R : Type*} [Ring R]
 
 /-- **Associativity of addition** (Ring axiom):
-    `a + (b + c) = (a + b) + c` for all `a, b, c ∈ R`. -/
+    `a + (b + c) = (a + b) + c` for all `a, b, c ∈ R`. @statement_id stmt-src-def.alg.ring
+-/
 theorem ring_add_assoc (a b c : R) : a + (b + c) = (a + b) + c := (add_assoc a b c).symm
 
 /-- **Commutativity of addition** (Ring axiom):
     `a + b = b + a` for all `a, b ∈ R`.
-    Note: Addition is always commutative, even in noncommutative rings. -/
+    Note: Addition is always commutative, even in noncommutative rings. @statement_id stmt-src-def.alg.ring
+-/
 theorem ring_add_comm (a b : R) : a + b = b + a := add_comm a b
 
 /-- **Neutrality of zero** (Ring axiom):
-    `a + 0 = a` for all `a ∈ R`. -/
+    `a + 0 = a` for all `a ∈ R`. @statement_id stmt-src-def.alg.ring
+-/
 theorem ring_add_zero (a : R) : a + 0 = a := add_zero a
 
 /-- **Neutrality of zero** (Ring axiom):
-    `0 + a = a` for all `a ∈ R`. -/
+    `0 + a = a` for all `a ∈ R`. @statement_id stmt-src-def.alg.ring
+-/
 theorem ring_zero_add (a : R) : 0 + a = a := zero_add a
 
 /-- **Existence of additive inverse** (Ring axiom):
-    `a + (-a) = 0` for all `a ∈ R`. -/
+    `a + (-a) = 0` for all `a ∈ R`. @statement_id stmt-src-def.alg.ring
+-/
 theorem ring_add_neg (a : R) : a + (-a) = 0 := add_neg_cancel a
 
 /-- **Associativity of multiplication** (Ring axiom):
-    `a * (b * c) = (a * b) * c` for all `a, b, c ∈ R`. -/
+    `a * (b * c) = (a * b) * c` for all `a, b, c ∈ R`. @statement_id stmt-src-def.alg.ring
+-/
 theorem ring_mul_assoc (a b c : R) : a * (b * c) = (a * b) * c := (mul_assoc a b c).symm
 
 /-- **Left distributivity** (Ring axiom):
-    `a * (b + c) = a * b + a * c` for all `a, b, c ∈ R`. -/
+    `a * (b + c) = a * b + a * c` for all `a, b, c ∈ R`. @statement_id stmt-src-def.alg.ring
+-/
 theorem ring_left_distrib (a b c : R) : a * (b + c) = a * b + a * c := mul_add a b c
 
 /-- **Right distributivity** (Ring axiom):
-    `(a + b) * c = a * c + b * c` for all `a, b, c ∈ R`. -/
+    `(a + b) * c = a * c + b * c` for all `a, b, c ∈ R`. @statement_id stmt-src-def.alg.ring
+-/
 theorem ring_right_distrib (a b c : R) : (a + b) * c = a * c + b * c := add_mul a b c
 
 /-- **Neutrality of one** (Ring axiom):
-    `a * 1 = a` for all `a ∈ R`. -/
+    `a * 1 = a` for all `a ∈ R`. @statement_id stmt-src-def.alg.ring
+-/
 theorem ring_mul_one (a : R) : a * 1 = a := mul_one a
 
 /-- **Neutrality of one** (Ring axiom):
-    `1 * a = a` for all `a ∈ R`. -/
+    `1 * a = a` for all `a ∈ R`. @statement_id stmt-src-def.alg.ring
+-/
 theorem ring_one_mul (a : R) : 1 * a = a := one_mul a
 
 /-- **Annihilation** (Ring property):
-    `a * 0 = 0` for all `a ∈ R`. -/
+    `a * 0 = 0` for all `a ∈ R`. @statement_id stmt-src-def.alg.ring
+-/
 theorem ring_mul_zero (a : R) : a * 0 = 0 := mul_zero a
 
 /-- **Annihilation** (Ring property):
-    `0 * a = 0` for all `a ∈ R`. -/
+    `0 * a = 0` for all `a ∈ R`. @statement_id stmt-src-def.alg.ring
+-/
 theorem ring_zero_mul (a : R) : 0 * a = 0 := zero_mul a
 
 end RingBasics
@@ -485,35 +514,43 @@ For commutative algebras, we use `CommRing A`.
 -/
 
 /-- A K-algebra is a ring: addition is commutative.
-    Label: def.alg.Kalg (Property 1) -/
+    Label: def.alg.Kalg (Property 1) @statement_id stmt-src-def.alg.kalg
+-/
 theorem kalg_add_comm (a b : A) : a + b = b + a := add_comm a b
 
 /-- A K-algebra is a ring: addition is associative.
-    Label: def.alg.Kalg (Property 1) -/
+    Label: def.alg.Kalg (Property 1) @statement_id stmt-src-def.alg.kalg
+-/
 theorem kalg_add_assoc (a b c : A) : a + (b + c) = (a + b) + c := (add_assoc a b c).symm
 
 /-- A K-algebra is a ring: zero is the additive identity.
-    Label: def.alg.Kalg (Property 1) -/
+    Label: def.alg.Kalg (Property 1) @statement_id stmt-src-def.alg.kalg
+-/
 theorem kalg_add_zero (a : A) : a + 0 = a := add_zero a
 
 /-- A K-algebra is a ring: multiplication is associative.
-    Label: def.alg.Kalg (Property 1) -/
+    Label: def.alg.Kalg (Property 1) @statement_id stmt-src-def.alg.kalg
+-/
 theorem kalg_mul_assoc (a b c : A) : a * (b * c) = (a * b) * c := (mul_assoc a b c).symm
 
 /-- A K-algebra is a ring: left distributivity.
-    Label: def.alg.Kalg (Property 1) -/
+    Label: def.alg.Kalg (Property 1) @statement_id stmt-src-def.alg.kalg
+-/
 theorem kalg_left_distrib (a b c : A) : a * (b + c) = a * b + a * c := mul_add a b c
 
 /-- A K-algebra is a ring: right distributivity.
-    Label: def.alg.Kalg (Property 1) -/
+    Label: def.alg.Kalg (Property 1) @statement_id stmt-src-def.alg.kalg
+-/
 theorem kalg_right_distrib (a b c : A) : (a + b) * c = a * c + b * c := add_mul a b c
 
 /-- A K-algebra is a ring: one is the multiplicative identity.
-    Label: def.alg.Kalg (Property 1) -/
+    Label: def.alg.Kalg (Property 1) @statement_id stmt-src-def.alg.kalg
+-/
 theorem kalg_mul_one (a : A) : a * 1 = a := mul_one a
 
 /-- A K-algebra is a ring: one is the multiplicative identity (left).
-    Label: def.alg.Kalg (Property 1) -/
+    Label: def.alg.Kalg (Property 1) @statement_id stmt-src-def.alg.kalg
+-/
 theorem kalg_one_mul (a : A) : 1 * a = a := one_mul a
 
 /-! ### Property 2: A is a K-Module
@@ -522,27 +559,33 @@ A K-algebra A is automatically a K-module. The module axioms are satisfied.
 -/
 
 /-- A K-algebra is a K-module: scalar multiplication is associative.
-    Label: def.alg.Kalg (Property 2) -/
+    Label: def.alg.Kalg (Property 2) @statement_id stmt-src-def.alg.kalg
+-/
 theorem kalg_smul_assoc (u v : K) (a : A) : u • (v • a) = (u * v) • a := by rw [mul_smul]
 
 /-- A K-algebra is a K-module: scalar multiplication distributes over addition (left).
-    Label: def.alg.Kalg (Property 2) -/
+    Label: def.alg.Kalg (Property 2) @statement_id stmt-src-def.alg.kalg
+-/
 theorem kalg_smul_add (u : K) (a b : A) : u • (a + b) = u • a + u • b := smul_add u a b
 
 /-- A K-algebra is a K-module: scalar multiplication distributes over addition (right).
-    Label: def.alg.Kalg (Property 2) -/
+    Label: def.alg.Kalg (Property 2) @statement_id stmt-src-def.alg.kalg
+-/
 theorem kalg_add_smul (u v : K) (a : A) : (u + v) • a = u • a + v • a := add_smul u v a
 
 /-- A K-algebra is a K-module: 1 acts as identity.
-    Label: def.alg.Kalg (Property 2) -/
+    Label: def.alg.Kalg (Property 2) @statement_id stmt-src-def.alg.kalg
+-/
 theorem kalg_one_smul (a : A) : (1 : K) • a = a := one_smul K a
 
 /-- A K-algebra is a K-module: 0 annihilates.
-    Label: def.alg.Kalg (Property 2) -/
+    Label: def.alg.Kalg (Property 2) @statement_id stmt-src-def.alg.kalg
+-/
 theorem kalg_zero_smul (a : A) : (0 : K) • a = 0 := zero_smul K a
 
 /-- A K-algebra is a K-module: scalar multiplication by zero element gives zero.
-    Label: def.alg.Kalg (Property 2) -/
+    Label: def.alg.Kalg (Property 2) @statement_id stmt-src-def.alg.kalg
+-/
 theorem kalg_smul_zero (u : K) : u • (0 : A) = 0 := smul_zero u
 
 /-! ### Property 3: Compatibility (Equation 7.5.2)
@@ -555,19 +598,22 @@ either of its two factors by λ.
 
 /-- The compatibility property for K-algebras: `λ(ab) = (λa)b`.
     This is equation (7.5.2) in the source.
-    Label: def.alg.Kalg (Property 3) -/
+    Label: def.alg.Kalg (Property 3) @statement_id stmt-src-def.alg.kalg
+-/
 theorem kalg_smul_mul_assoc (c : K) (a b : A) : c • (a * b) = (c • a) * b :=
   (Algebra.smul_mul_assoc c a b).symm
 
 /-- The compatibility property for K-algebras: `λ(ab) = a(λb)`.
     This is equation (7.5.2) in the source.
-    Label: def.alg.Kalg (Property 3) -/
+    Label: def.alg.Kalg (Property 3) @statement_id stmt-src-def.alg.kalg
+-/
 theorem kalg_mul_smul_comm (c : K) (a b : A) : c • (a * b) = a * (c • b) :=
   (Algebra.mul_smul_comm c a b).symm
 
 /-- Combined compatibility: `(λa)b = a(λb)`.
     Follows from the two parts of equation (7.5.2).
-    Label: def.alg.Kalg (Property 3) -/
+    Label: def.alg.Kalg (Property 3) @statement_id stmt-src-def.alg.kalg
+-/
 theorem kalg_smul_mul_eq_mul_smul (c : K) (a b : A) : (c • a) * b = a * (c • b) := by
   rw [← kalg_smul_mul_assoc, kalg_mul_smul_comm]
 
@@ -687,7 +733,8 @@ we define f[a] := Σ_{n ∈ ℕ} f_n · a^n.
 The sum is essentially finite since f is a polynomial (only finitely many
 coefficients are nonzero).
 
-In Mathlib, this is implemented as `Polynomial.aeval a f`. -/
+In Mathlib, this is implemented as `Polynomial.aeval a f`. @statement_id stmt-src-def.pol.subs
+-/
 abbrev polyEval (f : K[X]) (a : A) : A := aeval a f
 
 /-- Notation for polynomial evaluation: `f⦃a⦄` means the value of `f` at `a`.
@@ -695,19 +742,22 @@ This corresponds to the book's notation `f[a]`. -/
 scoped notation:max f:max "⦃" a "⦄" => polyEval f a
 
 /-- Evaluation of a polynomial at an element of a K-algebra equals the sum Σ f_n · a^n.
-This is the explicit formula from Definition 7.5.6 (def.pol.subs). -/
+This is the explicit formula from Definition 7.5.6 (def.pol.subs). @statement_id stmt-src-lem.pol.eval.def
+-/
 theorem eval_def (f : K[X]) (a : A) :
     f⦃a⦄ = f.sum fun n c => algebraMap K A c * a ^ n := by
   rw [polyEval, aeval_def, eval₂_eq_sum]
 
 /-- The evaluation f[a] can be written as a finite sum over the support of f.
-This makes explicit that the sum in Definition 7.5.6 is essentially finite. -/
+This makes explicit that the sum in Definition 7.5.6 is essentially finite. @statement_id stmt-src-lem.pol.eval.finsum
+-/
 theorem eval_eq_finsum (f : K[X]) (a : A) :
     f⦃a⦄ = ∑ n ∈ f.support, algebraMap K A (f.coeff n) * a ^ n := by
   rw [polyEval, aeval_def, eval₂_eq_sum, Polynomial.sum]
 
 /-- Alternative formulation: f[a] = Σ_{n=0}^{deg f} f_n · a^n.
-This shows that the sum can be taken up to the degree. -/
+This shows that the sum can be taken up to the degree. @statement_id stmt-src-lem.pol.eval.sum-range
+-/
 theorem eval_eq_sum_range (f : K[X]) (a : A) :
     f⦃a⦄ = ∑ n ∈ Finset.range (f.natDegree + 1), algebraMap K A (f.coeff n) * a ^ n := by
   rw [polyEval, aeval_def, eval₂_eq_sum_range]
@@ -718,43 +768,50 @@ Theorem 7.5.7 (thm.pol.eval.a+b): Basic properties of evaluation.
 -/
 
 /-- (f + g)[a] = f[a] + g[a].
-This is Theorem 7.5.7(a) in the source. -/
+This is Theorem 7.5.7(a) in the source. @statement_id stmt-src-thm.pol.eval.a-b
+-/
 theorem eval_add' (f g : K[X]) (a : A) :
     (f + g)⦃a⦄ = f⦃a⦄ + g⦃a⦄ :=
   map_add (aeval a) f g
 
 /-- (f * g)[a] = f[a] * g[a].
-This is Theorem 7.5.7(a) in the source. -/
+This is Theorem 7.5.7(a) in the source. @statement_id stmt-src-thm.pol.eval.a-b
+-/
 theorem eval_mul' (f g : K[X]) (a : A) :
     (f * g)⦃a⦄ = f⦃a⦄ * g⦃a⦄ :=
   map_mul (aeval a) f g
 
 /-- (c · f)[a] = c · f[a].
-This is Theorem 7.5.7(b) in the source. -/
+This is Theorem 7.5.7(b) in the source. @statement_id stmt-src-thm.pol.eval.a-b
+-/
 theorem eval_smul' (f : K[X]) (c : K) (a : A) :
     (c • f)⦃a⦄ = c • f⦃a⦄ :=
   map_smul (aeval a) c f
 
 /-- C(c)[a] = c · 1_A.
-This is Theorem 7.5.7(c) in the source. -/
+This is Theorem 7.5.7(c) in the source. @statement_id stmt-src-thm.pol.eval.a-b
+-/
 theorem eval_C' (c : K) (a : A) :
     (Polynomial.C c)⦃a⦄ = algebraMap K A c :=
   aeval_C a c
 
 /-- X[a] = a.
-This is Theorem 7.5.7(d) in the source. -/
+This is Theorem 7.5.7(d) in the source. @statement_id stmt-src-thm.pol.eval.a-b
+-/
 theorem eval_X' (a : A) :
     (Polynomial.X : K[X])⦃a⦄ = a :=
   aeval_X a
 
 /-- X^i[a] = a^i.
-This is Theorem 7.5.7(e) in the source. -/
+This is Theorem 7.5.7(e) in the source. @statement_id stmt-src-thm.pol.eval.a-b
+-/
 theorem eval_X_pow' (a : A) (i : ℕ) :
     ((Polynomial.X : K[X]) ^ i)⦃a⦄ = a ^ i := by
   simp only [polyEval, map_pow, aeval_X]
 
 /-- f[g[a]] = (f ∘ g)[a], where f ∘ g denotes composition of polynomials.
-This is Theorem 7.5.7(f) in the source. -/
+This is Theorem 7.5.7(f) in the source. @statement_id stmt-src-thm.pol.eval.a-b
+-/
 theorem eval_comp' (f g : K[X]) (a : A) :
     f⦃g⦃a⦄⦄ = (f.comp g)⦃a⦄ := by
   rw [polyEval, polyEval, polyEval, aeval_comp]
@@ -763,7 +820,8 @@ end Evaluation
 
 /-! ## Examples and Special Cases -/
 
-/-- The polynomial X is a polynomial (in the FPS sense). -/
+/-- The polynomial X is a polynomial (in the FPS sense). @statement_id stmt-src-lem.fps.pol.x
+-/
 @[simp]
 theorem isPolynomial_X : IsPolynomial (PowerSeries.X : PowerSeries K) := by
   simp only [IsPolynomial]
@@ -776,7 +834,8 @@ theorem isPolynomial_X : IsPolynomial (PowerSeries.X : PowerSeries K) := by
     exact hn rfl
   exact Set.Finite.subset (Set.finite_singleton 1) h
 
-/-- Any constant is a polynomial (in the FPS sense). -/
+/-- Any constant is a polynomial (in the FPS sense). @statement_id stmt-src-lem.fps.pol.c
+-/
 @[simp]
 theorem isPolynomial_C (c : K) : IsPolynomial (PowerSeries.C c) := by
   simp only [IsPolynomial]
@@ -796,7 +855,8 @@ section SpecialEval
 variable {A : Type*} [CommRing A] [Algebra K A]
 
 /-- f[x] = f, i.e., evaluating at the indeterminate gives back the polynomial.
-This is noted after Definition 7.5.6 in the source. -/
+This is noted after Definition 7.5.6 in the source. @statement_id stmt-src-lem.pol.eval.x-self
+-/
 theorem eval_X_eq_self (f : K[X]) :
     f⦃(Polynomial.X : K[X])⦄ = f := by
   have h := Polynomial.aeval_X_left (R := K)
@@ -804,13 +864,15 @@ theorem eval_X_eq_self (f : K[X]) :
   exact h f
 
 /-- f[0] = f₀, i.e., evaluating at 0 gives the constant term.
-This is noted after Definition 7.5.6 in the source. -/
+This is noted after Definition 7.5.6 in the source. @statement_id stmt-src-lem.pol.eval.zero
+-/
 theorem eval_zero_eq_coeff_zero (f : K[X]) :
     f⦃(0 : A)⦄ = algebraMap K A (f.coeff 0) := by
   simp only [polyEval, aeval_def, eval₂_at_zero]
 
 /-- f[1] = sum of all coefficients of f.
-This is noted after Definition 7.5.6 in the source. -/
+This is noted after Definition 7.5.6 in the source. @statement_id stmt-src-lem.pol.eval.one
+-/
 theorem eval_one_eq_sum_coeffs (f : K[X]) :
     f⦃(1 : A)⦄ = algebraMap K A (f.sum fun _ c => c) := by
   rw [polyEval, aeval_def, eval₂_at_one, Polynomial.eval_eq_sum]

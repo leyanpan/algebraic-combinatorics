@@ -70,11 +70,13 @@ variable {K : Type*}
 for all `i ≥ N`, we have `a_i = a`.
 
 This is the notion of convergence in the discrete topology.
-(Definition 7.5.1, label: def.fps.lim.stab) -/
+(Definition 7.5.1, label: def.fps.lim.stab) @statement_id stmt-src-def.fps.lim.stab
+-/
 def StabilizesTo (a : ℕ → K) (lim : K) : Prop :=
   ∃ N : ℕ, ∀ i ≥ N, a i = lim
 
-/-- If a sequence stabilizes to a limit, that limit is unique. -/
+/-- If a sequence stabilizes to a limit, that limit is unique. @statement_id stmt-src-lem.fps.lim.stab-unique
+-/
 theorem stabilizesTo_unique {a : ℕ → K} {lim₁ lim₂ : K}
     (h₁ : StabilizesTo a lim₁) (h₂ : StabilizesTo a lim₂) : lim₁ = lim₂ := by
   obtain ⟨N₁, hN₁⟩ := h₁
@@ -83,12 +85,14 @@ theorem stabilizesTo_unique {a : ℕ → K} {lim₁ lim₂ : K}
   have h2 : a (max N₁ N₂) = lim₂ := hN₂ (max N₁ N₂) (le_max_right N₁ N₂)
   exact h1.symm.trans h2
 
-/-- A constant sequence stabilizes to its value. -/
+/-- A constant sequence stabilizes to its value. @statement_id stmt-src-lem.fps.lim.stab-const
+-/
 @[simp]
 theorem stabilizesTo_const (c : K) : StabilizesTo (fun _ => c) c :=
   ⟨0, fun _ _ => rfl⟩
 
-/-- If a sequence is eventually equal to another, they stabilize to the same limit. -/
+/-- If a sequence is eventually equal to another, they stabilize to the same limit. @statement_id stmt-src-lem.fps.lim.stab-eventually-eq
+-/
 theorem stabilizesTo_of_eventually_eq {a b : ℕ → K} {lim : K}
     (h : StabilizesTo a lim) (heq : ∃ N, ∀ i ≥ N, a i = b i) : StabilizesTo b lim := by
   obtain ⟨N₁, hN₁⟩ := h
@@ -98,7 +102,8 @@ theorem stabilizesTo_of_eventually_eq {a b : ℕ → K} {lim : K}
   rw [← hN₂ i (le_of_max_le_right hi)]
   exact hN₁ i (le_of_max_le_left hi)
 
-/-- Addition preserves stabilization. -/
+/-- Addition preserves stabilization. @statement_id stmt-src-lem.fps.lim.stab-add
+-/
 theorem stabilizesTo_add [Add K] {a b : ℕ → K} {la lb : K}
     (ha : StabilizesTo a la) (hb : StabilizesTo b lb) :
     StabilizesTo (fun i => a i + b i) (la + lb) := by
@@ -108,7 +113,8 @@ theorem stabilizesTo_add [Add K] {a b : ℕ → K} {la lb : K}
   intro i hi
   simp only [hNa i (le_of_max_le_left hi), hNb i (le_of_max_le_right hi)]
 
-/-- Multiplication preserves stabilization. -/
+/-- Multiplication preserves stabilization. @statement_id stmt-src-lem.fps.lim.stab-mul
+-/
 theorem stabilizesTo_mul [Mul K] {a b : ℕ → K} {la lb : K}
     (ha : StabilizesTo a la) (hb : StabilizesTo b lb) :
     StabilizesTo (fun i => a i * b i) (la * lb) := by
@@ -118,13 +124,15 @@ theorem stabilizesTo_mul [Mul K] {a b : ℕ → K} {la lb : K}
   simp only [ge_iff_le, max_le_iff] at hi
   simp only [hNa i hi.1, hNb i hi.2]
 
-/-- Negation preserves stabilization. -/
+/-- Negation preserves stabilization. @statement_id stmt-src-lem.fps.lim.stab-neg
+-/
 theorem stabilizesTo_neg [Neg K] {a : ℕ → K} {la : K}
     (ha : StabilizesTo a la) : StabilizesTo (fun i => -a i) (-la) := by
   obtain ⟨N, hN⟩ := ha
   exact ⟨N, fun i hi => by simp only [hN i hi]⟩
 
-/-- If `s` is nilpotent (i.e., `s^k = 0` for some `k`), then `(s^i)` stabilizes to `0`. -/
+/-- If `s` is nilpotent (i.e., `s^k = 0` for some `k`), then `(s^i)` stabilizes to `0`. @statement_id stmt-src-lem.fps.lim.stab-pow-nilpotent
+-/
 theorem stabilizesTo_pow_of_nilpotent [MonoidWithZero K] {s : K} {k : ℕ}
     (hs : s ^ k = 0) : StabilizesTo (fun i => s ^ i) 0 := by
   use k
@@ -140,7 +148,8 @@ theorem stabilizesTo_pow_of_idempotent [Monoid K] {s : K}
   refine ⟨0, fun i _ => ?_⟩
   exact IsIdempotentElem.pow_succ_eq i hs
 
-/-- A finite sum of stabilizing sequences stabilizes. -/
+/-- A finite sum of stabilizing sequences stabilizes. @statement_id stmt-src-lem.fps.lim.stab-finset-sum
+-/
 theorem stabilizesTo_finset_sum {ι : Type*} [AddCommMonoid K] [DecidableEq ι] (s : Finset ι)
     {a : ι → ℕ → K} {la : ι → K}
     (h : ∀ i ∈ s, StabilizesTo (a i) (la i)) :
@@ -168,17 +177,20 @@ the sequence `([x^n] f_i)_{i ∈ ℕ}` stabilizes to `[x^n] f`.
 
 This is the notion of convergence in the product topology where each factor `K`
 has the discrete topology.
-(Definition 7.5.2, label: def.fps.lim.coeff-stab) -/
+(Definition 7.5.2, label: def.fps.lim.coeff-stab) @statement_id stmt-src-def.fps.lim.coeff-stab
+-/
 def CoeffStabilizesTo (f : ℕ → PowerSeries K) (lim : PowerSeries K) : Prop :=
   ∀ n : ℕ, Seq.StabilizesTo (fun i => coeff n (f i)) (coeff n lim)
 
-/-- If a sequence coefficientwise stabilizes to a limit, that limit is unique. -/
+/-- If a sequence coefficientwise stabilizes to a limit, that limit is unique. @statement_id stmt-src-lem.fps.lim.coeff-stab-unique
+-/
 theorem coeffStabilizesTo_unique {f : ℕ → PowerSeries K} {lim₁ lim₂ : PowerSeries K}
     (h₁ : CoeffStabilizesTo f lim₁) (h₂ : CoeffStabilizesTo f lim₂) : lim₁ = lim₂ := by
   ext n
   exact Seq.stabilizesTo_unique (h₁ n) (h₂ n)
 
-/-- A constant sequence coefficientwise stabilizes to its value. -/
+/-- A constant sequence coefficientwise stabilizes to its value. @statement_id stmt-src-lem.fps.lim.coeff-stab-const
+-/
 @[simp]
 theorem coeffStabilizesTo_const (g : PowerSeries K) :
     CoeffStabilizesTo (fun _ => g) g :=
@@ -187,7 +199,8 @@ theorem coeffStabilizesTo_const (g : PowerSeries K) :
 /-- The sequence `(x^i)_{i ∈ ℕ}` coefficientwise stabilizes to `0`.
 
 For each `n`, the sequence of `n`-th coefficients is `(0, 0, ..., 0, 1, 0, 0, ...)`
-which stabilizes to `0`. -/
+which stabilizes to `0`. @statement_id stmt-src-lem.fps.lim.x-pow
+-/
 theorem coeffStabilizesTo_X_pow :
     CoeffStabilizesTo (fun i => (X : PowerSeries K) ^ i) 0 := by
   intro n
@@ -198,7 +211,8 @@ theorem coeffStabilizesTo_X_pow :
   simp [hne]
 
 /-- If each coefficient sequence stabilizes, the FPS sequence coefficientwise stabilizes.
-(Theorem 7.5.3, label: thm.fps.lim.lim-crit) -/
+(Theorem 7.5.3, label: thm.fps.lim.lim-crit) @statement_id stmt-src-thm.fps.lim.lim-crit
+-/
 theorem coeffStabilizesTo_of_forall_coeff_stabilizes
     {f : ℕ → PowerSeries K} {g : ℕ → K}
     (h : ∀ n, Seq.StabilizesTo (fun i => coeff n (f i)) (g n)) :
@@ -278,7 +292,8 @@ theorem xnEquiv_mul {n : ℕ} {f₁ f₂ g₁ g₂ : PowerSeries K}
   have hj : p.2 ≤ n := by omega
   rw [hf p.1 hi, hg p.2 hj]
 
-/-- x^n-equivalence is compatible with powers. -/
+/-- x^n-equivalence is compatible with powers. @statement_id stmt-src-lem.fps.lim.xnequiv-pow
+-/
 theorem xnEquiv_pow {n : ℕ} {f g : PowerSeries K} (h : f ≡[x^n] g) (d : ℕ) :
     f ^ d ≡[x^n] g ^ d := by
   induction d with
@@ -322,7 +337,8 @@ theorem xnEquiv_finset_prod {ι : Type*} [DecidableEq ι] {n : ℕ} (s : Finset 
     · exact ih (fun i hi => h i (Finset.mem_insert_of_mem hi))
 
 /-- When `constantCoeff g = 0`, the coefficient `coeff n (g ^ d)` is zero for `d > n`.
-This is because `order(g) ≥ 1` implies `order(g^d) ≥ d`. -/
+This is because `order(g) ≥ 1` implies `order(g^d) ≥ d`. @statement_id stmt-src-lem.fps.lim.coeff-pow-zero
+-/
 theorem coeff_pow_eq_zero_of_constantCoeff_zero
     (g : PowerSeries K) (hg : constantCoeff g = 0)
     (n d : ℕ) (hd : d > n) : coeff n (g ^ d) = 0 := by
@@ -331,7 +347,8 @@ theorem coeff_pow_eq_zero_of_constantCoeff_zero
     _ ≤ order (g ^ d) := le_order_pow_of_constantCoeff_eq_zero d hg
 
 /-- The n-th coefficient of `f.subst g` equals a finite sum over coefficients.
-When `constantCoeff g = 0`, only coefficients 0 through n of `f` contribute. -/
+When `constantCoeff g = 0`, only coefficients 0 through n of `f` contribute. @statement_id stmt-src-lem.fps.lim.coeff-subst-finite
+-/
 theorem coeff_subst_eq_finite_sum
     (f g : PowerSeries K) (hg : constantCoeff g = 0) (n : ℕ) :
     coeff n (f.subst g) = ∑ d ∈ Finset.range (n + 1), coeff d f • coeff n (g ^ d) := by
@@ -347,7 +364,8 @@ theorem coeff_subst_eq_finite_sum
   rw [coeff_pow_eq_zero_of_constantCoeff_zero g hg n d (by omega), mul_zero]
 
 /-- x^n-equivalence is compatible with composition (when inner series have zero constant term).
-This is the key lemma (Proposition 7.4.7 in Loehr). -/
+This is the key lemma (Proposition 7.4.7 in Loehr). @statement_id stmt-src-lem.fps.lim.xnequiv-subst
+-/
 theorem xnEquiv_subst {n : ℕ} {f₁ f₂ g₁ g₂ : PowerSeries K}
     (hf : f₁ ≡[x^n] f₂) (hg : g₁ ≡[x^n] g₂)
     (hg₁ : constantCoeff g₁ = 0) (hg₂ : constantCoeff g₂ = 0) :
@@ -378,7 +396,8 @@ theorem coeff_mul_eq_of_coeff_eq {a b c d : PowerSeries K} {n : ℕ}
 
 /-- x^n-equivalence is compatible with taking inverses (when constant coefficients are units).
 The key insight is that the coefficients of the inverse are determined by a recursive formula
-that only depends on lower coefficients. -/
+that only depends on lower coefficients. @statement_id stmt-src-lem.fps.lim.xnequiv-invofunit
+-/
 theorem xnEquiv_invOfUnit {n : ℕ} {f g : PowerSeries K} (u : Kˣ)
     (h : f ≡[x^n] g) :
     invOfUnit f u ≡[x^n] invOfUnit g u := by
@@ -406,7 +425,8 @@ theorem xnEquiv_invOfUnit {n : ℕ} {f g : PowerSeries K} (u : Kˣ)
       · rfl
 
 /-- x^n-equivalence is compatible with taking inverses (with different units that are equal as elements).
-This variant is useful when the units come from different IsUnit proofs but have the same value. -/
+This variant is useful when the units come from different IsUnit proofs but have the same value. @statement_id stmt-src-lem.fps.lim.xnequiv-invofunit-prime
+-/
 theorem xnEquiv_invOfUnit' {n : ℕ} {f g : PowerSeries K} (u v : Kˣ)
     (huv : (u : K) = v)
     (h : f ≡[x^n] g) :
@@ -439,7 +459,8 @@ theorem xnEquiv_invOfUnit' {n : ℕ} {f g : PowerSeries K} (u v : Kˣ)
 /-- x^n-equivalence is compatible with division (when denominators are invertible).
 (Theorem 7.3.11(e), label: thm.fps.xneq.props)
 
-If a ≡[x^n] b and c ≡[x^n] d, and c, d are invertible, then a/c ≡[x^n] b/d. -/
+If a ≡[x^n] b and c ≡[x^n] d, and c, d are invertible, then a/c ≡[x^n] b/d. @statement_id stmt-src-lem.fps.lim.xnequiv-div
+-/
 theorem xnEquiv_div {n : ℕ} {a b c d : PowerSeries K}
     (hab : a ≡[x^n] b) (hcd : c ≡[x^n] d)
     (u : Kˣ) (hu : constantCoeff c = u)
@@ -471,7 +492,8 @@ theorem coeff_div_eq_of_coeff_eq {a b c d : PowerSeries K} {n : ℕ}
   xnEquiv_div hab hcd u hu v hv
 
 /-- If `f_i → f`, then for each `n`, eventually `f_i ≡[x^n] f`.
-(Lemma 7.5.4, label: lem.fps.lim.xn-equiv) -/
+(Lemma 7.5.4, label: lem.fps.lim.xn-equiv) @statement_id stmt-src-lem.fps.lim.xn-equiv
+-/
 theorem exists_xnEquiv_of_coeffStabilizesTo
     {f : ℕ → PowerSeries K} {lim : PowerSeries K}
     (h : CoeffStabilizesTo f lim) (n : ℕ) :
@@ -485,7 +507,8 @@ theorem exists_xnEquiv_of_coeffStabilizesTo
   exact le_trans (Finset.le_sup (by simp [hk])) hi
 
 /-- Limits respect addition.
-(Proposition 7.5.5, label: prop.fps.lim.sum-prod) -/
+(Proposition 7.5.5, label: prop.fps.lim.sum-prod) @statement_id stmt-src-prop.fps.lim.sum-prod
+-/
 theorem coeffStabilizesTo_add
     {f g : ℕ → PowerSeries K} {lf lg : PowerSeries K}
     (hf : CoeffStabilizesTo f lf) (hg : CoeffStabilizesTo g lg) :
@@ -495,7 +518,8 @@ theorem coeffStabilizesTo_add
   exact Seq.stabilizesTo_add (hf n) (hg n)
 
 /-- Limits respect multiplication.
-(Proposition 7.5.5, label: prop.fps.lim.sum-prod) -/
+(Proposition 7.5.5, label: prop.fps.lim.sum-prod) @statement_id stmt-src-prop.fps.lim.sum-prod
+-/
 theorem coeffStabilizesTo_mul
     {f g : ℕ → PowerSeries K} {lf lg : PowerSeries K}
     (hf : CoeffStabilizesTo f lf) (hg : CoeffStabilizesTo g lg) :
@@ -510,7 +534,8 @@ theorem coeffStabilizesTo_mul
   exact Seq.stabilizesTo_mul (hf p.1) (hg p.2)
 
 /-- Limits respect finite sums.
-(Corollary 7.5.6, label: cor.fps.lim.sum-prod-k) -/
+(Corollary 7.5.6, label: cor.fps.lim.sum-prod-k) @statement_id stmt-src-cor.fps.lim.sum-prod-k
+-/
 theorem coeffStabilizesTo_finset_sum {ι : Type*} (s : Finset ι)
     {f : ι → ℕ → PowerSeries K} {lf : ι → PowerSeries K}
     (h : ∀ i ∈ s, CoeffStabilizesTo (f i) (lf i)) :
@@ -527,7 +552,8 @@ theorem coeffStabilizesTo_finset_sum {ι : Type*} (s : Finset ι)
     · exact ih (fun i hi => h i (Finset.mem_insert_of_mem hi))
 
 /-- Limits respect finite products.
-(Corollary 7.5.6, label: cor.fps.lim.sum-prod-k) -/
+(Corollary 7.5.6, label: cor.fps.lim.sum-prod-k) @statement_id stmt-src-cor.fps.lim.sum-prod-k
+-/
 theorem coeffStabilizesTo_finset_prod {ι : Type*} (s : Finset ι)
     {f : ι → ℕ → PowerSeries K} {lf : ι → PowerSeries K}
     (h : ∀ i ∈ s, CoeffStabilizesTo (f i) (lf i)) :
@@ -543,7 +569,8 @@ theorem coeffStabilizesTo_finset_prod {ι : Type*} (s : Finset ι)
     · exact h _ (Finset.mem_insert_self _ _)
     · exact ih (fun i hi => h i (Finset.mem_insert_of_mem hi))
 
-/-- Limits respect negation. -/
+/-- Limits respect negation. @statement_id stmt-src-lem.fps.lim.neg
+-/
 theorem coeffStabilizesTo_neg
     {f : ℕ → PowerSeries K} {lf : PowerSeries K}
     (hf : CoeffStabilizesTo f lf) :
@@ -552,7 +579,8 @@ theorem coeffStabilizesTo_neg
   simp only [map_neg]
   exact Seq.stabilizesTo_neg (hf n)
 
-/-- Limits respect subtraction. -/
+/-- Limits respect subtraction. @statement_id stmt-src-lem.fps.lim.sub
+-/
 theorem coeffStabilizesTo_sub
     {f g : ℕ → PowerSeries K} {lf lg : PowerSeries K}
     (hf : CoeffStabilizesTo f lf) (hg : CoeffStabilizesTo g lg) :
@@ -561,7 +589,8 @@ theorem coeffStabilizesTo_sub
   simp only [sub_eq_add_neg] at h ⊢
   exact h
 
-/-- If each `g_i` is invertible and `g_i → g`, then `g` is invertible. -/
+/-- If each `g_i` is invertible and `g_i → g`, then `g` is invertible. @statement_id stmt-src-lem.fps.lim.isunit-constantcoeff
+-/
 theorem isUnit_constantCoeff_of_coeffStabilizesTo
     {g : ℕ → PowerSeries K} {lg : PowerSeries K}
     (hg : CoeffStabilizesTo g lg) (hunit : ∀ i, IsUnit (constantCoeff (g i))) :
@@ -577,7 +606,8 @@ theorem isUnit_constantCoeff_of_coeffStabilizesTo
   exact hunit N
 
 /-- Helper: the unit from isUnit_constantCoeff_of_coeffStabilizesTo equals the unit from hunit i
-for sufficiently large i. -/
+for sufficiently large i. @statement_id stmt-src-lem.fps.lim.unit-eq-of-coeffstabilizesto
+-/
 lemma unit_eq_of_coeffStabilizesTo
     {g : ℕ → PowerSeries K} {lg : PowerSeries K}
     (hg : CoeffStabilizesTo g lg)
@@ -594,7 +624,8 @@ lemma unit_eq_of_coeffStabilizesTo
   rw [h]
 
 /-- Coefficients of invOfUnit stabilize when the input coefficients stabilize.
-This is the key lemma for proving that limits respect division. -/
+This is the key lemma for proving that limits respect division. @statement_id stmt-src-lem.fps.lim.coeffstabilizesto-invofunit
+-/
 theorem coeffStabilizesTo_invOfUnit
     {g : ℕ → PowerSeries K} {lg : PowerSeries K}
     (hg : CoeffStabilizesTo g lg)
@@ -658,7 +689,8 @@ theorem coeffStabilizesTo_invOfUnit
 /-- Limits respect division (when denominators are invertible).
 (Proposition 7.5.6, label: prop.fps.lim.sum-quot)
 
-Note: We state this in terms of multiplication by the inverse. -/
+Note: We state this in terms of multiplication by the inverse. @statement_id stmt-src-prop.fps.lim.sum-quot
+-/
 theorem coeffStabilizesTo_mul_inv
     {f g : ℕ → PowerSeries K} {lf lg : PowerSeries K}
     (hf : CoeffStabilizesTo f lf) (hg : CoeffStabilizesTo g lg)
@@ -672,7 +704,8 @@ theorem coeffStabilizesTo_mul_inv
 /-- Limits respect composition (when the inner FPS has zero constant term).
 (Proposition 7.5.7, label: prop.fps.lim.comp)
 
-We use `subst` for composition. -/
+We use `subst` for composition. @statement_id stmt-src-prop.fps.lim.comp
+-/
 theorem coeffStabilizesTo_subst
     {f g : ℕ → PowerSeries K} {lf lg : PowerSeries K}
     (hf : CoeffStabilizesTo f lf) (hg : CoeffStabilizesTo g lg)
@@ -697,7 +730,8 @@ theorem coeffStabilizesTo_subst
   exact xnEquiv_subst hfi hgi (hconst i) hlg n (le_refl n)
 
 /-- Limits respect derivatives.
-(Proposition 7.5.8, label: prop.fps.lim.deriv-lim) -/
+(Proposition 7.5.8, label: prop.fps.lim.deriv-lim) @statement_id stmt-src-prop.fps.lim.deriv-lim
+-/
 theorem coeffStabilizesTo_derivativeFun
     {f : ℕ → PowerSeries K} {lf : PowerSeries K}
     (hf : CoeffStabilizesTo f lf) :
@@ -708,11 +742,13 @@ theorem coeffStabilizesTo_derivativeFun
   -- The sequence (coeff (n+1) (f i) * (n+1))_i stabilizes to coeff (n+1) lf * (n+1)
   exact Seq.stabilizesTo_mul (hf (n + 1)) (Seq.stabilizesTo_const _)
 
-/-- A family of FPSs is summable if for each `n`, only finitely many have nonzero `n`-th coeff. -/
+/-- A family of FPSs is summable if for each `n`, only finitely many have nonzero `n`-th coeff. @statement_id stmt-src-def.fps.lim.issummable
+-/
 def IsSummable (f : ℕ → PowerSeries K) : Prop :=
   ∀ n : ℕ, {i : ℕ | coeff n (f i) ≠ 0}.Finite
 
-/-- The infinite sum of a summable family. -/
+/-- The infinite sum of a summable family. @statement_id stmt-src-def.fps.lim.tsum
+-/
 noncomputable def tsum' (f : ℕ → PowerSeries K) (hf : IsSummable f) : PowerSeries K :=
   mk fun n => ∑ i ∈ (hf n).toFinset, coeff n (f i)
 
@@ -723,7 +759,8 @@ The proof proceeds by showing that for each coefficient index `n`, the sequence 
 partial sums of `n`-th coefficients eventually equals the infinite sum.
 This follows from the summability condition: only finitely many terms have
 nonzero `n`-th coefficient, so once the partial sum includes all of these,
-it stabilizes. -/
+it stabilizes. @statement_id stmt-src-thm.fps.lim.sum-lim
+-/
 theorem coeffStabilizesTo_partial_sum
     {f : ℕ → PowerSeries K} (hf : IsSummable f) :
     CoeffStabilizesTo (fun i => ∑ j ∈ Finset.range (i + 1), f j) (tsum' f hf) := by
@@ -779,7 +816,8 @@ sequences where we consider limits of partial products `∏_{i=0}^{N} f_i`.
 
 The general `PowerSeries.Multipliable a` only requires that each coefficient is
 finitely determined, and works for arbitrary index types. For general infinite
-products, use the definitions in `InfiniteProducts.lean`. -/
+products, use the definitions in `InfiniteProducts.lean`. @statement_id stmt-src-def.fps.lim.ismultipliable
+-/
 def IsMultipliable (f : ℕ → PowerSeries K) : Prop :=
   (∀ i, constantCoeff (f i) = 1) ∧
   ∀ n : ℕ, ∃ N : ℕ, ∀ i ≥ N, ∀ k ≤ n, coeff k (f i) = if k = 0 then 1 else 0
@@ -791,14 +829,16 @@ any sufficiently large partial product.
 
 **Note:** This is the ℕ-indexed version for use with `IsMultipliable`. For the
 general infinite product over arbitrary index types, use `PowerSeries.tprod` in
-`InfiniteProducts.lean`. -/
+`InfiniteProducts.lean`. @statement_id stmt-src-def.fps.lim.tprod
+-/
 noncomputable def tprod' (f : ℕ → PowerSeries K) (hf : IsMultipliable f) : PowerSeries K :=
   mk fun n =>
     let N := (hf.2 n).choose
     coeff n (∏ j ∈ Finset.range (N + 1), f j)
 
 /-- If f has the form 1 + O(x^{n+1}), then (g * f) agrees with g on coefficients ≤ n.
-This is a key lemma for showing that partial products stabilize. -/
+This is a key lemma for showing that partial products stabilize. @statement_id stmt-src-lem.fps.lim.coeff-mul-one-plus-higher
+-/
 lemma coeff_mul_one_plus_higher {g f : PowerSeries K} {n : ℕ}
     (hf : ∀ k ≤ n, coeff k f = if k = 0 then 1 else 0) :
     ∀ k ≤ n, coeff k (g * f) = coeff k g := by
@@ -837,7 +877,8 @@ lemma coeff_mul_one_plus_higher {g f : PowerSeries K} {n : ℕ}
     exact absurd hmem habs
 
 /-- Extending the partial product by one more term that is 1 + O(x^{n+1})
-doesn't change coefficients ≤ n. -/
+doesn't change coefficients ≤ n. @statement_id stmt-src-lem.fps.lim.coeff-prod-extend
+-/
 lemma coeff_prod_extend {f : ℕ → PowerSeries K} {n m : ℕ}
     (hf : ∀ k ≤ n, coeff k (f m) = if k = 0 then 1 else 0) (k : ℕ) (hk : k ≤ n) :
     coeff k (∏ j ∈ Finset.range (m + 1), f j) = coeff k (∏ j ∈ Finset.range m, f j) := by
@@ -845,7 +886,8 @@ lemma coeff_prod_extend {f : ℕ → PowerSeries K} {n m : ℕ}
   exact coeff_mul_one_plus_higher hf k hk
 
 /-- For a multipliable family, once the index exceeds N (where N witnesses the
-multipliability condition for n), the k-th coefficient of partial products stabilizes. -/
+multipliability condition for n), the k-th coefficient of partial products stabilizes. @statement_id stmt-src-lem.fps.lim.coeff-prod-range-eq-of-ge
+-/
 lemma coeff_prod_range_eq_of_ge {f : ℕ → PowerSeries K} {n N : ℕ}
     (hN : ∀ j ≥ N, ∀ k ≤ n, coeff k (f j) = if k = 0 then 1 else 0)
     {i : ℕ} (hi : i ≥ N) {k : ℕ} (hk : k ≤ n) :
@@ -865,7 +907,8 @@ lemma coeff_prod_range_eq_of_ge {f : ℕ → PowerSeries K} {n N : ℕ}
       rw [coeff_prod_extend (hN (i + 1) hi_succ_ge) k hk]
       exact ih hi''
 
-/-- For a multipliable family, the n-th coefficient of partial products stabilizes. -/
+/-- For a multipliable family, the n-th coefficient of partial products stabilizes. @statement_id stmt-src-lem.fps.lim.coeff-partial-prod-stabilizes
+-/
 lemma coeff_partial_prod_stabilizes {f : ℕ → PowerSeries K} (hf : IsMultipliable f) (n : ℕ) :
     ∃ N : ℕ, ∀ i ≥ N, coeff n (∏ j ∈ Finset.range (i + 1), f j) = coeff n (tprod' f hf) := by
   obtain ⟨N, hN⟩ := hf.2 n
@@ -893,7 +936,8 @@ lemma coeff_partial_prod_stabilizes {f : ℕ → PowerSeries K} (hf : IsMultipli
   rw [lhs_eq, rhs_eq]
 
 /-- Infinite product is the limit of partial products.
-(Theorem 7.5.10, label: thm.fps.lim.prod-lim) -/
+(Theorem 7.5.10, label: thm.fps.lim.prod-lim) @statement_id stmt-src-thm.fps.lim.prod-lim
+-/
 theorem coeffStabilizesTo_partial_prod
     {f : ℕ → PowerSeries K} (hf : IsMultipliable f) :
     CoeffStabilizesTo (fun i => ∏ j ∈ Finset.range (i + 1), f j) (tprod' f hf) := by
@@ -903,7 +947,8 @@ theorem coeffStabilizesTo_partial_prod
 /-- Each FPS is a limit of polynomials.
 (Corollary 7.5.11, label: cor.fps.lim.fps-as-pol)
 
-This can be restated as "the polynomials are dense in the FPSs". -/
+This can be restated as "the polynomials are dense in the FPSs". @statement_id stmt-src-cor.fps.lim.fps-as-pol
+-/
 theorem coeffStabilizesTo_trunc (a : PowerSeries K) :
     CoeffStabilizesTo (fun i => (trunc (i + 1) a : PowerSeries K)) a := by
   intro n
@@ -913,7 +958,8 @@ theorem coeffStabilizesTo_trunc (a : PowerSeries K) :
 
 /-- Converse of `coeffStabilizesTo_partial_sum`: if the partial sums converge,
 the family is summable.
-(Theorem 7.5.12, label: thm.fps.lim.sum-lim-conv) -/
+(Theorem 7.5.12, label: thm.fps.lim.sum-lim-conv) @statement_id stmt-src-thm.fps.lim.sum-lim-conv
+-/
 theorem isSummable_of_coeffStabilizesTo_partial_sum
     {f : ℕ → PowerSeries K} {lim : PowerSeries K}
     (h : CoeffStabilizesTo (fun i => ∑ j ∈ Finset.range (i + 1), f j) lim) :
@@ -965,7 +1011,8 @@ theorem isSummable_of_coeffStabilizesTo_partial_sum
   exact hi h_zero
 
 /-- If partial sums converge, the limit equals the infinite sum.
-(Theorem 7.5.12, label: thm.fps.lim.sum-lim-conv) -/
+(Theorem 7.5.12, label: thm.fps.lim.sum-lim-conv) @statement_id stmt-src-thm.fps.lim.sum-lim-conv
+-/
 theorem tsum'_eq_of_coeffStabilizesTo_partial_sum
     {f : ℕ → PowerSeries K} {lim : PowerSeries K}
     (h : CoeffStabilizesTo (fun i => ∑ j ∈ Finset.range (i + 1), f j) lim) :
@@ -974,7 +1021,8 @@ theorem tsum'_eq_of_coeffStabilizesTo_partial_sum
   · exact coeffStabilizesTo_partial_sum (isSummable_of_coeffStabilizesTo_partial_sum h)
   · exact h
 
-/-- Helper lemma: constant coeff of product of power series with constant coeff 1 is 1. -/
+/-- Helper lemma: constant coeff of product of power series with constant coeff 1 is 1. @statement_id stmt-src-lem.fps.lim.constantcoeff-prod-eq-one
+-/
 lemma constantCoeff_prod_eq_one {f : ℕ → PowerSeries K} {s : Finset ℕ}
     (hf : ∀ i ∈ s, constantCoeff (f i) = 1) :
     constantCoeff (∏ j ∈ s, f j) = 1 := by
@@ -985,7 +1033,8 @@ lemma constantCoeff_prod_eq_one {f : ℕ → PowerSeries K} {s : Finset ℕ}
 
 /-- Converse of `coeffStabilizesTo_partial_prod`: if the partial products converge,
 the family is multipliable.
-(Theorem 7.5.13, label: thm.fps.lim.prod-lim-conv) -/
+(Theorem 7.5.13, label: thm.fps.lim.prod-lim-conv) @statement_id stmt-src-thm.fps.lim.prod-lim-conv
+-/
 theorem isMultipliable_of_coeffStabilizesTo_partial_prod
     {f : ℕ → PowerSeries K} {lim : PowerSeries K}
     (h : CoeffStabilizesTo (fun i => ∏ j ∈ Finset.range (i + 1), f j) lim)
@@ -1179,7 +1228,8 @@ private lemma coeff_prod_eq_of_eventually_one {f : ℕ → PowerSeries K} {n N :
       exact ih'
 
 /-- If partial products converge, the limit equals the infinite product.
-(Theorem 7.5.13, label: thm.fps.lim.prod-lim-conv) -/
+(Theorem 7.5.13, label: thm.fps.lim.prod-lim-conv) @statement_id stmt-src-thm.fps.lim.prod-lim-conv
+-/
 theorem tprod'_eq_of_coeffStabilizesTo_partial_prod
     {f : ℕ → PowerSeries K} {lim : PowerSeries K}
     (h : CoeffStabilizesTo (fun i => ∏ j ∈ Finset.range (i + 1), f j) lim)

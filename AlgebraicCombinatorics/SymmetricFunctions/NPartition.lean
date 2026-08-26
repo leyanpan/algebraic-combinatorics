@@ -211,7 +211,8 @@ theorem size_eq_sum (μ : NPartition N) : μ.size = ∑ i, μ.parts i := rfl
 @[simp]
 theorem zero_size : (0 : NPartition N).size = 0 := by simp [size]
 
-/-- Each entry of an N-partition is bounded by the size. -/
+/-- Each entry of an N-partition is bounded by the size. @statement_id stmt-src-lem.sf.npar-size
+-/
 theorem parts_le_size (μ : NPartition N) (i : Fin N) : μ.parts i ≤ μ.size := by
   simp only [size]
   exact Finset.single_le_sum (fun _ _ => Nat.zero_le _) (Finset.mem_univ i)
@@ -256,14 +257,16 @@ theorem parts_zero_eq_size_iff (μ : NPartition N) (hN : 0 < N) :
     · intro h
       exact absurd (Finset.mem_univ _) h
 
-/-- An N-partition with size 0 is the zero partition. -/
+/-- An N-partition with size 0 is the zero partition. @statement_id stmt-src-lem.sf.npar-size
+-/
 theorem eq_zero_of_size_eq_zero (μ : NPartition N) (h : μ.size = 0) : μ = 0 := by
   ext i
   simp only [zero_parts]
   have : μ.parts i ≤ μ.size := parts_le_size μ i
   omega
 
-/-- An N-partition has size 0 if and only if it is the zero partition. -/
+/-- An N-partition has size 0 if and only if it is the zero partition. @statement_id stmt-src-lem.sf.npar-size
+-/
 @[simp]
 theorem size_eq_zero_iff (μ : NPartition N) : μ.size = 0 ↔ μ = 0 :=
   ⟨eq_zero_of_size_eq_zero μ, fun h => h ▸ zero_size⟩
@@ -285,7 +288,8 @@ This is the canonical `Add` instance for `NPartition`, used by all files includi
 -/
 
 /-- Component-wise addition of N-partitions.
-    Since both partitions are antitone (weakly decreasing), their sum is also antitone. -/
+    Since both partitions are antitone (weakly decreasing), their sum is also antitone. @statement_id stmt-src-lem.sf.npar-add
+-/
 def add (μ ν : NPartition N) : NPartition N where
   parts i := μ.parts i + ν.parts i
   antitone := fun _ _ hij => Nat.add_le_add (μ.antitone hij) (ν.antitone hij)
@@ -296,7 +300,8 @@ instance : Add (NPartition N) := ⟨add⟩
 @[simp]
 theorem add_parts (μ ν : NPartition N) (i : Fin N) : (μ + ν).parts i = μ.parts i + ν.parts i := rfl
 
-/-- The size of a sum of N-partitions equals the sum of their sizes. -/
+/-- The size of a sum of N-partitions equals the sum of their sizes. @statement_id stmt-src-lem.sf.npar-add
+-/
 @[simp]
 theorem add_size (μ ν : NPartition N) : (μ + ν).size = μ.size + ν.size := by
   simp only [size, add_parts]
@@ -440,7 +445,8 @@ theorem zero_le (μ : NPartition N) : (0 : NPartition N) ≤ μ := fun i => by
   simp only [zero_parts_apply]
   exact Nat.zero_le _
 
-/-- μ ≤ ν implies |μ| ≤ |ν| -/
+/-- μ ≤ ν implies |μ| ≤ |ν| @statement_id stmt-src-lem.sf.npar-le-size
+-/
 theorem size_le_of_le {μ ν : NPartition N} (h : μ ≤ ν) : μ.size ≤ ν.size := by
   unfold size
   apply Finset.sum_le_sum
@@ -449,14 +455,16 @@ theorem size_le_of_le {μ ν : NPartition N} (h : μ ≤ ν) : μ.size ≤ ν.si
 
 /-! ## Length of a partition -/
 
-/-- The length of an N-partition is the number of nonzero entries. -/
+/-- The length of an N-partition is the number of nonzero entries. @statement_id stmt-src-lem.sf.npar-length
+-/
 def length (μ : NPartition N) : ℕ := (Finset.univ.filter (fun i : Fin N => μ.parts i ≠ 0)).card
 
 @[simp]
 theorem zero_length : (0 : NPartition N).length = 0 := by
   simp only [length, zero_parts, ne_eq, not_true_eq_false, Finset.filter_false, Finset.card_empty]
 
-/-- An N-partition has length 0 if and only if it is the zero partition. -/
+/-- An N-partition has length 0 if and only if it is the zero partition. @statement_id stmt-src-lem.sf.npar-length
+-/
 @[simp]
 theorem length_eq_zero_iff {μ : NPartition N} : μ.length = 0 ↔ μ = 0 := by
   constructor
@@ -481,7 +489,8 @@ theorem length_pos_of_ne_zero {μ : NPartition N} (h : μ ≠ 0) : 0 < μ.length
   exact fun hz => h (length_eq_zero_iff.mp hz)
 
 
-/-- The length is at most N. -/
+/-- The length is at most N. @statement_id stmt-src-lem.sf.npar-length
+-/
 theorem length_le (μ : NPartition N) : μ.length ≤ N := by
   simp only [length]
   calc (Finset.univ.filter (fun i : Fin N => μ.parts i ≠ 0)).card
@@ -647,14 +656,16 @@ Here we define a version specific to N-partitions. -/
     Definition def.sf.ydiag in the source.
 
     Note: Mathlib has `YoungDiagram` which is more general (infinite diagrams).
-    Here we define a version specific to N-partitions. -/
+    Here we define a version specific to N-partitions. @statement_id stmt-src-def.sf.npar-youngdiagram
+-/
 def youngDiagram (μ : NPartition N) : Finset (Fin N × ℕ) :=
   Finset.univ.biUnion fun i => (Finset.range (μ.parts i)).map
     ⟨fun j => (i, j), fun _ _ h => by simp at h; exact h⟩
 
 /-- Membership in a Young diagram: (i, j) ∈ Y(λ) iff j < λ_i.
     This is the 0-indexed version of the textbook condition j ∈ [λ_i].
-    Definition def.sf.ydiag in the source. -/
+    Definition def.sf.ydiag in the source. @statement_id stmt-src-lem.sf.ydiag-mem
+-/
 theorem mem_youngDiagram {μ : NPartition N} {c : Fin N × ℕ} :
     c ∈ μ.youngDiagram ↔ c.2 < μ.parts c.1 := by
   simp only [youngDiagram, Finset.mem_biUnion, Finset.mem_univ, true_and,
@@ -693,7 +704,8 @@ theorem youngDiagram_nonempty_iff {μ : NPartition N} :
   rw [Finset.nonempty_iff_ne_empty, ne_eq, youngDiagram_eq_empty_iff]
 
 /-- The row i of the Young diagram has exactly μ.parts i elements.
-    This captures the definition that row i has λ_i boxes. -/
+    This captures the definition that row i has λ_i boxes. @statement_id stmt-src-lem.sf.npar-youngdiagram-row
+-/
 theorem youngDiagram_row_card (μ : NPartition N) (i : Fin N) :
     (μ.youngDiagram.filter fun c => c.1 = i).card = μ.parts i := by
   have h : μ.youngDiagram.filter (fun c => c.1 = i) =
@@ -748,7 +760,8 @@ instance youngDiagram_decidableMem (μ : NPartition N) :
     DecidablePred (· ∈ μ.youngDiagram) := fun c =>
   decidable_of_iff (c.2 < μ.parts c.1) mem_youngDiagram.symm
 
-/-- The total number of cells in the Young diagram equals the size of the partition. -/
+/-- The total number of cells in the Young diagram equals the size of the partition. @statement_id stmt-src-lem.sf.npar-youngdiagram-card
+-/
 theorem youngDiagram_card (μ : NPartition N) : μ.youngDiagram.card = μ.size := by
   simp only [size]
   -- The Young diagram is the disjoint union of rows
@@ -776,7 +789,8 @@ theorem youngDiagram_zero : (0 : NPartition N).youngDiagram = ∅ := by
   simp
 
 /-- μ ≤ ν is equivalent to Y(μ) ⊆ Y(ν).
-    This is the key equivalence for partition containment. -/
+    This is the key equivalence for partition containment. @statement_id stmt-src-lem.sf.npar-le-iff-youngdiagram
+-/
 theorem le_iff_youngDiagram_subset {μ ν : NPartition N} :
     μ ≤ ν ↔ μ.youngDiagram ⊆ ν.youngDiagram := by
   rw [le_iff]
@@ -831,7 +845,8 @@ See `SchurBasics.skewYoungDiagram_equiv_LR` for the equivalence proof. -/
     - LittlewoodRichardson: (i, j) ∈ Y(λ/μ) iff μ_i < j ≤ λ_i (1-indexed)
     
     The bijection (i, j) ↔ (i, j+1) converts between conventions.
-    See `SchurBasics.skewYoungDiagram_equiv_LR` for the equivalence proof. -/
+    See `SchurBasics.skewYoungDiagram_equiv_LR` for the equivalence proof. @statement_id stmt-src-def.sf.npar-skewyoungdiagram
+-/
 def skewYoungDiagram (lam mu : NPartition N) : Finset (Fin N × ℕ) :=
   lam.youngDiagram \ mu.youngDiagram
 
@@ -884,7 +899,8 @@ instance skewYoungDiagram_decidableMem (lam mu : NPartition N) :
     DecidablePred (· ∈ skewYoungDiagram lam mu) := fun c =>
   decidable_of_iff (mu.parts c.1 ≤ c.2 ∧ c.2 < lam.parts c.1) mem_skewYoungDiagram.symm
 
-/-- The cardinality of a skew Young diagram. -/
+/-- The cardinality of a skew Young diagram. @statement_id stmt-src-lem.sf.npar-skewyoungdiagram-card
+-/
 theorem skewYoungDiagram_card (lam mu : NPartition N) :
     (skewYoungDiagram lam mu).card = ∑ i, (lam.parts i - mu.parts i) := by
   simp only [skewYoungDiagram]

@@ -74,7 +74,8 @@ The derivative is then packaged as a `Derivation R R⟦X⟧ R⟦X⟧`.
 /-- **Definition def.fps.deriv**: The n-th coefficient of the derivative of f
 equals (n+1) times the (n+1)-th coefficient of f.
 
-This is `PowerSeries.coeff_derivative` in Mathlib. -/
+This is `PowerSeries.coeff_derivative` in Mathlib. @statement_id stmt-src-def.fps.deriv
+-/
 theorem coeff_derivative_eq (f : R⟦X⟧) (n : ℕ) :
     PowerSeries.coeff n (d⁄dX R f) = PowerSeries.coeff (n + 1) f * (n + 1) :=
   PowerSeries.coeff_derivative f n
@@ -82,23 +83,27 @@ theorem coeff_derivative_eq (f : R⟦X⟧) (n : ℕ) :
 /-- **Definition def.fps.deriv**: The derivative expressed in terms of `mk`.
 
 For `f = ∑ fₙ xⁿ`, the textbook defines `f' := ∑_{n>0} n · fₙ · x^{n-1}`.
-Reindexing gives `f' = mk (fun m => (m+1) * f_{m+1})`. -/
+Reindexing gives `f' = mk (fun m => (m+1) * f_{m+1})`. @statement_id stmt-src-lem.fps.deriv.mk
+-/
 theorem derivative_eq_mk (f : R⟦X⟧) :
     d⁄dX R f = PowerSeries.mk (fun n => (n + 1) * PowerSeries.coeff (n + 1) f) := by
   ext n
   rw [PowerSeries.coeff_derivative, PowerSeries.coeff_mk, mul_comm]
 
-/-- The derivative operation is exactly `derivativeFun` from Mathlib. -/
+/-- The derivative operation is exactly `derivativeFun` from Mathlib. @statement_id stmt-src-lem.fps.deriv.eq-derivativefun
+-/
 theorem derivative_eq_derivativeFun (f : R⟦X⟧) :
     d⁄dX R f = PowerSeries.derivativeFun f := rfl
 
 /-- Alternative characterization: the coefficient of xⁿ in f' is (n+1) · f_{n+1}.
-This is the "shift and multiply" form of the derivative. -/
+This is the "shift and multiply" form of the derivative. @statement_id stmt-src-lem.fps.deriv.coeff-formula
+-/
 theorem derivative_coeff_formula (f : R⟦X⟧) (n : ℕ) :
     PowerSeries.coeff n (d⁄dX R f) = (n + 1) * PowerSeries.coeff (n + 1) f := by
   rw [PowerSeries.coeff_derivative, mul_comm]
 
-/-- The derivative of X^(n+1) is (n+1) * X^n. This is a convenient form for induction. -/
+/-- The derivative of X^(n+1) is (n+1) * X^n. This is a convenient form for induction. @statement_id stmt-src-lem.fps.deriv.x-pow-succ
+-/
 @[simp]
 theorem derivative_X_pow_succ (n : ℕ) :
     d⁄dX R ((PowerSeries.X : R⟦X⟧) ^ (n + 1)) = (n + 1 : R) • PowerSeries.X ^ n := by
@@ -113,7 +118,8 @@ theorem derivative_X_pow_succ (n : ℕ) :
     have : m ≠ n := by omega
     simp [this]
 
-/-- Derivative of X^n for n > 0. -/
+/-- Derivative of X^n for n > 0. @statement_id stmt-src-lem.fps.deriv.x-pow-pos
+-/
 theorem derivative_X_pow_of_pos {n : ℕ} (hn : 0 < n) :
     d⁄dX R ((PowerSeries.X : R⟦X⟧) ^ n) = (n : R) • PowerSeries.X ^ (n - 1) := by
   obtain ⟨m, rfl⟩ := Nat.exists_eq_succ_of_ne_zero (Nat.pos_iff_ne_zero.mp hn)
@@ -139,16 +145,19 @@ variable {R : Type*} [CommSemiring R]
 This is automatic since `derivative` is a `Derivation`, hence an additive map.
 -/
 
-/-- **Theorem thm.fps.deriv.rules (a)**: Derivative is additive. -/
+/-- **Theorem thm.fps.deriv.rules (a)**: Derivative is additive. @statement_id stmt-src-thm.fps.deriv.rules
+-/
 theorem derivative_add (f g : R⟦X⟧) : d⁄dX R (f + g) = d⁄dX R f + d⁄dX R g :=
   map_add (d⁄dX R) f g
 
-/-- Derivative of negation: `(-f)' = -f'`. -/
+/-- Derivative of negation: `(-f)' = -f'`. @statement_id stmt-src-lem.fps.deriv.neg
+-/
 @[simp]
 theorem derivative_neg {R : Type*} [CommRing R] (f : R⟦X⟧) : d⁄dX R (-f) = -d⁄dX R f :=
   map_neg (d⁄dX R) f
 
-/-- Derivative of subtraction: `(f - g)' = f' - g'`. -/
+/-- Derivative of subtraction: `(f - g)' = f' - g'`. @statement_id stmt-src-lem.fps.deriv.sub
+-/
 @[simp]
 theorem derivative_sub {R : Type*} [CommRing R] (f g : R⟦X⟧) :
     d⁄dX R (f - g) = d⁄dX R f - d⁄dX R g :=
@@ -165,7 +174,8 @@ index, only finitely many family members have nonzero coefficient).
 -/
 
 /-- **Theorem thm.fps.deriv.rules (b)** (finite version):
-Derivative commutes with finite sums. -/
+Derivative commutes with finite sums. @statement_id stmt-src-thm.fps.deriv.rules
+-/
 theorem derivative_sum {ι : Type*} (s : Finset ι) (f : ι → R⟦X⟧) :
     d⁄dX R (∑ i ∈ s, f i) = ∑ i ∈ s, d⁄dX R (f i) :=
   map_sum (d⁄dX R) f s
@@ -176,7 +186,8 @@ theorem derivative_sum {ι : Type*} (s : Finset ι) (f : ι → R⟦X⟧) :
 
 variable {R' : Type*} [CommRing R']
 
-/-- If (fᵢ) is a summable family, then (fᵢ') is also summable. -/
+/-- If (fᵢ) is a summable family, then (fᵢ') is also summable. @statement_id stmt-src-lem.fps.deriv.summable-preserved
+-/
 theorem summableFPS_derivative {ι : Type*} (f : ι → R'⟦X⟧) (hf : SummableFPS f) :
     SummableFPS (fun i => d⁄dX R' (f i)) := by
   intro n
@@ -193,7 +204,8 @@ theorem summableFPS_derivative {ι : Type*} (f : ι → R'⟦X⟧) (hf : Summabl
 Derivative commutes with infinite summable sums.
 
 If (fᵢ)_{i ∈ I} is a summable family of FPSs, then (fᵢ')_{i ∈ I} is summable
-and (∑ fᵢ)' = ∑ fᵢ'. -/
+and (∑ fᵢ)' = ∑ fᵢ'. @statement_id stmt-src-thm.fps.deriv.rules
+-/
 theorem derivative_summableFPSSum {ι : Type*} (f : ι → R'⟦X⟧) (hf : SummableFPS f) :
     d⁄dX R' (summableFPSSum f hf) =
       summableFPSSum (fun i => d⁄dX R' (f i)) (summableFPS_derivative f hf) := by
@@ -217,11 +229,13 @@ theorem derivative_summableFPSSum {ι : Type*} (f : ι → R'⟦X⟧) (hf : Summ
 This is automatic since `derivative` is an `R`-linear map.
 -/
 
-/-- **Theorem thm.fps.deriv.rules (c)**: Derivative commutes with scalar multiplication. -/
+/-- **Theorem thm.fps.deriv.rules (c)**: Derivative commutes with scalar multiplication. @statement_id stmt-src-thm.fps.deriv.rules
+-/
 theorem derivative_smul (c : R) (f : R⟦X⟧) : d⁄dX R (c • f) = c • d⁄dX R f :=
   (d⁄dX R).map_smul c f
 
-/-- Variant with `C c * f` instead of `c • f`. -/
+/-- Variant with `C c * f` instead of `c • f`. @statement_id stmt-src-lem.fps.deriv.c-mul
+-/
 theorem derivative_C_mul (c : R) (f : R⟦X⟧) :
     d⁄dX R (PowerSeries.C c * f) = PowerSeries.C c * d⁄dX R f := by
   rw [← PowerSeries.smul_eq_C_mul, ← PowerSeries.smul_eq_C_mul, derivative_smul]
@@ -234,7 +248,8 @@ theorem derivative_C_mul (c : R) (f : R⟦X⟧) :
 This is the defining property of a derivation.
 -/
 
-/-- **Theorem thm.fps.deriv.rules (d)**: Leibniz rule for power series. -/
+/-- **Theorem thm.fps.deriv.rules (d)**: Leibniz rule for power series. @statement_id stmt-src-thm.fps.deriv.rules
+-/
 theorem derivative_mul (f g : R⟦X⟧) :
     d⁄dX R (f * g) = d⁄dX R f * g + f * d⁄dX R g := by
   rw [Derivation.leibniz, smul_eq_mul, smul_eq_mul]
@@ -254,7 +269,8 @@ variable {K : Type*} [Field K]
 /-- **Theorem thm.fps.deriv.rules (e)**: Quotient rule for power series.
 
 Note: In Mathlib, this is stated as `(f⁻¹)' = -f⁻¹² · f'`.
-The full quotient rule follows from combining this with Leibniz. -/
+The full quotient rule follows from combining this with Leibniz. @statement_id stmt-src-thm.fps.deriv.rules
+-/
 theorem derivative_div (f g : K⟦X⟧) (hg : constantCoeff g ≠ 0) :
     d⁄dX K (f * g⁻¹) = (d⁄dX K f * g - f * d⁄dX K g) * g⁻¹ ^ 2 := by
   have hg_unit : g * g⁻¹ = 1 := g.mul_inv_cancel hg
@@ -279,7 +295,8 @@ This is `PowerSeries.derivative_pow` in Mathlib.
 
 variable {A : Type*} [CommRing A]
 
-/-- **Theorem thm.fps.deriv.rules (f)**: Power rule for power series. -/
+/-- **Theorem thm.fps.deriv.rules (f)**: Power rule for power series. @statement_id stmt-src-thm.fps.deriv.rules
+-/
 theorem derivative_pow' (g : A⟦X⟧) (n : ℕ) :
     d⁄dX A (g ^ n) = n * g ^ (n - 1) * d⁄dX A g :=
   PowerSeries.derivative_pow A g n
@@ -296,7 +313,8 @@ the case when `[x⁰]g = 0`).
 
 /-- **Theorem thm.fps.deriv.rules (g)**: Chain rule for power series.
 
-This holds when `g` has nilpotent constant coefficient (in particular when `[x⁰]g = 0`). -/
+This holds when `g` has nilpotent constant coefficient (in particular when `[x⁰]g = 0`). @statement_id stmt-src-thm.fps.deriv.rules
+-/
 theorem derivative_comp (f g : A⟦X⟧) (hg : HasSubst g) :
     d⁄dX A (f.subst g) = (d⁄dX A f).subst g * d⁄dX A g :=
   @PowerSeries.derivative_subst A _ f g hg
@@ -315,7 +333,8 @@ differ by a constant.
 
 Note: Mathlib states this as: if `f' = g'` and `f₀ = g₀`, then `f = g`.
 We state the equivalent: if `f' = g'`, then `f - g` has zero derivative,
-hence is constant (all higher coefficients are zero). -/
+hence is constant (all higher coefficients are zero). @statement_id stmt-src-thm.fps.deriv.rules
+-/
 theorem derivative_eq_imp_diff_const {R : Type*} [CommRing R] [IsAddTorsionFree R]
     {f g : R⟦X⟧} (h : d⁄dX R f = d⁄dX R g) :
     ∀ n : ℕ, n ≠ 0 → PowerSeries.coeff n (f - g) = 0 := by
@@ -335,7 +354,8 @@ theorem derivative_eq_imp_diff_const {R : Type*} [CommRing R] [IsAddTorsionFree 
     exact sub_eq_zero.mpr heq
 
 /-- Equivalent formulation: if two power series have equal derivatives and equal
-constant terms, they are equal. This is `PowerSeries.derivative.ext` in Mathlib. -/
+constant terms, they are equal. This is `PowerSeries.derivative.ext` in Mathlib. @statement_id stmt-src-lem.fps.deriv.eq-of-deriv-eq-const-eq
+-/
 theorem eq_of_derivative_eq_of_constantCoeff_eq {R : Type*} [CommRing R] [IsAddTorsionFree R]
     {f g : R⟦X⟧} (hD : d⁄dX R f = d⁄dX R g) (hc : constantCoeff f = constantCoeff g) :
     f = g :=
@@ -353,28 +373,33 @@ section Additional
 
 variable {R : Type*} [CommSemiring R]
 
-/-- Derivative of zero is zero. -/
+/-- Derivative of zero is zero. @statement_id stmt-src-lem.fps.deriv.zero
+-/
 @[simp]
 theorem derivative_zero : d⁄dX R (0 : R⟦X⟧) = 0 :=
   map_zero (d⁄dX R)
 
-/-- Derivative of a constant is zero. -/
+/-- Derivative of a constant is zero. @statement_id stmt-src-lem.fps.deriv.c
+-/
 @[simp]
 theorem derivative_C (c : R) : d⁄dX R (PowerSeries.C c) = 0 :=
   PowerSeries.derivative_C c
 
-/-- Derivative of X is 1. -/
+/-- Derivative of X is 1. @statement_id stmt-src-lem.fps.deriv.x
+-/
 @[simp]
 theorem derivative_X : d⁄dX R (X : R⟦X⟧) = 1 :=
   PowerSeries.derivative_X
 
-/-- Derivative of 1 is 0. -/
+/-- Derivative of 1 is 0. @statement_id stmt-src-lem.fps.deriv.one
+-/
 @[simp]
 theorem derivative_one : d⁄dX R (1 : R⟦X⟧) = 0 :=
   Derivation.map_one_eq_zero (d⁄dX R)
 
 /-- The derivative of a polynomial viewed as a power series equals
-the polynomial derivative viewed as a power series. -/
+the polynomial derivative viewed as a power series. @statement_id stmt-src-lem.fps.deriv.coe-polynomial
+-/
 theorem derivative_coe_polynomial (p : R[X]) :
     d⁄dX R (p : R⟦X⟧) = (Polynomial.derivative p : R⟦X⟧) :=
   PowerSeries.derivative_coe p

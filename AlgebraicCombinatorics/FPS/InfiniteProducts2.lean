@@ -79,7 +79,8 @@ It is **definitionally equal** to:
 - `PowerSeries.EssentiallyFinite` in `Details/InfiniteProducts2.lean`
 
 All use `{i | f i ≠ 0}.Finite` which equals `(Function.support f).Finite` by definition.
-This version has the richest API in the `EssentiallyFinite` namespace. -/
+This version has the richest API in the `EssentiallyFinite` namespace. @statement_id stmt-src-def.fps.prodrule.ess-fin
+-/
 def EssentiallyFinite {I M : Type*} [Zero M] (f : I → M) : Prop :=
   (Function.support f).Finite
 
@@ -289,7 +290,8 @@ variable {L : Type*} [CommSemiring L]
 A product of sums can be expanded into a sum over the Cartesian product:
 `∏_{i=1}^n (∑_{k=1}^{m_i} p_{i,k}) = ∑_{(k₁,...,k_n) ∈ [m₁]×...×[m_n]} ∏_{i=1}^n p_{i,k_i}`
 
-This is the generalized distributive law. -/
+This is the generalized distributive law. @statement_id stmt-src-prop.fps.prodrule-fin-fin
+-/
 theorem prod_sum_eq_sum_prod_finset {n : ℕ} {m : Fin n → ℕ}
     (p : (i : Fin n) → Fin (m i) → L) :
     ∏ i : Fin n, ∑ k : Fin (m i), p i k =
@@ -321,7 +323,8 @@ variable [TopologicalSpace K] [IsTopologicalRing K] [T2Space K]
 
 omit [TopologicalSpace K] [IsTopologicalRing K] [T2Space K] in
 /-- Helper lemma: The coefficient of a product is zero if one factor has all low coefficients zero.
-This is used in the proof of summability for product families. -/
+This is used in the proof of summability for product families. @statement_id stmt-src-lem.fps.coeff-finprod-zero-of-high-order
+-/
 lemma coeff_finProd_eq_zero_of_factor_high_order {n : ℕ} {S : Fin n → Type*}
     (p : (i : Fin n) → S i → K⟦X⟧)
     (f : (i : Fin n) → S i) (i : Fin n) (d : ℕ)
@@ -352,7 +355,8 @@ This is the key technical lemma for `prod_tsum_eq_tsum_prod_finset`.
 - The set `{f | ∀ i, f i ∈ T i}` is finite (product of finite sets)
 - If `f i ∉ T i` for some `i`, then `coeff d (∏ j, p j (f j)) = 0`
 
-This proves that the support of `f ↦ coeff d (∏ i, p i (f i))` is finite. -/
+This proves that the support of `f ↦ coeff d (∏ i, p i (f i))` is finite. @statement_id stmt-src-lem.fps.summable-finprod-discrete
+-/
 theorem summable_finProd_discrete [DiscreteTopology K] {n : ℕ} {S : Fin n → Type*}
     (p : (i : Fin n) → S i → K⟦X⟧)
     (hp : ∀ i, Summable (p i)) :
@@ -392,7 +396,8 @@ theorem summable_finProd_discrete [DiscreteTopology K] {n : ℕ} {S : Fin n → 
 omit [IsTopologicalRing K] [T2Space K] in
 /-- Product of two summable families in K⟦X⟧ is summable (discrete case).
 
-This is used in the proof of `prod_tsum_eq_tsum_prod_finset_discrete`. -/
+This is used in the proof of `prod_tsum_eq_tsum_prod_finset_discrete`. @statement_id stmt-src-lem.fps.summable-prod-of-summable-discrete
+-/
 lemma summable_prod_of_summable_discrete [DiscreteTopology K] {α β : Type*}
     (f : α → K⟦X⟧) (g : β → K⟦X⟧)
     (hf : Summable f) (hg : Summable g) :
@@ -604,7 +609,8 @@ For a finite product of summable families:
 
 **Note**: This theorem requires `DiscreteTopology K`. This covers the main use cases
 (integers, rationals, finite fields). For non-discrete `K` (like ℝ or ℂ), additional
-assumptions (such as absolute summability) would be needed. -/
+assumptions (such as absolute summability) would be needed. @statement_id stmt-src-prop.fps.prodrule-fin-inf
+-/
 theorem prod_tsum_eq_tsum_prod_finset [DiscreteTopology K] {n : ℕ} {S : Fin n → Type*}
     (p : (i : Fin n) → S i → K⟦X⟧)
     (hp : ∀ i, Summable (p i)) :
@@ -766,7 +772,8 @@ This is `prop.fps.prodrule-fin-infJ` for discrete topology, fully proved.
 For a finite product of summable families over any finite type N:
 `∏_{i ∈ N} (∑_{k ∈ S_i} p_{i,k}) = ∑_{f : N → S} ∏_{i ∈ N} p_{i,f(i)}`
 
-This version uses `prod_tsum_eq_tsum_prod_finset_discrete` and reindexes via `Fintype.equivFin`. -/
+This version uses `prod_tsum_eq_tsum_prod_finset_discrete` and reindexes via `Fintype.equivFin`. @statement_id stmt-src-prop.fps.prodrule-fin-infj
+-/
 theorem prod_tsum_eq_tsum_prod_finset'_discrete [DiscreteTopology K] 
     {N : Type*} [Fintype N] [DecidableEq N]
     {S : N → Type*}
@@ -863,7 +870,8 @@ lemma summable_comp_injective_of_discrete [DiscreteTopology K] {α β : Type*}
 
 omit [IsTopologicalRing K] [T2Space K] in
 /-- For discrete K, T'_n = {(i,k) : k ≠ 0, ∃ m ≤ n, coeff m (p i k) ≠ 0} is finite.
-This follows from coefficient-wise summability. -/
+This follows from coefficient-wise summability. @statement_id stmt-src-lem.fps.t-n-finite-discrete
+-/
 lemma T'n_finite_of_discrete [DiscreteTopology K]
     {I : Type*} {S : I → Type*} [∀ i, Zero (S i)] [∀ i, DecidableEq (S i)]
     (p : (i : I) → S i → K⟦X⟧)
@@ -887,7 +895,8 @@ lemma T'n_finite_of_discrete [DiscreteTopology K]
 
 omit [TopologicalSpace K] [IsTopologicalRing K] [T2Space K] in
 /-- If a factor in a finite product has all coefficients up to n equal to zero,
-then the product also has coefficient n equal to zero. -/
+then the product also has coefficient n equal to zero. @statement_id stmt-src-lem.fps.coeff-prod-zero-of-factor-coeff-zero
+-/
 lemma coeff_prod_eq_zero_of_factor_coeff_zero
     {I : Type*} [DecidableEq I] (s : Finset I) (f : I → K⟦X⟧)
     (j : I) (hj : j ∈ s) (n : ℕ) (hf : ∀ m ≤ n, coeff m (f j) = 0) :
@@ -904,7 +913,8 @@ lemma coeff_prod_eq_zero_of_factor_coeff_zero
   rw [hf a (ha.trans hm), zero_mul]
 
 /-- Essentially finite functions whose graph is contained in a finite set form a finite set.
-This is the key combinatorial lemma for proving summability of the RHS. -/
+This is the key combinatorial lemma for proving summability of the RHS. @statement_id stmt-src-lem.fps.finite-funcs-graph-in-finite-set
+-/
 lemma finite_funcs_with_graph_in_finite_set
     {I : Type*} {S : I → Type*} [∀ i, Zero (S i)] [∀ i, DecidableEq (S i)]
     (T : Set (Σ i, { k : S i // k ≠ 0 })) (hT : T.Finite) :
@@ -976,7 +986,8 @@ omit [IsTopologicalRing K] [T2Space K] in
 /-- **Claim 1 from tex proof (discrete case)**: For each i ∈ I, the family (p_{i,k})_{k ∈ S_i} is summable.
 
 This version is for discrete K, where the proof is straightforward using
-`summable_comp_injective_of_discrete`. -/
+`summable_comp_injective_of_discrete`. @statement_id stmt-src-lem.summable-fiber-discrete
+-/
 lemma summable_fiber_discrete [DiscreteTopology K]
     {I : Type*} {S : I → Type*} [∀ i, Zero (S i)] [∀ i, DecidableEq (S i)]
     (p : (i : I) → S i → K⟦X⟧)
@@ -1239,7 +1250,8 @@ variable [TopologicalSpace K] [IsTopologicalRing K] [T2Space K]
 
 For discrete K, this follows from coefficient-wise finiteness arguments. The key insight is that
 ∑_k p_{i,k} = 1 + ∑_{k≠0} p_{i,k}, and for discrete K, only finitely many finsets of indices
-contribute to each coefficient of the partial products. -/
+contribute to each coefficient of the partial products. @statement_id stmt-src-lem.multipliable-tsum-fiber-discrete
+-/
 lemma multipliable_tsum_fiber_discrete [DiscreteTopology K]
     {I : Type*} {S : I → Type*} [∀ i, Zero (S i)] [∀ i, DecidableEq (S i)]
     (p : (i : I) → S i → K⟦X⟧)
@@ -1363,7 +1375,8 @@ lemma multipliable_tsum_fiber_discrete [DiscreteTopology K]
 omit [IsTopologicalRing K] [T2Space K] in
 /-- **Claim 7 from tex proof** (discrete case): The family (∏_i p_{i,k_i})_{(k_i) ∈ S^I_fin} is summable.
 
-For discrete K, this follows from the finiteness of T'_n and the helper lemmas above. -/
+For discrete K, this follows from the finiteness of T'_n and the helper lemmas above. @statement_id stmt-src-lem.summable-prod-essentiallyfinite-discrete
+-/
 lemma summable_prod_essentiallyFinite_discrete [DiscreteTopology K]
     {I : Type*} {S : I → Type*} [∀ i, Zero (S i)] [∀ i, DecidableEq (S i)]
     (p : (i : I) → S i → K⟦X⟧)
@@ -1470,7 +1483,8 @@ If `s ⊆ t` and for all `i ∈ t \ s`, `g i` has all coefficients up to n equal
 then `coeff n (∏ i ∈ t, (1 + g i)) = coeff n (∏ i ∈ s, (1 + g i))`.
 
 This is a key helper for reducing infinite products to finite products when computing
-individual coefficients. -/
+individual coefficients. @statement_id stmt-src-lem.fps.coeff-prod-extra-high-order
+-/
 lemma coeff_prod_eq_of_extra_high_order' {I : Type*} [DecidableEq I]
     (g : I → K⟦X⟧) (s t : Finset I) (hst : s ⊆ t)
     (n : ℕ) (h_high_order : ∀ i ∈ t \ s, ∀ m ≤ n, coeff m (g i) = 0) :
@@ -1513,7 +1527,8 @@ omit [TopologicalSpace K] [IsTopologicalRing K] [T2Space K] in
 then `coeff n` of the tprod equals `coeff n` of the finite product over `I_n`.
 
 This is the key lemma for reducing infinite products to finite products
-when computing individual coefficients. It implements Claim 10 from the tex proof. -/
+when computing individual coefficients. It implements Claim 10 from the tex proof. @statement_id stmt-src-lem.fps.coeff-tprod-one-add-reduce-to-finite
+-/
 lemma coeff_tprod_one_add_eq_coeff_prod_of_high_order' [TopologicalSpace K] [DiscreteTopology K]
     {I : Type*} (g : I → K⟦X⟧) (I_n : Set I) (hI_n : I_n.Finite)
     (hmult : Multipliable (1 + g ·))
@@ -1661,6 +1676,7 @@ The proof strategy (from the tex source) involves:
 2. Show both sides reduce to finite sums/products on these sets
 3. Apply the finite distributive law
 4. Use the irrelevance lemma to show high-order terms don't contribute
+@statement_id stmt-src-prop.fps.prodrule-inf-inf
 -/
 theorem tprod_tsum_eq_tsum_prod_essentiallyFinite
     [TopologicalSpace K] [IsTopologicalRing K] [T2Space K] [DiscreteTopology K]
@@ -2314,7 +2330,8 @@ The key insight is that only essentially finite sequences contribute to the sum 
 ensuring that each product `∏_{i=1}^∞ p_{i,k_i}` is well-defined (since all but finitely
 many factors are `p_{i,0} = 1`).
 
-This is a special case of `tprod_tsum_eq_tsum_prod_essentiallyFinite` with `I = ℕ+`. -/
+This is a special case of `tprod_tsum_eq_tsum_prod_essentiallyFinite` with `I = ℕ+`. @statement_id stmt-src-prop.fps.prodrule-inf-infn
+-/
 theorem tprod_tsum_eq_tsum_prod_essentiallyFinite_nat [DiscreteTopology K]
     {S : ℕ+ → Type*} [∀ i, Zero (S i)] [∀ i, DecidableEq (S i)]
     (p : (i : ℕ+) → S i → K⟦X⟧)
@@ -2390,7 +2407,8 @@ If `a ∈ K⟦X⟧` and `(f_i)_{i ∈ J}` is a summable family with each `f_i` h
 `[x^m](a · ∏_{i ∈ J}(1 + f_i)) = [x^m](a)` for `m ∈ {0, 1, ..., n}`.
 
 Intuitively, if all `f_i` have high order, then multiplying by `∏(1 + f_i)`
-doesn't affect the first `n+1` coefficients. -/
+doesn't affect the first `n+1` coefficients. @statement_id stmt-src-lem.fps.prod.irlv.inf
+-/
 theorem coeff_mul_tprod_one_add_eq_coeff [T2Space K]
     {J : Type*} (a : K⟦X⟧) (f : J → K⟦X⟧)
     (_hf_summable : Summable f)
@@ -2568,7 +2586,8 @@ The proof uses the fact that:
 The algebraic proof (from the TeX source) shows:
 1. `(1 + x^k)(1 - x^k) = 1 - x^{2k}`
 2. `∏_{k>0}(1 + x^k) = ∏_{k>0}(1 - x^{2k}) / ∏_{k>0}(1 - x^k)`
-3. The even factors cancel, leaving `1 / ∏_{k odd}(1 - x^k)` -/
+3. The even factors cancel, leaving `1 / ∏_{k odd}(1 - x^k)` @statement_id stmt-src-prop.gf.prod.euler-odd
+-/
 theorem euler_odd_parts_identity :
     ∏' i : ℕ+, Ring.inverse (1 - (X : K⟦X⟧) ^ (2 * (i : ℕ) - 1)) =
     ∏' k : ℕ+, (1 + (X : K⟦X⟧) ^ (k : ℕ)) := by
@@ -2621,7 +2640,8 @@ theorem euler_odd_parts_identity :
 /-- Alternative form of Euler's identity using the set of odd positive integers.
 
 This follows from `euler_odd_parts_identity` by reindexing the product using the
-equivalence `oddPNatEquivPNat` between `{ n : ℕ+ // Odd n }` and `ℕ+`. -/
+equivalence `oddPNatEquivPNat` between `{ n : ℕ+ // Odd n }` and `ℕ+`. @statement_id stmt-src-prop.gf.prod.euler-odd-alt
+-/
 theorem euler_odd_parts_identity' :
     ∏' i : { n : ℕ+ // Odd (n : ℕ) }, Ring.inverse (1 - (X : K⟦X⟧) ^ (i : ℕ)) =
     ∏' k : ℕ+, (1 + (X : K⟦X⟧) ^ (k : ℕ)) := by
@@ -2653,7 +2673,8 @@ the number of partitions of `n` into odd positive integers.
 
 For example, for `n = 6`:
 - Distinct partitions: `6`, `1+5`, `2+4`, `1+2+3` (4 partitions)
-- Odd partitions: `1+5`, `3+3`, `3+1+1+1`, `1+1+1+1+1+1` (4 partitions) -/
+- Odd partitions: `1+5`, `3+3`, `3+1+1+1`, `1+1+1+1+1+1` (4 partitions) @statement_id stmt-src-thm.gf.prod.euler-comb
+-/
 theorem euler_distinct_odd_partitions (n : ℕ) :
     numDistinctPartitions n = numOddPartitions n :=
   (Nat.Partition.card_odds_eq_card_distincts n).symm
@@ -2672,7 +2693,8 @@ open scoped PowerSeries.WithPiTopology
 variable [TopologicalSpace K] [IsTopologicalRing K] [T2Space K]
 
 omit [T2Space K] in
-/-- The `rescale` ring homomorphism is continuous in the pi topology on power series. -/
+/-- The `rescale` ring homomorphism is continuous in the pi topology on power series. @statement_id stmt-src-lem.fps.continuous-rescale
+-/
 theorem continuous_rescale (a : K) : Continuous (rescale a : K⟦X⟧ → K⟦X⟧) := by
   rw [continuous_pi_iff]
   intro n
@@ -2690,7 +2712,8 @@ theorem continuous_rescale (a : K) : Continuous (rescale a : K⟦X⟧ → K⟦X�
 If `(f_i)_{i ∈ I}` is a multipliable family and `a ∈ K`, then rescaling commutes with
 infinite products: `rescale a (∏_{i ∈ I} f_i) = ∏_{i ∈ I} (rescale a (f_i))`.
 
-In the context of substitution, this says that `(∏ f_i)(ax) = ∏ f_i(ax)`. -/
+In the context of substitution, this says that `(∏ f_i)(ax) = ∏ f_i(ax)`. @statement_id stmt-src-prop.fps.subs.rule-infprod
+-/
 theorem tprod_rescale_substitution
     {I : Type*} (f : I → K⟦X⟧) (a : K)
     (hf : Multipliable f) :
@@ -2761,7 +2784,8 @@ The RHS is a sum over all finite strictly increasing sequences of indices.
 
 **Note**: This theorem requires `K` to have discrete topology. This covers the main use cases
 (integers, rationals, finite fields). For non-discrete `K` (like ℝ or ℂ), additional
-assumptions (such as completeness) may be needed. -/
+assumptions (such as completeness) may be needed. @statement_id stmt-src-prop.fps.binary-product-rule
+-/
 theorem binary_product_rule (a : ℕ → K⟦X⟧) (ha : Summable a) [DiscreteTopology K] :
     ∏' i : ℕ, (1 + a i) =
     ∑' s : Finset ℕ, ∏ i ∈ s, a i := by
@@ -2838,7 +2862,8 @@ theorem binary_product_rule (a : ℕ → K⟦X⟧) (ha : Summable a) [DiscreteTo
   exact h_finsets_finite.subset h_support_subset
 
 omit [IsTopologicalRing K] [T2Space K] in
-/-- Alternative formulation: the product equals a sum over finite subsets. -/
+/-- Alternative formulation: the product equals a sum over finite subsets. @statement_id stmt-src-prop.fps.binary-product-rule-alt
+-/
 theorem binary_product_rule' (a : ℕ → K⟦X⟧) (ha : Summable a) [DiscreteTopology K] :
     ∏' i : ℕ, (1 + a i) =
     ∑' J : { J : Set ℕ // J.Finite }, ∏ᶠ i ∈ J.val, a i := by

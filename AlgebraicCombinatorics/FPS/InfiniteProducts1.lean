@@ -130,7 +130,8 @@ This is used in the proof of Proposition prop.fps.prod-mulable.
 
 /-- If coefficients agree up to n, products agree up to n.
     (Lemma lem.fps.prod.irlv.cong-mul)
-    Label: lem.fps.prod.irlv.cong-mul -/
+    Label: lem.fps.prod.irlv.cong-mul @statement_id stmt-src-lem.fps.prod.irlv.cong-mul-2
+-/
 theorem xnEquiv_mul_of_coeff_eq {n : ℕ} {a b c d : K⟦X⟧}
     (hab : ∀ m ≤ n, coeff m a = coeff m b)
     (hcd : ∀ m ≤ n, coeff m c = coeff m d) :
@@ -149,7 +150,8 @@ This is the division analogue of lem.fps.prod.irlv.cong-mul.
 /-- If coefficients agree up to n for numerators and invertible denominators,
     quotients agree up to n.
     (Lemma lem.fps.prod.irlv.cong-div)
-    Label: lem.fps.prod.irlv.cong-div -/
+    Label: lem.fps.prod.irlv.cong-div @statement_id stmt-src-lem.fps.prod.irlv.cong-div
+-/
 theorem xnEquiv_div {n : ℕ} {a b c d : K⟦X⟧}
     (hab : a ≡[x^n] b) (hcd : c ≡[x^n] d)
     (hc : IsUnit (constantCoeff c)) (hd : IsUnit (constantCoeff d)) :
@@ -175,7 +177,8 @@ the argument order used in this file.
     A finite subset `U ⊆ I` determines the x^n-coefficient in the product of `(aᵢ)_{i∈I}`
     if for every finite subset `T` with `U ⊆ T ⊆ I`, the x^n-coefficient of `∏_{i∈T} aᵢ`
     equals that of `∏_{i∈U} aᵢ`.
-    (Definition def.fps.infprod.coeff-det) -/
+    (Definition def.fps.infprod.coeff-det) @statement_id stmt-src-def.fps.determines-xn-coeff
+-/
 abbrev DeterminesCoeff {ι : Type*} (a : ι → K⟦X⟧) (n : ℕ) (U : Finset ι) : Prop :=
   PowerSeries.DeterminesCoeffInProd a U n
 
@@ -183,14 +186,16 @@ abbrev DeterminesCoeff {ι : Type*} (a : ι → K⟦X⟧) (n : ℕ) (U : Finset 
     A finite subset `U ⊆ I` is an x^n-approximator for `(aᵢ)_{i∈I}` if it determines
     the first `n+1` coefficients in the product.
     (Definition def.fps.xnappr)
-    Label: def.fps.xnappr -/
+    Label: def.fps.xnappr @statement_id stmt-src-def.fps.infprod-approx
+-/
 abbrev IsXnApproximator {ι : Type*} (a : ι → K⟦X⟧) (n : ℕ) (U : Finset ι) : Prop :=
   PowerSeries.IsXnApproximator a U n
 
 /-- Alias for `PowerSeries.CoeffFinitelyDeterminedInProd`.
     The x^n-coefficient in the product of `(aᵢ)_{i∈I}` is finitely determined if
     there exists a finite subset that determines it.
-    (Definition def.fps.infprod.coeff-det) -/
+    (Definition def.fps.infprod.coeff-det) @statement_id stmt-src-def.fps.xn-coeff-fin-determined
+-/
 abbrev CoeffFinitelyDetermined {ι : Type*} (a : ι → K⟦X⟧) (n : ℕ) : Prop :=
   PowerSeries.CoeffFinitelyDeterminedInProd a n
 
@@ -198,13 +203,15 @@ abbrev CoeffFinitelyDetermined {ι : Type*} (a : ι → K⟦X⟧) (n : ℕ) : Pr
     A family `(aᵢ)_{i∈I}` of FPSs is multipliable if each coefficient in the product
     is finitely determined.
     (Definition def.fps.multipliable)
-    Label: def.fps.multipliable -/
+    Label: def.fps.multipliable @statement_id stmt-src-def.fps.multipliable
+-/
 abbrev Multipliable {ι : Type*} (a : ι → K⟦X⟧) : Prop :=
   PowerSeries.Multipliable a
 
 /-- If a family is multipliable, there exists an x^n-approximator for each n.
     (Lemma lem.fps.mulable.approx)
-    Label: lem.fps.mulable.approx -/
+    Label: lem.fps.mulable.approx @statement_id stmt-src-lem.fps.mulable.approx
+-/
 theorem multipliable_exists_approximator {ι : Type*} {a : ι → K⟦X⟧}
     (h : Multipliable a) (n : ℕ) : ∃ U : Finset ι, IsXnApproximator a n U := by
   classical
@@ -296,7 +303,8 @@ This lemma is used in the proof of `multipliable_of_subset`.
     Label: lem.fps.prods-mulable-subfams-appr
 
     Given `U` an x^n-approximator for `(aᵢ)_{i∈I}` and `J ⊆ I` (as a Finset),
-    there exists an x^n-approximator for `(aᵢ)_{i∈J}` derived from `U ∩ J`. -/
+    there exists an x^n-approximator for `(aᵢ)_{i∈J}` derived from `U ∩ J`. @statement_id stmt-src-lem.fps.prods-mulable-subfams-appr
+-/
 theorem xnApproximator_inter {ι : Type*} [DecidableEq ι] {a : ι → K⟦X⟧} {n : ℕ}
     {U : Finset ι} {J : Finset ι}
     (hU : IsXnApproximator a n U)
@@ -1055,7 +1063,8 @@ This is a restatement of part of Theorem thm.fps.xneq.props (f).
 
 /-- Finite products preserve x^n-equivalence.
     (Lemma lem.fps.prods-mulable-rules.SW1.lem1)
-    Label: lem.fps.prods-mulable-rules.SW1.lem1 -/
+    Label: lem.fps.prods-mulable-rules.SW1.lem1 @statement_id stmt-src-lem.fps.prods-mulable-rules.sw1.lem1
+-/
 theorem xnEquiv_finprod {ι : Type*} {n : ℕ} {V : Finset ι}
     {c d : ι → K⟦X⟧} (h : ∀ v ∈ V, c v ≡[x^n] d v) :
     ∏ v ∈ V, c v ≡[x^n] ∏ v ∈ V, d v := by
@@ -1532,7 +1541,8 @@ theorem infprod_eq_infprod_fiber {S W : Type*} {a : S → K⟦X⟧} {f : S → W
 A finite family of FPSs is always multipliable.
 -/
 
-/-- A finite family of FPSs is multipliable. -/
+/-- A finite family of FPSs is multipliable. @statement_id stmt-src-lem.fps.multipliable-of-finite
+-/
 theorem multipliable_of_finite {ι : Type*} [Finite ι] (a : ι → K⟦X⟧) :
     Multipliable a := by
   intro n
@@ -1547,7 +1557,8 @@ theorem multipliable_of_finite {ι : Type*} [Finite ι] (a : ι → K⟦X⟧) :
     · intro _; exact hT (Finset.mem_univ x)
   simp only [h]
 
-/-- The infinite product of a finite family equals the finite product. -/
+/-- The infinite product of a finite family equals the finite product. @statement_id stmt-src-lem.fps.infprod-of-finite
+-/
 theorem infprod_of_finite {ι : Type*} [Fintype ι] (a : ι → K⟦X⟧) :
     infprod a (multipliable_of_finite a) = ∏ i : ι, a i := by
   ext n

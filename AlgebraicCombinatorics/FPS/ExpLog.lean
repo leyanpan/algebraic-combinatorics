@@ -65,12 +65,14 @@ variable (K : Type*) [CommRing K] [Algebra ℚ K]
 /-! ## Section 7.8.1: Definitions -/
 
 /-- The logarithm series `logbar = ∑_{n≥1} (-1)^{n-1}/n · x^n`, which is the Mercator series
-for `log(1+x)`. This is `\overline{\log}` in Definition 7.8.2 (def.fps.exp-log). -/
+for `log(1+x)`. This is `\overline{\log}` in Definition 7.8.2 (def.fps.exp-log). @statement_id stmt-src-def.fps.exp-log
+-/
 noncomputable def logbar : K⟦X⟧ :=
   mk fun n => if n = 0 then 0 else algebraMap ℚ K ((-1 : ℚ) ^ (n - 1) / n)
 
 /-- The shifted exponential series `expbar = exp - 1 = ∑_{n≥1} 1/n! · x^n`.
-This is `\overline{\exp}` in Definition 7.8.2 (def.fps.exp-log). -/
+This is `\overline{\exp}` in Definition 7.8.2 (def.fps.exp-log). @statement_id stmt-src-def.fps.exp-log
+-/
 noncomputable def expbar : K⟦X⟧ := exp K - 1
 
 variable {K}
@@ -142,7 +144,8 @@ theorem exp_eq_one_add_expbar : exp K = 1 + expbar K := by
 /-! ## Section 7.8.2: The exponential and logarithm are inverse -/
 
 variable (K) in
-/-- The series `(1+x)⁻¹ = ∑_{n≥0} (-1)^n x^n`. -/
+/-- The series `(1+x)⁻¹ = ∑_{n≥0} (-1)^n x^n`. @statement_id stmt-src-lem.fps.invoneplusx
+-/
 noncomputable def invOnePlusX : K⟦X⟧ := mk fun n => algebraMap ℚ K ((-1 : ℚ) ^ n)
 
 @[simp]
@@ -151,7 +154,8 @@ theorem coeff_invOnePlusX (n : ℕ) :
   coeff_mk _ _
 
 /-- The derivative of `logbar` is `invOnePlusX`. This is part of the proof of
-Proposition 7.8.3 (prop.fps.exp-log-der). -/
+Proposition 7.8.3 (prop.fps.exp-log-der). @statement_id stmt-src-lem.fps.derivative-logbar
+-/
 theorem derivative_logbar : d⁄dX K (logbar K) = invOnePlusX K := by
   ext n
   rw [coeff_derivative, coeff_logbar, coeff_invOnePlusX]
@@ -163,13 +167,15 @@ theorem derivative_logbar : d⁄dX K (logbar K) = invOnePlusX K := by
   field_simp
 
 /-- The derivative of `expbar` equals `exp`. This is equation (7.8.3) in the proof of
-Proposition 7.8.3 (prop.fps.exp-log-der). -/
+Proposition 7.8.3 (prop.fps.exp-log-der). @statement_id stmt-src-lem.fps.derivative-expbar
+-/
 theorem derivative_expbar : d⁄dX K (expbar K) = exp K := by
   unfold expbar
   simp [map_sub, derivative_exp]
 
 /-- Chain rule for composition with `exp`: `(exp ∘ g)' = (exp ∘ g) · g'`.
-This is Proposition 7.8.3(a) (prop.fps.exp-log-der). -/
+This is Proposition 7.8.3(a) (prop.fps.exp-log-der). @statement_id stmt-src-prop.fps.exp-log-der
+-/
 theorem derivative_exp_comp {g : K⟦X⟧} (hg : constantCoeff g = 0) :
     d⁄dX K ((exp K).subst g) = (exp K).subst g * d⁄dX K g := by
   have hsub : HasSubst g := HasSubst.of_constantCoeff_zero' hg
@@ -179,7 +185,8 @@ theorem derivative_exp_comp {g : K⟦X⟧} (hg : constantCoeff g = 0) :
 This is Proposition 7.8.3(a) (prop.fps.exp-log-der).
 
 Note that `expbar = exp - 1`, so `expbar' = exp' = exp`, and the chain rule gives
-`(expbar ∘ g)' = (exp ∘ g) · g'`. -/
+`(expbar ∘ g)' = (exp ∘ g) · g'`. @statement_id stmt-src-prop.fps.exp-log-der
+-/
 theorem derivative_expbar_comp {g : K⟦X⟧} (hg : constantCoeff g = 0) :
     d⁄dX K ((expbar K).subst g) = (exp K).subst g * d⁄dX K g := by
   have hsub : HasSubst g := HasSubst.of_constantCoeff_zero' hg
@@ -228,7 +235,8 @@ theorem invOnePlusX_mul_one_add_X : invOnePlusX K * (1 + X) = 1 := by
     simp only [pow_succ, mul_neg_one, map_neg]
     norm_num
 
-/-- `(invOnePlusX K).subst g = (1 + g)⁻¹` when `constantCoeff g = 0`. -/
+/-- `(invOnePlusX K).subst g = (1 + g)⁻¹` when `constantCoeff g = 0`. @statement_id stmt-src-lem.fps.invoneplusx-subst
+-/
 theorem invOnePlusX_subst_eq_inv {g : K⟦X⟧} (hg : constantCoeff g = 0) :
     (invOnePlusX K).subst g = (1 + g)⁻¹ := by
   have hsub : HasSubst g := HasSubst.of_constantCoeff_zero' hg
@@ -248,7 +256,8 @@ theorem invOnePlusX_subst_eq_inv {g : K⟦X⟧} (hg : constantCoeff g = 0) :
 
 /-- Chain rule for composition with `logbar`: `(logbar ∘ g)' = (1+g)⁻¹ · g'`.
 This is Proposition 7.8.3(b) (prop.fps.exp-log-der).
-Note: Requires Field K for the inverse to exist. -/
+Note: Requires Field K for the inverse to exist. @statement_id stmt-src-prop.fps.exp-log-der
+-/
 theorem derivative_logbar_comp {g : K⟦X⟧} (hg : constantCoeff g = 0) :
     d⁄dX K ((logbar K).subst g) = (1 + g)⁻¹ * d⁄dX K g := by
   have hsub : HasSubst g := HasSubst.of_constantCoeff_zero' hg
@@ -308,7 +317,8 @@ omit [Algebra ℚ K] in
 /-- The constant term of a composition `f ∘ g` where `g` has constant term 0.
 This is Lemma 7.8.4 (lem.fps.compos-cst-term-0).
 
-Note: Mathlib has `PowerSeries.constantCoeff_subst` which requires `HasSubst`. -/
+Note: Mathlib has `PowerSeries.constantCoeff_subst` which requires `HasSubst`. @statement_id stmt-src-lem.fps.compos-cst-term-0
+-/
 theorem constantCoeff_subst_of_constantCoeff_zero {f g : K⟦X⟧} (hg : constantCoeff g = 0) :
     constantCoeff (f.subst g) = constantCoeff f := by
   -- We use the Mathlib lemma constantCoeff_subst which expresses the result as a finsum
@@ -369,7 +379,8 @@ private theorem one_add_X_mul_invOnePlusX' : (1 + X) * invOnePlusX K = 1 := by
   rw [mul_comm, invOnePlusX_mul_one_add_X']
 
 /-- Uniqueness lemma for ODEs of the form `h' = (1 + h) * g` with matching initial conditions.
-This is used to prove `expbar_comp_logbar`. -/
+This is used to prove `expbar_comp_logbar`. @statement_id stmt-src-lem.fps.ode-uniqueness-mul-inv
+-/
 theorem eq_of_derivative_eq_mul_of_inv
     {h₁ h₂ g : K⟦X⟧}
     (hd₁ : d⁄dX K h₁ = (1 + h₁) * g) (hd₂ : d⁄dX K h₂ = (1 + h₂) * g)
@@ -414,7 +425,8 @@ theorem eq_of_derivative_eq_mul_of_inv
 equation (7.8.1).
 
 The proof uses the uniqueness of solutions to ODEs: both `expbar ∘ logbar` and `X` satisfy
-the ODE `h' = (1 + h) * invOnePlusX` with initial condition `h(0) = 0`. -/
+the ODE `h' = (1 + h) * invOnePlusX` with initial condition `h(0) = 0`. @statement_id stmt-src-thm.fps.exp-log-inv
+-/
 theorem expbar_comp_logbar : (expbar K).subst (logbar K) = X := by
   have hlogbar : constantCoeff (logbar K) = 0 := constantCoeff_logbar
   have hsub : HasSubst (logbar K) := HasSubst.of_constantCoeff_zero' hlogbar
@@ -434,7 +446,8 @@ theorem expbar_comp_logbar : (expbar K).subst (logbar K) = X := by
     rw [constantCoeff_subst_of_constantCoeff_zero hlogbar, constantCoeff_expbar, constantCoeff_X]
 
 /-- `(invOnePlusX K).subst (expbar K) * exp K = 1`. This is a key lemma for proving
-`logbar_comp_expbar`. -/
+`logbar_comp_expbar`. @statement_id stmt-src-lem.fps.invoneplusx-subst-expbar-mul-exp
+-/
 theorem invOnePlusX_subst_expbar_mul_exp : (invOnePlusX K).subst (expbar K) * exp K = 1 := by
   have hexp0 : constantCoeff (expbar K) = 0 := constantCoeff_expbar
   have hsub : HasSubst (expbar K) := HasSubst.of_constantCoeff_zero' hexp0
@@ -450,7 +463,8 @@ theorem invOnePlusX_subst_expbar_mul_exp : (invOnePlusX K).subst (expbar K) * ex
   rw [h2, h3] at h1
   exact h1
 
-/-- Uniqueness lemma for ODEs of the form `h' = 1` (constant) with matching initial conditions. -/
+/-- Uniqueness lemma for ODEs of the form `h' = 1` (constant) with matching initial conditions. @statement_id stmt-src-lem.fps.ode-uniqueness-one
+-/
 theorem eq_of_derivative_eq_one {h₁ h₂ : K⟦X⟧}
     (hd₁ : d⁄dX K h₁ = 1) (hd₂ : d⁄dX K h₂ = 1)
     (hc : constantCoeff h₁ = constantCoeff h₂) : h₁ = h₂ := by
@@ -485,7 +499,8 @@ the ODE `h' = 1` with initial condition `h(0) = 0`. The key calculation is:
 - `(logbar ∘ expbar)' = (logbar' ∘ expbar) · expbar'` by chain rule
 - `logbar' = invOnePlusX` and `expbar' = exp`
 - `(invOnePlusX ∘ expbar) · exp = 1` since `invOnePlusX · (1 + X) = 1` and `1 + expbar = exp`
-- So `(logbar ∘ expbar)' = 1 = X'` -/
+- So `(logbar ∘ expbar)' = 1 = X'` @statement_id stmt-src-thm.fps.exp-log-inv
+-/
 theorem logbar_comp_expbar : (logbar K).subst (expbar K) = X := by
   have hexp0 : constantCoeff (expbar K) = 0 := constantCoeff_expbar
   have hsub : HasSubst (expbar K) := HasSubst.of_constantCoeff_zero' hexp0
@@ -504,11 +519,13 @@ section PowerSeriesSets
 variable {R : Type*} [CommRing R]
 
 /-- `R⟦X⟧₀` is the set of FPS with constant term 0.
-This is Definition 7.8.6(a) (def.fps.Exp-Log-maps). -/
+This is Definition 7.8.6(a) (def.fps.Exp-Log-maps). @statement_id stmt-src-def.fps.exp-log-maps
+-/
 def PowerSeries₀ : Set R⟦X⟧ := {f | constantCoeff f = 0}
 
 /-- `R⟦X⟧₁` is the set of FPS with constant term 1.
-This is Definition 7.8.6(b) (def.fps.Exp-Log-maps). -/
+This is Definition 7.8.6(b) (def.fps.Exp-Log-maps). @statement_id stmt-src-def.fps.exp-log-maps
+-/
 def PowerSeries₁ : Set R⟦X⟧ := {f | constantCoeff f = 1}
 
 theorem mem_PowerSeries₀_iff {f : R⟦X⟧} : f ∈ PowerSeries₀ ↔ constantCoeff f = 0 := Iff.rfl
@@ -549,13 +566,15 @@ theorem PowerSeries₁.mul_mem {f g : R⟦X⟧} (hf : f ∈ PowerSeries₁) (hg 
   rw [hf, hg, one_mul]
 
 /-- If `f` has constant term 1, then `f - 1` has constant term 0.
-This is Lemma 7.8.7(d) (lem.fps.Exp-Log-maps-wd). -/
+This is Lemma 7.8.7(d) (lem.fps.Exp-Log-maps-wd). @statement_id stmt-src-lem.fps.sub-one-mem-ps0
+-/
 theorem sub_one_mem_PowerSeries₀ {f : R⟦X⟧} (hf : f ∈ PowerSeries₁) :
     f - 1 ∈ PowerSeries₀ := by
   rw [mem_PowerSeries₀_iff, map_sub, map_one, mem_PowerSeries₁_iff.mp hf, sub_self]
 
 /-- `R⟦X⟧₀` forms an additive subgroup.
-This is Proposition 7.8.10(a) (prop.fps.Exp-Log-groups). -/
+This is Proposition 7.8.10(a) (prop.fps.Exp-Log-groups). @statement_id stmt-src-prop.fps.exp-log-groups
+-/
 def PowerSeries₀.addSubgroup : AddSubgroup R⟦X⟧ where
   carrier := PowerSeries₀
   zero_mem' := PowerSeries₀.zero_mem
@@ -579,7 +598,8 @@ theorem PowerSeries₁.div_mem {f g : R⟦X⟧} (hf : f ∈ PowerSeries₁) (hg 
   PowerSeries₁.mul_mem hf (PowerSeries₁.inv_mem hg)
 
 /-- `R⟦X⟧₁` forms a multiplicative subgroup of units.
-This is Proposition 7.8.10(b) (prop.fps.Exp-Log-groups). -/
+This is Proposition 7.8.10(b) (prop.fps.Exp-Log-groups). @statement_id stmt-src-prop.fps.exp-log-groups
+-/
 def PowerSeries₁.subgroup : Subgroup (R⟦X⟧)ˣ where
   carrier := {u | (u : R⟦X⟧) ∈ PowerSeries₁}
   one_mem' := PowerSeries₁.one_mem
@@ -610,7 +630,8 @@ variable {K}
 
 omit [Algebra ℚ K] in
 /-- Composition of two FPS with constant term 0 has constant term 0.
-This is Lemma 7.8.7(a) (lem.fps.Exp-Log-maps-wd). -/
+This is Lemma 7.8.7(a) (lem.fps.Exp-Log-maps-wd). @statement_id stmt-src-lem.fps.exp-log-maps-wd
+-/
 theorem PowerSeries₀.subst_mem {f g : K⟦X⟧} (hf : f ∈ PowerSeries₀) (hg : g ∈ PowerSeries₀) :
     f.subst g ∈ PowerSeries₀ := by
   rw [mem_PowerSeries₀_iff] at hf hg ⊢
@@ -618,7 +639,8 @@ theorem PowerSeries₀.subst_mem {f g : K⟦X⟧} (hf : f ∈ PowerSeries₀) (h
 
 omit [Algebra ℚ K] in
 /-- Composition of an FPS with constant term 1 and one with constant term 0 has constant term 1.
-This is Lemma 7.8.7(b) (lem.fps.Exp-Log-maps-wd). -/
+This is Lemma 7.8.7(b) (lem.fps.Exp-Log-maps-wd). @statement_id stmt-src-lem.fps.exp-log-maps-wd
+-/
 theorem PowerSeries₁.subst_mem {f g : K⟦X⟧} (hf : f ∈ PowerSeries₁) (hg : g ∈ PowerSeries₀) :
     f.subst g ∈ PowerSeries₁ := by
   rw [mem_PowerSeries₁_iff] at hf ⊢
@@ -626,22 +648,26 @@ theorem PowerSeries₁.subst_mem {f g : K⟦X⟧} (hf : f ∈ PowerSeries₁) (h
   rw [constantCoeff_subst_of_constantCoeff_zero hg, hf]
 
 /-- `exp ∘ g` has constant term 1 when `g` has constant term 0.
-This is Lemma 7.8.7(c) (lem.fps.Exp-Log-maps-wd). -/
+This is Lemma 7.8.7(c) (lem.fps.Exp-Log-maps-wd). @statement_id stmt-src-lem.fps.exp-log-maps-wd
+-/
 theorem exp_subst_mem_PowerSeries₁ {g : K⟦X⟧} (hg : g ∈ PowerSeries₀) :
     (exp K).subst g ∈ PowerSeries₁ :=
   PowerSeries₁.subst_mem (exp_mem_PowerSeries₁ K) hg
 
+/-- @statement_id stmt-src-lem.fps.exp-log-maps-wd -/
 theorem logbar_subst_sub_one_mem_PowerSeries₀ {f : K⟦X⟧} (hf : f ∈ PowerSeries₁) :
     (logbar K).subst (f - 1) ∈ PowerSeries₀ :=
   PowerSeries₀.subst_mem (logbar_mem_PowerSeries₀ K) (sub_one_mem_PowerSeries₀ hf)
 
 /-- The exponential map `Exp : K⟦X⟧₀ → K⟦X⟧₁` defined by `g ↦ exp ∘ g`.
-This is Definition 7.8.6(c) (def.fps.Exp-Log-maps). -/
+This is Definition 7.8.6(c) (def.fps.Exp-Log-maps). @statement_id stmt-src-def.fps.exp-log-maps
+-/
 noncomputable def Exp (g : PowerSeries₀ (R := K)) : PowerSeries₁ (R := K) :=
   ⟨(exp K).subst g.val, exp_subst_mem_PowerSeries₁ g.property⟩
 
 /-- The logarithm map `Log : K⟦X⟧₁ → K⟦X⟧₀` defined by `f ↦ logbar ∘ (f - 1)`.
-This is Definition 7.8.6(c) (def.fps.Exp-Log-maps). -/
+This is Definition 7.8.6(c) (def.fps.Exp-Log-maps). @statement_id stmt-src-def.fps.exp-log-maps
+-/
 noncomputable def Log (f : PowerSeries₁ (R := K)) : PowerSeries₀ (R := K) :=
   ⟨(logbar K).subst (f.val - 1), logbar_subst_sub_one_mem_PowerSeries₀ f.property⟩
 
@@ -649,7 +675,8 @@ theorem Exp_val (g : PowerSeries₀ (R := K)) : (Exp g).val = (exp K).subst g.va
 
 theorem Log_val (f : PowerSeries₁ (R := K)) : (Log f).val = (logbar K).subst (f.val - 1) := rfl
 
-/-- `Log (Exp g) = g` for any `g ∈ K⟦X⟧₀`. This is part of Lemma 7.8.8 (lem.fps.Exp-Log-maps-inv). -/
+/-- `Log (Exp g) = g` for any `g ∈ K⟦X⟧₀`. This is part of Lemma 7.8.8 (lem.fps.Exp-Log-maps-inv). @statement_id stmt-src-lem.fps.exp-log-maps-inv
+-/
 theorem Log_Exp (g : PowerSeries₀ (R := K)) : Log (Exp g) = g := by
   apply Subtype.ext
   simp only [Log_val, Exp_val]
@@ -670,6 +697,7 @@ theorem Log_Exp (g : PowerSeries₀ (R := K)) : Log (Exp g) = g := by
   rw [logbar_comp_expbar]
   rw [subst_X hsub_g]
 
+/-- @statement_id stmt-src-lem.fps.exp-log-maps-inv -/
 theorem Exp_Log (f : PowerSeries₁ (R := K)) : Exp (Log f) = f := by
   apply Subtype.ext
   simp only [Exp, Log]
@@ -699,7 +727,8 @@ theorem Exp_Log (f : PowerSeries₁ (R := K)) : Exp (Log f) = f := by
     _ = (f.val - 1) + 1 := by rw [subst_X hsub_fv1]
     _ = f.val := by ring
 
-/-- `Exp` and `Log` are mutually inverse. This is Lemma 7.8.8 (lem.fps.Exp-Log-maps-inv). -/
+/-- `Exp` and `Log` are mutually inverse. This is Lemma 7.8.8 (lem.fps.Exp-Log-maps-inv). @statement_id stmt-src-lem.fps.exp-log-maps-inv
+-/
 theorem Exp_Log_inverse : Function.LeftInverse (Log (K := K)) Exp ∧
     Function.RightInverse (Log (K := K)) Exp :=
   ⟨Log_Exp, Exp_Log⟩
@@ -708,7 +737,8 @@ theorem Exp_Log_inverse : Function.LeftInverse (Log (K := K)) Exp ∧
 
 /-- Uniqueness lemma: if two power series satisfy the same first-order linear ODE
 `h' = h * g` with the same initial condition, they are equal.
-This is used to prove `Exp_add`. -/
+This is used to prove `Exp_add`. @statement_id stmt-src-lem.fps.ode-uniqueness-mul-self
+-/
 theorem eq_of_derivative_eq_mul_self {h₁ h₂ g : K⟦X⟧}
     (hd₁ : d⁄dX K h₁ = h₁ * g) (hd₂ : d⁄dX K h₂ = h₂ * g)
     (hc : constantCoeff h₁ = constantCoeff h₂) : h₁ = h₂ := by
@@ -748,7 +778,8 @@ theorem eq_of_derivative_eq_mul_self {h₁ h₂ g : K⟦X⟧}
       rw [hcancel, hcancel] at h'
       exact h'
 
-/-- `Exp(f + g) = Exp(f) · Exp(g)`. This is Lemma 7.8.9(a) (lem.fps.Exp-Log-additive). -/
+/-- `Exp(f + g) = Exp(f) · Exp(g)`. This is Lemma 7.8.9(a) (lem.fps.Exp-Log-additive). @statement_id stmt-src-lem.fps.exp-log-additive
+-/
 theorem Exp_add (f g : PowerSeries₀ (R := K)) :
     Exp (⟨f.val + g.val, by
       rw [mem_PowerSeries₀_iff, map_add, f.property, g.property, add_zero]⟩) =
@@ -780,7 +811,8 @@ theorem Exp_add (f g : PowerSeries₀ (R := K)) :
     rw [constantCoeff_subst_of_constantCoeff_zero (by simp [hf, hg] : constantCoeff (f.val + g.val) = 0)]
     simp [constantCoeff_exp]
 
-/-- `Log(fg) = Log(f) + Log(g)`. This is Lemma 7.8.9(b) (lem.fps.Exp-Log-additive). -/
+/-- `Log(fg) = Log(f) + Log(g)`. This is Lemma 7.8.9(b) (lem.fps.Exp-Log-additive). @statement_id stmt-src-lem.fps.exp-log-additive
+-/
 theorem Log_mul (f g : PowerSeries₁ (R := K)) :
     Log (⟨f.val * g.val, by
       rw [mem_PowerSeries₁_iff, map_mul, f.property, g.property, one_mul]⟩) =
@@ -822,7 +854,8 @@ theorem Exp_isAddGroupHom : ∀ f g : PowerSeries₀ (R := K),
   intro f g
   exact Exp_add f g
 
-/-- `Exp(0) = 1`. -/
+/-- `Exp(0) = 1`. @statement_id stmt-src-lem.fps.exp-zero-log-one
+-/
 theorem Exp_zero : Exp (⟨0, PowerSeries₀.zero_mem⟩ : PowerSeries₀ (R := K)) = 
     ⟨1, PowerSeries₁.one_mem⟩ := by
   apply Subtype.ext
@@ -849,7 +882,8 @@ theorem Exp_zero : Exp (⟨0, PowerSeries₀.zero_mem⟩ : PowerSeries₀ (R := 
     · simp [hd, hn]
     · simp [zero_pow hd]
 
-/-- `Log(1) = 0`. -/
+/-- `Log(1) = 0`. @statement_id stmt-src-lem.fps.exp-zero-log-one
+-/
 theorem Log_one : Log (⟨1, PowerSeries₁.one_mem⟩ : PowerSeries₁ (R := K)) = 
     ⟨0, PowerSeries₀.zero_mem⟩ := by
   apply Subtype.ext
@@ -883,6 +917,7 @@ The proof combines:
 - `Log_Exp` and `Exp_Log`: mutual inverse property (Lemma 7.8.8)
 - `Exp_add`: Exp preserves addition→multiplication (Lemma 7.8.9(a))
 - `Log_mul`: Log preserves multiplication→addition (Lemma 7.8.9(b))
+@statement_id stmt-src-thm.fps.exp-log-group-iso
 -/
 theorem Exp_Log_groupIso : 
     -- Part 1: Exp and Log are mutual inverses
@@ -921,6 +956,7 @@ sense over any field. The name "logarithmic derivative" comes from Proposition 7
 * `loder_mul`: `loder(fg) = loder f + loder g` (Proposition 7.8.14)
 * `loder_inv`: `loder(f⁻¹) = -loder f` (Corollary 7.8.16)
 * `loder_prod`: `loder(∏ fᵢ) = ∑ loder fᵢ` (Corollary 7.8.15)
+@statement_id stmt-src-def.fps.loder.1
 -/
 noncomputable def loder (f : R⟦X⟧) : R⟦X⟧ := d⁄dX R f * f⁻¹
 
@@ -936,7 +972,8 @@ are invertible. The following lemmas establish this. -/
 This is the well-definedness statement for `loder` in Definition 7.8.12 (def.fps.loder.1).
 
 The proof: If `constantCoeff f = 1`, then `constantCoeff f` is a unit in `R`, so by
-Proposition prop.fps.invertible, `f` is invertible in `R⟦X⟧`. -/
+Proposition prop.fps.invertible, `f` is invertible in `R⟦X⟧`. @statement_id stmt-src-lem.fps.isunit-constantcoeff-one
+-/
 theorem isUnit_of_constantCoeff_eq_one {f : R⟦X⟧} (hf : constantCoeff f = 1) : IsUnit f := by
   rw [isUnit_iff_exists_inv]
   use f⁻¹
@@ -944,7 +981,8 @@ theorem isUnit_of_constantCoeff_eq_one {f : R⟦X⟧} (hf : constantCoeff f = 1)
   exact PowerSeries.mul_inv_cancel f h
 
 /-- An FPS is invertible iff its constant coefficient is a unit.
-This is a more general version of `isUnit_of_constantCoeff_eq_one`. -/
+This is a more general version of `isUnit_of_constantCoeff_eq_one`. @statement_id stmt-src-lem.fps.isunit-constantcoeff-one
+-/
 theorem isUnit_iff_constantCoeff_isUnit {f : R⟦X⟧} : IsUnit f ↔ IsUnit (constantCoeff f) := by
   constructor
   · intro h
@@ -956,24 +994,28 @@ theorem isUnit_iff_constantCoeff_isUnit {f : R⟦X⟧} : IsUnit f ↔ IsUnit (co
     exact PowerSeries.mul_inv_cancel f h'
 
 /-- For FPS with constant term 1, we have `f * f⁻¹ = 1`.
-This is a key property used in the definition of `loder`. -/
+This is a key property used in the definition of `loder`. @statement_id stmt-src-lem.fps.isunit-constantcoeff-one
+-/
 theorem mul_inv_cancel_of_constantCoeff_eq_one {f : R⟦X⟧} (hf : constantCoeff f = 1) :
     f * f⁻¹ = 1 := by
   have h : constantCoeff f ≠ 0 := by simp [hf]
   exact PowerSeries.mul_inv_cancel f h
 
-/-- For FPS with constant term 1, we have `f⁻¹ * f = 1`. -/
+/-- For FPS with constant term 1, we have `f⁻¹ * f = 1`. @statement_id stmt-src-lem.fps.isunit-constantcoeff-one
+-/
 theorem inv_mul_cancel_of_constantCoeff_eq_one {f : R⟦X⟧} (hf : constantCoeff f = 1) :
     f⁻¹ * f = 1 := by
   have h : constantCoeff f ≠ 0 := by simp [hf]
   exact PowerSeries.inv_mul_cancel f h
 
-/-- The inverse of an FPS with constant term 1 also has constant term 1. -/
+/-- The inverse of an FPS with constant term 1 also has constant term 1. @statement_id stmt-src-lem.fps.isunit-constantcoeff-one
+-/
 theorem constantCoeff_inv_of_constantCoeff_eq_one {f : R⟦X⟧} (hf : constantCoeff f = 1) :
     constantCoeff f⁻¹ = 1 := by
   simp [constantCoeff_inv, hf]
 
-/-- The series `invOnePlusX` equals `(1 + X)⁻¹`. -/
+/-- The series `invOnePlusX` equals `(1 + X)⁻¹`. @statement_id stmt-src-lem.fps.invoneplusx-eq-inv
+-/
 theorem invOnePlusX_eq_inv [Algebra ℚ R] : invOnePlusX R = (1 + X)⁻¹ := by
   have h : constantCoeff (1 + X : R⟦X⟧) ≠ 0 := by simp
   rw [eq_inv_iff_mul_eq_one h]
@@ -1026,7 +1068,8 @@ theorem invOnePlusX_eq_inv [Algebra ℚ R] : invOnePlusX R = (1 + X)⁻¹ := by
           _ = 0 := by simp
     exact h2
 
-/-- Helper lemma: if `a * b = 1`, then `(a.subst g)⁻¹ = b.subst g`. -/
+/-- Helper lemma: if `a * b = 1`, then `(a.subst g)⁻¹ = b.subst g`. @statement_id stmt-src-lem.fps.subst-inv
+-/
 theorem subst_inv_of_mul_eq_one {g a b : R⟦X⟧} (hg : HasSubst g) (hab : a * b = 1) :
     (a.subst g)⁻¹ = b.subst g := by
   have h : a.subst g * b.subst g = 1 := by
@@ -1039,7 +1082,8 @@ theorem subst_inv_of_mul_eq_one {g a b : R⟦X⟧} (hg : HasSubst g) (hab : a * 
   rw [eq_comm, MvPowerSeries.eq_inv_iff_mul_eq_one hcc, mul_comm, h]
 
 /-- The logarithmic derivative equals the derivative of the logarithm over ℚ-algebras.
-This is Proposition 7.8.13 (prop.fps.loder.log). -/
+This is Proposition 7.8.13 (prop.fps.loder.log). @statement_id stmt-src-prop.fps.loder.log
+-/
 theorem loder_eq_derivative_Log [Algebra ℚ R] {f : R⟦X⟧} (hf : constantCoeff f = 1) :
     loder f = d⁄dX R ((logbar R).subst (f - 1)) := by
   -- Need HasSubst for f - 1
@@ -1073,7 +1117,8 @@ theorem loder_eq_derivative_Log [Algebra ℚ R] {f : R⟦X⟧} (hf : constantCoe
 /-- The logarithmic derivative is additive under multiplication: `loder(fg) = loder(f) + loder(g)`.
 This is Proposition 7.8.14 (prop.fps.loder.prod).
 
-Note: This does NOT require `R` to be a ℚ-algebra. -/
+Note: This does NOT require `R` to be a ℚ-algebra. @statement_id stmt-src-prop.fps.loder.prod
+-/
 theorem loder_mul {f g : R⟦X⟧} (hf : constantCoeff f = 1) (hg : constantCoeff g = 1) :
     loder (f * g) = loder f + loder g := by
   simp only [loder_def]
@@ -1095,7 +1140,8 @@ theorem loder_mul {f g : R⟦X⟧} (hf : constantCoeff f = 1) (hg : constantCoef
 /-- The logarithmic derivative of a product of `k` FPSs.
 This is Corollary 7.8.15 (cor.fps.loder.prodk).
 
-Note: This does NOT require `R` to be a ℚ-algebra. -/
+Note: This does NOT require `R` to be a ℚ-algebra. @statement_id stmt-src-cor.fps.loder.prodk
+-/
 theorem loder_prod {ι : Type*} (s : Finset ι) (f : ι → R⟦X⟧)
     (hf : ∀ i ∈ s, constantCoeff (f i) = 1) :
     loder (∏ i ∈ s, f i) = ∑ i ∈ s, loder (f i) := by
@@ -1112,7 +1158,8 @@ theorem loder_prod {ι : Type*} (s : Finset ι) (f : ι → R⟦X⟧)
 /-- The logarithmic derivative of the inverse: `loder(f⁻¹) = -loder(f)`.
 This is Corollary 7.8.16 (cor.fps.loder.inv).
 
-Note: This does NOT require `R` to be a ℚ-algebra. -/
+Note: This does NOT require `R` to be a ℚ-algebra. @statement_id stmt-src-cor.fps.loder.inv
+-/
 theorem loder_inv {f : R⟦X⟧} (hf : constantCoeff f = 1) : loder f⁻¹ = -loder f := by
   have hf_ne : constantCoeff f ≠ 0 := by simp [hf]
   have hfinv : constantCoeff f⁻¹ = 1 := by simp [constantCoeff_inv, hf]
@@ -1122,7 +1169,8 @@ theorem loder_inv {f : R⟦X⟧} (hf : constantCoeff f = 1) : loder f⁻¹ = -lo
   rw [h2, h3] at h1
   exact eq_neg_of_add_eq_zero_right h1.symm
 
-/-- The logarithmic derivative of 1 is 0. -/
+/-- The logarithmic derivative of 1 is 0. @statement_id stmt-src-lem.fps.loder-one
+-/
 @[simp]
 theorem loder_one : loder (1 : R⟦X⟧) = 0 := by
   simp [loder_def]
@@ -1149,7 +1197,8 @@ variable {I : Type*}
 /-- A family of FPS in `K⟦X⟧₀` is summable if for each coefficient index n,
 only finitely many family members have nonzero n-th coefficient.
 
-This is the notion of summability appropriate for `K⟦X⟧₀`. -/
+This is the notion of summability appropriate for `K⟦X⟧₀`. @statement_id stmt-src-def.fps.summable-multipliable
+-/
 def SummableFPS₀ (f : I → PowerSeries₀ (R := K)) : Prop :=
   ∀ n : ℕ, {i : I | (f i).val.coeff n ≠ 0}.Finite
 
@@ -1183,7 +1232,8 @@ power series. The reason is that `finsum` returns 0 when the support is infinite
 `SummableFPS₀` only guarantees finite support for each coefficient, not for the entire family.
 
 For each coefficient n, only finitely many terms contribute (by `SummableFPS₀`), so the
-finsum `∑ᶠ i, coeff n (f i).val` is well-defined and equals a finite sum. -/
+finsum `∑ᶠ i, coeff n (f i).val` is well-defined and equals a finite sum. @statement_id stmt-src-def.fps.summable-multipliable
+-/
 noncomputable def summableFPS₀Sum (f : I → PowerSeries₀ (R := K)) (_hf : SummableFPS₀ f) :
     PowerSeries₀ (R := K) :=
   ⟨mk fun n => ∑ᶠ i, coeff n (f i).val, by
@@ -1198,7 +1248,8 @@ noncomputable def summableFPS₀Sum (f : I → PowerSeries₀ (R := K)) (_hf : S
 /-- A family of FPS in `K⟦X⟧₁` is multipliable if for each coefficient index n,
 the n-th coefficient of the product is finitely determined.
 
-This is the notion of multipliability appropriate for `K⟦X⟧₁`. -/
+This is the notion of multipliability appropriate for `K⟦X⟧₁`. @statement_id stmt-src-def.fps.summable-multipliable
+-/
 def MultipliableFPS₁ (f : I → PowerSeries₁ (R := K)) : Prop :=
   PowerSeries.Multipliable (fun i => (f i).val)
 
@@ -1220,7 +1271,8 @@ theorem MultipliableFPS₁.prod_mem (f : I → PowerSeries₁ (R := K)) (hf : Mu
   have : (coeff 0) (∏ i ∈ (∅ : Finset I), (f i).val) = 1 := by simp
   rw [PowerSeries.tprod_coeff hf h0, this]
 
-/-- The product of a multipliable family in `K⟦X⟧₁` as an element of `K⟦X⟧₁`. -/
+/-- The product of a multipliable family in `K⟦X⟧₁` as an element of `K⟦X⟧₁`. @statement_id stmt-src-def.fps.summable-multipliable
+-/
 noncomputable def multipliableFPS₁Prod (f : I → PowerSeries₁ (R := K)) (hf : MultipliableFPS₁ f) :
     PowerSeries₁ (R := K) :=
   ⟨PowerSeries.tprod (fun i => (f i).val) hf, MultipliableFPS₁.prod_mem f hf⟩
@@ -1320,7 +1372,8 @@ private lemma subst_coeff_zero_of_high_order {f g : K⟦X⟧} {n : ℕ}
 /-- If `(f_i)_{i ∈ I}` is a multipliable family in `K⟦X⟧₁`, then `(Log f_i)_{i ∈ I}` is
 a summable family in `K⟦X⟧₀`.
 
-This is part of Proposition prop.fps.Exp-Log-infprod from the source material. -/
+This is part of Proposition prop.fps.Exp-Log-infprod from the source material. @statement_id stmt-src-lem.fps.log-summable
+-/
 theorem Log_summable_of_multipliable (f : I → PowerSeries₁ (R := K))
     (hf : MultipliableFPS₁ f) :
     SummableFPS₀ (fun i => Log (f i)) := by
@@ -1456,6 +1509,7 @@ The proof strategy:
 2. Show that for multipliable families, the finite partial products converge
 3. Use continuity of Log (which follows from the coefficient-wise definition)
    to pass to the limit
+@statement_id stmt-src-prop.fps.exp-log-infprod-2
 -/
 theorem Log_tprod (f : I → PowerSeries₁ (R := K))
     (hf : MultipliableFPS₁ f)
@@ -1593,6 +1647,7 @@ private lemma expbar_subst_coeff_zero (g : K⟦X⟧) (hg : constantCoeff g = 0) 
   have hord' := expbar_subst_order g hg n hord
   exact coeff_of_lt_order n hord'
 
+/-- @statement_id stmt-src-lem.fps.exp-multipliable -/
 theorem Exp_multipliable_of_summable (g : I → PowerSeries₀ (R := K))
     (hg : SummableFPS₀ g) :
     MultipliableFPS₁ (fun i => Exp (g i)) := by
@@ -1645,7 +1700,8 @@ theorem Exp_multipliable_of_summable (g : I → PowerSeries₀ (R := K))
 
 /-- Exp converts infinite sums to infinite products.
 
-This is the infinite version of `Exp_add`. -/
+This is the infinite version of `Exp_add`. @statement_id stmt-src-prop.fps.exp-log-infsum-2
+-/
 theorem Exp_sum (g : I → PowerSeries₀ (R := K))
     (hg : SummableFPS₀ g)
     (hg_mul : MultipliableFPS₁ (fun i => Exp (g i)) := Exp_multipliable_of_summable g hg) :

@@ -137,7 +137,8 @@ private theorem bitsFromList_sum_eq (L : List ℕ) (hL : ∀ x ∈ L, x < 2) :
 end BinaryRepresentation
 
 /-- Every natural number has a binary representation.
-This is part of Theorem `thm.fps.laure.binary-rep-uniq`. -/
+This is part of Theorem `thm.fps.laure.binary-rep-uniq`. @statement_id stmt-src-thm.fps.laure.binary-rep-uniq
+-/
 theorem binaryRepresentation_exists (n : ℕ) : Nonempty (BinaryRepresentation n) := by
   let L := Nat.digits 2 n
   have hL : ∀ x ∈ L, x < 2 := fun x hx => Nat.digits_lt_base (by norm_num : 1 < 2) hx
@@ -353,7 +354,8 @@ private def BinaryRepresentation.shift {n : ℕ} (r : BinaryRepresentation n) :
     exact hdiv2.symm
 
 /-- The binary representation of a natural number is unique.
-This is Theorem `thm.fps.laure.binary-rep-uniq`. -/
+This is Theorem `thm.fps.laure.binary-rep-uniq`. @statement_id stmt-src-thm.fps.laure.binary-rep-uniq
+-/
 theorem binaryRepresentation_unique (n : ℕ) (r₁ r₂ : BinaryRepresentation n) :
     r₁.bits = r₂.bits := by
   induction n using Nat.strong_induction_on with
@@ -383,7 +385,8 @@ A balanced ternary representation uses digits from {-1, 0, 1} with base 3.
 Unlike binary representations, this can represent negative integers.
 -/
 
-/-- The set of balanced ternary digits: {-1, 0, 1} -/
+/-- The set of balanced ternary digits: {-1, 0, 1} @statement_id stmt-src-lem.fps.laure.bt-digit-type
+-/
 inductive BalancedTernaryDigit : Type
   | negOne : BalancedTernaryDigit
   | zero : BalancedTernaryDigit
@@ -392,7 +395,8 @@ inductive BalancedTernaryDigit : Type
 
 namespace BalancedTernaryDigit
 
-/-- Convert a balanced ternary digit to an integer -/
+/-- Convert a balanced ternary digit to an integer @statement_id stmt-src-lem.fps.laure.bt-digit-type
+-/
 def toInt : BalancedTernaryDigit → ℤ
   | negOne => -1
   | zero => 0
@@ -403,7 +407,8 @@ instance : Zero BalancedTernaryDigit := ⟨zero⟩
 @[simp]
 theorem toInt_zero : (0 : BalancedTernaryDigit).toInt = 0 := rfl
 
-/-- Different digits have different integer values -/
+/-- Different digits have different integer values @statement_id stmt-src-lem.fps.laure.bt-digit-type
+-/
 theorem toInt_injective : Function.Injective toInt := by
   intro a b h
   cases a <;> cases b <;> simp [toInt] at h <;> rfl
@@ -428,6 +433,7 @@ end BalancedTernaryDigit
 sequence `(b_i)_{i ∈ ℕ}` of elements in `{-1, 0, 1}` such that `n = ∑ b_i * 3^i`.
 
 This corresponds to the Definition of balanced ternary representation in `sec.gf.laure`.
+@statement_id stmt-src-def.fps.laure.balanced-tern
 -/
 structure BalancedTernaryRepresentation (n : ℤ) where
   /-- The sequence of digits -/
@@ -595,7 +601,8 @@ private theorem natAbs_lt_of_abs_lt (m n : ℤ) (h : |m| < |n|) (hn0 : n ≠ 0) 
   exact h
 
 /-- Every integer has a balanced ternary representation.
-This is part of Theorem `thm.fps.laure.balanced-tern-rep-uniq`. -/
+This is part of Theorem `thm.fps.laure.balanced-tern-rep-uniq`. @statement_id stmt-src-lem.fps.laure.bt-exists-inductive
+-/
 theorem balancedTernaryRepresentation_exists (n : ℤ) :
     Nonempty (BalancedTernaryRepresentation n) := by
   induction hn : n.natAbs using Nat.strong_induction_on generalizing n with
@@ -684,7 +691,8 @@ private lemma sum_powers_of_three_eq_zero_aux (k : ℕ) (c : ℕ → ℤ)
     | succ j => exact ih' j
 
 /-- The balanced ternary representation of an integer is unique.
-This is Theorem `thm.fps.laure.balanced-tern-rep-uniq`. -/
+This is Theorem `thm.fps.laure.balanced-tern-rep-uniq`. @statement_id stmt-src-thm.fps.laure.balanced-tern-rep-uniq
+-/
 theorem balancedTernaryRepresentation_unique (n : ℤ)
     (r₁ r₂ : BalancedTernaryRepresentation n) : r₁.digits = r₂.digits := by
   -- Get bounds on the support
@@ -778,6 +786,7 @@ Note: This is NOT a ring because multiplication is not always well-defined
 (the convolution sum may be infinite).
 
 This corresponds to Definition `def.fps.laure.double`.
+@statement_id stmt-src-def.fps.laure.double
 -/
 def DoublyInfinitePowerSeries (K : Type*) [Semiring K] := ℤ → K
 
@@ -805,9 +814,11 @@ theorem coeff_add (f g : DoublyInfinitePowerSeries K) (n : ℤ) :
 theorem coeff_smul (r : K) (f : DoublyInfinitePowerSeries K) (n : ℤ) :
     coeff (r • f) n = r * coeff f n := rfl
 
-/-- The element x^n in K[[x^±]], represented as a family -/
+/-- The element x^n in K[[x^±]], represented as a family @statement_id stmt-src-lem.fps.laure.double-single
+-/
 def single (n : ℤ) : DoublyInfinitePowerSeries K := fun m => if m = n then 1 else 0
 
+/-- @statement_id stmt-src-lem.fps.laure.double-single -/
 @[simp]
 theorem coeff_single (n m : ℤ) : coeff (single n : DoublyInfinitePowerSeries K) m =
     if m = n then 1 else 0 := rfl
@@ -832,7 +843,8 @@ theorem coeff_single_ne {n m : ℤ} (h : m ≠ n) :
     coeff (single n : DoublyInfinitePowerSeries K) m = 0 := by
   simp [coeff_single, h]
 
-/-- Scalar multiplication of single. -/
+/-- Scalar multiplication of single. @statement_id stmt-src-lem.fps.laure.double-single
+-/
 @[simp]
 theorem smul_single (r : K) (n : ℤ) :
     r • (single n : DoublyInfinitePowerSeries K) = fun m => if m = n then r else 0 := by
@@ -850,12 +862,14 @@ This formalizes the representation mentioned at the end of Definition `def.fps.l
 "we will later use the notation ∑_{n∈ℤ} a_n x^n for a family (a_n)_{n∈ℤ}".
 
 Note: This is a formal identity of families. The "sum" is well-defined because
-at each coefficient position m, only the term n = m contributes. -/
+at each coefficient position m, only the term n = m contributes. @statement_id stmt-src-lem.fps.laure.double-decomp
+-/
 theorem eq_coeff_at_position (f : DoublyInfinitePowerSeries K) (m : ℤ) :
     f m = coeff f m := rfl
 
 /-- The representation f = ∑_{n∈ℤ} (coeff f n) · x^n holds pointwise:
-at position m, f m = (coeff f m) · 1 + ∑_{n≠m} (coeff f n) · 0 = coeff f m. -/
+at position m, f m = (coeff f m) · 1 + ∑_{n≠m} (coeff f n) · 0 = coeff f m. @statement_id stmt-src-lem.fps.laure.double-decomp
+-/
 theorem coeff_eq_single_contrib (f : DoublyInfinitePowerSeries K) (m : ℤ) :
     coeff f m = coeff f m * coeff (single m : DoublyInfinitePowerSeries K) m := by
   simp
@@ -869,7 +883,8 @@ We let K((x)) be the subset of K[[x^±]] consisting of all families (a_i)_{i∈�
 such that the sequence (a_{-1}, a_{-2}, a_{-3}, ...) is essentially finite --
 i.e., such that all sufficiently low i ∈ ℤ satisfy a_i = 0.
 
-The elements of K((x)) are called Laurent series in one indeterminate x over K. -/
+The elements of K((x)) are called Laurent series in one indeterminate x over K. @statement_id stmt-src-def.fps.laure.lauser
+-/
 def IsLaurentSeries (f : DoublyInfinitePowerSeries K) : Prop :=
   ∃ N : ℤ, ∀ n : ℤ, n < N → coeff f n = 0
 
@@ -890,7 +905,8 @@ def ofLaurentSeries (f : LaurentSeries K) : DoublyInfinitePowerSeries K :=
 /-- A Mathlib LaurentSeries satisfies our IsLaurentSeries predicate.
 
 This shows that Mathlib's definition of LaurentSeries (as HahnSeries ℤ K)
-matches the textbook Definition `def.fps.laure.lauser`. -/
+matches the textbook Definition `def.fps.laure.lauser`. @statement_id stmt-src-lem.fps.laure.mathlib-agrees
+-/
 theorem isLaurentSeries_ofLaurentSeries (f : LaurentSeries K) :
     IsLaurentSeries (ofLaurentSeries f) := by
   have h := f.isPWO_support
@@ -913,7 +929,8 @@ theorem isLaurentSeries_ofLaurentSeries (f : LaurentSeries K) :
 /-- For ℤ, a set bounded below is partially well-ordered.
 
 This follows from the fact that any sequence in ℤ bounded below has a monotone
-subsequence (by Ramsey's theorem / infinite pigeonhole). -/
+subsequence (by Ramsey's theorem / infinite pigeonhole). @statement_id stmt-src-lem.fps.laure.ispwo-bddbelow
+-/
 theorem Int.isPWO_of_bddBelow {s : Set ℤ} (hs : BddBelow s) : s.IsPWO := by
   obtain ⟨N, hN⟩ := hs
   rw [Set.isPWO_iff_exists_monotone_subseq]
@@ -978,13 +995,15 @@ def toLaurentSeries (f : DoublyInfinitePowerSeries K) (hf : IsLaurentSeries f) :
   push_neg at h
   exact hn (hN n h)
 
-/-- The round-trip from LaurentSeries to DoublyInfinitePowerSeries and back gives the same series -/
+/-- The round-trip from LaurentSeries to DoublyInfinitePowerSeries and back gives the same series @statement_id stmt-src-lem.fps.laure.mathlib-agrees
+-/
 theorem toLaurentSeries_ofLaurentSeries (f : LaurentSeries K) :
     toLaurentSeries (ofLaurentSeries f) (isLaurentSeries_ofLaurentSeries f) = f := by
   ext n
   rfl
 
-/-- The round-trip from DoublyInfinitePowerSeries to LaurentSeries and back gives the same function -/
+/-- The round-trip from DoublyInfinitePowerSeries to LaurentSeries and back gives the same function @statement_id stmt-src-lem.fps.laure.mathlib-agrees
+-/
 theorem ofLaurentSeries_toLaurentSeries (f : DoublyInfinitePowerSeries K)
     (hf : IsLaurentSeries f) :
     ofLaurentSeries (toLaurentSeries f hf) = f := by
@@ -1038,7 +1057,8 @@ In Mathlib, this is `LaurentPolynomial.T 0 = 1`.
 -/
 
 /-- The unity of K[x^±] is T 0 = (δ_{i,0})_{i∈ℤ}.
-This is part of Theorem `thm.fps.laure.laupol-ring`. -/
+This is part of Theorem `thm.fps.laure.laupol-ring`. @statement_id stmt-src-def.fps.laure.laupol
+-/
 theorem laurentPolynomial_one_eq_T_zero : (1 : K[T;T⁻¹]) = LaurentPolynomial.T 0 := rfl
 
 /-- The unity of K[x^±] evaluated at index n is 1 if n = 0, else 0.
@@ -1054,30 +1074,35 @@ The element x (represented as T 1 in Mathlib) is a unit in K[x^±], with inverse
 -/
 
 /-- The element T 1 (corresponding to x) is invertible in K[T;T⁻¹].
-This is part of Theorem `thm.fps.laure.laupol-ring`. -/
+This is part of Theorem `thm.fps.laure.laupol-ring`. @statement_id stmt-src-thm.fps.laure.laupol-ring
+-/
 theorem laurentPolynomial_T_isUnit : IsUnit (LaurentPolynomial.T 1 : K[T;T⁻¹]) :=
   LaurentPolynomial.isUnit_T 1
 
 /-- More generally, T n is invertible for any n ∈ ℤ.
-This generalizes the invertibility statement in Theorem `thm.fps.laure.laupol-ring`. -/
+This generalizes the invertibility statement in Theorem `thm.fps.laure.laupol-ring`. @statement_id stmt-src-lem.fps.laure.t-inv
+-/
 theorem laurentPolynomial_T_isUnit' (n : ℤ) : IsUnit (LaurentPolynomial.T n : K[T;T⁻¹]) :=
   LaurentPolynomial.isUnit_T n
 
 /-- The inverse of T n is T (-n).
-This is the explicit inverse formula from Theorem `thm.fps.laure.laupol-ring`. -/
+This is the explicit inverse formula from Theorem `thm.fps.laure.laupol-ring`. @statement_id stmt-src-lem.fps.laure.t-inv
+-/
 @[simp]
 theorem laurentPolynomial_T_mul_T_neg (n : ℤ) :
     (LaurentPolynomial.T n : K[T;T⁻¹]) * LaurentPolynomial.T (-n) = 1 := by
   rw [← LaurentPolynomial.T_add, add_neg_cancel, LaurentPolynomial.T_zero]
 
 /-- The inverse of T n is T (-n) (multiplication in the other order).
-This is the explicit inverse formula from Theorem `thm.fps.laure.laupol-ring`. -/
+This is the explicit inverse formula from Theorem `thm.fps.laure.laupol-ring`. @statement_id stmt-src-lem.fps.laure.t-inv
+-/
 @[simp]
 theorem laurentPolynomial_T_neg_mul_T (n : ℤ) :
     (LaurentPolynomial.T (-n) : K[T;T⁻¹]) * LaurentPolynomial.T n = 1 := by
   rw [← LaurentPolynomial.T_add, neg_add_cancel, LaurentPolynomial.T_zero]
 
-/-- The unit associated to T n, with explicit inverse T (-n). -/
+/-- The unit associated to T n, with explicit inverse T (-n). @statement_id stmt-src-lem.fps.laure.t-inv
+-/
 def laurentPolynomial_T_unit (n : ℤ) : (K[T;T⁻¹])ˣ where
   val := LaurentPolynomial.T n
   inv := LaurentPolynomial.T (-n)
@@ -1092,7 +1117,8 @@ Any Laurent polynomial f = (a_i)_{i ∈ ℤ} satisfies f = ∑_{i ∈ support f}
 /-- Any Laurent polynomial f = (a_i)_{i ∈ ℤ} satisfies f = ∑_{i ∈ support f} a_i T^i.
 This is Proposition `prop.fps.laure.a=sumaixi`.
 
-Here we state this for Laurent polynomials, where the sum is finite. -/
+Here we state this for Laurent polynomials, where the sum is finite. @statement_id stmt-src-lem.fps.laure.laupol-decomp
+-/
 theorem laurentPolynomial_eq_sum (f : K[T;T⁻¹]) :
     f = f.sum fun n a => LaurentPolynomial.C a * LaurentPolynomial.T n := by
   conv_lhs => rw [← Finsupp.sum_single f]
@@ -1110,7 +1136,8 @@ These are mentioned in the textbook after Theorem `thm.fps.laure.laupol-ring`.
 -/
 
 /-- K[x^±] is isomorphic to the group algebra K[ℤ].
-This is one of the alternative characterizations mentioned after Theorem `thm.fps.laure.laupol-ring`. -/
+This is one of the alternative characterizations mentioned after Theorem `thm.fps.laure.laupol-ring`. @statement_id stmt-src-lem.fps.laure.laupol-decomp
+-/
 theorem laurentPolynomial_eq_groupAlgebra :
     K[T;T⁻¹] = AddMonoidAlgebra K ℤ := rfl
 
@@ -1166,7 +1193,8 @@ private def singleMonoidHom : Multiplicative ℤ →* LaurentSeries K where
 This embeds K[x^±] into K((x)) by mapping each Laurent polynomial to the corresponding
 Laurent series with the same coefficients.
 
-This is mentioned after Theorem `thm.fps.laure.lauser-ring`. -/
+This is mentioned after Theorem `thm.fps.laure.lauser-ring`. @statement_id stmt-src-lem.fps.laure.laupol-embed
+-/
 def laurentPolyToSeries : K[T;T⁻¹] →+* LaurentSeries K :=
   AddMonoidAlgebra.liftNCRingHom HahnSeries.C (singleMonoidHom K)
     (by
@@ -1176,7 +1204,8 @@ def laurentPolyToSeries : K[T;T⁻¹] →+* LaurentSeries K :=
       rw [HahnSeries.single_mul_single, HahnSeries.single_mul_single]
       simp [add_comm])
 
-/-- The Laurent polynomial to series map sends single n r to single n r. -/
+/-- The Laurent polynomial to series map sends single n r to single n r. @statement_id stmt-src-lem.fps.laure.laupol-embed-coeff
+-/
 theorem laurentPolyToSeries_single (n : ℤ) (r : K) :
     laurentPolyToSeries K (Finsupp.single n r) = HahnSeries.single n r := by
   unfold laurentPolyToSeries
@@ -1186,7 +1215,8 @@ theorem laurentPolyToSeries_single (n : ℤ) (r : K) :
   rw [HahnSeries.single_mul_single]
   simp only [zero_add, mul_one]
 
-/-- The Laurent polynomial to series map preserves coefficients. -/
+/-- The Laurent polynomial to series map preserves coefficients. @statement_id stmt-src-lem.fps.laure.laupol-embed-coeff
+-/
 theorem laurentPolyToSeries_coeff (f : K[T;T⁻¹]) (n : ℤ) :
     (laurentPolyToSeries K f).coeff n = f n := by
   conv_lhs => rw [← Finsupp.sum_single f]
@@ -1210,7 +1240,8 @@ theorem laurentPolyToSeries_coeff (f : K[T;T⁻¹]) (n : ℤ) :
         exact absurd hx hn
       · simp [hxn]
 
-/-- The Laurent polynomial to series map is injective. -/
+/-- The Laurent polynomial to series map is injective. @statement_id stmt-src-lem.fps.laure.laupol-embed
+-/
 theorem laurentPolyToSeries_injective : Function.Injective (laurentPolyToSeries K) := by
   intro f g hfg
   ext n
@@ -1224,7 +1255,8 @@ theorem laurentPolynomial_embeds_in_laurentSeries :
 
 /-- For any positive integer i, the power series 1 - x^i is invertible in K[[x]]
 and hence also in K((x)). This allows the computation in the proof of
-Theorem `thm.fps.laure.balanced-tern-rep-uniq`. -/
+Theorem `thm.fps.laure.balanced-tern-rep-uniq`. @statement_id stmt-src-lem.fps.laure.one-sub-xpow-unit
+-/
 theorem one_sub_X_pow_isUnit (i : ℕ) (hi : 0 < i) :
     IsUnit (1 - (PowerSeries.X : PowerSeries K)^i) := by
   rw [PowerSeries.isUnit_iff_constantCoeff]
@@ -1250,7 +1282,8 @@ variable {K : Type*} [CommRing K] [Nontrivial K]
 The product (∑ b_n x^n) · (∑ a_n x^n) = (∑ c_n x^n) where c_n = ∑_{i ∈ ℤ} a_i b_{n-i}.
 This sum is finite because the Laurent polynomial has finite support.
 
-This makes K[[x^±]] into a K[x^±]-module. -/
+This makes K[[x^±]] into a K[x^±]-module. @statement_id stmt-src-lem.fps.laure.laupol-smul
+-/
 def laurentPolynomialSmul (p : K[T;T⁻¹]) (f : DoublyInfinitePowerSeries K) :
     DoublyInfinitePowerSeries K :=
   fun n => p.sum fun i b => b * f (n - i)
@@ -1259,7 +1292,8 @@ def laurentPolynomialSmul (p : K[T;T⁻¹]) (f : DoublyInfinitePowerSeries K) :
 as a K[x^±]-module. This is the calculation showing why we cannot divide by (1-x)
 in K[[x^±]].
 
-This corresponds to the discussion at the end of the section. -/
+This corresponds to the discussion at the end of the section. @statement_id stmt-src-lem.fps.laure.torsion-example
+-/
 theorem torsion_example :
     ∃ (p : K[T;T⁻¹]) (f : DoublyInfinitePowerSeries K),
       p ≠ 0 ∧ f ≠ 0 ∧ laurentPolynomialSmul p f = 0 := by
@@ -1333,12 +1367,14 @@ A balanced ternary representation is k-bounded if all digits beyond position k a
 This is used in the rigorous proof of Theorem `thm.fps.laure.balanced-tern-rep-uniq`.
 -/
 
-/-- A balanced ternary representation is k-bounded if b_{k+1} = b_{k+2} = ... = 0. -/
+/-- A balanced ternary representation is k-bounded if b_{k+1} = b_{k+2} = ... = 0. @statement_id stmt-src-lem.fps.laure.bt-bounded-helpers
+-/
 def BalancedTernaryRepresentation.isBounded {n : ℤ} (r : BalancedTernaryRepresentation n)
     (k : ℕ) : Prop :=
   ∀ i > k, r.digits i = 0
 
-/-- For k-bounded representations, the finsum equals a finite sum over range(k+1). -/
+/-- For k-bounded representations, the finsum equals a finite sum over range(k+1). @statement_id stmt-src-lem.fps.laure.bt-bounded-helpers
+-/
 lemma bounded_sum_eq {n : ℤ} (r : BalancedTernaryRepresentation n) (k : ℕ)
     (hk : r.isBounded k) :
     n = ∑ i ∈ Finset.range (k + 1), (r.digits i).toInt * (3 : ℤ)^i := by
@@ -1358,7 +1394,8 @@ lemma bounded_sum_eq {n : ℤ} (r : BalancedTernaryRepresentation n) (k : ℕ)
 
 This is the core uniqueness argument: the difference of two balanced ternary
 representations has coefficients in {-2,...,2}, and if the sum is 0, all
-coefficients must be 0. -/
+coefficients must be 0. @statement_id stmt-src-lem.fps.laure.sum-powers-three-zero
+-/
 lemma sum_powers_of_three_eq_zero (k : ℕ) (c : ℕ → ℤ)
     (hc : ∀ i ≤ k, -2 ≤ c i ∧ c i ≤ 2)
     (hzero : ∀ i > k, c i = 0)
@@ -1425,7 +1462,8 @@ lemma sum_powers_of_three_eq_zero (k : ℕ) (c : ℕ → ℤ)
 balanced ternary representation.
 
 This is the key lemma used in the rigorous proof of
-Theorem `thm.fps.laure.balanced-tern-rep-uniq`. -/
+Theorem `thm.fps.laure.balanced-tern-rep-uniq`. @statement_id stmt-src-lem.fps.laure.kbounded-unique
+-/
 theorem balancedTernaryRepresentation_bounded_unique (k : ℕ) (n : ℤ)
     (_hn : |n| ≤ ∑ i ∈ Finset.range (k + 1), (3 : ℤ)^i)
     (r₁ r₂ : BalancedTernaryRepresentation n)
@@ -1484,13 +1522,15 @@ involves the partial products ∏_{i=0}^{k} (1 + x^{3^i} + x^{-3^i}).
 -/
 
 /-- The partial product ∏_{i=0}^{k} (1 + T^{3^i} + T^{-3^i}) in the Laurent polynomial ring.
-This is used in the proof of Theorem `thm.fps.laure.balanced-tern-rep-uniq`. -/
+This is used in the proof of Theorem `thm.fps.laure.balanced-tern-rep-uniq`. @statement_id stmt-src-lem.fps.laure.partial-product
+-/
 def balancedTernaryPartialProduct (K : Type*) [CommSemiring K] (k : ℕ) : K[T;T⁻¹] :=
   ∏ i ∈ Finset.range (k + 1),
     (1 + LaurentPolynomial.T ((3 : ℤ)^i) + LaurentPolynomial.T (-((3 : ℤ)^i)))
 
 /-- The identity 1 + x + x^{-1} = (1 - x^3) / (x(1-x)) as Laurent polynomials.
-This is used in simplifying the partial products. -/
+This is used in simplifying the partial products. @statement_id stmt-src-lem.fps.laure.one-plus-t
+-/
 theorem one_plus_T_plus_Tinv_eq (K : Type*) [CommRing K] :
     (1 + LaurentPolynomial.T 1 + LaurentPolynomial.T (-1) : K[T;T⁻¹]) *
     (LaurentPolynomial.T 1 * (1 - LaurentPolynomial.T 1)) =
@@ -1500,7 +1540,8 @@ theorem one_plus_T_plus_Tinv_eq (K : Type*) [CommRing K] :
   ring
 
 /-- The sum 3^0 + 3^1 + ... + 3^k = (3^{k+1} - 1) / 2.
-This is used in bounding the range of balanced ternary representations. -/
+This is used in bounding the range of balanced ternary representations. @statement_id stmt-src-lem.fps.laure.partial-product
+-/
 theorem geom_sum_three (k : ℕ) :
     2 * ∑ i ∈ Finset.range (k + 1), (3 : ℤ)^i = (3 : ℤ)^(k + 1) - 1 := by
   induction k with

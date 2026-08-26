@@ -33,15 +33,18 @@ New code should use this module.
 
 namespace PermFinset
 
-/-- The image of a finset under a permutation. -/
+/-- The image of a finset under a permutation. @statement_id stmt-src-def.det.imagefinset
+-/
 def imageFinset {n : ℕ} (σ : Equiv.Perm (Fin n)) (P : Finset (Fin n)) : Finset (Fin n) :=
   P.map ⟨σ, σ.injective⟩
 
-/-- The image has the same cardinality as the original set. -/
+/-- The image has the same cardinality as the original set. @statement_id stmt-src-lem.det.imagefinset-card
+-/
 theorem imageFinset_card {n : ℕ} (σ : Equiv.Perm (Fin n)) (P : Finset (Fin n)) :
     (imageFinset σ P).card = P.card := Finset.card_map _
 
-/-- The image of a complement equals the complement of the image. -/
+/-- The image of a complement equals the complement of the image. @statement_id stmt-src-lem.det.imagefinset-compl
+-/
 lemma imageFinset_compl {n : ℕ} (σ : Equiv.Perm (Fin n)) (P : Finset (Fin n)) :
     imageFinset σ Pᶜ = (imageFinset σ P)ᶜ := by
   ext x
@@ -59,7 +62,8 @@ lemma imageFinset_compl {n : ℕ} (σ : Equiv.Perm (Fin n)) (P : Finset (Fin n))
       exact ⟨σ.symm x, h, by simp⟩
     · simp
 
-/-- If σ maps P to Q (i.e., σ '' P = Q), then σ⁻¹ maps Q to P. -/
+/-- If σ maps P to Q (i.e., σ '' P = Q), then σ⁻¹ maps Q to P. @statement_id stmt-src-lem.det.imagefinset-inv
+-/
 lemma imageFinset_inv {n : ℕ} {σ : Equiv.Perm (Fin n)} {P Q : Finset (Fin n)}
     (h : imageFinset σ P = Q) : imageFinset σ⁻¹ Q = P := by
   simp only [imageFinset] at h ⊢
@@ -77,11 +81,13 @@ lemma imageFinset_inv {n : ℕ} {σ : Equiv.Perm (Fin n)} {P Q : Finset (Fin n)}
     refine ⟨σ x, ⟨x, hx, rfl⟩, ?_⟩
     exact σ.symm_apply_apply x
 
-/-- The set of permutations that map P to Q. -/
+/-- The set of permutations that map P to Q. @statement_id stmt-src-def.det.permsmapping
+-/
 def permsMapping {n : ℕ} (P Q : Finset (Fin n)) : Finset (Equiv.Perm (Fin n)) :=
   Finset.univ.filter (fun σ => imageFinset σ P = Q)
 
-/-- If |P| ≠ |Q|, no permutation maps P to Q. -/
+/-- If |P| ≠ |Q|, no permutation maps P to Q. @statement_id stmt-src-lem.det.permsmapping-empty
+-/
 theorem permsMapping_empty_of_card_ne {n : ℕ} (P Q : Finset (Fin n))
     (h : P.card ≠ Q.card) : permsMapping P Q = ∅ := by
   simp only [permsMapping, Finset.filter_eq_empty_iff, Finset.mem_univ, true_implies]
@@ -147,7 +153,8 @@ variable {R : Type*} [CommRing R]
     - `CauchyBinet.minor` (same signature and semantics)
     - `Determinants.submatrixDet` in DesnanotJacobi.lean (uses `finsetToFin` instead of
       `orderEmbOfFin`, but these are equivalent)
-    - `CauchyBinet.submatrixDet` when |P| = |Q| (that version requires a proof argument) -/
+    - `CauchyBinet.submatrixDet` when |P| = |Q| (that version requires a proof argument) @statement_id stmt-src-def.det.submatrixdet
+-/
 noncomputable def submatrixDet {n : ℕ} (A : Matrix (Fin n) (Fin n) R)
     (P Q : Finset (Fin n)) : R :=
   if h : P.card = Q.card then
@@ -155,19 +162,22 @@ noncomputable def submatrixDet {n : ℕ} (A : Matrix (Fin n) (Fin n) R)
   else 0
 
 /-- When |P| = |Q|, the submatrix determinant equals the actual determinant.
-    This lemma bridges the "total" definition with the "proof-requiring" style. -/
+    This lemma bridges the "total" definition with the "proof-requiring" style. @statement_id stmt-src-lem.det.submatrixdet-card-eq
+-/
 theorem submatrixDet_of_card_eq {n : ℕ} (A : Matrix (Fin n) (Fin n) R)
     (P Q : Finset (Fin n)) (h : P.card = Q.card) :
     submatrixDet A P Q = (A.submatrix (P.orderEmbOfFin rfl) (Q.orderEmbOfFin (h ▸ rfl))).det := by
   simp only [submatrixDet, h, ↓reduceDIte]
 
-/-- When |P| ≠ |Q|, the submatrix determinant is 0. -/
+/-- When |P| ≠ |Q|, the submatrix determinant is 0. @statement_id stmt-src-lem.det.submatrixdet-card-ne
+-/
 theorem submatrixDet_of_card_ne {n : ℕ} (A : Matrix (Fin n) (Fin n) R)
     (P Q : Finset (Fin n)) (h : P.card ≠ Q.card) :
     submatrixDet A P Q = 0 := by
   simp only [submatrixDet, h, ↓reduceDIte]
 
-/-- The submatrix determinant of the empty sets is 1. -/
+/-- The submatrix determinant of the empty sets is 1. @statement_id stmt-src-lem.det.submatrixdet-empty
+-/
 @[simp]
 theorem submatrixDet_empty {n : ℕ} (A : Matrix (Fin n) (Fin n) R) :
     submatrixDet A ∅ ∅ = 1 := by

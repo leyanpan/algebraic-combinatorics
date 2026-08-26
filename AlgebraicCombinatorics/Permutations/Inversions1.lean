@@ -85,6 +85,7 @@ An inversion of a permutation σ ∈ S_n is a pair (i, j) of elements of [n]
 such that i < j and σ(i) > σ(j).
 
 See Definition 1.3.1 (def.perm.invs) in the source.
+@statement_id stmt-src-def.perm.invs
 -/
 def inv (σ : Equiv.Perm (Fin n)) : Finset (Fin n × Fin n) :=
   Finset.filter (fun p => p.1 < p.2 ∧ σ p.1 > σ p.2) Finset.univ
@@ -94,6 +95,7 @@ The length (or Coxeter length) of a permutation σ is the number of inversions o
 This is denoted ℓ(σ) in the source.
 
 See Definition 1.3.1 (def.perm.invs) part (b) in the source.
+@statement_id stmt-src-def.perm.invs
 -/
 def invCount (σ : Equiv.Perm (Fin n)) : ℕ :=
   (inv σ).card
@@ -204,6 +206,7 @@ theorem invCount_eq_zero_iff (σ : Equiv.Perm (Fin n)) : invCount σ = 0 ↔ σ 
 The identity permutation has no inversions.
 
 The identity preserves order, so there cannot be a pair (i, j) with i < j and 1(i) > 1(j).
+@statement_id stmt-src-lem.perm.inv_one
 -/
 @[simp]
 theorem inv_one : inv (1 : Equiv.Perm (Fin n)) = ∅ := by
@@ -216,6 +219,7 @@ theorem inv_one : inv (1 : Equiv.Perm (Fin n)) = ∅ := by
 The identity permutation has length 0.
 
 This follows directly from `inv_one`: the identity has no inversions.
+@statement_id stmt-src-lem.perm.inv_one
 -/
 @[simp]
 theorem invCount_one : invCount (1 : Equiv.Perm (Fin n)) = 0 := by
@@ -227,6 +231,7 @@ The inversion count is preserved under taking inverses.
 For a permutation σ, the pair (i, j) with i < j is an inversion of σ iff σ(i) > σ(j).
 For σ⁻¹, the pair (a, b) with a < b is an inversion iff σ⁻¹(a) > σ⁻¹(b).
 The map (a, b) ↦ (σ⁻¹(b), σ⁻¹(a)) gives a bijection between inversions of σ⁻¹ and σ.
+@statement_id stmt-src-lem.perm.invcount_inv
 -/
 theorem invCount_inv (σ : Equiv.Perm (Fin n)) : invCount σ⁻¹ = invCount σ := by
   unfold invCount
@@ -255,7 +260,8 @@ theorem invCount_inv (σ : Equiv.Perm (Fin n)) : invCount σ⁻¹ = invCount σ 
     simp
 
 /-- The inversion count of a product is bounded by the sum of inversion counts.
-    This is not an equality in general (the triangle inequality for inversions). -/
+    This is not an equality in general (the triangle inequality for inversions). @statement_id stmt-src-lem.perm.invcount_mul_le
+-/
 theorem invCount_mul_le (σ τ : Equiv.Perm (Fin n)) :
     invCount (σ * τ) ≤ invCount σ + invCount τ := by
   -- An inversion (i, j) of σ * τ means i < j and (σ * τ)(i) > (σ * τ)(j)
@@ -324,6 +330,7 @@ The longest element w₀ ∈ S_n is the permutation with OLN n(n-1)(n-2)...21,
 i.e., the reversal permutation.
 
 Note: This is equivalent to `Fin.revPerm` from Mathlib. See `longestElement_eq_revPerm`.
+@statement_id stmt-src-lem.perm.longestelement
 -/
 def longestElement (n : ℕ) : Equiv.Perm (Fin n) :=
   ⟨fun i => ⟨n - 1 - i.val, by omega⟩,
@@ -333,6 +340,7 @@ def longestElement (n : ℕ) : Equiv.Perm (Fin n) :=
 
 /--
 The longest element is equal to `Fin.revPerm` from Mathlib.
+@statement_id stmt-src-lem.perm.longestelement_eq_revperm
 -/
 theorem longestElement_eq_revPerm : longestElement n = Fin.revPerm := by
   ext i
@@ -342,6 +350,7 @@ theorem longestElement_eq_revPerm : longestElement n = Fin.revPerm := by
 /--
 The set of inversions of the longest element w₀ is exactly the set of all pairs (i, j)
 with i < j. That is, every pair is an inversion.
+@statement_id stmt-src-lem.perm.inv_longestelement
 -/
 theorem inv_longestElement :
     inv (longestElement n) = Finset.filter (fun p : Fin n × Fin n => p.1 < p.2) Finset.univ := by
@@ -2478,6 +2487,7 @@ The non-inversions of a permutation σ: pairs (i, j) with i < j and σ i < σ j.
 
 This is the complement of `inv σ` within the set of ordered pairs.
 The non-inversions are exactly the pairs where σ preserves the order.
+@statement_id stmt-src-def.perm.noninv
 -/
 def nonInv (σ : Equiv.Perm (Fin n)) : Finset (Fin n × Fin n) :=
   Finset.filter (fun p => p.1 < p.2 ∧ σ p.1 < σ p.2) Finset.univ
@@ -2603,6 +2613,7 @@ The inversion count of `w₀ * σ` equals the number of non-inversions of `σ`.
 
 This expresses a fundamental duality: multiplying by the longest element w₀
 swaps inversions and non-inversions.
+@statement_id stmt-src-lem.perm.invcount_longestelement_mul
 -/
 theorem invCount_longestElement_mul (σ : Equiv.Perm (Fin n)) :
     invCount (longestElement n * σ) = (nonInv σ).card := by
@@ -2615,6 +2626,7 @@ The inversion count of `w₀ * σ` equals `n choose 2` minus the inversion count
 
 This shows that multiplication by the longest element w₀ "complements" the length:
 if σ has k inversions, then w₀ * σ has (n choose 2) - k inversions.
+@statement_id stmt-src-lem.perm.invcount_longestelement_mul
 -/
 @[simp]
 theorem invCount_longestElement_mul' (σ : Equiv.Perm (Fin n)) :
@@ -2627,6 +2639,7 @@ theorem invCount_longestElement_mul' (σ : Equiv.Perm (Fin n)) :
 The longest element w₀ is an involution: w₀ * w₀ = 1.
 
 This follows from the fact that w₀ = Fin.revPerm and revPerm is an involution.
+@statement_id stmt-src-lem.perm.longestelement
 -/
 @[simp]
 theorem longestElement_mul_self : longestElement n * longestElement n = 1 := by
@@ -2639,6 +2652,7 @@ theorem longestElement_mul_self : longestElement n * longestElement n = 1 := by
 The inverse of the longest element is itself: w₀⁻¹ = w₀.
 
 This follows from `longestElement_mul_self`.
+@statement_id stmt-src-lem.perm.longestelement
 -/
 @[simp]
 theorem longestElement_inv : (longestElement n)⁻¹ = longestElement n := by
@@ -2650,6 +2664,7 @@ theorem longestElement_inv : (longestElement n)⁻¹ = longestElement n := by
 Explicit computation of the longest element: w₀(i) = n - 1 - i.
 
 This shows that w₀ reverses the order of elements.
+@statement_id stmt-src-lem.perm.longestelement
 -/
 @[simp]
 theorem longestElement_apply (i : Fin n) : longestElement n i = ⟨n - 1 - i.val, by omega⟩ := by
@@ -2660,6 +2675,7 @@ The number of σ ∈ S_n with ℓ(σ) = k equals the number with ℓ(σ) = (n ch
 This is the symmetry of the length distribution.
 
 See Proposition 1.3.3 (prop.perm.lengths-k-small-k) part (f) in the source.
+@statement_id stmt-src-prop.perm.lengths-k-small-k
 -/
 theorem card_invCount_symm (k : ℤ) :
     (Finset.univ.filter (fun σ : Equiv.Perm (Fin n) => (invCount σ : ℤ) = k)).card =
@@ -2778,6 +2794,7 @@ This is the canonical definition using a function type `Fin n → ℕ`.
 For the list representation, use `lehmerCode_toList`.
 
 See Definition 1.3.5 (def.perm.lehmer1) part (e) in the source.
+@statement_id stmt-src-def.perm.lehmer1
 -/
 def lehmerCode (σ : Equiv.Perm (Fin n)) : Fin n → ℕ :=
   fun i => lehmerEntry σ i
@@ -2811,6 +2828,7 @@ The length of σ equals the sum of its Lehmer code entries:
 ℓ(σ) = ℓ_1(σ) + ℓ_2(σ) + ... + ℓ_n(σ).
 
 See Proposition 1.3.6 (prop.perm.lehmer.l) in the source.
+@statement_id stmt-src-prop.perm.lehmer.l
 -/
 theorem invCount_eq_sum_lehmerCode (σ : Equiv.Perm (Fin n)) :
     invCount σ = ∑ i : Fin n, lehmerEntry σ i := by
@@ -2880,6 +2898,7 @@ def lehmerCodeSet (n : ℕ) : Set (Fin n → ℕ) :=
 
 /--
 The Lehmer code of any permutation lies in H_n.
+@statement_id stmt-src-def.perm.lehmer1
 -/
 theorem Perm.lehmerCode_mem_lehmerCodeSet {n : ℕ} (σ : Equiv.Perm (Fin n)) :
     Perm.lehmerCode σ ∈ lehmerCodeSet n := by
@@ -3044,6 +3063,7 @@ private lemma eq_of_lehmerEntry_eq_and_prefix_eq {n : ℕ} (σ τ : Equiv.Perm (
 The Lehmer code map L : S_n → H_n is injective.
 
 See Theorem 1.3.7 (thm.perm.lehmer.bij) in the source.
+@statement_id stmt-src-thm.perm.lehmer.bij
 -/
 theorem Perm.lehmerCode_injective (n : ℕ) :
     Function.Injective (fun σ : Equiv.Perm (Fin n) => Perm.lehmerCode σ) := by
@@ -3063,6 +3083,7 @@ theorem Perm.lehmerCode_injective (n : ℕ) :
 The Lehmer code map L : S_n → H_n is a bijection.
 
 See Theorem 1.3.7 (thm.perm.lehmer.bij) in the source.
+@statement_id stmt-src-thm.perm.lehmer.bij
 -/
 theorem Perm.lehmerCode_bijective (n : ℕ) :
     Function.Bijective (fun σ : Equiv.Perm (Fin n) =>
@@ -3113,6 +3134,7 @@ theorem lexLt_eq_piLex {n : ℕ} (a b : Fin n → ℤ) :
 The lexicographic order is irreflexive: no tuple is lexicographically smaller than itself.
 
 This is part of Definition 1.3.8 (def.perm.lehmer.lex-ord): `<_lex` is a strict order.
+@statement_id stmt-src-def.perm.lehmer.lex-ord
 -/
 theorem lexLt_irrefl {n : ℕ} (a : Fin n → ℤ) : ¬lexLt a a := by
   intro ⟨k, _, hk⟩
@@ -3122,6 +3144,7 @@ theorem lexLt_irrefl {n : ℕ} (a : Fin n → ℤ) : ¬lexLt a a := by
 The lexicographic order is transitive.
 
 This is part of Definition 1.3.8 (def.perm.lehmer.lex-ord): `<_lex` is a strict order.
+@statement_id stmt-src-def.perm.lehmer.lex-ord
 -/
 theorem lexLt_trans {n : ℕ} {a b c : Fin n → ℤ} (hab : lexLt a b) (hbc : lexLt b c) :
     lexLt a c := by
@@ -3158,6 +3181,7 @@ theorem lexLt_trans {n : ℕ} {a b c : Fin n → ℤ} (hab : lexLt a b) (hbc : l
 The lexicographic order is asymmetric: if a <_lex b, then not b <_lex a.
 
 This is part of Definition 1.3.8 (def.perm.lehmer.lex-ord): `<_lex` is a strict order.
+@statement_id stmt-src-def.perm.lehmer.lex-ord
 -/
 theorem lexLt_asymm {n : ℕ} {a b : Fin n → ℤ} (hab : lexLt a b) : ¬lexLt b a := by
   intro hba
@@ -3168,6 +3192,7 @@ theorem lexLt_asymm {n : ℕ} {a b : Fin n → ℤ} (hab : lexLt a b) : ¬lexLt 
 If a and b are two distinct n-tuples of integers, then either a <_lex b or b <_lex a.
 
 See Proposition 1.3.9 (prop.perm.lehmer.lex-ord.total) in the source.
+@statement_id stmt-src-prop.perm.lehmer.lex-ord.total
 -/
 theorem lexLt_trichotomous {n : ℕ} (a b : Fin n → ℤ) (hab : a ≠ b) :
     lexLt a b ∨ lexLt b a := by
@@ -3194,6 +3219,7 @@ for any a, b, exactly one of `a = b`, `lexLt a b`, or `lexLt b a` holds.
 
 This completes the proof that `<_lex` defines a strict total order on ℤⁿ.
 See Definition 1.3.8 (def.perm.lehmer.lex-ord) in the source.
+@statement_id stmt-src-def.perm.lehmer.lex-ord
 -/
 theorem lexLt_strictTotalOrder {n : ℕ} (a b : Fin n → ℤ) :
     (a = b ∧ ¬lexLt a b ∧ ¬lexLt b a) ∨
@@ -3214,7 +3240,8 @@ theorem lexLt_strictTotalOrder {n : ℕ} (a b : Fin n → ℤ) :
 This is the number of elements smaller than σ(i) that haven't been "used" yet
 (i.e., are not in the image of positions before i).
 
-See the proof of Theorem 1.3.7 (thm.perm.lehmer.bij) in the source. -/
+See the proof of Theorem 1.3.7 (thm.perm.lehmer.bij) in the source. @statement_id stmt-src-lem.perm.lehmerentry_eq_card_filter
+-/
 lemma Perm.lehmerEntry_eq_card_filter {n : ℕ} (σ : Equiv.Perm (Fin n)) (i : Fin n) :
     Perm.lehmerEntry σ i =
     (Finset.filter (fun v : Fin n => v < σ i ∧ v ∉ Finset.image σ (Finset.filter (· < i) Finset.univ))
@@ -3360,6 +3387,7 @@ The proof uses the alternative characterization of Lehmer entries:
 If σ and τ agree on positions below k and σ(k) < τ(k), then:
 - For i < k: ℓ_i(σ) = ℓ_i(τ) (since the images below i are equal and σ(i) = τ(i))
 - At k: ℓ_k(σ) < ℓ_k(τ) (since σ(k) is available for τ but not for σ)
+@statement_id stmt-src-prop.perm.lehmer.lex
 -/
 theorem Perm.lehmerCode_preserves_lexLt {n : ℕ} (σ τ : Equiv.Perm (Fin n))
     (h : lexLt (fun i => (σ i).val) (fun i => (τ i).val)) :
@@ -3397,7 +3425,8 @@ theorem Perm.lehmerCode_preserves_lexLt {n : ℕ} (σ τ : Equiv.Perm (Fin n))
 
 /-! ### Generating function for length -/
 
-/-- Helper lemma: Lehmer code entry is strictly less than n - i. -/
+/-- Helper lemma: Lehmer code entry is strictly less than n - i. @statement_id stmt-src-lem.perm.lehmerentry_lt
+-/
 theorem Perm.lehmerEntry_lt {n : ℕ} (σ : Equiv.Perm (Fin n)) (i : Fin n) :
     Perm.lehmerEntry σ i < n - i.val := by
   have h := Perm.lehmerEntry_le σ i
@@ -3460,6 +3489,7 @@ The generating function for permutation lengths:
 This equals the product (1+x)(1+x+x²)...(1+x+...+x^{n-1}).
 
 See Proposition 1.3.4 (prop.perm.length.gf) in the source.
+@statement_id stmt-src-prop.perm.length.gf
 -/
 theorem length_generating_function (n : ℕ) (x : ℕ) :
     ∑ σ : Equiv.Perm (Fin n), x ^ Perm.invCount σ =

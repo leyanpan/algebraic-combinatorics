@@ -72,11 +72,13 @@ The condition `[x⁰]g = 0` implies `HasSubst g` via `HasSubst.of_constantCoeff_
 
 /-- **Definition 7.3.1** (def.fps.subs)
 The composition/substitution f[g] of power series is defined when g has constant term 0.
-This is the Mathlib `PowerSeries.subst` function. -/
+This is the Mathlib `PowerSeries.subst` function. @statement_id stmt-src-def.fps.subs
+-/
 noncomputable def fps_comp (f g : K⟦X⟧) (_hg : constantCoeff g = 0) : K⟦X⟧ :=
   PowerSeries.subst g f
 
-/-- The composition f[g] equals the Mathlib substitution. -/
+/-- The composition f[g] equals the Mathlib substitution. @statement_id stmt-src-lem.fps.subs.eq-subst
+-/
 theorem fps_comp_eq_subst (f g : K⟦X⟧) (hg : constantCoeff g = 0) :
     fps_comp f g hg = PowerSeries.subst g f := rfl
 
@@ -84,7 +86,8 @@ theorem fps_comp_eq_subst (f g : K⟦X⟧) (hg : constantCoeff g = 0) :
 The n-th coefficient of f[g] is the (finitely supported) sum ∑_{d∈ℕ} fₐ · [xⁿ](g^d).
 
 This is the explicit formula from Definition 7.3.1: f[g] = ∑_{n∈ℕ} fₙ gⁿ,
-expressed at the coefficient level. -/
+expressed at the coefficient level. @statement_id stmt-src-def.fps.subs
+-/
 theorem fps_comp_coeff (f g : K⟦X⟧) (hg : constantCoeff g = 0) (n : ℕ) :
     coeff n (PowerSeries.subst g f) = finsum (fun d ↦ coeff d f * coeff n (g ^ d)) := by
   have ha := HasSubst.of_constantCoeff_zero' hg
@@ -102,7 +105,8 @@ Proposition 7.3.3 (prop.fps.subs.wd): Let f and g be two FPSs with [x⁰]g = 0.
 /-- **Proposition 7.3.3(a)** (prop.fps.subs.wd)
 For each n∈ℕ, the first n coefficients of the FPS g^n are 0 when g has constant term 0.
 
-This follows from g = x·h for some h, so g^n = x^n · h^n. -/
+This follows from g = x·h for some h, so g^n = x^n · h^n. @statement_id stmt-src-prop.fps.subs.wd
+-/
 theorem fps_subs_wd_firstCoeffs (g : K⟦X⟧) (hg : constantCoeff g = 0) (n : ℕ) (k : ℕ) (hk : k < n) :
     coeff k (g ^ n) = 0 := by
   have h_order : (n : ℕ∞) ≤ (g ^ n).order := le_order_pow_of_constantCoeff_eq_zero n hg
@@ -110,7 +114,8 @@ theorem fps_subs_wd_firstCoeffs (g : K⟦X⟧) (hg : constantCoeff g = 0) (n : �
 
 /-- **Definition 7.3.1** (def.fps.subs) - Alternative coefficient formula
 For any fixed n, the sum ∑_{d∈ℕ} fₐ · [xⁿ](g^d) is actually finite,
-since [xⁿ](g^d) = 0 for d > n when g has constant term 0. -/
+since [xⁿ](g^d) = 0 for d > n when g has constant term 0. @statement_id stmt-src-def.fps.subs
+-/
 theorem fps_comp_coeff_finite (f g : K⟦X⟧) (hg : constantCoeff g = 0) (n : ℕ) :
     coeff n (PowerSeries.subst g f) = ∑ d ∈ Finset.range (n + 1), coeff d f * coeff n (g ^ d) := by
   rw [fps_comp_coeff f g hg n]
@@ -129,13 +134,15 @@ theorem fps_comp_coeff_finite (f g : K⟦X⟧) (hg : constantCoeff g = 0) (n : �
 The family (fₙ gⁿ)_{n∈ℕ} is summable, i.e., for each coefficient position m,
 only finitely many terms contribute.
 
-In Mathlib, this is built into the definition of `PowerSeries.subst` via `HasSubst`. -/
+In Mathlib, this is built into the definition of `PowerSeries.subst` via `HasSubst`. @statement_id stmt-src-prop.fps.subs.wd
+-/
 theorem fps_subs_wd_summable (_f g : K⟦X⟧) (hg : constantCoeff g = 0) :
     HasSubst g :=
   HasSubst.of_constantCoeff_zero' hg
 
 /-- **Proposition 7.3.3(c)** (prop.fps.subs.wd)
-The constant coefficient of f[g] equals f₀. -/
+The constant coefficient of f[g] equals f₀. @statement_id stmt-src-prop.fps.subs.wd
+-/
 theorem fps_subs_wd_constCoeff (f g : K⟦X⟧) (hg : constantCoeff g = 0) :
     constantCoeff (PowerSeries.subst g f) = constantCoeff f := by
   have ha := HasSubst.of_constantCoeff_zero' hg
@@ -151,14 +158,16 @@ theorem fps_subs_wd_constCoeff (f g : K⟦X⟧) (hg : constantCoeff g = 0) :
     have h2 : MvPowerSeries.constantCoeff g = (0 : K) := hg
     simp only [h1, h2, zero_pow hd, mul_zero]
 
-/-- Substituting into 0 gives 0. -/
+/-- Substituting into 0 gives 0. @statement_id stmt-src-lem.fps.subs.zero
+-/
 @[simp] lemma subst_zero (g : K⟦X⟧) (hg : constantCoeff g = 0) :
     PowerSeries.subst g (0 : K⟦X⟧) = 0 := by
   have ha := HasSubst.of_constantCoeff_zero' hg
   rw [← coe_substAlgHom ha]
   simp
 
-/-- Substituting into 1 gives 1. -/
+/-- Substituting into 1 gives 1. @statement_id stmt-src-lem.fps.subs.one
+-/
 @[simp] lemma subst_one (g : K⟦X⟧) (hg : constantCoeff g = 0) :
     PowerSeries.subst g (1 : K⟦X⟧) = 1 := by
   have ha := HasSubst.of_constantCoeff_zero' hg
@@ -172,7 +181,8 @@ If the first k coefficients of f are 0, then the first k coefficients of f ∘ g
 -/
 
 /-- **Lemma 7.3.5** (lem.fps.fg-coeffs-0)
-If the first k coefficients of f are 0, then the first k coefficients of f ∘ g are 0. -/
+If the first k coefficients of f are 0, then the first k coefficients of f ∘ g are 0. @statement_id stmt-src-lem.fps.fg-coeffs-0
+-/
 theorem fps_fg_coeffs_zero (f g : K⟦X⟧) (hg : constantCoeff g = 0)
     (k : ℕ) (hf : ∀ m < k, coeff m f = 0) :
     ∀ m < k, coeff m (PowerSeries.subst g f) = 0 := by
@@ -199,13 +209,15 @@ Proposition 7.3.4 (prop.fps.subs.rules): Composition of FPSs satisfies expected 
 -/
 
 /-- **Proposition 7.3.4(a)** (prop.fps.subs.rules)
-(f₁ + f₂) ∘ g = f₁ ∘ g + f₂ ∘ g -/
+(f₁ + f₂) ∘ g = f₁ ∘ g + f₂ ∘ g @statement_id stmt-src-prop.fps.subs.rules
+-/
 theorem fps_subs_add (f₁ f₂ g : K⟦X⟧) (hg : constantCoeff g = 0) :
     PowerSeries.subst g (f₁ + f₂) = PowerSeries.subst g f₁ + PowerSeries.subst g f₂ :=
   subst_add (HasSubst.of_constantCoeff_zero' hg) f₁ f₂
 
 /-- **Proposition 7.3.4(b)** (prop.fps.subs.rules)
-(f₁ · f₂) ∘ g = (f₁ ∘ g) · (f₂ ∘ g) -/
+(f₁ · f₂) ∘ g = (f₁ ∘ g) · (f₂ ∘ g) @statement_id stmt-src-prop.fps.subs.rules
+-/
 theorem fps_subs_mul (f₁ f₂ g : K⟦X⟧) (hg : constantCoeff g = 0) :
     PowerSeries.subst g (f₁ * f₂) = PowerSeries.subst g f₁ * PowerSeries.subst g f₂ :=
   subst_mul (HasSubst.of_constantCoeff_zero' hg) f₁ f₂
@@ -217,7 +229,8 @@ Note: Division of power series requires working over a field. We state this
 for the case where K is a field and f₂ has nonzero constant coefficient.
 
 In the source, this is stated as: if f₂ is invertible (i.e., has nonzero constant term),
-then f₂ ∘ g is automatically invertible and the division rule holds. -/
+then f₂ ∘ g is automatically invertible and the division rule holds. @statement_id stmt-src-prop.fps.subs.rules
+-/
 theorem fps_subs_div {K : Type*} [Field K] (f₁ f₂ g : K⟦X⟧) (hg : constantCoeff g = 0)
     (hf₂ : constantCoeff f₂ ≠ 0) :
     PowerSeries.subst g f₁ * (PowerSeries.subst g f₂)⁻¹ =
@@ -248,7 +261,8 @@ theorem fps_subs_div {K : Type*} [Field K] (f₁ f₂ g : K⟦X⟧) (hg : consta
   exact h3
 
 /-- **Proposition 7.3.4(d)** (prop.fps.subs.rules)
-f^k ∘ g = (f ∘ g)^k -/
+f^k ∘ g = (f ∘ g)^k @statement_id stmt-src-prop.fps.subs.rules
+-/
 theorem fps_subs_pow (f g : K⟦X⟧) (hg : constantCoeff g = 0) (k : ℕ) :
     PowerSeries.subst g (f ^ k) = (PowerSeries.subst g f) ^ k :=
   subst_pow (HasSubst.of_constantCoeff_zero' hg) f k
@@ -256,7 +270,8 @@ theorem fps_subs_pow (f g : K⟦X⟧) (hg : constantCoeff g = 0) (k : ℕ) :
 /-- **Proposition 7.3.4(e)** (prop.fps.subs.rules)
 (f ∘ g) ∘ h = f ∘ (g ∘ h), and [x⁰](g ∘ h) = 0.
 
-Part 1: The constant coefficient of g ∘ h is 0. -/
+Part 1: The constant coefficient of g ∘ h is 0. @statement_id stmt-src-prop.fps.subs.rules
+-/
 theorem fps_subs_assoc_constCoeff (g h : K⟦X⟧) (hg : constantCoeff g = 0) (hh : constantCoeff h = 0) :
     constantCoeff (PowerSeries.subst h g) = 0 := by
   rw [fps_subs_wd_constCoeff g h hh, hg]
@@ -264,7 +279,8 @@ theorem fps_subs_assoc_constCoeff (g h : K⟦X⟧) (hg : constantCoeff g = 0) (h
 /-- **Proposition 7.3.4(e)** (prop.fps.subs.rules)
 (f ∘ g) ∘ h = f ∘ (g ∘ h)
 
-Part 2: Associativity of composition. -/
+Part 2: Associativity of composition. @statement_id stmt-src-prop.fps.subs.rules
+-/
 theorem fps_subs_assoc (f g h : K⟦X⟧) (hg : constantCoeff g = 0) (hh : constantCoeff h = 0) :
     PowerSeries.subst h (PowerSeries.subst g f) =
     PowerSeries.subst (PowerSeries.subst h g) f := by
@@ -273,7 +289,8 @@ theorem fps_subs_assoc (f g h : K⟦X⟧) (hg : constantCoeff g = 0) (hh : const
   exact subst_comp_subst_apply ha_g ha_h f
 
 /-- **Proposition 7.3.4(f)** (prop.fps.subs.rules)
-a ∘ g = a for any constant a ∈ K. -/
+a ∘ g = a for any constant a ∈ K. @statement_id stmt-src-prop.fps.subs.rules
+-/
 theorem fps_subs_const (a : K) (g : K⟦X⟧) (hg : constantCoeff g = 0) :
     PowerSeries.subst g (C a) = C a := by
   have ha := HasSubst.of_constantCoeff_zero' hg
@@ -281,7 +298,8 @@ theorem fps_subs_const (a : K) (g : K⟦X⟧) (hg : constantCoeff g = 0) :
   exact (substAlgHom ha).commutes a
 
 /-- **Proposition 7.3.4(g)** (prop.fps.subs.rules)
-X ∘ g = g -/
+X ∘ g = g @statement_id stmt-src-prop.fps.subs.rules
+-/
 theorem fps_subs_X_left (g : K⟦X⟧) (hg : constantCoeff g = 0) :
     PowerSeries.subst g (X : K⟦X⟧) = g :=
   subst_X (HasSubst.of_constantCoeff_zero' hg)
@@ -292,7 +310,8 @@ theorem fps_subs_X_left (g : K⟦X⟧) (hg : constantCoeff g = 0) :
   fps_subs_X_left g hg
 
 /-- **Proposition 7.3.4(g)** (prop.fps.subs.rules)
-g ∘ X = g -/
+g ∘ X = g @statement_id stmt-src-prop.fps.subs.rules
+-/
 theorem fps_subs_X_right (g : K⟦X⟧) :
     PowerSeries.subst X g = g := by
   have ha : HasSubst (X : K⟦X⟧) := HasSubst.X'
@@ -303,7 +322,8 @@ theorem fps_subs_X_right (g : K⟦X⟧) :
   simp
 
 /-- **Proposition 7.3.4(h)** (prop.fps.subs.rules) - Finite sum version
-For a finite sum (∑ᵢ∈s fᵢ), we have (∑ᵢ∈s fᵢ) ∘ g = ∑ᵢ∈s (fᵢ ∘ g). -/
+For a finite sum (∑ᵢ∈s fᵢ), we have (∑ᵢ∈s fᵢ) ∘ g = ∑ᵢ∈s (fᵢ ∘ g). @statement_id stmt-src-prop.fps.subs.rules
+-/
 theorem fps_subs_sum {ι : Type*} (s : Finset ι) (f : ι → K⟦X⟧) (g : K⟦X⟧)
     (hg : constantCoeff g = 0) :
     PowerSeries.subst g (∑ i ∈ s, f i) = ∑ i ∈ s, PowerSeries.subst g (f i) := by
@@ -326,7 +346,8 @@ then (fᵢ ∘ g)_{i∈I} is also summable.
 
 The key insight is that [x^n](fᵢ ∘ g) only depends on [x^0]fᵢ, ..., [x^n]fᵢ.
 If all these are 0, then [x^n](fᵢ ∘ g) = 0. So the set of i with
-[x^n](fᵢ ∘ g) ≠ 0 is contained in the finite union ⋃_{k≤n} {i | [x^k]fᵢ ≠ 0}. -/
+[x^n](fᵢ ∘ g) ≠ 0 is contained in the finite union ⋃_{k≤n} {i | [x^k]fᵢ ≠ 0}. @statement_id stmt-src-prop.fps.subs.rules
+-/
 theorem fps_subs_summable {ι : Type*} (f : ι → K⟦X⟧) (g : K⟦X⟧)
     (hg : constantCoeff g = 0) (hf : SummableFPS f) :
     SummableFPS (fun i => PowerSeries.subst g (f i)) := by
@@ -369,7 +390,8 @@ For a summable family (fᵢ)_{i∈I}, we have (∑ᵢ fᵢ) ∘ g = ∑ᵢ (fᵢ
 
 This is the full infinite sum version of the substitution rule. The proof uses
 the distributive law for multiplication over infinite sums and Fubini's theorem
-for essentially finite double sums. -/
+for essentially finite double sums. @statement_id stmt-src-prop.fps.subs.rules
+-/
 theorem fps_subs_summableFPSSum {ι : Type*} (f : ι → K⟦X⟧) (g : K⟦X⟧)
     (hg : constantCoeff g = 0) (hf : SummableFPS f) :
     PowerSeries.subst g (summableFPSSum f hf) =
@@ -508,7 +530,8 @@ Example 7.3.2 (exa.fps.subs.fibonacci): Substituting x + x² into 1/(1-x) gives
 the generating function for shifted Fibonacci numbers.
 -/
 
-/-- The geometric series 1 + x + x² + ... = 1/(1-x) -/
+/-- The geometric series 1 + x + x² + ... = 1/(1-x) @statement_id stmt-src-def.fps.geometric-series
+-/
 noncomputable def geometricSeries {K : Type*} [Field K] : K⟦X⟧ := (1 - X)⁻¹
 
 /-- Substituting (x + x²) into the geometric series yields 1/(1 - x - x²).
@@ -517,7 +540,8 @@ This is related to the Fibonacci generating function.
 The proof uses Proposition 7.3.4(c): (1/f₂)[g] = 1[g] / f₂[g] = 1 / f₂[g].
 
 Note: The full proof requires showing that subst preserves inverses when
-the original power series has invertible constant coefficient. -/
+the original power series has invertible constant coefficient. @statement_id stmt-src-lem.fps.geometric-subst-fibonacci
+-/
 theorem fps_geometric_subst_fibonacci {K : Type*} [Field K] :
     PowerSeries.subst (X + X^2) (geometricSeries (K := K)) = ((1 : K⟦X⟧) - X - X^2)⁻¹ := by
   -- geometricSeries = (1 - X)⁻¹
@@ -575,21 +599,25 @@ For example, δ₂₂ = 1 and δ₃₈ = 0.
 -/
 
 /-- **Definition 7.3.6** (def.kron-delta)
-The Kronecker delta function: δᵢⱼ is 1 if i = j, and 0 otherwise. -/
+The Kronecker delta function: δᵢⱼ is 1 if i = j, and 0 otherwise. @statement_id stmt-src-def.kron-delta
+-/
 def kroneckerDelta {α : Type*} [DecidableEq α] (i j : α) : K :=
   if i = j then 1 else 0
 
-/-- δᵢᵢ = 1 -/
+/-- δᵢᵢ = 1 @statement_id stmt-src-lem.kron-delta.self
+-/
 @[simp]
 theorem kroneckerDelta_self {α : Type*} [DecidableEq α] (i : α) :
     kroneckerDelta (K := K) i i = 1 := by simp [kroneckerDelta]
 
-/-- δᵢⱼ = 0 when i ≠ j -/
+/-- δᵢⱼ = 0 when i ≠ j @statement_id stmt-src-lem.kron-delta.ne
+-/
 @[simp]
 theorem kroneckerDelta_ne {α : Type*} [DecidableEq α] {i j : α} (h : i ≠ j) :
     kroneckerDelta (K := K) i j = 0 := by simp [kroneckerDelta, h]
 
-/-- Symmetry: δᵢⱼ = δⱼᵢ -/
+/-- Symmetry: δᵢⱼ = δⱼᵢ @statement_id stmt-src-lem.kron-delta.comm
+-/
 theorem kroneckerDelta_comm {α : Type*} [DecidableEq α] (i j : α) :
     kroneckerDelta (K := K) i j = kroneckerDelta j i := by
   simp only [kroneckerDelta]
@@ -599,25 +627,29 @@ theorem kroneckerDelta_comm {α : Type*} [DecidableEq α] (i j : α) :
   · exact absurd h2.symm h1
   · rfl
 
-/-- Multiplication on the left: δᵢⱼ · a = a if i = j, else 0 -/
+/-- Multiplication on the left: δᵢⱼ · a = a if i = j, else 0 @statement_id stmt-src-lem.kron-delta.mul-left
+-/
 theorem kroneckerDelta_mul_left {α : Type*} [DecidableEq α] (i j : α) (a : K) :
     kroneckerDelta (K := K) i j * a = if i = j then a else 0 := by
   simp only [kroneckerDelta]
   split_ifs <;> ring
 
-/-- Multiplication on the right: a · δᵢⱼ = a if i = j, else 0 -/
+/-- Multiplication on the right: a · δᵢⱼ = a if i = j, else 0 @statement_id stmt-src-lem.kron-delta.mul-right
+-/
 theorem kroneckerDelta_mul_right {α : Type*} [DecidableEq α] (i j : α) (a : K) :
     a * kroneckerDelta (K := K) i j = if i = j then a else 0 := by
   simp only [kroneckerDelta]
   split_ifs <;> ring
 
-/-- Sum over the first index: ∑ᵢ δᵢⱼ = 1 -/
+/-- Sum over the first index: ∑ᵢ δᵢⱼ = 1 @statement_id stmt-src-lem.kron-delta.sum-left
+-/
 theorem sum_kroneckerDelta_left {α : Type*} [DecidableEq α] [Fintype α] (j : α) :
     ∑ i, kroneckerDelta (K := K) i j = 1 := by
   rw [Fintype.sum_eq_single j (fun i hi => kroneckerDelta_ne hi)]
   exact kroneckerDelta_self j
 
-/-- Sum over the second index: ∑ⱼ δᵢⱼ = 1 -/
+/-- Sum over the second index: ∑ⱼ δᵢⱼ = 1 @statement_id stmt-src-lem.kron-delta.sum-right
+-/
 theorem sum_kroneckerDelta_right {α : Type*} [DecidableEq α] [Fintype α] (i : α) :
     ∑ j, kroneckerDelta (K := K) i j = 1 := by
   have h : ∀ j, kroneckerDelta (K := K) i j = kroneckerDelta j i := fun j => kroneckerDelta_comm i j
@@ -628,7 +660,8 @@ theorem sum_kroneckerDelta_right {α : Type*} [DecidableEq α] [Fintype α] (i :
 /-- Contraction/selection property: ∑ᵢ δᵢⱼ · f(i) = f(j)
 
 This is the key property that makes Kronecker delta useful:
-summing over one index "selects" the value at the other index. -/
+summing over one index "selects" the value at the other index. @statement_id stmt-src-lem.kron-delta.contraction
+-/
 theorem sum_kroneckerDelta_mul {α : Type*} [DecidableEq α] [Fintype α] (j : α) (f : α → K) :
     ∑ i, kroneckerDelta (K := K) i j * f i = f j := by
   simp only [kroneckerDelta_mul_left]
@@ -637,7 +670,8 @@ theorem sum_kroneckerDelta_mul {α : Type*} [DecidableEq α] [Fintype α] (j : �
   · intro i hi
     simp [hi]
 
-/-- Contraction/selection property (variant): ∑ⱼ f(j) · δᵢⱼ = f(i) -/
+/-- Contraction/selection property (variant): ∑ⱼ f(j) · δᵢⱼ = f(i) @statement_id stmt-src-lem.kron-delta.contraction-right
+-/
 theorem sum_mul_kroneckerDelta {α : Type*} [DecidableEq α] [Fintype α] (i : α) (f : α → K) :
     ∑ j, f j * kroneckerDelta (K := K) i j = f i := by
   simp only [kroneckerDelta_mul_right]
@@ -646,20 +680,24 @@ theorem sum_mul_kroneckerDelta {α : Type*} [DecidableEq α] [Fintype α] (i : �
   · intro j hj
     simp [hj.symm]
 
-/-- Kronecker delta for natural numbers (explicit form) -/
+/-- Kronecker delta for natural numbers (explicit form) @statement_id stmt-src-lem.kron-delta.nat-eq
+-/
 theorem kroneckerDelta_nat_eq {n m : ℕ} :
     kroneckerDelta (K := K) n m = if n = m then 1 else 0 := rfl
 
-/-- Kronecker delta for integers (explicit form) -/
+/-- Kronecker delta for integers (explicit form) @statement_id stmt-src-lem.kron-delta.int-eq
+-/
 theorem kroneckerDelta_int_eq {n m : ℤ} :
     kroneckerDelta (K := K) n m = if n = m then 1 else 0 := rfl
 
-/-- Kronecker delta equals zero iff the indices are different -/
+/-- Kronecker delta equals zero iff the indices are different @statement_id stmt-src-lem.kron-delta.eq-zero-iff
+-/
 theorem kroneckerDelta_eq_zero_iff {α : Type*} [DecidableEq α] [Nontrivial K] {i j : α} :
     kroneckerDelta (K := K) i j = 0 ↔ i ≠ j := by
   simp [kroneckerDelta]
 
-/-- Kronecker delta equals one iff the indices are equal (when 1 ≠ 0) -/
+/-- Kronecker delta equals one iff the indices are equal (when 1 ≠ 0) @statement_id stmt-src-lem.kron-delta.eq-one-iff
+-/
 theorem kroneckerDelta_eq_one_iff {α : Type*} [DecidableEq α] [Nontrivial K] {i j : α} :
     kroneckerDelta (K := K) i j = 1 ↔ i = j := by
   simp [kroneckerDelta]

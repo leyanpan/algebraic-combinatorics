@@ -71,7 +71,8 @@ from DominoTilings.lean via dot notation (e.g., `d.isHorizontal`). -/
     
     The conversion uses the minimum coordinate as the anchor point:
     - A horizontal domino becomes DominoTilingsZ.Domino.horizontal (min col) row
-    - A vertical domino becomes DominoTilingsZ.Domino.vertical col (min row) -/
+    - A vertical domino becomes DominoTilingsZ.Domino.vertical col (min row) @statement_id stmt-src-def.details.domino.bridge-conversions
+-/
 def toDominoZ (d : DominoTilings.Domino) : DominoTilingsZ.Domino :=
   if d.isHorizontal then
     -- Horizontal: cells differ in first coordinate
@@ -99,7 +100,8 @@ instance : DecidablePred hasPositiveCoords := fun d =>
     
     The conversion preserves the cells covered by the domino:
     - A horizontal domino at (i, j) becomes a DominoTilings.Domino with cells (i, j) and (i+1, j)
-    - A vertical domino at (i, j) becomes a DominoTilings.Domino with cells (i, j) and (i, j+1) -/
+    - A vertical domino at (i, j) becomes a DominoTilings.Domino with cells (i, j) and (i, j+1) @statement_id stmt-src-def.details.domino.bridge-conversions
+-/
 def toDominoN (d : DominoTilingsZ.Domino) (hpos : hasPositiveCoords d) : DominoTilings.Domino :=
   match d, hpos with
   | .horizontal i j, ⟨hi, hj⟩ =>
@@ -300,7 +302,8 @@ We establish that they correspond under the natural embedding ℕ → ℤ. -/
 def cellToZ (c : ℕ × ℕ) : ℤ × ℤ := (c.1, c.2)
 
 /-- The image of DominoTilings.Rectangle under cellToZ equals DominoTilingsZ.Rectangle 
-    as sets of ℤ × ℤ. -/
+    as sets of ℤ × ℤ. @statement_id stmt-src-lem.details.domino.rectangle-correspondence
+-/
 theorem rectangle_correspondence (n m : ℕ) :
     cellToZ '' (DominoTilings.Rectangle n m : Set (ℕ × ℕ)) = DominoTilingsZ.Rectangle n m := by
   ext ⟨x, y⟩
@@ -378,7 +381,8 @@ lemma DominoTiling_dominos_pos (T : DominoTilings.DominoTiling n m) (d : DominoT
   rw [DominoTilings.mem_Rectangle] at hc1 hc2
   exact ⟨hc1.1, hc1.2.2.1, hc2.1, hc2.2.2.1⟩
 
-/-- Converting a DominoTiling preserves pairwise disjointness. -/
+/-- Converting a DominoTiling preserves pairwise disjointness. @statement_id stmt-src-lem.details.domino.todominoz-pairwise-disjoint
+-/
 lemma toDominoZ_pairwise_disjoint (T : DominoTilings.DominoTiling n m) :
     Set.PairwiseDisjoint (dominoFinsetToSet T.dominos) DominoTilingsZ.Domino.toShape := by
   intro dz1 hdz1 dz2 hdz2 hne
@@ -435,7 +439,8 @@ lemma toDominoZ_pairwise_disjoint (T : DominoTilings.DominoTiling n m) :
         simp [hcell]
       simp [hdisj] at hmem
 
-/-- Converting a DominoTiling preserves the covering property. -/
+/-- Converting a DominoTiling preserves the covering property. @statement_id stmt-src-lem.details.domino.todominoz-cover
+-/
 lemma toDominoZ_cover (T : DominoTilings.DominoTiling n m) :
     ⋃ d ∈ dominoFinsetToSet T.dominos, d.toShape = DominoTilingsZ.Rectangle n m := by
   ext ⟨x, y⟩
@@ -483,7 +488,8 @@ lemma toDominoZ_cover (T : DominoTilings.DominoTiling n m) :
       have h2 : y.toNat = d.cell2.2 := congrArg Prod.snd hc2
       constructor <;> omega
 
-/-- Convert a DominoTiling to a Tiling. -/
+/-- Convert a DominoTiling to a Tiling. @statement_id stmt-src-def.details.domino.bridge-conversions
+-/
 def toTilingZ (T : DominoTilings.DominoTiling n m) : 
     DominoTilingsZ.Tiling (DominoTilingsZ.Rectangle n m) where
   dominos := dominoFinsetToSet T.dominos

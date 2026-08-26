@@ -51,7 +51,8 @@ namespace AlgebraicCombinatorics
 
 /-- The k-th pentagonal number, defined as w_k = (3k - 1) * k / 2.
 This is always a nonnegative integer for any k ∈ ℤ.
-(Definition \ref{def.pars.pent-num}) -/
+(Definition \ref{def.pars.pent-num}) @statement_id stmt-src-def.pars.pent-num
+-/
 def pentagonalNumber (k : ℤ) : ℕ :=
   ((3 * k - 1) * k / 2).toNat
 
@@ -240,7 +241,8 @@ lemma pentagonalNumber_ge_natAbs {k : ℤ} (hk : k ≠ 0) :
     rw [heq, habs]
     exact Int.toNat_le_toNat h1
 
-/-- The set of k with pentagonalNumber k < n is finite, since pentagonal numbers grow quadratically. -/
+/-- The set of k with pentagonalNumber k < n is finite, since pentagonal numbers grow quadratically. @statement_id stmt-src-lem.pent.below-finite
+-/
 lemma pentagonal_below_finite (n : ℕ) : Set.Finite {k : ℤ | pentagonalNumber k < n} := by
   have h : {k : ℤ | pentagonalNumber k < n} ⊆ Set.Icc (-(n : ℤ)) n := by
     intro k hk
@@ -267,7 +269,8 @@ instance pentagonal_below_fintype (n : ℕ) : Finite {k : ℤ // pentagonalNumbe
   exact Set.finite_coe_iff.mpr this
 
 /-- The pentagonal numbers for all k ∈ ℤ are distinct.
-Specifically: w_0 < w_1 < w_{-1} < w_2 < w_{-2} < w_3 < w_{-3} < ... -/
+Specifically: w_0 < w_1 < w_{-1} < w_2 < w_{-2} < w_3 < w_{-3} < ... @statement_id stmt-src-lem.pent.injective
+-/
 theorem pentagonalNumber_injective : Function.Injective pentagonalNumber := by
   intro k₁ k₂ h
   -- Convert to integer equation using pentagonalNumber_eq
@@ -350,7 +353,8 @@ theorem pentagonalNumber_strict_mono_pos {k : ℕ} (hk : k > 0) :
 This identity is key to connecting Jacobi's triple product to Euler's pentagonal theorem.
 When we set q = x³, z = -x in Jacobi's triple product, the RHS exponent is:
   3ℓ² + ℓ = (3(-ℓ) - 1)(-ℓ) = 2w_{-ℓ}
-This allows us to rewrite the sum as ∑_{k∈ℤ} (-1)^k (x²)^{w_k}. -/
+This allows us to rewrite the sum as ∑_{k∈ℤ} (-1)^k (x²)^{w_k}. @statement_id stmt-src-lem.jtp.pentagonal-exponent-identity
+-/
 theorem pentagonal_exponent_identity (ell : ℤ) :
     3 * ell^2 + ell = 2 * pentagonalNumber (-ell) := by
   rw [pentagonalNumber_eq]
@@ -417,7 +421,8 @@ def pentagonalNumberInverse (n : ℕ) : Option ℤ :=
 Returns (-1)^k if n = w_k for some k, and 0 otherwise.
 
 Note: We use `k.natAbs` to compute the sign correctly for negative k,
-since (-1)^k = (-1)^|k| for integers (as (-1)^{-m} = (-1)^m). -/
+since (-1)^k = (-1)^|k| for integers (as (-1)^{-m} = (-1)^m). @statement_id stmt-src-def.pent.coeff
+-/
 def pentagonalCoeff (n : ℕ) : ℤ :=
   match pentagonalNumberInverse n with
   | some k => (-1 : ℤ) ^ k.natAbs
@@ -430,7 +435,8 @@ def pentagonalCoeff (n : ℕ) : ℤ :=
 This is well-defined because the pentagonal numbers grow quadratically.
 
 We define the coefficient at n to be (-1)^k if n = w_k for some k, and 0 otherwise.
-Since pentagonal numbers are injective, this is well-defined. -/
+Since pentagonal numbers are injective, this is well-defined. @statement_id stmt-src-def.pent.pentagonalseries
+-/
 noncomputable def pentagonalSeries : R⟦X⟧ :=
   PowerSeries.mk fun n => (pentagonalCoeff n : R)
 
@@ -438,7 +444,8 @@ noncomputable def pentagonalSeries : R⟦X⟧ :=
 
 This is defined using the discrete topology on R, which ensures the infinite product
 is well-defined via Mathlib's infrastructure for infinite products of power series.
-The product is multipliable because the order of (1 - X^k) is k, which tends to infinity. -/
+The product is multipliable because the order of (1 - X^k) is k, which tends to infinity. @statement_id stmt-src-def.pent.eulerproduct
+-/
 noncomputable def eulerProduct : R⟦X⟧ :=
   letI : TopologicalSpace R := ⊥
   haveI : DiscreteTopology R := ⟨rfl⟩
@@ -457,11 +464,13 @@ See the section "Euler's Pentagonal Number Theorem (Main Result)" below.
 /-! ## Recursive Formula for Partition Numbers -/
 
 /-- Local alias for `Nat.Partition.partitionCount` from `Partitions/Basics.lean`.
-This provides compatibility with existing code in this file. -/
+This provides compatibility with existing code in this file. @statement_id stmt-src-def.pars.pn-pkn
+-/
 abbrev partitionCount := Nat.Partition.partitionCount
 
 /-- The generating function for partitions as a formal power series.
-  ∑_{n∈ℕ} p(n) x^n -/
+  ∑_{n∈ℕ} p(n) x^n @statement_id stmt-src-def.fps.partitiongenfun
+-/
 noncomputable def partitionGenFun : ℤ⟦X⟧ :=
   PowerSeries.mk fun n => partitionCount n
 
@@ -481,6 +490,7 @@ This is the fundamental identity connecting the partition function to
 the infinite product. It is used in the proof of Corollary \ref{cor.pars.pn-rec}.
 
 Note: This may also be available in Mathlib as `Nat.Partition.genFun` related theorems.
+@statement_id stmt-src-lem.fps.partition-gen-fun-eq
 -/
 theorem partition_generating_function :
     partitionGenFun = eulerProductInv := by
@@ -537,7 +547,8 @@ private lemma eulerProduct_mul_eulerProductInv_aux :
 
 end eulerProductProof
 
-/-- Helper: eulerProduct * eulerProductInv = 1 -/
+/-- Helper: eulerProduct * eulerProductInv = 1 @statement_id stmt-src-lem.fps.eulerproduct-mul-eulerproductinv
+-/
 theorem eulerProduct_mul_eulerProductInv :
     (eulerProduct : ℤ⟦X⟧) * eulerProductInv = 1 := by
   unfold eulerProduct eulerProductInv
@@ -936,7 +947,8 @@ a state with energy e and particle number p.
 -/
 
 /-- The monomial q^e * z^p in JacobiRing, representing a state with energy e and particle number p.
-This is the building block for the state generating function. -/
+This is the building block for the state generating function. @statement_id stmt-src-def.jtp.statemonomial
+-/
 noncomputable def stateMonomial (e : ℕ) (p : ℤ) : JacobiRing :=
   PowerSeries.X ^ e * jacobiZPow p
 
@@ -1129,6 +1141,7 @@ This equals:
   ∑_{ℓ∈ℤ} q^{ℓ²} z^ℓ · ∑_{n≥0} (number of partitions of n) · q^{2n}
 
 which is jacobiRHS' · partitionGenFun[q²].
+@statement_id stmt-src-def.jtp.stategenfun
 -/
 noncomputable def stateGenFun : JacobiRing :=
   letI : TopologicalSpace (LaurentPolynomial ℤ) := ⊥
@@ -1149,7 +1162,8 @@ This is a key ingredient in proving Jacobi's triple product identity:
   stateGenFun = jacobiRHS' * partitionGenFunJacobi
 
 Note: We define this as a sum over partitions rather than using the product
-formula ∏_{k≥1}(1-q^{2k})^{-1} to match the structure of stateGenFun. -/
+formula ∏_{k≥1}(1-q^{2k})^{-1} to match the structure of stateGenFun. @statement_id stmt-src-def.jtp.partitiongenfunjacobi
+-/
 noncomputable def partitionGenFunJacobi : JacobiRing :=
   letI : TopologicalSpace (LaurentPolynomial ℤ) := ⊥
   haveI : DiscreteTopology (LaurentPolynomial ℤ) := ⟨rfl⟩
@@ -1243,7 +1257,8 @@ lemma coeff_zero_partitionGenFunJacobi :
   simp_rw [heq]
   exact tsum_ite_eq p0 (fun _ => 1)
 
-/-- partitionGenFunJacobi is a unit (has constant term 1, hence invertible). -/
+/-- partitionGenFunJacobi is a unit (has constant term 1, hence invertible). @statement_id stmt-src-lem.jtp.partitiongenfunjacobi-isunit
+-/
 lemma partitionGenFunJacobi_isUnit :
     letI : TopologicalSpace (LaurentPolynomial ℤ) := ⊥
     haveI : DiscreteTopology (LaurentPolynomial ℤ) := ⟨rfl⟩
@@ -1413,6 +1428,7 @@ private lemma sum_antidiag_indicator {α : Type*} [AddCommMonoid α] (d : ℕ) (
     apply h
     omega
 
+/-- @statement_id stmt-src-lem.jtp.stategenfun-eq-rhs -/
 lemma stateGenFun_eq_jacobiRHS'_mul_partitionGenFunJacobi :
     letI : TopologicalSpace (LaurentPolynomial ℤ) := ⊥
     haveI : DiscreteTopology (LaurentPolynomial ℤ) := ⟨rfl⟩
@@ -1632,7 +1648,8 @@ lemma stateGenFun_eq_jacobiRHS'_mul_partitionGenFunJacobi :
 
 /-- The product of Z and ZInv factors (without the Q factor):
   ∏_{n>0} ((1 + q^{2n-1}z)(1 + q^{2n-1}z^{-1}))
-This is the product that remains after canceling the (1-q^{2n}) factors. -/
+This is the product that remains after canceling the (1-q^{2n}) factors. @statement_id stmt-src-def.jtp.jacobizzproduct
+-/
 noncomputable def jacobiZZProduct : JacobiRing :=
   letI : TopologicalSpace (LaurentPolynomial ℤ) := ⊥
   haveI : DiscreteTopology (LaurentPolynomial ℤ) := ⟨rfl⟩
@@ -1641,7 +1658,8 @@ noncomputable def jacobiZZProduct : JacobiRing :=
 
 /-- The Euler product (Q factors only):
   ∏_{n>0} (1 - q^{2n})
-This is the product that cancels with partitionGenFunJacobi. -/
+This is the product that cancels with partitionGenFunJacobi. @statement_id stmt-src-def.jtp.jacobiqproduct
+-/
 noncomputable def jacobiQProduct : JacobiRing :=
   letI : TopologicalSpace (LaurentPolynomial ℤ) := ⊥
   haveI : DiscreteTopology (LaurentPolynomial ℤ) := ⟨rfl⟩
@@ -1919,7 +1937,8 @@ private lemma coeff_jacobi_product_eq_card_partition_aux (n : ℕ) :
 This is the key cancellation: the partition generating function times the
 Euler product equals 1, which is the classical identity
   ∑_{μ partition} q^{2|μ|} * ∏_{n>0}(1-q^{2n}) = 1
-in JacobiRing. -/
+in JacobiRing. @statement_id stmt-src-lem.jtp.partitiongenfunjacobi-mul-qproduct
+-/
 lemma partitionGenFunJacobi_mul_QProduct_eq_one :
     letI : TopologicalSpace (LaurentPolynomial ℤ) := ⊥
     haveI : DiscreteTopology (LaurentPolynomial ℤ) := ⟨rfl⟩
@@ -2295,7 +2314,8 @@ lemma jacobiFactorQ_multipliable :
 
 /-- Key lemma 1: jacobiLHS' factors as ZZProduct * QProduct.
 This follows from the definition of jacobiProductTerm and the fact that
-infinite products can be split when both factors are multipliable. -/
+infinite products can be split when both factors are multipliable. @statement_id stmt-src-lem.jtp.jacobilhs-eq-zzproduct-mul-qproduct
+-/
 lemma jacobiLHS'_eq_ZZProduct_mul_QProduct :
     letI : TopologicalSpace (LaurentPolynomial ℤ) := ⊥
     haveI : DiscreteTopology (LaurentPolynomial ℤ) := ⟨rfl⟩
@@ -2852,7 +2872,8 @@ The formula is:
 This is the key expansion needed to relate jacobiZZProduct to stateGenFun.
 
 **Proof sketch**: Use `tprod_jacobiFactorZ_eq_tsum`, `tprod_jacobiFactorZInv_eq_tsum`,
-and `Summable.tsum_mul_tsum` to expand the product of two sums into a double sum. -/
+and `Summable.tsum_mul_tsum` to expand the product of two sums into a double sum. @statement_id stmt-src-lem.jtp.jacobizzproduct-eq-double-tsum
+-/
 lemma jacobiZZProduct_eq_double_tsum :
     letI : TopologicalSpace (LaurentPolynomial ℤ) := ⊥
     haveI : DiscreteTopology (LaurentPolynomial ℤ) := ⟨rfl⟩
@@ -2875,7 +2896,8 @@ For a pair (P, N) of finite subsets of ℕ:
   (∏_{n∈P} (jacobiFactorZ n - 1)) * (∏_{n∈N} (jacobiFactorZInv n - 1))
   = X^{∑_{n∈P}(2n+1) + ∑_{n∈N}(2n+1)} * z^{|P| - |N|}
 
-This uses the explicit formulas for the products. -/
+This uses the explicit formulas for the products. @statement_id stmt-src-lem.jtp.double-sum-term-explicit
+-/
 lemma double_sum_term_explicit (P N : Finset ℕ) :
     (∏ n ∈ P, (jacobiFactorZ n - 1)) * (∏ n ∈ N, (jacobiFactorZInv n - 1)) =
     PowerSeries.X ^ (∑ n ∈ P, (2 * n + 1) + ∑ n ∈ N, (2 * n + 1)) *
@@ -3335,7 +3357,8 @@ lemma partitionGenFunEval_constantCoeff (a : ℤ) (u : ℚ) (ha : a > 0) :
   · intro p hp
     exact h_zero p hp
 
-/-- The partition generating function is a unit (invertible) in ℚ⟦X⟧. -/
+/-- The partition generating function is a unit (invertible) in ℚ⟦X⟧. @statement_id stmt-src-lem.jtp.partitiongenfuneval-isunit
+-/
 lemma partitionGenFunEval_isUnit (a : ℤ) (u : ℚ) (ha : a > 0) :
     IsUnit (partitionGenFunEval a u) := by
   rw [PowerSeries.isUnit_iff_constantCoeff]
@@ -4149,7 +4172,8 @@ The proof uses the geometric series identity: for each k,
   (∑' j, x_k^j) * (1 - x_k) = 1
 where x_k = u^{2(k+1)} * X^{2a(k+1)}.
 
-Combined with the product decomposition of partitions, this gives the result. -/
+Combined with the product decomposition of partitions, this gives the result. @statement_id stmt-src-lem.jtp.partitiongenfuneval-mul-eulerproductparam
+-/
 
 lemma partitionGenFunEval_mul_eulerProductParam (a : ℤ) (u : ℚ) (ha : a > 0) :
     partitionGenFunEval a u * eulerProductParam a u = 1 := by
@@ -5081,6 +5105,7 @@ private lemma summable_product_terms (a b : ℤ) (u v : ℚ) (ha : a > 0) (hab :
   -- The set of images is finite because Nat.Partition n is finite
   exact Set.Finite.image _ Set.finite_univ
 
+/-- @statement_id stmt-src-lem.jtp.jacobirhs-mul-partgenfun -/
 lemma jacobiRHS_mul_partitionGenFun (a b : ℤ) (u v : ℚ) (ha : a > 0) (hab : a ≥ |b|) (_hv : v ≠ 0) :
     jacobiRHSEval a b u v * partitionGenFunEval a u =
     letI : TopologicalSpace ℚ := ⊥
@@ -5469,7 +5494,8 @@ We represent it by the integer p. Thus:
 
 The structure tracks:
 - `finite_nonneg`: the set of nonnegative integers p (representing positive half-integer levels) in S
-- `finite_negative_missing`: the set of negative integers p (representing negative half-integer levels) NOT in S -/
+- `finite_negative_missing`: the set of negative integers p (representing negative half-integer levels) NOT in S @statement_id stmt-src-def.jtp.state
+-/
 structure State where
   /-- The set of levels in this state -/
   levels : Set Level
@@ -5517,7 +5543,8 @@ For ℓ ≥ 0:
 
 For ℓ < 0:
 - No nonnegative integers are in G_ℓ
-- Negative integers missing from G_ℓ: {ℓ, ℓ+1, ..., -1} -/
+- Negative integers missing from G_ℓ: {ℓ, ℓ+1, ..., -1} @statement_id stmt-src-def.jtp.groundstate
+-/
 def groundState (ell : ℤ) : State where
   levels := {p : Level | p < ell}
   finite_nonneg := by
@@ -5567,6 +5594,7 @@ For ℓ < 0:
 The proof is technical and involves showing that:
 - The sum 1 + 3 + 5 + ... + (2n-1) = n² (sum of first n odd numbers)
 - The correct correspondence between the finite sets and the sums
+@statement_id stmt-src-thm.jtp.groundstate-energy-parnum
 -/
 theorem groundState_energy (ell : ℤ) : (groundState ell).energy = ell.natAbs ^ 2 := by
   unfold energy
@@ -5650,7 +5678,8 @@ theorem groundState_energy (ell : ℤ) : (groundState ell).energy = ell.natAbs ^
       omega
     rw [h_reflect, sum_odd_eq_sq]
 
-/-- The particle number of the ground state G_ℓ is ℓ. -/
+/-- The particle number of the ground state G_ℓ is ℓ. @statement_id stmt-src-thm.jtp.groundstate-energy-parnum
+-/
 theorem groundState_parnum (ell : ℤ) : (groundState ell).parnum = ell := by
   unfold parnum
   -- Convert toFinset to Finset.Ico
@@ -5674,7 +5703,8 @@ theorem groundState_parnum (ell : ℤ) : (groundState ell).parnum = ell := by
     have h2 : ((-ell).toNat : ℤ) = -ell := Int.toNat_of_nonneg (neg_nonneg.mpr (le_of_lt h))
     simp only [h1, h2, Nat.cast_zero, zero_sub, neg_neg]
 
-/-- Jump operation: if p ∈ S and p + q ∉ S, then jump_{p,q}(S) = (S \ {p}) ∪ {p + q}. -/
+/-- Jump operation: if p ∈ S and p + q ∉ S, then jump_{p,q}(S) = (S \ {p}) ∪ {p + q}. @statement_id stmt-src-def.jtp.jump
+-/
 def jump (S : State) (p : Level) (q : ℕ) (_hp : p ∈ S.levels)
     (_hpq : p + q ∉ S.levels) (_hq : q > 0) : State where
   levels := (S.levels \ {p}) ∪ {p + q}
@@ -5724,7 +5754,8 @@ private lemma mem_jump_finite_negative_missing (S : State) (p : Level) (q : ℕ)
   simp only [Set.Finite.mem_toFinset, Set.mem_setOf_eq, jump,
              Set.mem_union, Set.mem_diff, Set.mem_singleton_iff]
 
-/-- A jump preserves the particle number. -/
+/-- A jump preserves the particle number. @statement_id stmt-src-thm.jtp.jump-parnum-energy
+-/
 theorem jump_parnum (S : State) (p : Level) (q : ℕ) (hp : p ∈ S.levels)
     (hpq : p + q ∉ S.levels) (hq : q > 0) :
     (S.jump p q hp hpq hq).parnum = S.parnum := by
@@ -6026,7 +6057,8 @@ The proof tracks how the finite sums change when we jump from p to p+q:
 - If p < 0: p is added to the negative_missing set, contributing +(2*|p| - 1)
 - If p+q < 0: p+q is removed from the negative_missing set, contributing -(2*|p+q| - 1)
 
-The total change is always 2*q, as proven by `energy_change_formula`. -/
+The total change is always 2*q, as proven by `energy_change_formula`. @statement_id stmt-src-thm.jtp.jump-parnum-energy
+-/
 theorem jump_energy (S : State) (p : Level) (q : ℕ) (hp : p ∈ S.levels)
     (hpq : p + q ∉ S.levels) (hq : q > 0) :
     (S.jump p q hp hpq hq).energy = S.energy + 2 * q := by
@@ -6323,7 +6355,8 @@ theorem excitedStateLevels_finite_negative_missing (ell : ℤ) {n : ℕ} (mu : N
 according to the partition μ.
 
 Given a partition μ = (μ₁, μ₂, ..., μₖ) of some n, we start with the ℓ-ground state
-and let the k highest electrons jump by μ₁, μ₂, ..., μₖ steps respectively. -/
+and let the k highest electrons jump by μ₁, μ₂, ..., μₖ steps respectively. @statement_id stmt-src-def.jtp.excitedstate
+-/
 noncomputable def excitedState (ell : ℤ) {n : ℕ} (mu : Nat.Partition n) : State where
   levels := excitedStateLevels ell mu
   finite_nonneg := excitedStateLevels_finite_nonneg ell mu
@@ -6545,6 +6578,7 @@ The proof proceeds by induction on the number of parts k = (mu.parts.sort (· �
   2. (ell - 1 - i + parts[i]) is NOT in the intermediate state (requires parts[i] > 0
      and no collision with previous jump targets)
   3. parts[i] > 0 (all parts of a partition are positive)
+@statement_id stmt-src-lem.jtp.excitedstate-reachable
 -/
 theorem excitedState_reachable (ell : ℤ) {n : ℕ} (mu : Nat.Partition n) :
     ReachableByJumps (groundState ell) (excitedState ell mu) := by
@@ -6762,7 +6796,8 @@ theorem excitedState_reachable_with_total (ell : ℤ) {n : ℕ} (mu : Nat.Partit
 
 /-- The energy of an excited state.
 The proof uses `reachableByJumpsWithTotal_energy` with the fact that the excited
-state is reachable with total jump amount n, combined with `groundState_energy`. -/
+state is reachable with total jump amount n, combined with `groundState_energy`. @statement_id stmt-src-thm.jtp.excitedstate-energy-parnum
+-/
 theorem excitedState_energy (ell : ℤ) {n : ℕ} (mu : Nat.Partition n) :
     (excitedState ell mu).energy = ell.natAbs ^ 2 + 2 * n := by
   have h := reachableByJumpsWithTotal_energy (groundState ell) (excitedState ell mu) n
@@ -6770,7 +6805,8 @@ theorem excitedState_energy (ell : ℤ) {n : ℕ} (mu : Nat.Partition n) :
   rw [groundState_energy] at h
   exact h
 
-/-- The particle number of an excited state equals ℓ. -/
+/-- The particle number of an excited state equals ℓ. @statement_id stmt-src-thm.jtp.excitedstate-energy-parnum
+-/
 theorem excitedState_parnum (ell : ℤ) {n : ℕ} (mu : Nat.Partition n) :
     (excitedState ell mu).parnum = ell :=
   reachableByJumps_parnum ell (excitedState ell mu) (excitedState_reachable ell mu)
@@ -6897,7 +6933,8 @@ so the partition can be recovered from the state.
 
 The proof uses the fact that with sorted parts, the function i ↦ parts[i] - i
 is strictly decreasing, hence injective. This means the set of excited levels
-{ell - 1 - i + parts[i] | i < k} uniquely determines the sequence of parts. -/
+{ell - 1 - i + parts[i] | i < k} uniquely determines the sequence of parts. @statement_id stmt-src-lem.jtp.excitedstate-injective
+-/
 theorem excitedState_injective (ell : ℤ) {n₁ n₂ : ℕ} (mu₁ : Nat.Partition n₁) (mu₂ : Nat.Partition n₂)
     (h : excitedState ell mu₁ = excitedState ell mu₂) :
     (⟨n₁, mu₁⟩ : Σ n, Nat.Partition n) = ⟨n₂, mu₂⟩ := by
@@ -7491,7 +7528,8 @@ The construction proceeds as follows:
 
 The key insight is that the parnum calculation shows |E| = ell - t:
 - For t ≥ 0: parnum = t + |E|, so |E| = ell - t
-- For t < 0: parnum = |E| + t, so |E| = ell - t -/
+- For t < 0: parnum = |E| + t, so |E| = ell - t @statement_id stmt-src-lem.jtp.excitedstate-surjective
+-/
 theorem excitedState_surjective (ell : ℤ) (S : State) (hS : S.parnum = ell) :
     ∃ (n : ℕ) (mu : Nat.Partition n), excitedState ell mu = S := by
   -- Set up the key quantities
@@ -7781,7 +7819,8 @@ The map sends a partition μ to the excited state E_{ℓ,μ}.
 
 Note: We express this as bijectivity onto the subtype {S : State // S.parnum = ell}
 rather than as a map to State × ℤ (which would not be surjective since the particle
-number of excitedState is always ell). -/
+number of excitedState is always ell). @statement_id stmt-src-thm.jtp.partitiontostate-bijective
+-/
 theorem partitionToState_bijective (ell : ℤ) :
     Function.Bijective fun (p : Σ n, Nat.Partition n) =>
       (⟨excitedState ell p.2, excitedState_parnum ell p.2⟩ : {S : State // S.parnum = ell}) := by
@@ -7805,7 +7844,8 @@ between `ℤ × (Σ n, Nat.Partition n)` and `State`.
 The map sends (ℓ, μ) to the excited state E_{ℓ,μ}.
 The inverse sends S to (parnum(S), μ) where μ is the unique partition with E_{parnum(S),μ} = S.
 
-This is key for reindexing sums: ∑_{(ℓ,μ)} f(ℓ,μ) = ∑_{S} f(parnum(S), μ(S)). -/
+This is key for reindexing sums: ∑_{(ℓ,μ)} f(ℓ,μ) = ∑_{S} f(parnum(S), μ(S)). @statement_id stmt-src-thm.jtp.intpartitiontostate-bijective
+-/
 theorem intPartitionToState_bijective :
     Function.Bijective (fun (pair : ℤ × (Σ n, Nat.Partition n)) => 
       excitedState pair.1 pair.2.2) := by
@@ -7833,7 +7873,8 @@ theorem intPartitionToState_bijective :
 
 This is the key relationship between energy and parnum that follows from the
 bijection with excited states. The value n is the size of the unique partition μ
-such that excitedState (parnum S) μ = S. -/
+such that excitedState (parnum S) μ = S. @statement_id stmt-src-lem.jtp.energy-eq-parnum-sq-add-even
+-/
 theorem energy_eq_parnum_sq_add_even (S : State) :
     ∃ n : ℕ, S.energy = S.parnum.natAbs ^ 2 + 2 * n := by
   obtain ⟨n, μ, hμ⟩ := excitedState_surjective S.parnum S rfl
@@ -7891,7 +7932,8 @@ These formulas match the exponent and z-power in the double sum expansion of jac
 /-- Construct a state from a pair (P, N) of finite subsets of ℕ.
 - P represents the nonnegative levels in the state (n ∈ P means n ∈ S.levels)
 - N represents the negative levels that are MISSING from the state
-  (n ∈ N means -(n+1) ∉ S.levels) -/
+  (n ∈ N means -(n+1) ∉ S.levels) @statement_id stmt-src-def.jtp.fromfinsetpair
+-/
 def fromFinsetPair (P N : Finset ℕ) : State where
   levels := {p : Level | (p ≥ 0 ∧ p.toNat ∈ P) ∨ (p < 0 ∧ ((-p - 1).toNat) ∉ N)}
   finite_nonneg := by
@@ -7993,6 +8035,7 @@ private lemma fromFinsetPair_finite_negative_missing_eq (P N : Finset ℕ) :
         convert hn_N using 1
         simp
 
+/-- @statement_id stmt-src-lem.jtp.fromfinsetpair-energy -/
 theorem fromFinsetPair_energy (P N : Finset ℕ) :
     (fromFinsetPair P N).energy = ∑ n ∈ P, (2 * n + 1) + ∑ n ∈ N, (2 * n + 1) := by
   unfold energy
@@ -8045,7 +8088,8 @@ lemma fromFinsetPair_finite_negative_missing_card (P N : Finset ℕ) :
 
 /-- The particle number of a state constructed from (P, N) equals |P| - |N|.
 
-This matches the z-power in the double sum: z^{|P| - |N|} = z^{parnum(S)}. -/
+This matches the z-power in the double sum: z^{|P| - |N|} = z^{parnum(S)}. @statement_id stmt-src-lem.jtp.fromfinsetpair-parnum
+-/
 theorem fromFinsetPair_parnum (P N : Finset ℕ) :
     (fromFinsetPair P N).parnum = P.card - N.card := by
   unfold parnum
@@ -8175,7 +8219,8 @@ theorem toN_fromFinsetPair (P N : Finset ℕ) : toN (fromFinsetPair P N) = N := 
 
 /-- The map (P, N) ↦ fromFinsetPair P N is a bijection from Finset ℕ × Finset ℕ to State.
 
-This establishes the bijection needed for `coeff_double_sum_eq_coeff_stateGenFun`. -/
+This establishes the bijection needed for `coeff_double_sum_eq_coeff_stateGenFun`. @statement_id stmt-src-thm.jtp.finsetpair-bijective
+-/
 theorem finsetPair_bijective :
     Function.Bijective (fun pair : Finset ℕ × Finset ℕ => fromFinsetPair pair.1 pair.2) := by
   constructor
@@ -8334,7 +8379,8 @@ The proof uses:
 5. sum_finsetPair_eq_sum_partition_via_state: reindexing lemma
 
 This lemma provides the key combinatorial fact needed to fill the sorry in
-`coeff_double_sum_eq_coeff_stateGenFun`. -/
+`coeff_double_sum_eq_coeff_stateGenFun`. @statement_id stmt-src-lem.jtp.finsetpair-sum-eq-partition-sum
+-/
 theorem finsetPair_sum_eq_partition_sum (d : ℕ) (f : ℤ → LaurentPolynomial ℤ) 
     (h_lhs_finite : {p : Finset ℕ × Finset ℕ | 
         (∑ n ∈ p.1, (2 * n + 1) + ∑ n ∈ p.2, (2 * n + 1) : ℕ) = d}.Finite)
@@ -8817,6 +8863,7 @@ Using binary expansion, this product equals:
   = ∑_{S state} q^{energy(S)} z^{parnum(S)}
 
 The proof uses the binary expansion of the product over positive integers.
+@statement_id stmt-src-lem.jtp.jacobilhs-mul-partgenfun
 -/
 lemma jacobiLHS_mul_partitionGenFun (a b : ℤ) (u v : ℚ) (ha : a > 0) (hab : a ≥ |b|) (hv : v ≠ 0) :
     jacobiLHSEval a b u v * partitionGenFunEval a u =
@@ -9503,6 +9550,7 @@ Both sides, when multiplied by the partition generating function, equal the same
 "state generating function", allowing cancellation.
 
 See also `jacobi_triple_product_fps'` for the formal power series version (thm.pars.jtp1).
+@statement_id stmt-src-thm.pars.jtp2
 -/
 theorem jacobi_triple_product (a b : ℤ) (ha : a > 0) (hab : a ≥ |b|)
     (u v : ℚ) (hv : v ≠ 0) :
@@ -9804,7 +9852,8 @@ lemma evalLaurentCoeffShifted_finset_sum {ι : Type*} [DecidableEq ι] (a b : �
 
 /-- Corrected full evaluation map from JacobiRing to ℚ⟦X⟧.
 This version computes the combined exponent (a·e + b·ℓ).toNat correctly,
-avoiding the truncation issue in the original evalJacobi. -/
+avoiding the truncation issue in the original evalJacobi. @statement_id stmt-src-def.jtp.evaljacobicorrect
+-/
 noncomputable def evalJacobiCorrect (a b : ℤ) (u v : ℚ) (f : JacobiRing) : ℚ⟦X⟧ :=
   letI : TopologicalSpace ℚ := ⊥
   haveI : DiscreteTopology ℚ := ⟨rfl⟩
@@ -9987,6 +10036,7 @@ lemma coeff_tsum_evalJacobiCorrect_eq_finsum (a b : ℤ) (u v : ℚ) (ha : a > 0
     rw [Set.Finite.mem_toFinset, Set.mem_setOf_eq] at hℓ
     simp only [hℓ, ↓reduceIte]
 
+/-- @statement_id stmt-src-lem.jtp.evaljacobicorrect-jacobirhs -/
 lemma evalJacobiCorrect_jacobiRHS' (a b : ℤ) (u v : ℚ) (ha : a > 0) (hab : a ≥ |b|) (_hv : v ≠ 0) :
     evalJacobiCorrect a b u v jacobiRHS' = jacobiRHSEval a b u v := by
   /-
@@ -10507,6 +10557,7 @@ hence f = g.
 Here f[x²] denotes the substitution of x² for x in f, i.e., `PowerSeries.subst (X^2) f`.
 This substitution is well-defined because X² has zero constant coefficient,
 satisfying the `HasSubst` condition.
+@statement_id stmt-src-lem.fps.fxx-gxx
 -/
 theorem fps_eq_of_sq_eq {R : Type*} [CommRing R] (f g : R⟦X⟧)
     (h : PowerSeries.subst (PowerSeries.X ^ 2 : R⟦X⟧) f =
@@ -10597,7 +10648,8 @@ The n-th coefficient of `eulerProduct` over ℤ, when cast to ℚ, equals the n-
 of `eulerProduct` over ℚ. This follows from the fact that `MvPowerSeries.map` commutes
 with `tprod` for continuous ring homomorphisms.
 
-This lemma is key for transferring `euler_pentagonal_number_theorem_rat` from ℚ to ℤ. -/
+This lemma is key for transferring `euler_pentagonal_number_theorem_rat` from ℚ to ℤ. @statement_id stmt-src-lem.jtp.eulerproduct-coeff-map
+-/
 lemma eulerProduct_coeff_map (n : ℕ) :
     letI : TopologicalSpace ℤ := ⊥
     haveI : DiscreteTopology ℤ := ⟨rfl⟩
@@ -10764,6 +10816,7 @@ private lemma partial_prod_eq_aux (K : ℕ) :
     ring
 
 set_option maxHeartbeats 800000 in
+/-- @statement_id stmt-src-lem.jtp.jacobilhs-eq-eulerproduct-sq -/
 theorem jacobiLHSEval_3_1_1_neg1_eq_eulerProduct_sq :
     jacobiLHSEval 3 1 1 (-1) =
     PowerSeries.subst (PowerSeries.X ^ 2 : ℚ⟦X⟧) (eulerProduct : ℚ⟦X⟧) := by
@@ -11135,6 +11188,7 @@ private lemma jacobiRHS_coeff_term (ℓ : ℤ) (n : ℕ) :
   · simp
   · simp
 
+/-- @statement_id stmt-src-lem.jtp.jacobirhs-eq-pentagonalseries-sq -/
 theorem jacobiRHSEval_3_1_1_neg1_eq_pentagonalSeries_sq :
     jacobiRHSEval 3 1 1 (-1) =
     PowerSeries.subst (PowerSeries.X ^ 2 : ℚ⟦X⟧) (pentagonalSeries : ℚ⟦X⟧) := by
@@ -11209,6 +11263,7 @@ theorem jacobiRHSEval_3_1_1_neg1_eq_pentagonalSeries_sq :
 
 This is the key intermediate step: we prove the identity over ℚ first, then
 transfer to ℤ using the fact that both sides have integer coefficients.
+@statement_id stmt-src-lem.jtp.euler-pentagonal-rat
 -/
 theorem euler_pentagonal_number_theorem_rat :
     (eulerProduct : ℚ⟦X⟧) = pentagonalSeries := by
@@ -11234,6 +11289,7 @@ Concretely:
 
 The proof transfers from ℚ to ℤ using `euler_pentagonal_number_theorem_rat` and
 the fact that both sides have integer coefficients.
+@statement_id stmt-src-thm.pars.pent
 -/
 theorem euler_pentagonal_number_theorem :
     (eulerProduct : ℤ⟦X⟧) = pentagonalSeries := by
@@ -11249,7 +11305,8 @@ theorem euler_pentagonal_number_theorem :
     simp only [pentagonalSeries, PowerSeries.coeff_mk, Int.cast_id]
   exact Int.cast_injective (h1.trans (h2.trans h3))
 
-/-- partitionGenFun * pentagonalSeries = 1 -/
+/-- partitionGenFun * pentagonalSeries = 1 @statement_id stmt-src-lem.jtp.partitiongenfun-mul-pentagonalseries
+-/
 theorem partitionGenFun_mul_pentagonalSeries :
     partitionGenFun * (pentagonalSeries : ℤ⟦X⟧) = 1 := by
   rw [partition_generating_function, ← euler_pentagonal_number_theorem, mul_comm]
@@ -11265,6 +11322,7 @@ where p(m) = 0 for m < 0.
 
 Note: The sign (-1)^{k-1} is computed using `(k.natAbs + 1) % 2` to handle
 negative k correctly. For k ≠ 0, (-1)^{k-1} equals (-1)^{|k|-1} = (-1)^{|k|+1}.
+@statement_id stmt-src-cor.pars.pn-rec
 -/
 theorem partition_recursive (n : ℕ) (hn : n > 0) :
     partitionCount n = ∑' k : {k : ℤ // k ≠ 0 ∧ pentagonalNumber k ≤ n},
@@ -11295,7 +11353,8 @@ section EulerSumDivisors
 open scoped ArithmeticFunction.sigma
 
 /-- The sum of divisors generating function: S = ∑_{k>0} σ(k) x^k.
-This is the generating function for the sum of divisors function σ₁. -/
+This is the generating function for the sum of divisors function σ₁. @statement_id stmt-src-def.jtp.sigmaseries
+-/
 noncomputable def sigmaSeries : ℤ⟦X⟧ :=
   PowerSeries.mk fun n => if n = 0 then 0 else (σ 1 n : ℤ)
 
@@ -11331,7 +11390,8 @@ lemma coeff_X_mul_deriv_pentagonalSeries (n : ℕ) :
     ring
 
 /-- Express the coefficient of x * Q' in terms of pentagonalNumberInverse.
-The coefficient is (-1)^|k| * n if n = w_k for some k, and 0 otherwise. -/
+The coefficient is (-1)^|k| * n if n = w_k for some k, and 0 otherwise. @statement_id stmt-src-lem.jtp.coeff-x-mul-deriv-pentagonal-match
+-/
 lemma coeff_X_mul_deriv_pentagonal_match (n : ℕ) :
     PowerSeries.coeff n (PowerSeries.X * (PowerSeries.derivative ℤ) (pentagonalSeries : ℤ⟦X⟧)) =
     match pentagonalNumberInverse n with
@@ -11423,6 +11483,7 @@ This lemma is the key remaining piece for proving `euler_sum_divisors_recursive`
 The bijection approach is the most elementary but requires formalizing Young diagrams
 and cell positions. The logarithmic derivative approach is cleaner but requires
 infrastructure for power series logarithms.
+@statement_id stmt-src-lem.jtp.partition-sigma-identity
 -/
 lemma partition_sigma_identity (n : ℕ) :
     (n : ℤ) * partitionCount n =
@@ -11754,7 +11815,8 @@ The proof follows from the logarithmic derivative of the partition generating fu
 Since P = ∏_{k≥1} 1/(1-x^k), we have:
   log(P) = -∑_{k≥1} log(1-x^k) = ∑_{k≥1} ∑_{m≥1} x^{km}/m
   X * d/dx log(P) = ∑_{k≥1} ∑_{m≥1} k * x^{km} = ∑_{n≥1} σ(n) * x^n = S
-Since d/dx log(P) = P'/P, we get X * P'/P = S, i.e., X * P' = S * P. -/
+Since d/dx log(P) = P'/P, we get X * P'/P = S, i.e., X * P' = S * P. @statement_id stmt-src-lem.jtp.x-mul-deriv-partitiongenfun
+-/
 lemma X_mul_deriv_partitionGenFun_eq :
     PowerSeries.X * (PowerSeries.derivative ℤ) partitionGenFun = sigmaSeries * partitionGenFun := by
   -- We prove this by showing both sides have the same coefficients
@@ -11804,7 +11866,8 @@ generating function) and the identity xP' = SP. Taking the derivative of PQ = 1 
 P'Q + PQ' = 0, so Q' = -P'Q/P. Multiplying by x: xQ' = -xP'Q/P = -SQ (using xP' = SP).
 
 Note: This lemma depends on `euler_pentagonal_number_theorem` and `partition_generating_function`
-which are being proved separately. -/
+which are being proved separately. @statement_id stmt-src-lem.jtp.pentagonal-deriv-identity
+-/
 theorem pentagonal_deriv_identity :
     PowerSeries.X * (PowerSeries.derivative ℤ) (pentagonalSeries : ℤ⟦X⟧) =
     -(pentagonalSeries : ℤ⟦X⟧) * sigmaSeries := by
@@ -11884,13 +11947,15 @@ lemma coeff_pentagonalSeries_mul_sigmaSeries (n : ℕ) :
   simp only [coeff_pentagonalSeries, coeff_sigmaSeries, hp.2, ↓reduceIte]
 
 
-/-- pentagonalCoeff at a pentagonal number equals (-1)^|k|. -/
+/-- pentagonalCoeff at a pentagonal number equals (-1)^|k|. @statement_id stmt-src-lem.pent.coeff-at-pentagonal
+-/
 lemma pentagonalCoeff_of_pentagonalNumber (k : ℤ) :
     pentagonalCoeff (pentagonalNumber k) = (-1 : ℤ) ^ k.natAbs := by
   simp only [pentagonalCoeff]
   rw [pentagonalNumberInverse_of_pentagonalNumber rfl]
 
-/-- pentagonalCoeff is zero at non-pentagonal numbers. -/
+/-- pentagonalCoeff is zero at non-pentagonal numbers. @statement_id stmt-src-lem.pent.coeff-zero-non-pentagonal
+-/
 lemma pentagonalCoeff_eq_zero_of_not_pentagonal {m : ℕ}
     (h : ∀ k : ℤ, pentagonalNumber k ≠ m) : pentagonalCoeff m = 0 := by
   simp only [pentagonalCoeff]
@@ -12059,6 +12124,7 @@ gives the result.
 
 ## Blocking Dependencies
 - Power series infrastructure for xP' = SP identity
+@statement_id stmt-src-thm.pars.euler-sum-div-rec
 -/
 theorem euler_sum_divisors_recursive (n : ℕ) (_hn : n > 0) :
     ∑' k : {k : ℤ // pentagonalNumber k < n},
@@ -12276,6 +12342,7 @@ to the state generating function. The proof uses the bijection:
 where energy and parnum are preserved.
 
 This is documented in tex source lines 500-570 of PentagonalJacobi.tex.
+@statement_id stmt-src-lem.jtp.coeff-double-sum-eq-coeff-stategenfun
 -/
 lemma coeff_double_sum_eq_coeff_stateGenFun (d : ℕ) :
     letI : TopologicalSpace (LaurentPolynomial ℤ) := ⊥
@@ -12404,7 +12471,8 @@ This is because:
 
 **RABBIT HOLE NOTE:** This lemma is used by `jacobi_triple_product_fps'` (thm.pars.jtp1),
 but is NOT on the critical path for `jacobi_triple_product` (thm.pars.jtp2). The evaluated
-form (jtp2) uses a different route via `jacobiLHS_mul_partitionGenFun`. -/
+form (jtp2) uses a different route via `jacobiLHS_mul_partitionGenFun`. @statement_id stmt-src-lem.jtp.jacobizzproduct-eq-stategenfun
+-/
 lemma jacobiZZProduct_eq_stateGenFun :
     letI : TopologicalSpace (LaurentPolynomial ℤ) := ⊥
     haveI : DiscreteTopology (LaurentPolynomial ℤ) := ⟨rfl⟩
@@ -12423,6 +12491,7 @@ lemma jacobiZZProduct_eq_stateGenFun :
   -- Use coeff_double_sum_eq_coeff_stateGenFun to show the coefficients are equal
   exact coeff_double_sum_eq_coeff_stateGenFun d
 
+/-- @statement_id stmt-src-lem.jtp.stategenfun-eq-lhs -/
 lemma stateGenFun_eq_jacobiLHS'_mul_partitionGenFunJacobi :
     letI : TopologicalSpace (LaurentPolynomial ℤ) := ⊥
     haveI : DiscreteTopology (LaurentPolynomial ℤ) := ⟨rfl⟩
@@ -12464,6 +12533,7 @@ sense when z is invertible, which is the case in JacobiRing where z = T(1).
 
 The proof uses Borcherds' approach via states and energy/particle number,
 as implemented in the State infrastructure above.
+@statement_id stmt-src-thm.pars.jtp1
 -/
 theorem jacobi_triple_product_fps' : jacobiLHS' = jacobiRHS' := by
   -- Use the key lemmas: both LHS and RHS equal stateGenFun when multiplied by partitionGenFunJacobi
@@ -12507,6 +12577,7 @@ the independent proof path through the State infrastructure.
 
 Note: This uses `evalJacobiCorrect` which computes combined exponents correctly, unlike
 the original `evalJacobi` which has truncation issues with negative intermediate exponents.
+@statement_id stmt-src-thm.jtp.jacobi-via-evalcorrect
 -/
 theorem jacobi_triple_product_via_evalCorrect (a b : ℤ) (ha : a > 0) (hab : a ≥ |b|)
     (u v : ℚ) (hv : v ≠ 0) :

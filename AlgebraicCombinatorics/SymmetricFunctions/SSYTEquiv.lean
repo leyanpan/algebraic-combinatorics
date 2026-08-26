@@ -299,7 +299,8 @@ theorem toSchurBasicsSSYT_toSFSSYT {lam : NPartition N}
       exact h
     exact (T.toYoungTableau.support c hc).symm
 
-/-- The equivalence between the two SSYT types. -/
+/-- The equivalence between the two SSYT types. @statement_id stmt-src-def.sf.ssyt-equiv
+-/
 def ssytEquiv (lam : SymmetricFunctions.NPartition N) :
     SymmetricFunctions.SSYT lam ≃ SSYT (sfNPartition_to_SchurBasics lam) where
   toFun := toSchurBasicsSSYT
@@ -564,7 +565,8 @@ theorem sfSSYT_monomial_eq_filling {lam : SymmetricFunctions.NPartition N}
     `schurPoly (sfNPartition_to_SchurBasics lam)`.
 
     **Note**: This theorem requires `[NeZero N]` because `schurPoly` requires it.
-    For the generic ring version, see `schur_eq_schurPoly_map`. -/
+    For the generic ring version, see `schur_eq_schurPoly_map`. @statement_id stmt-src-thm.sf.schur-eq-schurpoly-int
+-/
 theorem schur_eq_schurPoly_int (lam : SymmetricFunctions.NPartition N) :
     (SymmetricFunctions.schur (R := ℤ) lam : MvPolynomial (Fin N) ℤ) =
     schurPoly (sfNPartition_to_SchurBasics lam) := by
@@ -598,7 +600,8 @@ theorem schur_eq_schurPoly_int (lam : SymmetricFunctions.NPartition N) :
 
 /-- Corollary: The two Schur polynomial definitions are equal up to NPartition conversion.
 
-    This is the main user-facing theorem for composing results from different files. -/
+    This is the main user-facing theorem for composing results from different files. @statement_id stmt-src-thm.sf.schurpoly-eq-schur
+-/
 theorem schurPoly_eq_schur (lam : NPartition N) :
     (schurPoly lam : MvPolynomial (Fin N) ℤ) =
     SymmetricFunctions.schur (schurBasicsNPartition_to_SF lam) := by

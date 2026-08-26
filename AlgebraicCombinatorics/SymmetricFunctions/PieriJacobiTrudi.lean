@@ -138,7 +138,8 @@ def zero (N : ℕ) : NPartition N where
 
 instance : Zero (NPartition N) := ⟨zero N⟩
 
-/-- The size (sum of parts) of an N-partition -/
+/-- The size (sum of parts) of an N-partition @statement_id stmt-src-lem.sf.npar-size
+-/
 def size (lam : NPartition N) : ℕ := ∑ i, lam.parts i
 
 /-- Containment of partitions: μ ⊆ λ means μᵢ ≤ λᵢ for all i -/
@@ -155,7 +156,8 @@ instance instDecidableLE : DecidableRel (fun (a b : NPartition N) => a ≤ b) :=
 /-- The transpose of a partition.
     See Exercise exe.pars.transpose in the source.
     The transpose λᵗ satisfies: (λᵗ)ᵢ = |{j : λⱼ ≥ i+1}| for each i.
-    The length of the transpose equals the first (largest) part of λ. -/
+    The length of the transpose equals the first (largest) part of λ. @statement_id stmt-src-def.sf.npartition-transpose
+-/
 noncomputable def transpose (lam : NPartition N) (hN : 0 < N) : NPartition (lam.parts ⟨0, hN⟩) where
   parts := fun i => (Finset.univ.filter fun j : Fin N => i.val + 1 ≤ lam.parts j).card
   weaklyDecreasing := by
@@ -170,7 +172,8 @@ noncomputable def transpose (lam : NPartition N) (hN : 0 < N) : NPartition (lam.
     (λᵗ)ᵢ = |{j : λⱼ ≥ i}| for each i.
 
     Since we work with fixed-length tuples, this predicate captures
-    when two tuples represent transpose partitions (possibly with trailing zeros). -/
+    when two tuples represent transpose partitions (possibly with trailing zeros). @statement_id stmt-src-def.sf.is-transpose
+-/
 def IsTranspose {M : ℕ} (lam : Fin N → ℕ) (lamt : Fin M → ℕ) : Prop :=
   (∀ i : Fin M, lamt i = (Finset.univ.filter fun j : Fin N => i.val + 1 ≤ lam j).card) ∧
   (∀ j : Fin N, lam j = (Finset.univ.filter fun i : Fin M => j.val + 1 ≤ lamt i).card)
@@ -232,7 +235,8 @@ private lemma card_filter_le_fin (i : Fin N) :
     j + 1 ≤ λ_i ↔ i + 1 ≤ λᵗ_j
 
     The proof uses the weakly decreasing property: if j + 1 ≤ λ_i, then all
-    rows 0, 1, ..., i have at least j + 1 boxes, so λᵗ_j ≥ i + 1. -/
+    rows 0, 1, ..., i have at least j + 1 boxes, so λᵗ_j ≥ i + 1. @statement_id stmt-src-lem.sf.transpose-box-equiv
+-/
 theorem IsTranspose.box_equiv {M : ℕ} {lam : Fin N → ℕ} {lamt : Fin M → ℕ}
     (hlam_mono : ∀ i j : Fin N, i ≤ j → lam j ≤ lam i)
     (hlamt_mono : ∀ i j : Fin M, i ≤ j → lamt j ≤ lamt i)
@@ -265,7 +269,8 @@ theorem IsTranspose.box_equiv {M : ℕ} {lam : Fin N → ℕ} {lamt : Fin M → 
     |λ| = |λᵗ| (the size of the partition equals the size of its transpose).
 
     The proof uses double counting: both ∑ᵢ λᵢ and ∑ⱼ λᵗⱼ count the total
-    number of boxes in the Young diagram, just organized differently. -/
+    number of boxes in the Young diagram, just organized differently. @statement_id stmt-src-lem.sf.transpose-sum-eq
+-/
 theorem IsTranspose.sum_eq {M : ℕ} {lam : Fin N → ℕ} {lamt : Fin M → ℕ}
     (hlam_mono : ∀ i j : Fin N, i ≤ j → lam j ≤ lam i)
     (hlamt_mono : ∀ i j : Fin M, i ≤ j → lamt j ≤ lamt i)
@@ -303,7 +308,8 @@ alternative proof of Pieri rules via Littlewood-Richardson. -/
 
 /-- The row partition (n, 0, 0, ..., 0) with n boxes in the first row.
     This is the partition corresponding to h_n (complete homogeneous symmetric polynomial).
-    Requires N > 0 to have at least one row. -/
+    Requires N > 0 to have at least one row. @statement_id stmt-src-def.sf.row-partition
+-/
 def rowPartition (N : ℕ) (n : ℕ) (_hN : 0 < N) : NPartition N where
   parts := fun i => if i.val = 0 then n else 0
   weaklyDecreasing := by
@@ -315,7 +321,8 @@ def rowPartition (N : ℕ) (n : ℕ) (_hN : 0 < N) : NPartition N where
       · omega  -- i > 0 but j = 0 contradicts i ≤ j
       · simp only [hj, ↓reduceIte, hi]; rfl
 
-/-- The row partition has size n. -/
+/-- The row partition has size n. @statement_id stmt-src-lem.sf.npar-row-col
+-/
 @[simp]
 theorem rowPartition_size (N : ℕ) (n : ℕ) (hN : 0 < N) :
     (rowPartition N n hN).size = n := by
@@ -344,7 +351,8 @@ theorem rowPartition_parts_pos (N : ℕ) (n : ℕ) (hN : 0 < N) (i : Fin N) (hi 
 
 /-- The column partition (1, 1, ..., 1, 0, ..., 0) with n ones (n boxes in first column).
     This is the partition corresponding to e_n (elementary symmetric polynomial).
-    Requires n ≤ N (can't have more rows than N). -/
+    Requires n ≤ N (can't have more rows than N). @statement_id stmt-src-def.sf.col-partition
+-/
 def colPartition (N : ℕ) (n : ℕ) (_hn : n ≤ N) : NPartition N where
   parts := fun i => if i.val < n then 1 else 0
   weaklyDecreasing := by
@@ -353,7 +361,8 @@ def colPartition (N : ℕ) (n : ℕ) (_hn : n ≤ N) : NPartition N where
     · split_ifs <;> omega
     · split_ifs <;> omega
 
-/-- The column partition has size n. -/
+/-- The column partition has size n. @statement_id stmt-src-lem.sf.npar-row-col
+-/
 @[simp]
 theorem colPartition_size (N : ℕ) (n : ℕ) (hn : n ≤ N) :
     (colPartition N n hn).size = n := by
@@ -612,7 +621,8 @@ no two boxes in the same column or row, respectively.
 -/
 
 /-- A skew partition λ/μ is a pair of N-partitions with μ ⊆ λ.
-    Definition def.sf.strips(a). -/
+    Definition def.sf.strips(a). @statement_id stmt-src-def.sf.strips
+-/
 structure SkewPartition (N : ℕ) where
   /-- The outer partition λ -/
   outer : NPartition N
@@ -638,7 +648,8 @@ def size (s : SkewPartition N) : ℕ := s.outer.size - s.inner.size
     - `isHorizontalStripFun`: Canonical unbundled version with `(lam, mu)` argument order
 
     **Equivalence:** `s.isHorizontalStrip ↔ isHorizontalStripFun s.outer.parts s.inner.parts`
-    (see `SkewPartition.isHorizontalStrip_iff_isHorizontalStripFun`) -/
+    (see `SkewPartition.isHorizontalStrip_iff_isHorizontalStripFun`) @statement_id stmt-src-def.sf.strips
+-/
 def isHorizontalStrip (s : SkewPartition N) : Prop :=
   ∀ i : Fin N, ∀ hi : i.val + 1 < N,
     s.inner.parts i ≥ s.outer.parts ⟨i.val + 1, hi⟩
@@ -653,19 +664,22 @@ def isHorizontalStrip (s : SkewPartition N) : Prop :=
     - `isVerticalStripFun`: Canonical unbundled version with `(lam, mu)` argument order
 
     **Equivalence:** `s.isVerticalStrip ↔ isVerticalStripFun s.outer.parts s.inner.parts`
-    (see `SkewPartition.isVerticalStrip_iff_isVerticalStripFun`) -/
+    (see `SkewPartition.isVerticalStrip_iff_isVerticalStripFun`) @statement_id stmt-src-def.sf.strips
+-/
 def isVerticalStrip (s : SkewPartition N) : Prop :=
   ∀ i : Fin N, s.outer.parts i ≤ s.inner.parts i + 1
 
 /-- A skew partition is a horizontal n-strip if it is a horizontal strip
     with |Y(λ/μ)| = n.
-    Definition def.sf.strips(d). -/
+    Definition def.sf.strips(d). @statement_id stmt-src-def.sf.strips
+-/
 def isHorizontalNStrip (s : SkewPartition N) (n : ℕ) : Prop :=
   s.isHorizontalStrip ∧ s.size = n
 
 /-- A skew partition is a vertical n-strip if it is a vertical strip
     with |Y(λ/μ)| = n.
-    Definition def.sf.strips(e). -/
+    Definition def.sf.strips(e). @statement_id stmt-src-def.sf.strips
+-/
 def isVerticalNStrip (s : SkewPartition N) (n : ℕ) : Prop :=
   s.isVerticalStrip ∧ s.size = n
 
@@ -680,7 +694,8 @@ characterized in terms of the entries of the partitions.
     Label: prop.sf.strips.entries
 
     A skew partition λ/μ is a horizontal strip iff
-    λ₁ ≥ μ₁ ≥ λ₂ ≥ μ₂ ≥ ⋯ ≥ λ_N ≥ μ_N. -/
+    λ₁ ≥ μ₁ ≥ λ₂ ≥ μ₂ ≥ ⋯ ≥ λ_N ≥ μ_N. @statement_id stmt-src-prop.sf.strips.entries
+-/
 theorem horizontalStrip_iff_entries (s : SkewPartition N) :
     s.isHorizontalStrip ↔
       ∀ i : Fin N, ∀ hi : i.val + 1 < N,
@@ -696,7 +711,8 @@ theorem horizontalStrip_iff_entries (s : SkewPartition N) :
     Label: prop.sf.strips.entries
 
     A skew partition λ/μ is a vertical strip iff
-    μᵢ ≤ λᵢ ≤ μᵢ + 1 for each i ∈ [N]. -/
+    μᵢ ≤ λᵢ ≤ μᵢ + 1 for each i ∈ [N]. @statement_id stmt-src-prop.sf.strips.entries
+-/
 theorem verticalStrip_iff_entries (s : SkewPartition N) :
     s.isVerticalStrip ↔
       ∀ i : Fin N, s.inner.parts i ≤ s.outer.parts i ∧
@@ -1272,7 +1288,8 @@ theorem skewSSYTFinset_mem (s : SkewPartition N) (T : SkewSSYT s) :
   rfl
 
 /-- The Schur polynomial s_λ defined as the sum over all SSYT of shape λ.
-    Definition def.sf.schur. -/
+    Definition def.sf.schur. @statement_id stmt-src-def.sf.schur-local
+-/
 noncomputable def schur (lam : NPartition N) : MvPolynomial (Fin N) R :=
   ∑ T ∈ ssytFinset lam, T.toMonomial
 
@@ -1320,13 +1337,15 @@ theorem ssytFinset_zero : ssytFinset (0 : NPartition N) = {SSYT.unique} := by
     exact ssytFinset_mem 0 SSYT.unique
 
 /-- The Schur polynomial of the zero partition is 1.
-    This is because the only SSYT of shape 0 is the empty tableau with monomial 1. -/
+    This is because the only SSYT of shape 0 is the empty tableau with monomial 1. @statement_id stmt-src-lem.sf.schur-zero
+-/
 @[simp]
 theorem schur_zero : schur (0 : NPartition N) = (1 : MvPolynomial (Fin N) R) := by
   simp only [schur, ssytFinset_zero, Finset.sum_singleton, SSYT.toMonomial_unique]
 
 /-- The skew Schur polynomial s_{λ/μ} defined as the sum over all skew SSYT.
-    Definition def.sf.skew-schur. -/
+    Definition def.sf.skew-schur. @statement_id stmt-src-def.sf.skew-schur-local
+-/
 noncomputable def skewSchur (s : SkewPartition N) : MvPolynomial (Fin N) R :=
   ∑ T ∈ skewSSYTFinset s, T.toMonomial
 
@@ -1375,7 +1394,8 @@ lemma ssytToSkewSSYT_toMonomial (lam : Fin N → ℕ) (hlam : ∀ i j : Fin N, i
     (ssytToSkewSSYT lam hlam T).toMonomial = T.toMonomial (R := R) := rfl
 
 /-- When the inner partition is zero, the skew Schur polynomial equals the regular Schur polynomial.
-    This is because the skew shape λ/0 is just the shape λ. -/
+    This is because the skew shape λ/0 is just the shape λ. @statement_id stmt-src-lem.sf.skew-schur-zero
+-/
 theorem skewSchur_zero_eq_schur (lam : Fin N → ℕ)
     (hlam : ∀ i j : Fin N, i ≤ j → lam j ≤ lam i) :
     skewSchur (R := R) ⟨⟨lam, hlam⟩, ⟨fun _ => 0, fun _ _ _ => le_refl 0⟩, fun _ => Nat.zero_le _⟩ =
@@ -1492,7 +1512,8 @@ def toNPartition (f : Fin N → ℕ) (hf : isWeaklyDecreasing f) : NPartition N 
     2. Horizontal strip: μ_i ≥ λ_{i+1} for all i < N
     3. Size: |λ| - |μ| = n
 
-    The set is finite because each λ_i is bounded. -/
+    The set is finite because each λ_i is bounded. @statement_id stmt-src-def.sf.horizontal-n-strip-partitions
+-/
 def horizontalNStripPartitions (mu : NPartition N) (n : ℕ) : Finset (NPartition N) :=
   (potentialHorizontalStrips mu n).filter (fun f =>
     isWeaklyDecreasing f ∧ isHorizontalStripFun f mu.parts ∧ hasSizeDiff mu.parts f n
@@ -1516,7 +1537,8 @@ def potentialVerticalStrips (mu : NPartition N) : Finset (Fin N → ℕ) :=
     2. Vertical strip: λ_i ≤ μ_i + 1 for all i
     3. Size: |λ| - |μ| = n
 
-    The set is finite because each λ_i ∈ {μ_i, μ_i + 1}. -/
+    The set is finite because each λ_i ∈ {μ_i, μ_i + 1}. @statement_id stmt-src-def.sf.vertical-n-strip-partitions
+-/
 def verticalNStripPartitions (mu : NPartition N) (n : ℕ) : Finset (NPartition N) :=
   (potentialVerticalStrips mu).filter (fun f =>
     isWeaklyDecreasing f ∧ isVerticalStripFun f mu.parts ∧ hasSizeDiff mu.parts f n
@@ -1683,7 +1705,8 @@ proving that specific partitions belong to these sets.
     4. Each λ_i is bounded by `horizontalStripUpperBound μ n i`
 
     This characterization is useful for proving that specific partitions
-    belong to `horizontalNStripPartitions μ n`. -/
+    belong to `horizontalNStripPartitions μ n`. @statement_id stmt-src-lem.sf.horizontal-strip-membership
+-/
 theorem mem_horizontalNStripPartitions_iff (mu : NPartition N) (n : ℕ) (lam : NPartition N) :
     lam ∈ horizontalNStripPartitions mu n ↔
       (∀ i, mu.parts i ≤ lam.parts i) ∧
@@ -1734,7 +1757,8 @@ theorem mem_horizontalNStripPartitions_iff (mu : NPartition N) (n : ℕ) (lam : 
     3. |λ| - |μ| = n (size constraint)
 
     This characterization is useful for proving that specific partitions
-    belong to `verticalNStripPartitions μ n`. -/
+    belong to `verticalNStripPartitions μ n`. @statement_id stmt-src-lem.sf.vertical-strip-membership
+-/
 theorem mem_verticalNStripPartitions_iff (mu : NPartition N) (n : ℕ) (lam : NPartition N) :
     lam ∈ verticalNStripPartitions mu n ↔
       (∀ i, mu.parts i ≤ lam.parts i) ∧
@@ -1805,7 +1829,8 @@ lemma hasSizeDiff_of_isVerticalNStrip (mu : NPartition N) (n : ℕ)
 /-- Simplified membership criterion for horizontal strip partitions using SkewPartition API.
 
     This theorem bridges the gap between the `horizontalNStripPartitions` finset
-    and the `SkewPartition.isHorizontalNStrip` predicate. -/
+    and the `SkewPartition.isHorizontalNStrip` predicate. @statement_id stmt-src-lem.sf.mem-horizontal-of-ishorizontalnstrip
+-/
 theorem mem_horizontalNStripPartitions_of_isHorizontalNStrip (mu : NPartition N) (n : ℕ)
     (lam : NPartition N) (hcontained : mu ≤ lam)
     (hstrip : (⟨lam, mu, hcontained⟩ : SkewPartition N).isHorizontalNStrip n)
@@ -1817,7 +1842,8 @@ theorem mem_horizontalNStripPartitions_of_isHorizontalNStrip (mu : NPartition N)
 /-- Simplified membership criterion for vertical strip partitions using SkewPartition API.
 
     This theorem bridges the gap between the `verticalNStripPartitions` finset
-    and the `SkewPartition.isVerticalNStrip` predicate. -/
+    and the `SkewPartition.isVerticalNStrip` predicate. @statement_id stmt-src-lem.sf.mem-vertical-of-isverticalnstrip
+-/
 theorem mem_verticalNStripPartitions_of_isVerticalNStrip (mu : NPartition N) (n : ℕ)
     (lam : NPartition N) (hcontained : mu ≤ lam)
     (hstrip : (⟨lam, mu, hcontained⟩ : SkewPartition N).isVerticalNStrip n) :
@@ -1981,17 +2007,20 @@ representations of horizontal/vertical strip predicates:
 -/
 
 /-- The bundled `SkewPartition.isHorizontalStrip` is equivalent to the canonical
-    unbundled `isHorizontalStripFun` applied to the outer and inner partitions. -/
+    unbundled `isHorizontalStripFun` applied to the outer and inner partitions. @statement_id stmt-src-lem.sf.horizontal-strip-iff-fun
+-/
 theorem SkewPartition.isHorizontalStrip_iff_isHorizontalStripFun (s : SkewPartition N) :
     s.isHorizontalStrip ↔ isHorizontalStripFun s.outer.parts s.inner.parts := Iff.rfl
 
 /-- The bundled `SkewPartition.isVerticalStrip` is equivalent to the canonical
-    unbundled `isVerticalStripFun` applied to the outer and inner partitions. -/
+    unbundled `isVerticalStripFun` applied to the outer and inner partitions. @statement_id stmt-src-lem.sf.vertical-strip-iff-fun
+-/
 theorem SkewPartition.isVerticalStrip_iff_isVerticalStripFun (s : SkewPartition N) :
     s.isVerticalStrip ↔ isVerticalStripFun s.outer.parts s.inner.parts := Iff.rfl
 
 /-- All entries of a tableau are 0 (the first row index).
-    This is the key property for row partition Yamanouchi tableaux. -/
+    This is the key property for row partition Yamanouchi tableaux. @statement_id stmt-src-def.sf.all-entries-zero
+-/
 def allEntriesZero {lam mu : Fin N → ℕ} (T : AlgebraicCombinatorics.Tableau lam mu) : Prop :=
   ∀ c : {c : Fin N × ℕ // c ∈ AlgebraicCombinatorics.skewYoungDiagram lam mu}, (T c).val = 0
 
@@ -2019,7 +2048,8 @@ lemma contentColGeq_zero_of_allEntriesZero {lam mu : Fin N → ℕ}
 
 /-- **Row partition Yamanouchi characterization (reverse direction):**
     If all entries of T are 0 and T is semistandard, then T is ν-Yamanouchi
-    for ν = (n, 0, ..., 0). -/
+    for ν = (n, 0, ..., 0). @statement_id stmt-src-thm.sf.all-entries-zero-yamanouchi
+-/
 theorem allEntriesZero_implies_isYamanouchi_rowPartition
     {lam mu : Fin N → ℕ} (hN : 0 < N)
     (T : AlgebraicCombinatorics.Tableau lam mu)
@@ -2081,7 +2111,8 @@ with respect to a row partition.
 -/
 
 /-- Convert a Sym to an SSYT of row partition shape.
-    The sorted multiset gives a weakly increasing sequence for row 0. -/
+    The sorted multiset gives a weakly increasing sequence for row 0. @statement_id stmt-src-def.sf.sym-to-row-ssyt
+-/
 def symToRowSSYT (hN : 0 < N) (n : ℕ) (s : Sym (Fin N) n) :
     SSYT (NPartition.rowPartition N n hN) where
   entries i j :=
@@ -2119,7 +2150,8 @@ def symToRowSSYT (hN : 0 < N) (n : ℕ) (s : Sym (Fin N) n) :
     exact (Nat.not_lt_zero j.val hj).elim
 
 /-- Convert an SSYT of row partition shape back to a Sym.
-    Row 0 entries form a weakly increasing sequence which gives a multiset. -/
+    Row 0 entries form a weakly increasing sequence which gives a multiset. @statement_id stmt-src-def.sf.row-ssyt-to-sym
+-/
 def rowSSYTToSym (hN : 0 < N) (n : ℕ) (T : SSYT (NPartition.rowPartition N n hN)) :
     Sym (Fin N) n := by
   -- Row 0 has n boxes
@@ -2129,7 +2161,8 @@ def rowSSYTToSym (hN : 0 < N) (n : ℕ) (T : SSYT (NPartition.rowPartition N n h
   let entries0 : Fin n → Fin N := fun j => T.entries ⟨0, hN⟩ ⟨j.val, by rw [hrow0]; exact j.isLt⟩
   exact weaklyIncreasingToSym n entries0
 
-/-- symToRowSSYT and rowSSYTToSym are inverses (Sym → SSYT → Sym). -/
+/-- symToRowSSYT and rowSSYTToSym are inverses (Sym → SSYT → Sym). @statement_id stmt-src-lem.sf.row-ssyt-roundtrip
+-/
 theorem rowSSYTToSym_symToRowSSYT (hN : 0 < N) (n : ℕ) (s : Sym (Fin N) n) :
     rowSSYTToSym hN n (symToRowSSYT hN n s) = s := by
   unfold rowSSYTToSym symToRowSSYT
@@ -2179,7 +2212,8 @@ theorem symToRowSSYT_toMonomial (hN : 0 < N) (n : ℕ) (s : Sym (Fin N) n) :
     - Such sequences correspond to multisets of size n from Fin N
     - The monomial of such a tableau is exactly (s.1.map X).prod for s : Sym (Fin N) n
 
-    This lemma enables deriving the horizontal Pieri rule from Littlewood-Richardson. -/
+    This lemma enables deriving the horizontal Pieri rule from Littlewood-Richardson. @statement_id stmt-src-thm.sf.hsymm-eq-schur-row
+-/
 theorem hsymm_eq_schur_rowPartition (hN : 0 < N) (n : ℕ) :
     hsymm (Fin N) R n = schur (NPartition.rowPartition N n hN) := by
   -- Both sides are sums of monomials
@@ -2247,7 +2281,8 @@ theorem hsymm_eq_schur_rowPartition (hN : 0 < N) (n : ℕ) :
     exact (symToRowSSYT_toMonomial hN n s).symm
 
 /-- Convert a subset of size n to an SSYT of column partition shape.
-    The sorted subset gives a strictly increasing sequence for column 0. -/
+    The sorted subset gives a strictly increasing sequence for column 0. @statement_id stmt-src-def.sf.finset-to-col-ssyt
+-/
 def finsetToColSSYT (n : ℕ) (hn : n ≤ N) (s : Finset (Fin N)) (hs : s.card = n) :
     SSYT (NPartition.colPartition N n hn) where
   entries i j :=
@@ -2312,7 +2347,8 @@ theorem colSSYTEntry_succ_lt (n : ℕ) (hn : n ≤ N)
     simp [NPartition.colPartition, hk1]
   exact T.colStrict ⟨k, hkN⟩ hk1N ⟨0, by simp [NPartition.colPartition, hk]⟩ hj
 
-/-- Column entries are strictly increasing - general case -/
+/-- Column entries are strictly increasing - general case @statement_id stmt-src-lem.sf.col-ssyt-entry-strict-mono
+-/
 theorem colSSYTEntry_strictMono (n : ℕ) (hn : n ≤ N)
     (T : SSYT (NPartition.colPartition N n hn))
     (k₁ k₂ : ℕ) (hk₁ : k₁ < n) (hk₂ : k₂ < n) (hlt : k₁ < k₂) :
@@ -2497,7 +2533,8 @@ theorem finsetToColSSYT_toMonomial (n : ℕ) (hn : n ≤ N) (s : Finset (Fin N))
     3. schur sums over SSYT of shape (1,...,1,0,...,0) with monomial T.toMonomial
     4. For column partition, SSYT entries in column 0 form strictly increasing sequences
     5. The bijection: s ↦ SSYT with entries = sorted(s) in column 0
-    6. Weight preservation: ∏_{i ∈ s} X_i = T.toMonomial -/
+    6. Weight preservation: ∏_{i ∈ s} X_i = T.toMonomial @statement_id stmt-src-thm.sf.esymm-eq-schur-col
+-/
 theorem esymm_eq_schur_colPartition (n : ℕ) (hn : n ≤ N) :
     esymm (Fin N) R n = schur (NPartition.colPartition N n hn) := by
   -- The proof establishes a bijection between:
@@ -2612,7 +2649,8 @@ theorem esymm_eq_schur_colPartition (n : ℕ) (hn : n ≤ N) :
 
     This is Exercise exe.sf.pieri in the TeX source. The proof requires the
     Robinson-Schensted-Knuth (RSK) row insertion bijection, which is not yet
-    formalized in this project. -/
+    formalized in this project. @statement_id stmt-src-thm.sf.pieri
+-/
 theorem pieri_horizontal (n : ℕ) (mu : NPartition N) :
     hsymm (Fin N) R n * schur mu =
       ∑ lam ∈ horizontalNStripPartitions mu n, schur lam := by
@@ -2627,7 +2665,8 @@ theorem pieri_horizontal (n : ℕ) (mu : NPartition N) :
 
     This is Exercise exe.sf.pieri in the TeX source. The proof requires the
     Robinson-Schensted-Knuth (RSK) column insertion bijection, or alternatively
-    can be derived from `pieri_horizontal` via the ω-involution. -/
+    can be derived from `pieri_horizontal` via the ω-involution. @statement_id stmt-src-thm.sf.pieri
+-/
 theorem pieri_vertical (n : ℕ) (mu : NPartition N) :
     esymm (Fin N) R n * schur mu =
       ∑ lam ∈ verticalNStripPartitions mu n, schur lam := by
@@ -2641,11 +2680,13 @@ of matrices involving h_n or e_n.
 -/
 
 /-- Extended h_n: h_n = 0 for n < 0, h_0 = 1.
-    This is needed since the Jacobi-Trudi formula may have negative indices. -/
+    This is needed since the Jacobi-Trudi formula may have negative indices. @statement_id stmt-src-def.sf.hsymm-ext
+-/
 noncomputable def hsymmExt (n : ℤ) : MvPolynomial (Fin N) R :=
   if 0 ≤ n then hsymm (Fin N) R n.toNat else 0
 
-/-- hsymmExt is symmetric. -/
+/-- hsymmExt is symmetric. @statement_id stmt-src-lem.sf.hsymm-ext-symmetric
+-/
 theorem hsymmExt_isSymmetric (n : ℤ) : (hsymmExt (N := N) (R := R) n).IsSymmetric := by
   unfold hsymmExt
   split_ifs with h
@@ -2674,7 +2715,8 @@ noncomputable def jacobiTrudiMatrixH (lam mu : Fin N → ℕ) :
 
     - [Stanley, EC2, Theorem 7.16.1]
     - [Grinberg-Reiner, Section 2.4]
-    - [Fulton, Young Tableaux, Section 4.3] -/
+    - [Fulton, Young Tableaux, Section 4.3] @statement_id stmt-src-thm.sf.jt-e
+-/
 theorem jacobiTrudi_e (lam mu : Fin N → ℕ)
     (lamt muT : Fin N → ℕ)
     (hlam : ∀ i j : Fin N, i ≤ j → lam j ≤ lam i)
@@ -2723,7 +2765,8 @@ def jacobiTrudiTargetX (lam : Fin N → ℕ) (j : Fin N) : ℤ :=
 
 /-- The source x-coordinates are weakly decreasing.
     This follows from the partition being weakly decreasing:
-    μᵢ - i ≥ μⱼ - j when i ≤ j, since μᵢ ≥ μⱼ and i ≤ j. -/
+    μᵢ - i ≥ μⱼ - j when i ≤ j, since μᵢ ≥ μⱼ and i ≤ j. @statement_id stmt-src-lem.sf.jt-source-x-decreasing
+-/
 theorem jacobiTrudiSourceX_antitone (mu : Fin N → ℕ)
     (hmu : ∀ i j : Fin N, i ≤ j → mu j ≤ mu i) :
     ∀ i j : Fin N, i ≤ j → jacobiTrudiSourceX mu j ≤ jacobiTrudiSourceX mu i := by
@@ -2734,7 +2777,8 @@ theorem jacobiTrudiSourceX_antitone (mu : Fin N → ℕ)
   omega
 
 /-- The target x-coordinates are weakly decreasing.
-    This follows from the partition being weakly decreasing. -/
+    This follows from the partition being weakly decreasing. @statement_id stmt-src-lem.sf.jt-target-x-decreasing
+-/
 theorem jacobiTrudiTargetX_antitone (lam : Fin N → ℕ)
     (hlam : ∀ i j : Fin N, i ≤ j → lam j ≤ lam i) :
     ∀ i j : Fin N, i ≤ j → jacobiTrudiTargetX lam j ≤ jacobiTrudiTargetX lam i := by
@@ -2819,7 +2863,8 @@ lemma toSym_symToLatticePath {a c : ℤ} (s : Sym (Fin N) (c - a).toNat) :
   simp only [LatticePath.toSym, symToLatticePath, Sym.coe_mk]
   exact Multiset.sort_eq s.1 (· ≤ ·)
 
-/-- The equivalence between lattice paths and Sym (multisets). -/
+/-- The equivalence between lattice paths and Sym (multisets). @statement_id stmt-src-lem.sf.lattice-path-sym-equiv
+-/
 noncomputable def latticePathSymEquiv {a c : ℤ} :
     LatticePath (N := N) a c ≃ Sym (Fin N) (c - a).toNat where
   toFun := LatticePath.toSym
@@ -2849,7 +2894,8 @@ noncomputable def latticePathFinset (a c : ℤ) : Finset (LatticePath (N := N) a
     This follows from Proposition prop.lgv.1-paths.ct.
     The key insight is that the weakly increasing sequences of length n
     with entries in [N] are in bijection with multisets of size n from [N],
-    which are exactly what h_n counts. -/
+    which are exactly what h_n counts. @statement_id stmt-src-thm.sf.jt-obs1
+-/
 theorem pathWeightSum_eq_hsymm (a c : ℤ) :
     ∑ p ∈ latticePathFinset (N := N) a c, p.weight (R := R) = hsymmExt (N := N) (R := R) (c - a) := by
   unfold hsymmExt latticePathFinset
@@ -2868,7 +2914,8 @@ theorem pathWeightSum_eq_hsymm (a c : ℤ) :
     simp
 
 /-- A non-intersecting path tuple (nipat) from sources A to targets B.
-    For Jacobi-Trudi, A_i = (μᵢ - i, 1) and B_i = (λᵢ - i, N). -/
+    For Jacobi-Trudi, A_i = (μᵢ - i, 1) and B_i = (λᵢ - i, N). @statement_id stmt-src-def.sf.nipat
+-/
 structure Nipat (lam mu : Fin N → ℕ)
     (hlam : ∀ i j : Fin N, i ≤ j → lam j ≤ lam i)
     (hmu : ∀ i j : Fin N, i ≤ j → mu j ≤ mu i)
@@ -2912,7 +2959,8 @@ private lemma List.IsChain.getElem_le_getElem_of_le {α : Type*} [Preorder α]
       · omega
 
 /-- The bijection between nipats and SSYT, sending a nipat to the tableau
-    whose i-th row contains the heights of east-steps in path i. -/
+    whose i-th row contains the heights of east-steps in path i. @statement_id stmt-src-def.sf.nipat-to-ssyt
+-/
 noncomputable def nipatToSSYT {lam mu : Fin N → ℕ}
     {hlam : ∀ i j : Fin N, i ≤ j → lam j ≤ lam i}
     {hmu : ∀ i j : Fin N, i ≤ j → mu j ≤ mu i}
@@ -2987,7 +3035,8 @@ def mkLatticePathFromEntries (lam mu : ℕ) (i : ℕ)
     simp
 
 /-- The inverse bijection from SSYT to nipats, sending a tableau to the nipat
-    whose i-th path has east-steps at the heights given by row i of the tableau. -/
+    whose i-th path has east-steps at the heights given by row i of the tableau. @statement_id stmt-src-def.sf.ssyt-to-nipat
+-/
 noncomputable def ssytToNipat {lam mu : Fin N → ℕ}
     {hlam : ∀ i j : Fin N, i ≤ j → lam j ≤ lam i}
     {hmu : ∀ i j : Fin N, i ≤ j → mu j ≤ mu i}
@@ -3020,7 +3069,8 @@ theorem Nipat.eq_of_paths_eq {lam mu : Fin N → ℕ}
   subst h
   rfl
 
-/-- ssytToNipat is a left inverse of nipatToSSYT. -/
+/-- ssytToNipat is a left inverse of nipatToSSYT. @statement_id stmt-src-lem.sf.ssyt-nipat-roundtrip-1
+-/
 theorem ssytToNipat_nipatToSSYT {lam mu : Fin N → ℕ}
     {hlam : ∀ i j : Fin N, i ≤ j → lam j ≤ lam i}
     {hmu : ∀ i j : Fin N, i ≤ j → mu j ≤ mu i}
@@ -3079,7 +3129,8 @@ lemma ssytToNipat_paths {lam mu : Fin N → ℕ}
   simp only [ssytToNipat, mkLatticePathFromEntries, List.get_ofFn]
   congr 1
 
-/-- nipatToSSYT is a left inverse of ssytToNipat. -/
+/-- nipatToSSYT is a left inverse of ssytToNipat. @statement_id stmt-src-lem.sf.ssyt-nipat-roundtrip-2
+-/
 theorem nipatToSSYT_ssytToNipat {lam mu : Fin N → ℕ}
     {hlam : ∀ i j : Fin N, i ≤ j → lam j ≤ lam i}
     {hmu : ∀ i j : Fin N, i ≤ j → mu j ≤ mu i}
@@ -3103,7 +3154,8 @@ private lemma list_prod_map_X_eq_finset_prod (l : List (Fin N)) (n : ℕ) (h : l
     simp only [Fin.val_zero, Fin.val_succ, List.get_cons_succ, List.get]
     rw [mul_comm, ih, mul_comm]
 
-/-- The weight of a nipat equals the monomial of the corresponding tableau. -/
+/-- The weight of a nipat equals the monomial of the corresponding tableau. @statement_id stmt-src-lem.sf.nipat-to-ssyt-weight
+-/
 theorem nipatToSSYT_weight {lam mu : Fin N → ℕ}
     {hlam : ∀ i j : Fin N, i ≤ j → lam j ≤ lam i}
     {hmu : ∀ i j : Fin N, i ≤ j → mu j ≤ mu i}
@@ -3125,7 +3177,8 @@ theorem nipatToSSYT_weight {lam mu : Fin N → ℕ}
     where the entries in row i are the heights of the east-steps of pᵢ.
 
     Moreover, the weight of a nipat equals the monomial x_T of the
-    corresponding tableau. -/
+    corresponding tableau. @statement_id stmt-src-thm.sf.jt-obs2
+-/
 theorem nipat_ssyt_bijection (lam mu : Fin N → ℕ)
     (hlam : ∀ i j : Fin N, i ≤ j → lam j ≤ lam i)
     (hmu : ∀ i j : Fin N, i ≤ j → mu j ≤ mu i)
@@ -3164,7 +3217,8 @@ noncomputable instance SkewSSYT.fintype (s : SkewPartition N) : Fintype (SkewSSY
   }
   exact Fintype.ofEquiv S e
 
-/-- The equivalence between Nipat and SkewSSYT, established by the bijection functions. -/
+/-- The equivalence between Nipat and SkewSSYT, established by the bijection functions. @statement_id stmt-src-lem.sf.nipat-ssyt-equiv
+-/
 noncomputable def nipatSSYTEquiv (lam mu : Fin N → ℕ)
     (hlam : ∀ i j : Fin N, i ≤ j → lam j ≤ lam i)
     (hmu : ∀ i j : Fin N, i ≤ j → mu j ≤ mu i)
@@ -3193,7 +3247,8 @@ noncomputable def nipatFinset' (lam mu : Fin N → ℕ)
   Finset.univ
 
 /-- The sum of nipat weights equals the sum of SSYT monomials.
-    This follows from the bijection and weight preservation. -/
+    This follows from the bijection and weight preservation. @statement_id stmt-src-lem.sf.nipat-weight-eq-ssyt-sum
+-/
 theorem nipatWeightSum_eq_ssytSum (lam mu : Fin N → ℕ)
     (hlam : ∀ i j : Fin N, i ≤ j → lam j ≤ lam i)
     (hmu : ∀ i j : Fin N, i ≤ j → mu j ≤ mu i)
@@ -3211,7 +3266,8 @@ theorem nipatWeightSum_eq_ssytSum (lam mu : Fin N → ℕ)
   exact Equiv.sum_comp e (fun T => T.toMonomial)
 
 /-- The sum of nipat weights equals skewSchur.
-    This combines the bijection with the definition of skewSchur. -/
+    This combines the bijection with the definition of skewSchur. @statement_id stmt-src-lem.sf.nipat-weight-eq-skew-schur
+-/
 theorem nipatWeightSum_eq_skewSchur (lam mu : Fin N → ℕ)
     (hlam : ∀ i j : Fin N, i ≤ j → lam j ≤ lam i)
     (hmu : ∀ i j : Fin N, i ≤ j → mu j ≤ mu i)
@@ -3249,12 +3305,14 @@ The key insight is that:
 -/
 
 /-- The source k-vertex for the Jacobi-Trudi LGV setup: A_i = (μ_i - i, 1).
-    The y-coordinate 1 represents the starting height in the lattice. -/
+    The y-coordinate 1 represents the starting height in the lattice. @statement_id stmt-src-def.sf.jt-source-target
+-/
 def jacobiTrudiSourceVertex (mu : Fin N → ℕ) : LGV.kVertex (ℤ × ℤ) N :=
   fun i => (jacobiTrudiSourceX mu i, 1)
 
 /-- The target k-vertex for the Jacobi-Trudi LGV setup: B_j = (λ_j - j, N).
-    The y-coordinate N represents the ending height in the lattice. -/
+    The y-coordinate N represents the ending height in the lattice. @statement_id stmt-src-def.sf.jt-source-target
+-/
 def jacobiTrudiTargetVertex (lam : Fin N → ℕ) : LGV.kVertex (ℤ × ℤ) N :=
   fun j => (jacobiTrudiTargetX lam j, N)
 
@@ -3291,7 +3349,8 @@ theorem jacobiTrudiTargetVertex_yIncreasing (lam : Fin N → ℕ) :
     North-steps are weighted by 1.
 
     Note: The lattice uses y-coordinates 1 to N, but Fin N uses 0 to N-1.
-    An east-step at y-coordinate y gets weight X_{y-1} when 1 ≤ y ≤ N. -/
+    An east-step at y-coordinate y gets weight X_{y-1} when 1 ≤ y ≤ N. @statement_id stmt-src-def.sf.jt-arc-weight
+-/
 noncomputable def jacobiTrudiArcWeight :
     LGV.ArcWeight LGV.integerLattice (MvPolynomial (Fin N) R) :=
   fun u v _ =>
@@ -3421,7 +3480,8 @@ private lemma x_coord_monotone_along_path (vertices : List (ℤ × ℤ))
         omega
 
 /-- The number of east-steps equals the x-displacement.
-    This is a key property for the bijection. -/
+    This is a key property for the bijection. @statement_id stmt-src-lem.sf.lgv-east-step-length
+-/
 theorem lgvPathEastStepYCoords_length_eq_xDisplacement (vertices : List (ℤ × ℤ))
     (h_ne : vertices ≠ [])
     (h_arcs : ∀ i : ℕ, ∀ hi : i + 1 < vertices.length,
@@ -3536,7 +3596,8 @@ private lemma lgvPathEastStepYCoords_head_mem (vertices : List (ℤ × ℤ)) (y 
     | cons hd tl => simp [h] at hy; rw [hy]; simp
   exact lgvPathEastStepYCoords_mem vertices y hmem
 
-/-- East-step y-coordinates are weakly increasing (paths go north or east). -/
+/-- East-step y-coordinates are weakly increasing (paths go north or east). @statement_id stmt-src-lem.sf.lgv-east-step-weakly-increasing
+-/
 theorem lgvPathEastStepYCoords_weaklyIncreasing (vertices : List (ℤ × ℤ))
     (h_arcs : ∀ i : ℕ, ∀ hi : i + 1 < vertices.length,
       LGV.integerLattice.arc (vertices.get ⟨i, Nat.lt_of_succ_lt hi⟩)
@@ -3619,7 +3680,8 @@ private lemma lgvPathEastStepYCoords_ge_start (vertices : List (ℤ × ℤ))
       · exfalso; apply h_east; exact ⟨hx, hy_eq⟩
       · omega
 
-/-- East-step y-coordinates are bounded between start and end y-coordinates. -/
+/-- East-step y-coordinates are bounded between start and end y-coordinates. @statement_id stmt-src-lem.sf.lgv-east-step-bounded
+-/
 theorem lgvPathEastStepYCoords_bounded (vertices : List (ℤ × ℤ))
     (h_ne : vertices ≠ [])
     (h_arcs : ∀ i : ℕ, ∀ hi : i + 1 < vertices.length,
@@ -4009,7 +4071,8 @@ private lemma integerLattice_path_y_contiguous_at_x (p : LGV.SimpleDigraph.Path 
 
     This is the "paths don't cross" property for x-coordinates.
     The proof uses discrete IVT: if the y-difference ever becomes ≤ 0, there must be
-    a point where it equals 0, meaning the paths share a vertex (contradiction). -/
+    a point where it equals 0, meaning the paths share a vertex (contradiction). @statement_id stmt-src-lem.sf.paths-above-stays-above
+-/
 theorem paths_above_at_x_stays_above (p p' : LGV.SimpleDigraph.Path LGV.integerLattice)
     (hni : ∀ v, v ∈ p.vertices → v ∉ p'.vertices)
     (x₀ : ℤ) -- x-coordinate where p' is above p
@@ -4358,7 +4421,8 @@ lemma lgvYCoordsToFinN_map_val_add_one_eq (heights : List (Fin N)) {l : List ℤ
     exact this
 
 /-- Convert an LGV path from (a, 1) to (c, N) to a LatticePath.
-    This extracts the east-step heights and converts them to Fin N. -/
+    This extracts the east-step heights and converts them to Fin N. @statement_id stmt-src-def.sf.lgv-path-to-lattice-path
+-/
 noncomputable def lgvPathToLatticePath (a c : ℤ) (p : LGV.SimpleDigraph.Path LGV.integerLattice)
     (hstart : p.start = (a, 1)) (hfinish : p.finish = (c, (N : ℤ))) :
     LatticePath (N := N) a c where
@@ -4646,7 +4710,8 @@ theorem lgvPath_vertices_eq_of_eastStepYCoords_eq
 /-- Corollary: lgvPathToLatticePath is injective on paths with the same start and end.
 
     If two LGV paths from (a, 1) to (c, N) map to the same LatticePath,
-    then they have the same vertices (and hence are equal as paths). -/
+    then they have the same vertices (and hence are equal as paths). @statement_id stmt-src-lem.sf.lgv-path-to-lattice-path-injective
+-/
 theorem lgvPathToLatticePath_injective (a c : ℤ)
     (p₁ p₂ : LGV.SimpleDigraph.Path LGV.integerLattice)
     (hstart₁ : p₁.start = (a, 1)) (hfinish₁ : p₁.finish = (c, (N : ℤ)))
@@ -5833,6 +5898,7 @@ private lemma pathWeightAux_eq_map_prod_lgvYCoords (vertices : List (ℤ × ℤ)
           exact hy
         rw [ih h_arcs' h_bounded']
 
+/-- @statement_id stmt-src-lem.sf.lgv-path-to-lattice-path-weight -/
 theorem lgvPathToLatticePath_weight_eq (a c : ℤ) (p : LGV.SimpleDigraph.Path LGV.integerLattice)
     (hstart : p.start = (a, 1)) (hfinish : p.finish = (c, (N : ℤ))) :
     LGV.pathWeight (jacobiTrudiArcWeight (N := N) (R := R)) p =
@@ -6063,7 +6129,8 @@ theorem lgv_pathWeightSum_eq_latticePathSum (a c : ℤ) (h : 0 ≤ c - a) (hN : 
     The proof uses lgv_pathWeightSum_eq_latticePathSum to establish a weight-preserving
     bijection between LGV paths and LatticePaths, then applies pathWeightSum_eq_hsymm.
 
-    This is a key infrastructure lemma needed for det_jacobiTrudiMatrixH_eq_nipatSum. -/
+    This is a key infrastructure lemma needed for det_jacobiTrudiMatrixH_eq_nipatSum. @statement_id stmt-src-thm.sf.lgv-path-weight-sum-eq-hsymm-ext
+-/
 theorem lgv_pathWeightSum_eq_hsymmExt (a c : ℤ) (hN : 0 < N) :
     LGV.pathWeightSum LGV.integerLattice_pathFinite (jacobiTrudiArcWeight (N := N) (R := R))
       (a, 1) (c, (N : ℤ)) = hsymmExt (N := N) (R := R) (c - a) := by
@@ -6124,7 +6191,8 @@ theorem lgv_pathWeightSum_eq_hsymmExt (a c : ℤ) (hN : 0 < N) :
     entry of the path weight matrix, hence the transpose relationship.
 
     The proof uses lgv_pathWeightSum_eq_hsymmExt to connect the LGV path weight sum
-    to hsymmExt, which is how jacobiTrudiMatrixH entries are defined. -/
+    to hsymmExt, which is how jacobiTrudiMatrixH entries are defined. @statement_id stmt-src-lem.sf.jt-matrix-eq-path-weight
+-/
 theorem jacobiTrudiMatrixH_eq_pathWeightMatrix_transpose (lam mu : Fin N → ℕ) :
     jacobiTrudiMatrixH (R := R) lam mu =
       (LGV.pathWeightMatrix LGV.integerLattice_pathFinite
@@ -6139,7 +6207,8 @@ theorem jacobiTrudiMatrixH_eq_pathWeightMatrix_transpose (lam mu : Fin N → ℕ
   rw [← lgv_pathWeightSum_eq_hsymmExt _ _ hN]
 
 /-- Corollary: The determinant of jacobiTrudiMatrixH equals the determinant of the
-    path weight matrix. This follows from det(Mᵀ) = det(M). -/
+    path weight matrix. This follows from det(Mᵀ) = det(M). @statement_id stmt-src-lem.sf.jt-det-eq-det-path-weight
+-/
 theorem det_jacobiTrudiMatrixH_eq_det_pathWeightMatrix (lam mu : Fin N → ℕ) :
     (jacobiTrudiMatrixH (R := R) lam mu).det =
       (LGV.pathWeightMatrix LGV.integerLattice_pathFinite
@@ -6964,7 +7033,8 @@ private lemma pathTupleToNipat_weight (lam mu : Fin N → ℕ)
     - Non-intersection of LGV paths ↔ column-strictness of east-step heights
 
     The proof uses `pathTupleToNipat` to convert LGV nipats to our Nipat type,
-    with weight preservation via `pathTupleToNipat_weight`. -/
+    with weight preservation via `pathTupleToNipat_weight`. @statement_id stmt-src-lem.sf.jt-lgv-connection
+-/
 theorem lgv_nipatWeightSum_eq_nipatSum (lam mu : Fin N → ℕ)
     (hlam : ∀ i j : Fin N, i ≤ j → lam j ≤ lam i)
     (hmu : ∀ i j : Fin N, i ≤ j → mu j ≤ mu i)
@@ -7979,7 +8049,8 @@ theorem lgv_nipatWeightSum_eq_nipatSum (lam mu : Fin N → ℕ)
     The proof follows from:
     1. jacobiTrudiMatrixH entries are h_{λᵢ - μⱼ - i + j} = pathWeightSum from A_j to B_i
     2. By LGV nonpermutable lemma, det(pathWeightMatrix) = sum over nipats
-    3. The Nipat type captures exactly the non-intersecting path tuples -/
+    3. The Nipat type captures exactly the non-intersecting path tuples @statement_id stmt-src-lem.sf.jt-det-eq-nipat
+-/
 theorem det_jacobiTrudiMatrixH_eq_nipatSum (lam mu : Fin N → ℕ)
     (hlam : ∀ i j : Fin N, i ≤ j → lam j ≤ lam i)
     (hmu : ∀ i j : Fin N, i ≤ j → mu j ≤ mu i)
@@ -8046,6 +8117,7 @@ theorem det_jacobiTrudiMatrixH_eq_nipatSum (lam mu : Fin N → ℕ)
     ## References
     - TeX source: AlgebraicCombinatorics/tex/SymmetricFunctions/PieriJacobiTrudi.tex
     - LGV infrastructure: AlgebraicCombinatorics/Determinants/LGV2.lean
+@statement_id stmt-src-thm.sf.jt-h
 -/
 theorem jacobiTrudi_h (lam mu : Fin N → ℕ)
     (hlam : ∀ i j : Fin N, i ≤ j → lam j ≤ lam i)
@@ -8067,13 +8139,15 @@ When μ = 0 (the empty partition), we get formulas for non-skew Schur polynomial
 
 /-- The Schur polynomial for a partition λ equals the skew Schur polynomial for λ/0.
     This follows from the fact that a skew partition λ/0 is just the partition λ,
-    so SSYT(λ) and SkewSSYT(λ/0) are in natural bijection. -/
+    so SSYT(λ) and SkewSSYT(λ/0) are in natural bijection. @statement_id stmt-src-lem.sf.schur-eq-skewschur-zero
+-/
 lemma schur_eq_skewSchur_zero (lam : NPartition N) :
     schur (R := R) lam = skewSchur (R := R) ⟨lam, 0, fun _ => Nat.zero_le _⟩ := by
   exact (skewSchur_zero_eq_schur lam.parts lam.weaklyDecreasing).symm
 
 /-- Jacobi-Trudi for non-skew Schur polynomials:
-    s_λ = det((h_{λᵢ - i + j})_{1 ≤ i,j ≤ N}) -/
+    s_λ = det((h_{λᵢ - i + j})_{1 ≤ i,j ≤ N}) @statement_id stmt-src-thm.sf.jt-h-nonskew
+-/
 theorem jacobiTrudi_h_nonSkew (lam : Fin N → ℕ)
     (hlam : ∀ i j : Fin N, i ≤ j → lam j ≤ lam i) :
     schur (R := R) ⟨lam, hlam⟩ =
@@ -8103,7 +8177,8 @@ complementing the Bender-Knuth approach in SchurBasics.lean (which is also sorry
 -/
 
 /-- If all entries of a matrix are symmetric polynomials, then the determinant is symmetric.
-    This is because rename σ commutes with det, and rename σ fixes each symmetric entry. -/
+    This is because rename σ commutes with det, and rename σ fixes each symmetric entry. @statement_id stmt-src-lem.sf.det-symmetric-of-entries-symmetric
+-/
 theorem det_isSymmetric_of_entries_symmetric (M : Matrix (Fin N) (Fin N) (MvPolynomial (Fin N) R))
     (h : ∀ i j, (M i j).IsSymmetric) : M.det.IsSymmetric := by
   intro σ
@@ -8118,14 +8193,16 @@ theorem det_isSymmetric_of_entries_symmetric (M : Matrix (Fin N) (Fin N) (MvPoly
   intro i _
   exact h (τ i) i σ
 
-/-- The Jacobi-Trudi matrix (h-version) has symmetric entries. -/
+/-- The Jacobi-Trudi matrix (h-version) has symmetric entries. @statement_id stmt-src-lem.sf.jt-matrix-entries-symmetric
+-/
 theorem jacobiTrudiMatrixH_entries_isSymmetric (lam mu : Fin N → ℕ) (i j : Fin N) :
     (jacobiTrudiMatrixH (R := R) lam mu i j).IsSymmetric := by
   unfold jacobiTrudiMatrixH
   simp only [Matrix.of_apply]
   exact hsymmExt_isSymmetric _
 
-/-- The determinant of the Jacobi-Trudi matrix (h-version) is symmetric. -/
+/-- The determinant of the Jacobi-Trudi matrix (h-version) is symmetric. @statement_id stmt-src-thm.sf.jt-matrix-det-symmetric
+-/
 theorem jacobiTrudiMatrixH_det_isSymmetric (lam mu : Fin N → ℕ) :
     (jacobiTrudiMatrixH (R := R) lam mu).det.IsSymmetric := by
   apply det_isSymmetric_of_entries_symmetric
@@ -8141,7 +8218,8 @@ theorem jacobiTrudiMatrixH_det_isSymmetric (lam mu : Fin N → ℕ) :
     2. Showing each entry h_{λᵢ - μⱼ - i + j} is symmetric (via `hsymmExt_isSymmetric`)
     3. Concluding the determinant is symmetric (via `det_isSymmetric_of_entries_symmetric`)
 
-    Theorem \ref{thm.sf.skew-schur-symm} in the source. -/
+    Theorem \ref{thm.sf.skew-schur-symm} in the source. @statement_id stmt-src-thm.sf.skew-schur-symm-jt
+-/
 theorem skewSchur_isSymmetric_jacobiTrudi (lam mu : Fin N → ℕ)
     (hlam : ∀ i j : Fin N, i ≤ j → lam j ≤ lam i)
     (hmu : ∀ i j : Fin N, i ≤ j → mu j ≤ mu i)
@@ -8154,7 +8232,8 @@ theorem skewSchur_isSymmetric_jacobiTrudi (lam mu : Fin N → ℕ)
 
     This is a corollary of `skewSchur_isSymmetric_jacobiTrudi` with μ = 0.
 
-    Theorem \ref{thm.sf.schur-symm}(a) in the source. -/
+    Theorem \ref{thm.sf.schur-symm}(a) in the source. @statement_id stmt-src-thm.sf.schur-symm-jt
+-/
 theorem schur_isSymmetric_jacobiTrudi (lam : Fin N → ℕ)
     (hlam : ∀ i j : Fin N, i ≤ j → lam j ≤ lam i) :
     (schur (R := R) ⟨lam, hlam⟩).IsSymmetric := by

@@ -270,7 +270,8 @@ theorem vandermondeMat_eq_projVandermonde (a : Fin n → R) :
     Label: thm.det.vander (a)
 
     Note: Mathlib's `Matrix.det_vandermonde` uses a slightly different indexing convention.
-    This statement matches the textbook presentation. -/
+    This statement matches the textbook presentation. @statement_id stmt-src-thm.det.vander
+-/
 theorem vandermonde_det_a (a : Fin n → R) :
     (vandermondeMat a).det = ∏ i : Fin n, ∏ j ∈ Ioi i, (a i - a j) := by
   rw [vandermondeMat_eq_projVandermonde, Matrix.det_projVandermonde]
@@ -282,7 +283,8 @@ theorem vandermonde_det_a (a : Fin n → R) :
 
 /-- Vandermonde determinant, part (b): det(aⱼⁿ⁻ⁱ) = ∏_{i<j} (aᵢ - aⱼ)
     This is the transpose of part (a).
-    Label: thm.det.vander (b) -/
+    Label: thm.det.vander (b) @statement_id stmt-src-thm.det.vander
+-/
 theorem vandermonde_det_b (a : Fin n → R) :
     (vandermondeMat a)ᵀ.det = ∏ i : Fin n, ∏ j ∈ Ioi i, (a i - a j) := by
   rw [det_transpose, vandermonde_det_a]
@@ -311,7 +313,8 @@ private lemma prod_Ioi_eq_prod_Iio (a : Fin n → R) :
     rfl
 
 /-- Vandermonde determinant, part (c): det(aᵢʲ⁻¹) = ∏_{j<i} (aᵢ - aⱼ)
-    Label: thm.det.vander (c) -/
+    Label: thm.det.vander (c) @statement_id stmt-src-thm.det.vander
+-/
 theorem vandermonde_det_c (a : Fin n → R) :
     (vandermondeMat' a).det = ∏ i : Fin n, ∏ j ∈ Iio i, (a i - a j) := by
   -- vandermondeMat' is the same as Matrix.vandermonde
@@ -322,7 +325,8 @@ theorem vandermonde_det_c (a : Fin n → R) :
 
 /-- Vandermonde determinant, part (d): det(aⱼⁱ⁻¹) = ∏_{j<i} (aᵢ - aⱼ)
     This is the transpose of part (c).
-    Label: thm.det.vander (d) -/
+    Label: thm.det.vander (d) @statement_id stmt-src-thm.det.vander
+-/
 theorem vandermonde_det_d (a : Fin n → R) :
     (vandermondeMat' a)ᵀ.det = ∏ i : Fin n, ∏ j ∈ Iio i, (a i - a j) := by
   -- The transpose has the same determinant as the original
@@ -419,7 +423,8 @@ lemma sum_card_Ioi_fin' (m : ℕ) : ∑ i : Fin m, (Finset.Ioi i).card = m * (m 
   -- Use the reflection lemma: ∑ i ∈ range m, (m - 1 - i) = ∑ i ∈ range m, i
   rw [Finset.sum_range_reflect (fun i => i) m, Finset.sum_range_id]
 
-/-- Helper lemma for column permutation of determinants. -/
+/-- Helper lemma for column permutation of determinants. @statement_id stmt-src-lem.det.vander.col-perm
+-/
 lemma det_submatrix_col_perm' {m : ℕ} {S : Type*} [CommRing S]
     (A : Matrix (Fin m) (Fin m) S) (σ : Equiv.Perm (Fin m)) :
     (A.submatrix id σ).det = Equiv.Perm.sign σ * A.det := by
@@ -456,7 +461,8 @@ lemma vandermondePolyMat_eq_vandermonde_submatrix (m : ℕ) :
   have h : (Fin.rev j).val = m - 1 - j.val := by simp only [Fin.rev]; omega
   rw [h]
 
-/-- The determinant of vandermondePolyMat in terms of Mathlib's vandermonde. -/
+/-- The determinant of vandermondePolyMat in terms of Mathlib's vandermonde. @statement_id stmt-src-lem.det.vander.det-vandermondepolymat
+-/
 lemma det_vandermondePolyMat (m : ℕ) :
     (vandermondePolyMat m).det =
     Equiv.Perm.sign (Fin.revPerm (n := m)) *
@@ -465,7 +471,8 @@ lemma det_vandermondePolyMat (m : ℕ) :
   exact det_submatrix_col_perm' _ _
 
 /-- The sign of Mathlib's `Fin.revPerm` column reversal permutation.
-    Label: lem.det.vander.a.pol (helper) -/
+    Label: lem.det.vander.a.pol (helper) @statement_id stmt-src-lem.det.vander.sign-fin-revperm
+-/
 lemma sign_Fin_revPerm (m : ℕ) : Equiv.Perm.sign (Fin.revPerm (n := m)) = (-1 : ℤˣ) ^ (m * (m - 1) / 2) := by
   rw [Equiv.Perm.sign_eq_prod_prod_Ioi]
   -- For i < j, Fin.revPerm i > Fin.revPerm j, so the condition is false
@@ -492,7 +499,8 @@ lemma sign_Fin_revPerm (m : ℕ) : Equiv.Perm.sign (Fin.revPerm (n := m)) = (-1 
   exact Finset.sum_range_id m
 
 /-- The product transformation: swapping subtraction order introduces a sign.
-    Label: lem.det.vander.a.pol (helper) -/
+    Label: lem.det.vander.a.pol (helper) @statement_id stmt-src-lem.det.vander.prod-ioi-neg-sub
+-/
 lemma prod_Ioi_neg_sub' {m : ℕ} {S : Type*} [CommRing S] (v : Fin m → S) :
     ∏ i : Fin m, ∏ j ∈ Ioi i, (v i - v j) =
     (-1 : S) ^ (m * (m - 1) / 2) * ∏ i : Fin m, ∏ j ∈ Ioi i, (v j - v i) := by
@@ -528,7 +536,8 @@ lemma prod_Ioi_neg_sub' {m : ℕ} {S : Type*} [CommRing S] (v : Fin m → S) :
     - Column reversal (relating our matrix to Mathlib's convention)
     - Sign analysis (the two sign changes cancel)
 
-    Label: lem.det.vander.a.pol -/
+    Label: lem.det.vander.a.pol @statement_id stmt-src-lem.det.vander.a.pol
+-/
 theorem vandermonde_det_poly' (m : ℕ) :
     (vandermondePolyMat m).det = vandermondePolyProd m := by
   rw [det_vandermondePolyMat, sign_Fin_revPerm]
@@ -643,7 +652,8 @@ private lemma sign_revPerm_cast : (Equiv.Perm.sign (Fin.revPerm (n := n)) : R) =
     The proof can be done either by factor hunting (first proof in the source)
     or by factoring the matrix as P · Q where P and Q are related to Vandermonde
     matrices (second proof in the source).
-    Label: prop.det.(xi+yj)n-1 -/
+    Label: prop.det.(xi+yj)n-1 @statement_id stmt-src-prop.det.-xi-yj-n-1
+-/
 theorem det_sum_pow (x y : Fin n → R) :
     (sumPowMat x y).det =
       (∏ k : Fin n, (n - 1).choose k.val) *
@@ -711,7 +721,8 @@ def submatrixRemove {m : ℕ} (A : Matrix (Fin (m + 1)) (Fin (m + 1)) R)
 /-- Laplace expansion along row p (Theorem thm.det.laplace (a)):
     det A = ∑_q (-1)^(p+q) A_{p,q} det(A_{~p,~q})
 
-    In Mathlib, this is `Matrix.det_succ_row`. -/
+    In Mathlib, this is `Matrix.det_succ_row`. @statement_id stmt-src-thm.det.laplace
+-/
 theorem det_laplace_row {m : ℕ} (A : Matrix (Fin (m + 1)) (Fin (m + 1)) R)
     (p : Fin (m + 1)) :
     A.det = ∑ q : Fin (m + 1), (-1) ^ (p.val + q.val) * A p q *
@@ -722,7 +733,8 @@ theorem det_laplace_row {m : ℕ} (A : Matrix (Fin (m + 1)) (Fin (m + 1)) R)
 /-- Laplace expansion along column q (Theorem thm.det.laplace (b)):
     det A = ∑_p (-1)^(p+q) A_{p,q} det(A_{~p,~q})
 
-    In Mathlib, this is `Matrix.det_laplace_column`. -/
+    In Mathlib, this is `Matrix.det_laplace_column`. @statement_id stmt-src-thm.det.laplace
+-/
 theorem det_laplace_col {m : ℕ} (A : Matrix (Fin (m + 1)) (Fin (m + 1)) R)
     (q : Fin (m + 1)) :
     A.det = ∑ p : Fin (m + 1), (-1) ^ (p.val + q.val) * A p q *
@@ -740,7 +752,8 @@ the sum is zero.
     If p ≠ r, then ∑_q (-1)^(p+q) A_{r,q} det(A_{~p,~q}) = 0
 
     The proof uses the adjugate: each term equals A r q * adjugate A q p,
-    so the sum is (A * adjugate A) r p = (det A * I) r p = 0 when r ≠ p. -/
+    so the sum is (A * adjugate A) r p = (det A * I) r p = 0 when r ≠ p. @statement_id stmt-src-prop.det.laplace.0
+-/
 theorem det_laplace_row_zero {m : ℕ} (A : Matrix (Fin (m + 1)) (Fin (m + 1)) R)
     (p r : Fin (m + 1)) (hpr : p ≠ r) :
     ∑ q : Fin (m + 1), (-1) ^ (p.val + q.val) * A r q *
@@ -758,7 +771,8 @@ theorem det_laplace_row_zero {m : ℕ} (A : Matrix (Fin (m + 1)) (Fin (m + 1)) R
     _ = 0 := by simp [Matrix.smul_apply, Matrix.one_apply_ne hpr.symm]
 
 /-- Proposition prop.det.laplace.0 (b):
-    If q ≠ r, then ∑_p (-1)^(p+q) A_{p,r} det(A_{~p,~q}) = 0 -/
+    If q ≠ r, then ∑_p (-1)^(p+q) A_{p,r} det(A_{~p,~q}) = 0 @statement_id stmt-src-prop.det.laplace.0
+-/
 theorem det_laplace_col_zero {m : ℕ} (A : Matrix (Fin (m + 1)) (Fin (m + 1)) R)
     (q r : Fin (m + 1)) (hqr : q ≠ r) :
     ∑ p : Fin (m + 1), (-1) ^ (p.val + q.val) * A p r *
@@ -804,7 +818,8 @@ Note the index swap: the (i,j) entry involves removing row j and column i.
 
     Note: Mathlib defines `Matrix.adjugate` which is the same concept, but using a different
     but equivalent definition. We provide this definition for clarity and connection to the textbook.
-    Label: def.det.adj -/
+    Label: def.det.adj @statement_id stmt-src-def.det.adj
+-/
 def adjugateMat {m : ℕ} (A : Matrix (Fin (m + 1)) (Fin (m + 1)) R) :
     Matrix (Fin (m + 1)) (Fin (m + 1)) R :=
   Matrix.of fun i j => (-1) ^ (i.val + j.val) * (submatrixRemove A j i).det
@@ -846,7 +861,8 @@ private lemma det_updateRow_single {m : ℕ} (A : Matrix (Fin (m + 1)) (Fin (m +
     Mathlib defines `A.adjugate i j = (A.updateRow j (Pi.single i 1)).det`.
     Our definition is `adjugateMat A i j = (-1)^(i+j) * det(A_{~j,~i})`.
     These are equal by Laplace expansion along row j of the updated matrix.
-    Label: def.det.adj -/
+    Label: def.det.adj @statement_id stmt-src-def.det.adj
+-/
 theorem adjugateMat_eq_adjugate {m : ℕ} (A : Matrix (Fin (m + 1)) (Fin (m + 1)) R) :
     adjugateMat A = A.adjugate := by
   ext i j
@@ -888,7 +904,8 @@ Similarly, (adj A) · A = (det A) · I_n can be shown using column versions.
     This works for all n ≥ 0, including the trivial case n = 0 where both sides equal
     the 0×0 identity matrix.
 
-    Label: thm.det.adj.inverse -/
+    Label: thm.det.adj.inverse @statement_id stmt-src-thm.det.adj.inverse
+-/
 theorem mul_adjugate' (A : Matrix (Fin n) (Fin n) R) :
     A * A.adjugate = A.det • 1 :=
   Matrix.mul_adjugate A
@@ -900,7 +917,8 @@ theorem mul_adjugate' (A : Matrix (Fin n) (Fin n) R) :
     Together with `mul_adjugate'`, this shows that the adjugate is a "pseudo-inverse"
     of A scaled by det(A).
 
-    Label: thm.det.adj.inverse -/
+    Label: thm.det.adj.inverse @statement_id stmt-src-thm.det.adj.inverse
+-/
 theorem adjugate_mul' (A : Matrix (Fin n) (Fin n) R) :
     A.adjugate * A = A.det • 1 :=
   Matrix.adjugate_mul A
@@ -2783,7 +2801,8 @@ private lemma laplace_sum_eq {m : ℕ} (A : Matrix (Fin m) (Fin m) R)
        - A bijection ρ : Pᶜ → Qᶜ (contributing to det(sub_{Pᶜ}^{Qᶜ} A))
     4. The sign of σ decomposes as sign(σ) = (-1)^(sum P + sum Q) · sign(τ) · sign(ρ)
        where the (-1)^(sum P + sum Q) accounts for reordering indices.
-    5. Summing over all τ and ρ gives the product of minors. -/
+    5. Summing over all τ and ρ gives the product of minors. @statement_id stmt-src-thm.det.laplace-multi
+-/
 theorem det_laplace_multi_row {m : ℕ} (A : Matrix (Fin m) (Fin m) R)
     (P : Finset (Fin m)) :
     A.det = ∑ Q ∈ sameCardSubsets m P,
@@ -2794,7 +2813,8 @@ theorem det_laplace_multi_row {m : ℕ} (A : Matrix (Fin m) (Fin m) R)
 
 /-- Theorem thm.det.laplace-multi (b):
     For any subset Q of [n], det A = ∑_{P : |P|=|Q|} (-1)^(sum P + sum Q) det(sub_P^Q A) det(sub_{~P}^{~Q} A)
-    Label: thm.det.laplace-multi -/
+    Label: thm.det.laplace-multi @statement_id stmt-src-thm.det.laplace-multi
+-/
 theorem det_laplace_multi_col {m : ℕ} (A : Matrix (Fin m) (Fin m) R)
     (Q : Finset (Fin m)) :
     A.det = ∑ P ∈ sameCardSubsets m Q,
@@ -2886,7 +2906,8 @@ lemma adjugate_corner_last_0 {k : ℕ} (A : Matrix (Fin (k + 2)) (Fin (k + 2)) R
 
 /-- The 2×2 determinant of the corner entries of the adjugate simplifies to
     the product of diagonal minors minus the product of off-diagonal minors.
-    This is a key step in proving the Desnanot-Jacobi identity. -/
+    This is a key step in proving the Desnanot-Jacobi identity. @statement_id stmt-src-lem.det.adj-corners
+-/
 lemma det_adjugate_corners {k : ℕ} (A : Matrix (Fin (k + 2)) (Fin (k + 2)) R) :
     A.adjugate 0 0 * A.adjugate (Fin.last (k + 1)) (Fin.last (k + 1)) -
     A.adjugate 0 (Fin.last (k + 1)) * A.adjugate (Fin.last (k + 1)) 0 =
@@ -2897,7 +2918,8 @@ lemma det_adjugate_corners {k : ℕ} (A : Matrix (Fin (k + 2)) (Fin (k + 2)) R) 
   rw [neg_one_pow_mul_two']
   ring
 
-/-- Desnanot-Jacobi identity for 2×2 matrices (base case) -/
+/-- Desnanot-Jacobi identity for 2×2 matrices (base case) @statement_id stmt-src-lem.det.desnanot-jacobi-base
+-/
 lemma desnanot_jacobi_base (A : Matrix (Fin 2) (Fin 2) R) :
     A.det * (innerSubmatrix A).det =
       (submatrixRemove A 0 0).det * (submatrixRemove A (Fin.last 1) (Fin.last 1)).det -
@@ -4251,7 +4273,8 @@ lemma desnanot_jacobi_6x6 (A : Matrix (Fin 6) (Fin 6) R) :
     - adj₀₀ * adj₁₁ = d * a
     - adj₀₁ * adj₁₀ = (-b) * (-c) = bc
     - LHS = da - bc = det(A)
-    - RHS = det(A) * det(0×0 matrix) = det(A) * 1 = det(A) ✓ -/
+    - RHS = det(A) * det(0×0 matrix) = det(A) * 1 = det(A) ✓ @statement_id stmt-src-lem.det.jacobi-complement-2x2-base
+-/
 lemma jacobi_complement_2x2_base (A : Matrix (Fin 2) (Fin 2) R) :
     A.adjugate 0 0 * A.adjugate (Fin.last 1) (Fin.last 1) -
     A.adjugate 0 (Fin.last 1) * A.adjugate (Fin.last 1) 0 =
@@ -4270,7 +4293,8 @@ lemma jacobi_complement_2x2_base (A : Matrix (Fin 2) (Fin 2) R) :
     equals det(A) times the middle entry A₁₁.
     
     This verifies Jacobi's complementary minor theorem for the specific case
-    where P = Q = {0, 2} (first and last indices). -/
+    where P = Q = {0, 2} (first and last indices). @statement_id stmt-src-lem.det.jacobi-complement-2x2-three
+-/
 lemma jacobi_complement_2x2_three (A : Matrix (Fin 3) (Fin 3) R) :
     A.adjugate 0 0 * A.adjugate (Fin.last 2) (Fin.last 2) -
     A.adjugate 0 (Fin.last 2) * A.adjugate (Fin.last 2) 0 =
@@ -4421,7 +4445,8 @@ private lemma jacobi_complement_2x2 {n : ℕ} (A : Matrix (Fin (n + 2)) (Fin (n 
     corner submatrix of adj(A) at positions {0, last} × {0, last} equals
     det(A) · det(innerSubmatrix A).
 
-    Label: thm.det.des-jac-1 -/
+    Label: thm.det.des-jac-1 @statement_id stmt-src-thm.det.des-jac-1
+-/
 theorem desnanot_jacobi {m : ℕ} (A : Matrix (Fin (m + 2)) (Fin (m + 2)) R) :
     A.det * (innerSubmatrix A).det =
       (submatrixRemove A 0 0).det * (submatrixRemove A (Fin.last (m + 1)) (Fin.last (m + 1))).det -
@@ -4441,7 +4466,8 @@ theorem desnanot_jacobi {m : ℕ} (A : Matrix (Fin (m + 2)) (Fin (m + 2)) R) :
 
 /-- Alternative formulation of Desnanot-Jacobi using a 2×2 determinant:
     det(A) · det(A') = det [[det(A_{~1,~1}), det(A_{~1,~n})], [det(A_{~n,~1}), det(A_{~n,~n})]]
-    Label: thm.det.des-jac-1 -/
+    Label: thm.det.des-jac-1 @statement_id stmt-src-thm.det.des-jac-1
+-/
 theorem desnanot_jacobi_det2 {m : ℕ} (A : Matrix (Fin (m + 2)) (Fin (m + 2)) R) :
     A.det * (innerSubmatrix A).det =
       Matrix.det !![
@@ -4527,7 +4553,8 @@ lemma skipTwo_eq_finsetToFin_compl {m : ℕ} (p q : Fin (m + 2)) (hpq : p < q) :
 /-- The determinant of submatrixRemove2 equals submatrixDet on complements.
     This is the key connection between our explicit submatrix construction and the
     general submatrixDet definition using finsets. Combined with jacobi_complementary_minor,
-    this allows proving desnanot_jacobi_direct for all matrix sizes. -/
+    this allows proving desnanot_jacobi_direct for all matrix sizes. @statement_id stmt-src-lem.det.submatrixremove2-eq-submatrixdet
+-/
 lemma submatrixRemove2_det_eq_submatrixDet_compl {m : ℕ} (A : Matrix (Fin (m + 2)) (Fin (m + 2)) R)
     (p q u v : Fin (m + 2)) (hpq : p < q) (huv : u < v) :
     (submatrixRemove2 A p q u v hpq huv).det =
@@ -4702,7 +4729,8 @@ variable {K : Type*} [Field K]
     equals the corresponding adjugate entry divided by the determinant.
     
     Note: A⁻¹ i j = adjugate(A) i j / det(A) (same indices, not swapped).
-    This follows from A⁻¹ = det⁻¹ • adjugate. -/
+    This follows from A⁻¹ = det⁻¹ • adjugate. @statement_id stmt-src-lem.det.inv-eq-adjugate-div
+-/
 lemma inv_apply_eq_adjugate_div_det {n : ℕ} (A : Matrix (Fin n) (Fin n) K) 
     (hA : A.det ≠ 0) (i j : Fin n) :
     A⁻¹ i j = A.adjugate i j / A.det := by
@@ -4725,7 +4753,8 @@ lemma adjugate_eq_det_smul_inv {n : ℕ} (A : Matrix (Fin n) (Fin n) K)
 end InverseAdjugateRelation
 
 /-- Key lemma: For invertible A, the adjugate submatrix equals det(A) times the inverse submatrix.
-    This follows from adj(A) = det(A) • A⁻¹ for invertible A. -/
+    This follows from adj(A) = det(A) • A⁻¹ for invertible A. @statement_id stmt-src-lem.det.adjugate-submatrix-eq-smul
+-/
 lemma adjugate_submatrix_eq_smul {n : Type*} [DecidableEq n] [Fintype n] {m' : Type*}
     (A : Matrix n n R) (h : IsUnit A.det) (f g : m' → n) :
     A.adjugate.submatrix f g = A.det • (A⁻¹).submatrix f g := by
@@ -4744,7 +4773,8 @@ lemma adjugate_submatrix_eq_smul {n : Type*} [DecidableEq n] [Fintype n] {m' : T
 /-- For invertible A with |P| = |Q| = k, the determinant of the adjugate submatrix equals
     det(A)^k times the determinant of the inverse submatrix.
     This reduces Jacobi's complementary minor theorem to the complementary minor theorem
-    for inverse matrices. -/
+    for inverse matrices. @statement_id stmt-src-lem.det.det-adjugate-submatrix-finset
+-/
 lemma det_adjugate_submatrix_finset {m k : ℕ} (A : Matrix (Fin m) (Fin m) R)
     (h : IsUnit A.det) (P Q : Finset (Fin m)) (hP : P.card = k) (hQ : Q.card = k) :
     (submatrixOfFinsets' A.adjugate P Q hP hQ).det =
@@ -4777,7 +4807,8 @@ private lemma fromBlocks_submatrix_inl_inl (A : Matrix m' m' R) (B : Matrix m' n
     with the fact that (M⁻¹)₁₁ = (A - B * D⁻¹ * C)⁻¹.
 
     The general complementary minor theorem (for arbitrary index sets P, Q) follows
-    by permuting rows and columns to bring P and Q to the first positions. -/
+    by permuting rows and columns to bring P and Q to the first positions. @statement_id stmt-src-lem.det.complementary-minor-block
+-/
 theorem complementary_minor_block
     (A : Matrix m' m' R) (B : Matrix m' n' R) (C : Matrix n' m' R) (D : Matrix n' n' R)
     [Invertible D] [Invertible (A - B * ⅟D * C)] [Invertible (Matrix.fromBlocks A B C D)] :
@@ -4830,7 +4861,8 @@ private lemma adjugate_eq_det_smul_inv' {m n : Type*} [Fintype m] [Fintype n]
     the determinant of the adjugate's top-left block equals det(M)^(k-1) * det(D).
     
     This is the Schur complement version of Jacobi's complementary minor theorem
-    for the special case of block matrices. -/
+    for the special case of block matrices. @statement_id stmt-src-lem.det.adjugate-toblocks11
+-/
 theorem adjugate_toBlocks₁₁_det_of_invertible {m n : Type*} [Fintype m] [Fintype n] 
     [DecidableEq m] [DecidableEq n] {R : Type*} [CommRing R]
     (A : Matrix m m R) (B : Matrix m n R) (C : Matrix n m R) (D : Matrix n n R)
@@ -4912,7 +4944,8 @@ lemma finsetOrderEmb_eq_orderEmbOfFin {m : ℕ} (P : Finset (Fin m)) (i : Fin P.
   exact Finset.coe_orderIsoOfFin_apply P rfl i
 
 /-- Equivalence that sorts indices so that P elements come first (as Sum.inl)
-    and Pᶜ elements come second (as Sum.inr). This uses `finSumEquivOfFinset`. -/
+    and Pᶜ elements come second (as Sum.inr). This uses `finSumEquivOfFinset`. @statement_id stmt-src-def.det.sortequivpq
+-/
 noncomputable def sortEquivPQ {m : ℕ} (P : Finset (Fin m)) : Fin P.card ⊕ Fin (m - P.card) ≃ Fin m :=
   finSumEquivOfFinset rfl (by rw [Finset.card_compl, Fintype.card_fin])
 
@@ -4946,7 +4979,8 @@ lemma sortEquivPQ_inr_eq_finsetOrderEmb {m : ℕ} (P : Finset (Fin m)) (i : Fin 
     RelIso.coe_toEmbedding, Function.Embedding.subtype_apply]
   rfl
 
-/-- Inverse of a matrix permuted by two equivalences. -/
+/-- Inverse of a matrix permuted by two equivalences. @statement_id stmt-src-lem.det.inv-submatrix-equiv
+-/
 lemma inv_submatrix_equiv {m : ℕ} {n : Type*} [DecidableEq n] [Fintype n] 
     (A : Matrix (Fin m) (Fin m) K) (hA : IsUnit A.det) (σ τ : n ≃ Fin m) :
     (A.submatrix σ τ)⁻¹ = A⁻¹.submatrix τ σ := by
@@ -4958,7 +4992,8 @@ lemma inv_submatrix_equiv {m : ℕ} {n : Type*} [DecidableEq n] [Fintype n]
   rw [this, Matrix.mul_nonsing_inv _ hA, Matrix.one_apply]
   simp [EmbeddingLike.apply_eq_iff_eq]
 
-/-- Determinant of a matrix permuted by two equivalences. -/
+/-- Determinant of a matrix permuted by two equivalences. @statement_id stmt-src-lem.det.det-submatrix-equiv
+-/
 lemma det_submatrix_equiv_equiv {m : ℕ} {n : Type*} [DecidableEq n] [Fintype n] 
     (A : Matrix (Fin m) (Fin m) K) (f g : n ≃ Fin m) :
     (A.submatrix f g).det = Equiv.Perm.sign (g.symm.trans f) * A.det := by
@@ -5203,6 +5238,7 @@ private lemma toBlocks22_det_eq {m : ℕ} (A : Matrix (Fin m) (Fin m) K)
   congr 2
 
 set_option maxHeartbeats 400000 in
+/-- @statement_id stmt-src-lem.det.complementary-minor-inverse -/
 theorem complementary_minor_inverse {m : ℕ} (A : Matrix (Fin m) (Fin m) K) (hA : A.det ≠ 0)
     (P Q : Finset (Fin m)) (hPQ : P.card = Q.card) :
     A.det * (A⁻¹.submatrix (finsetOrderEmb P) (fun i => finsetOrderEmb Q (finCongr hPQ i))).det =
@@ -5617,7 +5653,8 @@ theorem complementary_minor_inverse {m : ℕ} (A : Matrix (Fin m) (Fin m) K) (hA
     This follows from:
     - adj(A) = det(A) * A⁻¹ for invertible A
     - det(sub_P^Q(adj A)) = det(A)^k * det(sub_P^Q(A⁻¹))
-    - complementary_minor_inverse: det(A) * det(sub_P^Q(A⁻¹)) = (-1)^(...) * det(sub_{Qᶜ}^{Pᶜ}(A)) -/
+    - complementary_minor_inverse: det(A) * det(sub_P^Q(A⁻¹)) = (-1)^(...) * det(sub_{Qᶜ}^{Pᶜ}(A)) @statement_id stmt-src-lem.det.jacobi-field
+-/
 theorem jacobi_complementary_minor_field {m : ℕ} (A : Matrix (Fin m) (Fin m) K) (hA : A.det ≠ 0)
     (P Q : Finset (Fin m)) (hPQ : P.card = Q.card) (hP : P.card ≥ 1) :
     (A.adjugate.submatrix (finsetOrderEmb P) (fun i => finsetOrderEmb Q (finCongr hPQ i))).det =
@@ -6186,7 +6223,8 @@ private lemma jacobi_2x2 {m : ℕ} (A : Matrix (Fin (m + 2)) (Fin (m + 2)) R)
     The proof follows from Jacobi's complementary minor theorem for the 2×2 case.
     By comparing the 2×2 determinant of the adjugate submatrix (computed two ways),
     we obtain the desired identity.
-    Label: thm.det.des-jac-2 -/
+    Label: thm.det.des-jac-2 @statement_id stmt-src-thm.det.des-jac-2
+-/
 theorem desnanot_jacobi_general {m : ℕ} (A : Matrix (Fin (m + 2)) (Fin (m + 2)) R)
     (p q : Fin (m + 2)) (u v : Fin (m + 2)) (hpq : p < q) (huv : u < v) :
     A.det * (submatrixRemove2 A p q u v hpq huv).det =
@@ -6369,13 +6407,15 @@ This is proved by induction on the polynomial structure, showing that
 P - P|_{X_i = X_j} is divisible by (X_i - X_j).
 -/
 
-/-- Substitution that replaces X_i with X_j in a multivariate polynomial. -/
+/-- Substitution that replaces X_i with X_j in a multivariate polynomial. @statement_id stmt-src-def.det.substxitoxj
+-/
 noncomputable def substXiToXj {σ : Type*} [DecidableEq σ] (i j : σ) :
     MvPolynomial σ R →ₐ[R] MvPolynomial σ R :=
   MvPolynomial.aeval (fun k => if k = i then MvPolynomial.X j else MvPolynomial.X k)
 
 /-- The multivariate factor theorem: (X_i - X_j) divides P - P|_{X_i = X_j}.
-    This is the multivariate analogue of Polynomial.sub_dvd_eval_sub. -/
+    This is the multivariate analogue of Polynomial.sub_dvd_eval_sub. @statement_id stmt-src-lem.det.x-sub-x-dvd-sub-subst
+-/
 lemma X_sub_X_dvd_sub_subst {σ : Type*} [DecidableEq σ]
     (p : MvPolynomial σ R) (i j : σ) (_hij : i ≠ j) :
     (MvPolynomial.X i - MvPolynomial.X j : MvPolynomial σ R) ∣ p - (substXiToXj i j) p := by
@@ -6532,7 +6572,8 @@ lemma finSuccEquiv_rename_succ_general (m : ℕ) (p : MvPolynomial (Fin (m + 1))
 
 omit [IsDomain R] in
 /-- The multivariate factor theorem for Fin (m+2) with indices 0 and 1:
-    If P(X_0, X_1, ...) vanishes when X_0 is replaced by X_1, then (X_0 - X_1) divides P. -/
+    If P(X_0, X_1, ...) vanishes when X_0 is replaced by X_1, then (X_0 - X_1) divides P. @statement_id stmt-src-lem.det.x-sub-x-dvd-eval-zero
+-/
 theorem X_sub_X_dvd_of_eval₂_eq_zero_fin_01 (m : ℕ) (P : MvPolynomial (Fin (m + 2)) R) 
     (h : MvPolynomial.eval₂ MvPolynomial.C (fun i : Fin (m + 2) => if i = 0 then MvPolynomial.X 1 else MvPolynomial.X i) P = 0) :
     MvPolynomial.X 0 - MvPolynomial.X 1 ∣ P := by
@@ -6572,7 +6613,8 @@ theorem X_sub_X_dvd_of_eval₂_eq_zero_fin_01 (m : ℕ) (P : MvPolynomial (Fin (
 
 omit [IsDomain R] in
 /-- The total degree of X_i - X_j is 1 for distinct i and j.
-    This is a key lemma for proving irreducibility of linear factors. -/
+    This is a key lemma for proving irreducibility of linear factors. @statement_id stmt-src-lem.det.x-sub-x-totaldegree
+-/
 lemma X_sub_X_totalDegree_eq_one {σ : Type*} [DecidableEq σ] (i j : σ) (hij : i ≠ j) :
     (MvPolynomial.X i - MvPolynomial.X j : MvPolynomial σ ℤ).totalDegree = 1 := by
   have hle : (MvPolynomial.X i - MvPolynomial.X j : MvPolynomial σ ℤ).totalDegree ≤ 1 := by
@@ -6608,7 +6650,8 @@ lemma X_sub_X_totalDegree_eq_one {σ : Type*} [DecidableEq σ] (i j : σ) (hij :
 
 omit [IsDomain R] in
 /-- The polynomial X_i - X_j is primitive (only units divide all coefficients).
-    This is needed for `irreducible_of_totalDegree_eq_one`. -/
+    This is needed for `irreducible_of_totalDegree_eq_one`. @statement_id stmt-src-lem.det.x-sub-x-isprimitive
+-/
 lemma X_sub_X_isPrimitive {σ : Type*} [DecidableEq σ] (i j : σ) (hij : i ≠ j) :
     ∀ r : ℤ, (∀ d : σ →₀ ℕ, r ∣ MvPolynomial.coeff d 
       (MvPolynomial.X i - MvPolynomial.X j : MvPolynomial σ ℤ)) → IsUnit r := by
@@ -6628,7 +6671,8 @@ lemma X_sub_X_isPrimitive {σ : Type*} [DecidableEq σ] (i j : σ) (hij : i ≠ 
 
 omit [IsDomain R] in
 /-- The polynomial X_i - X_j is irreducible in MvPolynomial σ ℤ for distinct i and j.
-    This is a key lemma for the factor hunting proof of the Cauchy determinant formula. -/
+    This is a key lemma for the factor hunting proof of the Cauchy determinant formula. @statement_id stmt-src-lem.det.x-sub-x-irreducible
+-/
 lemma X_sub_X_irreducible {σ : Type*} [DecidableEq σ] (i j : σ) (hij : i ≠ j) :
     Irreducible (MvPolynomial.X i - MvPolynomial.X j : MvPolynomial σ ℤ) := by
   apply MvPolynomial.irreducible_of_totalDegree_eq_one
@@ -6771,7 +6815,8 @@ lemma substY_inr_eq_substXiToXj (m : ℕ) (i j : Fin m) :
     (substY_inr m i j : MvPolynomial (Fin m ⊕ Fin m) ℤ →ₐ[ℤ] _) = 
     substXiToXj (Sum.inr i) (Sum.inr j) := rfl
 
-/-- The determinant of the polynomial Cauchy matrix is divisible by (x_i - x_j) for i ≠ j. -/
+/-- The determinant of the polynomial Cauchy matrix is divisible by (x_i - x_j) for i ≠ j. @statement_id stmt-src-lem.det.cauchy-poly-dvd-x
+-/
 lemma polyCauchyMat'_det_dvd_x_sub_x (m : ℕ) (i j : Fin m) (hij : i ≠ j) :
     (MvPolynomial.X (Sum.inl i) - MvPolynomial.X (Sum.inl j) : 
      MvPolynomial (Fin m ⊕ Fin m) ℤ) ∣ (polyCauchyMat' m).det := by
@@ -6780,7 +6825,8 @@ lemma polyCauchyMat'_det_dvd_x_sub_x (m : ℕ) (i j : Fin m) (hij : i ≠ j) :
   have hij' : (Sum.inl i : Fin m ⊕ Fin m) ≠ Sum.inl j := fun h => hij (Sum.inl_injective h)
   exact X_sub_X_dvd_of_subst_eq_zero _ _ _ hij' h_zero
 
-/-- The determinant of the polynomial Cauchy matrix is divisible by (y_i - y_j) for i ≠ j. -/
+/-- The determinant of the polynomial Cauchy matrix is divisible by (y_i - y_j) for i ≠ j. @statement_id stmt-src-lem.det.cauchy-poly-dvd-y
+-/
 lemma polyCauchyMat'_det_dvd_y_sub_y (m : ℕ) (i j : Fin m) (hij : i ≠ j) :
     (MvPolynomial.X (Sum.inr i) - MvPolynomial.X (Sum.inr j) : 
      MvPolynomial (Fin m ⊕ Fin m) ℤ) ∣ (polyCauchyMat' m).det := by
@@ -6933,7 +6979,8 @@ lemma X_sub_X_not_dvd {σ : Type*} [DecidableEq σ] (i j k l : σ)
 
 /-- Distinct linear factors (X_i - X_j) and (X_k - X_l) are relatively prime when not associated.
     This is a key lemma for the factor hunting proof: we can use `Finset.prod_dvd_of_isRelPrime`
-    to show that the product of coprime factors divides the determinant. -/
+    to show that the product of coprime factors divides the determinant. @statement_id stmt-src-lem.det.x-sub-x-isrelprime
+-/
 lemma X_sub_X_isRelPrime {σ : Type*} [DecidableEq σ] (i j k l : σ) (hij : i ≠ j) (hkl : k ≠ l) 
     (h_ne : ¬((i = k ∧ j = l) ∨ (i = l ∧ j = k))) :
     IsRelPrime (MvPolynomial.X i - MvPolynomial.X j : MvPolynomial σ ℤ) 
@@ -9100,7 +9147,8 @@ private lemma eq_of_dvd_of_eval_eq {σ : Type*} [DecidableEq σ] [Finite σ]
     5. The RHS is exactly this product, and degrees match, so LHS = c * RHS for some constant c
     6. Comparing leading coefficients shows c = 1
 
-    Label: thm.det.cauchy -/
+    Label: thm.det.cauchy @statement_id stmt-src-lem.det.cauchy-poly
+-/
 theorem cauchy_det_poly (x y : Fin n → R) :
     (Matrix.of fun i j => ∏ k ∈ Finset.univ.filter (· ≠ j), (x i + y k)).det =
       ∏ i : Fin n, ∏ j ∈ Ioi i, (x i - x j) * (y i - y j) := by
@@ -9310,7 +9358,8 @@ theorem cauchy_det_poly (x y : Fin n → R) :
     - The LHS equals (∏ᵢ∏ⱼ(xᵢ + yⱼ)) · det(cauchyMat)
     - Dividing both sides by ∏ᵢ∏ⱼ(xᵢ + yⱼ) gives the Cauchy determinant formula
     
-    Label: thm.det.cauchy -/
+    Label: thm.det.cauchy @statement_id stmt-src-lem.det.cauchy-det-of-poly
+-/
 theorem cauchy_det_of_poly {K : Type*} [Field K] {m : ℕ} (x y : Fin m → K)
     (h : ∀ i j, x i + y j ≠ 0) :
     (cauchyMat x y h).det = cauchyNumerator x y / cauchyDenominator x y := by
@@ -9342,7 +9391,8 @@ theorem cauchy_det_of_poly {K : Type*} [Field K] {m : ℕ} (x y : Fin m → K)
     Note: The proof is complete for n = 0-7. For n ≥ 8, there is a sorry in `cauchyMatEval_det`
     which is used to verify the evaluation equality in the factor hunting proof.
 
-    Label: thm.det.cauchy -/
+    Label: thm.det.cauchy @statement_id stmt-src-thm.det.cauchy
+-/
 theorem cauchy_det {K : Type*} [Field K] (x y : Fin n → K)
     (h : ∀ i j, x i + y j ≠ 0) :
     (cauchyMat x y h).det =
@@ -9402,7 +9452,8 @@ For subsets P, Q ⊆ [n] with |P| = |Q| ≥ 1:
        matrices A via the evaluation homomorphism.
 
     The key missing infrastructure in Mathlib is the complementary minor theorem for inverse
-    matrices (step 3), which typically requires block matrix determinant formulas. -/
+    matrices (step 3), which typically requires block matrix determinant formulas. @statement_id stmt-src-thm.det.jacobi-complement
+-/
 theorem jacobi_complementary_minor {m : ℕ} (A : Matrix (Fin m) (Fin m) R)
     (P Q : Finset (Fin m)) (hPQ : P.card = Q.card) (_hP : P.card ≥ 1) :
     submatrixDet A.adjugate P Q =
