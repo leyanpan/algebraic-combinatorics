@@ -225,6 +225,7 @@ theorem qBinomial_at_one (n k : ℕ) : qBinomial (1 : R) n k = n.choose k := by
       simp only [qBinomial, one_pow, one_mul, ih]
       rw [← Nat.cast_add, Nat.choose_succ_succ]
 
+/-- @statement_id stmt-src-lem.qbinomial_zero_right -/
 @[simp]
 theorem qBinomial_zero_right (q : R) (n : ℕ) : qBinomial q n 0 = 1 := by
   cases n <;> rfl
@@ -254,10 +255,12 @@ theorem qBinomial_gt (q : R) (n k : ℕ) (h : k > n) : qBinomial q n k = 0 := by
       rw [ih k hk1, ih (k + 1) hk2, mul_zero, add_zero]
 
 /-- Alias for `qBinomial_gt` with the hypothesis stated as `n < k`.
-    This is the form used in Proposition prop.pars.qbinom.0. -/
+    This is the form used in Proposition prop.pars.qbinom.0. @statement_id stmt-src-lem.qbinomial_eq_zero_of_lt
+-/
 theorem qBinomial_eq_zero_of_lt (q : R) (n k : ℕ) (h : n < k) : qBinomial q n k = 0 :=
   qBinomial_gt q n k h
 
+/-- @statement_id stmt-src-lem.qbinomial_self -/
 theorem qBinomial_self (q : R) (n : ℕ) : qBinomial q n n = 1 := by
   induction n with
   | zero => rfl
@@ -523,6 +526,7 @@ private lemma monotoneFunctionsStartPos_zero_empty (n : ℕ) : monotoneFunctions
   · intro hf
     simp_all
 
+/-- @statement_id stmt-src-lem.qbinomial-formulas.sum-monotone -/
 theorem qBinomial_eq_sum_monotone (q : R) (n k : ℕ) (hk : k ≤ n) :
     qBinomial q n k = ∑ f ∈ monotoneFunctions k (n - k), q ^ (sumValues k (n - k) f) := by
   induction n generalizing k with
@@ -682,6 +686,7 @@ private lemma orderEmbOfFin_gap' (S : Finset ℕ) (k : ℕ)
         _ ≥ S.orderEmbOfFin hcard x + d := ihd'
   exact H (b.val - a.val) a b (by omega)
 
+/-- @statement_id stmt-src-lem.qbinomial-formulas.sum-subsets -/
 theorem qBinomial_eq_sum_subsets (q : R) (n k : ℕ) :
     qBinomial q n k = ∑ S ∈ kSubsetsOfIcc n k, q ^ (finsetSumNat S - triangular k) := by
   by_cases hkn : k ≤ n
@@ -937,7 +942,8 @@ private theorem prod_qNat_reverse (q : R) (n : ℕ) :
 /-- The q-binomial coefficient satisfies the product formula over a field:
     [n choose k]_q = ∏_{i=0}^{k-1} [n-i]_q / [i+1]_q
 
-    This is equivalent to the recursive definition when q is not a root of unity. -/
+    This is equivalent to the recursive definition when q is not a root of unity. @statement_id stmt-src-lem.qbinomial-formulas.prod-div
+-/
 theorem qBinomial_eq_prod_div {F : Type*} [Field F] (q : F) (n k : ℕ) (hk : k ≤ n)
     (hq : ∀ i : ℕ, i < k → qNat q (i + 1) ≠ 0) :
     qBinomial q n k = ∏ i ∈ range k, qNat q (n - i) / qNat q (i + 1) := by
@@ -1403,7 +1409,8 @@ private lemma subtract_after_add (m : Multiset ℕ) (n : ℕ) (hm : ∀ x ∈ m,
 
     The bijection:
     - Forward: subtract 1 from each part, filter zeros (using `ofSums`)
-    - Inverse: add 1 to each part, pad with 1s to get exactly k+1 parts -/
+    - Inverse: add 1 to each part, pad with 1s to get exactly k+1 parts @statement_id stmt-src-lem.qbinomial-formulas.exact-parts-bij
+-/
 lemma partitionsInBoxExact_card_eq (s k m : ℕ) (hm : m ≥ 1) (hs : s ≥ k + 1) :
     (partitionsInBoxExact s (k + 1) m).card = countPartitionsInBox (s - (k + 1)) (k + 1) (m - 1) := by
   unfold countPartitionsInBox
@@ -1489,7 +1496,8 @@ private lemma empty_partition_satisfies_box (n k : ℕ) :
     finitely many such partitions - they all fit in a k × (n-k) box, so their
     size is at most k · (n-k).
 
-    When k > n, this is 0 (the empty sum, since n - k < 0 means no partitions qualify). -/
+    When k > n, this is 0 (the empty sum, since n - k < 0 means no partitions qualify). @statement_id stmt-src-def.qbinomial-formulas.qbinom-poly
+-/
 noncomputable def qBinomialPolyDef (n k : ℕ) : Polynomial ℤ :=
   if k ≤ n then
     ∑ size ∈ range (k * (n - k) + 1),
@@ -1553,7 +1561,8 @@ variable {R : Type*} [CommRing R]
 
     where λ ranges over all partitions with largest part ≤ n-k and length ≤ k.
 
-    This is the result of substituting `a` for `q` in the polynomial `[n choose k]_q`. -/
+    This is the result of substituting `a` for `q` in the polynomial `[n choose k]_q`. @statement_id stmt-src-def.qbinomial-formulas.qbinom-poly
+-/
 noncomputable def qBinomialEval (n k : ℕ) (a : R) : R :=
   (qBinomialPolyDef n k).eval₂ (Int.castRingHom R) a
 
@@ -1617,7 +1626,8 @@ private lemma sum_range_extend_zero {R : Type*} [AddCommMonoid R] (f : ℕ → R
     1. Those with length ≤ k (same as partitions in k × (n-k) box)
     2. Those with length = k+1, which biject with partitions in (k+1) × (n-k-1) box
        via "removing a column" (subtracting 1 from each of the k+1 parts),
-       with size decreased by k+1 (hence the factor q^{k+1}). -/
+       with size decreased by k+1 (hence the factor q^{k+1}). @statement_id stmt-src-lem.qbinomial-formulas.pascal-poly
+-/
 theorem qBinomialPolyDef_pascal (n k : ℕ) (hk : k + 1 ≤ n + 1) :
     qBinomialPolyDef (n + 1) (k + 1) =
       qBinomialPolyDef n k + (Polynomial.X : Polynomial ℤ) ^ (k + 1) * qBinomialPolyDef n (k + 1) := by
@@ -1759,7 +1769,8 @@ private theorem qBinomialEval_pascal (n k : ℕ) (q : R) (hk : k + 1 ≤ n + 1) 
     This connects Definition def.pars.qbinom.qbinom with the recurrence-based `qBinomial`.
 
     The proof shows that both definitions satisfy the same recurrence relation
-    (q-Pascal's identity) and boundary conditions. -/
+    (q-Pascal's identity) and boundary conditions. @statement_id stmt-src-thm.qbinomial-formulas.eval-eq-qbinomial
+-/
 theorem qBinomialEval_eq_qBinomial (n k : ℕ) (q : R) :
     qBinomialEval n k q = qBinomial q n k := by
   -- Both definitions satisfy:
@@ -1811,7 +1822,8 @@ variable {L : Type*} [CommRing L]
     This is a fundamental identity used in proofs of the q-binomial theorems
     and determinant formulas.
 
-    A rigorous proof can be found in [detnotes, Exercise 6.1 (a)]. -/
+    A rigorous proof can be found in [detnotes, Exercise 6.1 (a)]. @statement_id stmt-src-lem.prodrule.sum-ai-plus-bi
+-/
 theorem prod_add_eq_sum_over_subsets {n : ℕ} (a b : Fin n → L) :
     ∏ i, (a i + b i) = ∑ S : Finset (Fin n), (∏ i ∈ S, a i) * (∏ i ∈ Sᶜ, b i) := by
   simp only [compl_eq_univ_sdiff]
@@ -1885,7 +1897,8 @@ private lemma qNat_add_pow (q : K) (n : ℕ) : qNat q n + q ^ n = 1 + q * qNat q
 
     The proof proceeds by induction on n, using the specific structure of
     qBinomial coefficients. The identity follows from the fact that qBinomial
-    can be expressed as a geometric sum. -/
+    can be expressed as a geometric sum. @statement_id stmt-src-lem.qbinomial-formulas.qbinom-induction-identity
+-/
 lemma qBinomial_induction_identity (q : K) (n k : ℕ) :
     q ^ k * qBinomial q n (k + 1) + q ^ n * qBinomial q n k =
     q ^ k * qBinomial q n k + q ^ (k + 1) * q ^ k * qBinomial q n (k + 1) := by
@@ -1926,7 +1939,8 @@ lemma qBinomial_induction_identity (q : K) (n k : ℕ) :
     - [n choose k]_q counts k-element subsets weighted by q^{sum(S) - (1+2+...+k)}
     - In 0-indexed form, this becomes q^{sum(S)} = q^{k(k-1)/2} * [n choose k]_q
 
-    The proof proceeds by induction on n, using the q-Pascal recurrence. -/
+    The proof proceeds by induction on n, using the q-Pascal recurrence. @statement_id stmt-src-lem.qbinomial-formulas.subset-sum-formula
+-/
 theorem qBinomial_sum_subsets (q : K) (n k : ℕ) :
     ∑ S ∈ ((range n).powerset.filter (fun S => S.card = k)),
       q ^ (∑ i ∈ S, i) =
@@ -2002,7 +2016,8 @@ theorem qBinomial_sum_subsets (q : K) (n k : ℕ) :
     - Expand the product as a sum over subsets S ⊆ {0, 1, ..., n-1}
     - For each S, the contribution is a^|S| * q^{∑_{i ∈ S} i} * b^{n - |S|}
     - Group by cardinality k = |S|
-    - Use qBinomial_sum_subsets to evaluate the sum over k-element subsets -/
+    - Use qBinomial_sum_subsets to evaluate the sum over k-element subsets @statement_id stmt-src-thm.pars.qbinom.binom1
+-/
 theorem qBinomial_first_theorem (a b q : K) (n : ℕ) :
     ∏ i ∈ range n, (a * q ^ i + b) =
     ∑ k ∈ range (n + 1), q ^ (k * (k - 1) / 2) * qBinomial q n k * a ^ k * b ^ (n - k) := by
@@ -2055,7 +2070,8 @@ theorem qBinomial_first_theorem (a b q : K) (n : ℕ) :
   rw [qBinomial_sum_subsets]
   ring
 
-/-- The first q-binomial theorem specializes to the binomial formula when q = 1. -/
+/-- The first q-binomial theorem specializes to the binomial formula when q = 1. @statement_id stmt-src-lem.qbinomial-formulas.binom1-at-one
+-/
 theorem qBinomial_first_theorem_at_one (a b : K) (n : ℕ) :
     ∏ _i ∈ range n, (a + b) = ∑ k ∈ range (n + 1), (n.choose k : K) * a ^ k * b ^ (n - k) := by
   -- LHS is (a + b)^n
@@ -2074,7 +2090,8 @@ section SecondQBinomialTheorem
 variable {L : Type*} [CommRing L]
 variable {A : Type*} [Ring A] [Algebra L A]
 
-/-- Helper lemma: b * a^k = ω^k * a^k * b for the twisted commutativity relation. -/
+/-- Helper lemma: b * a^k = ω^k * a^k * b for the twisted commutativity relation. @statement_id stmt-src-lem.qbinomial-formulas.b-mul-pow-a
+-/
 lemma b_mul_pow_a (ω : L) (a b : A) (hab : b * a = ω • (a * b)) (k : ℕ) :
     b * a ^ k = (ω ^ k) • (a ^ k * b) := by
   induction k with
@@ -2096,7 +2113,8 @@ lemma b_mul_pow_a (ω : L) (a b : A) (hab : b * a = ω • (a * b)) (k : ℕ) :
     Then (a + b)ⁿ = ∑_{k=0}^{n} [n choose k]_ω · aᵏ · bⁿ⁻ᵏ.
 
     This generalizes the binomial formula to the noncommutative setting with
-    a "twisted" commutativity relation. -/
+    a "twisted" commutativity relation. @statement_id stmt-src-thm.pars.qbinom.binom2
+-/
 theorem qBinomial_second_theorem (ω : L) (a b : A) (hab : b * a = ω • (a * b)) (n : ℕ) :
     (a + b) ^ n = ∑ k ∈ range (n + 1), (qBinomial ω n k) • (a ^ k * b ^ (n - k)) := by
   induction n with
@@ -2189,7 +2207,8 @@ private lemma range_init_eq_image_lt {n : ℕ} (v : Fin (n + 1) → V) :
 /-- Lemma lem.linalg.lin-ind-via-span: A k-tuple (v₁, v₂, ..., vₖ) is linearly independent
     if and only if each vᵢ ∉ span{v₁, ..., vᵢ₋₁}.
 
-    This is the inductive characterization of linear independence. -/
+    This is the inductive characterization of linear independence. @statement_id stmt-src-lem.linalg.lin-ind-via-span
+-/
 theorem linearIndependent_iff_not_mem_span_of_lt {k : ℕ} (v : Fin k → V) :
     LinearIndependent F v ↔
     ∀ i : Fin k, v i ∉ Submodule.span F (v '' {j : Fin k | j.val < i.val}) := by
@@ -2267,7 +2286,8 @@ variable {V : Type*} [AddCommGroup V] [Module F V] [Module.Finite F V]
       choices for v₁.
 
     This uses `card_linearIndependent` from Mathlib which proves this via the equivalence
-    `equiv_linearIndependent`. -/
+    `equiv_linearIndependent`. @statement_id stmt-src-lem.pars.qbinom.lin-ind-count
+-/
 theorem card_linearIndependent_tuples (n k : ℕ) (hn : Module.finrank F V = n) :
     Nat.card {v : Fin k → V // LinearIndependent F v} =
     ∏ i ∈ range k, (Fintype.card F ^ n - Fintype.card F ^ i) := by
@@ -2300,7 +2320,8 @@ theorem card_linearIndependent_tuples (n k : ℕ) (hn : Module.finrank F V = n) 
     A map f satisfying this assumption is called an m-to-1 map.
 
     The proof uses the fiber decomposition: |A| = Σ_{b ∈ B} |fiber(b)|,
-    where each fiber has cardinality m by assumption. -/
+    where each fiber has cardinality m by assumption. @statement_id stmt-src-lem.count.multijection
+-/
 theorem card_eq_mul_of_fibers {A B : Type*} [Fintype A] [Fintype B] [DecidableEq B]
     (f : A → B) (m : ℕ) (hf : ∀ b : B, Fintype.card {a : A // f a = b} = m) :
     Fintype.card A = m * Fintype.card B := by
@@ -2310,7 +2331,8 @@ theorem card_eq_mul_of_fibers {A B : Type*} [Fintype A] [Fintype B] [DecidableEq
     exact Fintype.card_congr (Equiv.sigmaFiberEquiv f).symm
   simp_rw [h1, hf, Finset.sum_const, Finset.card_univ, smul_eq_mul, mul_comm]
 
-/-- The span map sends a linearly independent k-tuple to its span (a k-dimensional subspace). -/
+/-- The span map sends a linearly independent k-tuple to its span (a k-dimensional subspace). @statement_id stmt-src-def.qbinomial-formulas.span-map
+-/
 noncomputable def spanMap (k : ℕ) :
     {v : Fin k → V // LinearIndependent F v} → {W : Submodule F V // Module.finrank F W = k} :=
   fun ⟨v, hv⟩ => ⟨Submodule.span F (Set.range v), by
@@ -2385,7 +2407,8 @@ private noncomputable def fiberEquiv (k : ℕ) (W : {W : Submodule F V // Module
     - Thus the preimages are exactly the linearly independent k-tuples in W
     - By card_linearIndependent, the count is ∏_{i=0}^{k-1} (q^k - q^i)
 
-    This is the key step in the proof of qBinomial_subspace_count. -/
+    This is the key step in the proof of qBinomial_subspace_count. @statement_id stmt-src-lem.qbinomial-formulas.span-fiber-card
+-/
 theorem spanMap_fiber_card (k : ℕ) (W : {W : Submodule F V // Module.finrank F W = k}) :
     Nat.card {v : {v : Fin k → V // LinearIndependent F v} // spanMap k v = W} =
     ∏ i ∈ range k, (Fintype.card F ^ k - Fintype.card F ^ i) := by
@@ -2427,7 +2450,8 @@ theorem spanMap_fiber_card (k : ℕ) (W : {W : Submodule F V // Module.finrank F
 
     5. Therefore:
        (# of k-dim subspaces) = ∏_{i=0}^{k-1} (q^n - q^i) / ∏_{i=0}^{k-1} (q^k - q^i)
-                              = [n choose k]_q -/
+                              = [n choose k]_q @statement_id stmt-src-thm.pars.qbinom.subsp-count
+-/
 theorem qBinomial_subspace_count (n k : ℕ) (hn : Module.finrank F V = n) :
     qBinomial (Fintype.card F : ℚ) n k =
     Nat.card {W : Submodule F V // Module.finrank F W = k} := by
@@ -2672,6 +2696,7 @@ private lemma qBinomial_coeff_eq_aux : ∀ (s : ℕ), ∀ (d k n m : ℕ), d + k
             rw [h1, h2]
           · rw [h1]
 
+/-- @statement_id stmt-src-lem.qbinomial-formulas.coeff-stability -/
 lemma qBinomial_coeff_eq (d k n m : ℕ) (hn : n ≥ d + k) (hm : m ≥ d + k) :
     PowerSeries.coeff d (qBinomial (PowerSeries.X : PowerSeries ℚ) n k) =
     PowerSeries.coeff d (qBinomial PowerSeries.X m k) :=
@@ -2735,6 +2760,7 @@ private lemma qBinomial_stable_eq_prod_aux : ∀ (s d k : ℕ), d + k ≤ s →
         rw [hstab, h2, h1]
       · rw [h1]
 
+/-- @statement_id stmt-src-lem.qbinomial-formulas.stable-eq-prod -/
 lemma qBinomial_stable_eq_prod (d k : ℕ) :
     PowerSeries.coeff d (qBinomial (PowerSeries.X : PowerSeries ℚ) (d + k) k) =
     PowerSeries.coeff d (∏ i ∈ range k, (1 - PowerSeries.X ^ (i + 1))⁻¹) :=
@@ -2746,7 +2772,8 @@ lemma qBinomial_stable_eq_prod (d k : ℕ) :
 
     where pᵢ(n) is the number of partitions of n with exactly i parts.
 
-    This is stated for power series over a field where inverses exist. -/
+    This is stated for power series over a field where inverses exist. @statement_id stmt-src-prop.pars.qbinom.lim1
+-/
 theorem qBinomial_limit (k : ℕ) :
     Filter.Tendsto (fun n => qBinomial (PowerSeries.X : PowerSeries ℚ) n k)
       Filter.atTop
@@ -2966,6 +2993,7 @@ private lemma conjugatePartition_all_parts_le' (m k : ℕ) (p : Nat.Partition m)
   exact le_trans hmax hp
 
 -- Conjugation is an involution
+/-- @statement_id stmt-src-lem.qbinomial-formulas.conjugation-involution -/
 lemma conjugatePartition_involution' (m : ℕ) (p : Nat.Partition m) :
     conjugatePartition' m (conjugatePartition' m p) = p := by
   apply Nat.Partition.ext
@@ -2989,6 +3017,7 @@ lemma conjugatePartition_involution' (m : ℕ) (p : Nat.Partition m) :
   rw [YoungDiagram.rowLens_ofRowLens_eq_self (parts_sort_pos' m p)]
   exact Multiset.sort_eq p.parts (· ≥ ·)
 
+/-- @statement_id stmt-src-lem.qbinomial-formulas.restricted-eq-atmost -/
 lemma restricted_card_eq_atMostKParts (n k : ℕ) :
     #(Nat.Partition.restricted n (· ≤ k)) = partitionCountAtMostKParts n k := by
   have hlhs : #(Nat.Partition.restricted n (· ≤ k)) =
@@ -3017,7 +3046,8 @@ lemma restricted_card_eq_atMostKParts (n k : ℕ) :
     This is the second equality in Proposition prop.pars.qbinom.lim1:
     ∑_{n ∈ ℕ} (p₀(n) + p₁(n) + ... + pₖ(n)) qⁿ = ∏_{i=1}^{k} 1/(1 - qⁱ)
 
-    Combined with Theorem thm.pars.main-gf-0n from the partition generating functions section. -/
+    Combined with Theorem thm.pars.main-gf-0n from the partition generating functions section. @statement_id stmt-src-thm.qbinomial-formulas.limit-eq-partition-gf
+-/
 theorem qBinomial_limit_eq_partition_gf (k : ℕ) :
     ∏ i ∈ range k, (1 - (PowerSeries.X : PowerSeries ℚ) ^ (i + 1))⁻¹ =
     PowerSeries.mk fun n => (partitionCountAtMostKParts n k : ℚ) := by

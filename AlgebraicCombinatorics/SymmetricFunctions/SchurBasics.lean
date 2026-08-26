@@ -75,7 +75,8 @@ For example, when N = 3, we have ρ = (2, 1, 0).
     Note: The textbook uses 1-based indexing with ρ_j = N - j for j ∈ [N].
     In Lean with 0-based indexing, this becomes ρ(i) = N - 1 - i for i ∈ Fin N.
 
-    This is an abbreviation for `AlgebraicCombinatorics.rho N` from LittlewoodRichardson.lean. -/
+    This is an abbreviation for `AlgebraicCombinatorics.rho N` from LittlewoodRichardson.lean. @statement_id stmt-src-def.sf.alternants
+-/
 abbrev rhoVector (N : ℕ) : Fin N → ℕ := AlgebraicCombinatorics.rho N
 
 omit [NeZero N] in
@@ -84,7 +85,8 @@ theorem rhoVector_val (i : Fin N) : rhoVector N i = N - 1 - i.val :=
   AlgebraicCombinatorics.rho_apply i
 
 omit [NeZero N] in
-/-- The ρ vector is strictly decreasing -/
+/-- The ρ vector is strictly decreasing @statement_id stmt-src-lem.sf.rhovector-strictanti
+-/
 theorem rhoVector_strictAnti : StrictAnti (rhoVector N) :=
   AlgebraicCombinatorics.rho_strictAnti
 
@@ -103,11 +105,13 @@ theorem rhoVector_last : rhoVector N ⟨N - 1, Nat.sub_lt (Nat.pos_of_ne_zero (N
 
 omit [NeZero N] in
 /-- The sum of the ρ vector equals N(N-1)/2, which is the triangular number T_{N-1}.
-    This follows from ∑_{i=0}^{N-1} (N-1-i) = ∑_{k=0}^{N-1} k = N(N-1)/2. -/
+    This follows from ∑_{i=0}^{N-1} (N-1-i) = ∑_{k=0}^{N-1} k = N(N-1)/2. @statement_id stmt-src-lem.sf.rhovector-sum
+-/
 theorem rhoVector_sum : ∑ i : Fin N, rhoVector N i = N * (N - 1) / 2 :=
   AlgebraicCombinatorics.rho_sum
 
-/-- The ρ vector as an N-partition (when N > 0) -/
+/-- The ρ vector as an N-partition (when N > 0) @statement_id stmt-src-def.sf.rhopartition
+-/
 def rhoPartition (N : ℕ) [NeZero N] : NPartition N where
   parts := rhoVector N
   antitone := rhoVector_antitone N
@@ -145,7 +149,8 @@ variable {R : Type*} [CommRing R]
     which defines it as ∑_{σ ∈ S_N} sign(σ) · x^(σ·α). This equals the determinant-based
     definition det(x_j^{α_i}) by `AlgebraicCombinatorics.alternant_eq_det`.
 
-    The explicit `N` parameter is kept for backward compatibility with existing code. -/
+    The explicit `N` parameter is kept for backward compatibility with existing code. @statement_id stmt-src-def.sf.alternants
+-/
 noncomputable abbrev alternant (N : ℕ) (α : Fin N → ℕ) : MvPolynomial (Fin N) R :=
   AlgebraicCombinatorics.alternant α
 
@@ -174,6 +179,7 @@ theorem alternantTextbook_eq_alternant (α : Fin N → ℕ) :
       | x_2^{N-1}  x_2^{N-2}  ...  x_2^0 |
       |    ...        ...     ...   ...  |
       | x_N^{N-1}  x_N^{N-2}  ...  x_N^0 |
+@statement_id stmt-src-thm.sf.alternant-rho-vandermonde
 -/
 theorem alternant_rho_eq_vandermonde :
     alternant (R := R) N (rhoVector N) =
@@ -286,7 +292,8 @@ See `NPartition.youngDiagram`, `NPartition.mem_youngDiagram`, etc.
 /-! ## Young Tableaux -/
 
 /-- A Young tableau of shape lam is a filling of the Young diagram Y(lam) with elements of [N].
-    Definition \ref{def.sf.ytab} in the source. -/
+    Definition \ref{def.sf.ytab} in the source. @statement_id stmt-src-def.sf.ytab
+-/
 structure YoungTableau {N : ℕ} [NeZero N] (lam : NPartition N) where
   /-- The filling function -/
   entry : Fin N × ℕ → Fin N
@@ -336,7 +343,8 @@ theorem entry_mem_iff (_T : YoungTableau lam) {i : Fin N} {j : ℕ} :
     (i, j) ∈ lam.youngDiagram ↔ j < lam.parts i :=
   NPartition.mem_youngDiagram
 
-/-- The size of a tableau equals the sum of parts of the partition. -/
+/-- The size of a tableau equals the sum of parts of the partition. @statement_id stmt-src-lem.sf.ytab-size-sum-parts
+-/
 theorem size_eq_sum_parts (T : YoungTableau lam) : T.size = ∑ i, lam.parts i := by
   unfold size NPartition.youngDiagram
   rw [Finset.card_biUnion]
@@ -381,7 +389,8 @@ end YoungTableau
     - Use this definition when working with cell coordinates `(i, j)` directly, or when
       extending the `YoungTableau` structure is beneficial.
     - Use `SymmetricFunctions.SSYT` when the dependent type ensures bounds checking at
-      compile time, or when `[NeZero N]` is not available. -/
+      compile time, or when `[NeZero N]` is not available. @statement_id stmt-src-def.sf.ssyt
+-/
 structure SSYT {N : ℕ} [NeZero N] (lam : NPartition N) extends YoungTableau lam where
   /-- Entries increase weakly along rows -/
   row_weak : ∀ i : Fin N, ∀ j₁ j₂ : ℕ, (i, j₂) ∈ lam.youngDiagram → j₁ < j₂ →
@@ -403,7 +412,8 @@ theorem ext {T₁ T₂ : SSYT lam} (h : ∀ c, T₁.entry c = T₂.entry c) : T�
   simp only [mk.injEq]
   exact YoungTableau.ext h
 
-/-- Row-weak property extended to non-strict inequality. -/
+/-- Row-weak property extended to non-strict inequality. @statement_id stmt-src-lem.sf.ssyt-row-weak-of-le
+-/
 theorem row_weak_of_le (T : SSYT lam) {i : Fin N} {j₁ j₂ : ℕ}
     (h : (i, j₂) ∈ lam.youngDiagram) (hle : j₁ ≤ j₂) :
     T.entry (i, j₁) ≤ T.entry (i, j₂) := by
@@ -411,7 +421,8 @@ theorem row_weak_of_le (T : SSYT lam) {i : Fin N} {j₁ j₂ : ℕ}
   · rfl
   · exact T.row_weak i j₁ j₂ h hlt
 
-/-- Column-weak property (derived from col_strict). -/
+/-- Column-weak property (derived from col_strict). @statement_id stmt-src-lem.sf.ssyt-col-weak
+-/
 theorem col_weak (T : SSYT lam) {i₁ i₂ : Fin N} {j : ℕ}
     (h : (i₂, j) ∈ lam.youngDiagram) (hle : i₁ ≤ i₂) :
     T.entry (i₁, j) ≤ T.entry (i₂, j) := by
@@ -422,7 +433,8 @@ theorem col_weak (T : SSYT lam) {i₁ i₂ : Fin N} {j : ℕ}
 /-! ### Entry Bounds -/
 
 /-- In a semistandard tableau, entry values in a column are at least the row index.
-    This is because entries strictly increase down columns, starting from some value ≥ 0. -/
+    This is because entries strictly increase down columns, starting from some value ≥ 0. @statement_id stmt-src-lem.sf.ssyt-entry-ge-row
+-/
 theorem entry_ge_row (T : SSYT lam) (i : Fin N) {j : ℕ}
     (h : (i, j) ∈ lam.youngDiagram) : i.val ≤ (T.entry (i, j)).val := by
   induction' hi : i.val with n ih generalizing i
@@ -458,7 +470,8 @@ theorem entry_lt_N (T : SSYT lam) (c : Fin N × ℕ) : (T.entry c).val < N :=
     1 1
     2
     ```
-    where each row i is filled with the value i. -/
+    where each row i is filled with the value i. @statement_id stmt-src-lem.sf.ssyt-highest-weight
+-/
 def highestWeight (lam : NPartition N) : SSYT lam where
   entry := fun c => if (c.1, c.2) ∈ lam.youngDiagram then c.1 else 0
   support := fun c hc => by simp [hc]
@@ -492,7 +505,8 @@ theorem highestWeight_entry_eq_row (i : Fin N) (j : ℕ) (h : (i, j) ∈ lam.you
     (highestWeight lam).entry (i, j) = i := by
   simp [h]
 
-/-- The highest weight tableau achieves the minimum possible entry at each cell. -/
+/-- The highest weight tableau achieves the minimum possible entry at each cell. @statement_id stmt-src-lem.sf.ssyt-highest-weight-le
+-/
 theorem highestWeight_entry_le (T : SSYT lam) (c : Fin N × ℕ) (h : c ∈ lam.youngDiagram) :
     (highestWeight lam).entry c ≤ T.entry c := by
   simp only [highestWeight_entry_of_mem c h]
@@ -504,7 +518,8 @@ end SSYT
 
 /-- The monomial x_T associated to a Young tableau T.
     Definition \ref{def.sf.ytab.xT} in the source.
-    x_T = ∏_{c ∈ Y(lam)} x_{T(c)} -/
+    x_T = ∏_{c ∈ Y(lam)} x_{T(c)} @statement_id stmt-src-def.sf.ytab.xt
+-/
 def YoungTableau.monomial {N : ℕ} [NeZero N] {lam : NPartition N}
     (T : YoungTableau lam) : MvPolynomial (Fin N) ℤ :=
   ∏ c ∈ lam.youngDiagram, X (T.entry c)
@@ -527,7 +542,8 @@ def occurrences (T : YoungTableau lam) (k : Fin N) : ℕ :=
 
 /-- The monomial x_T equals the product ∏_{k=1}^N x_k^{#{times k appears in T}}.
     This is the third form of the definition in def.sf.ytab.xT:
-    x_T = ∏_{k=1}^N x_k^{(# of times k appears in T)} -/
+    x_T = ∏_{k=1}^N x_k^{(# of times k appears in T)} @statement_id stmt-src-lem.sf.ytab-monomial-prod-pow
+-/
 theorem monomial_eq_prod_pow (T : YoungTableau lam) :
     T.monomial = ∏ k : Fin N, X k ^ T.occurrences k := by
   unfold monomial occurrences
@@ -678,7 +694,8 @@ def fillingMonomialYoung {N : ℕ} [NeZero N] {lam : NPartition N}
 
     **Equivalence:** The two definitions agree when the partition is valid. See:
     - `SSYTEquiv.schurPoly_eq_schur`: relates this definition to `SymmetricFunctions.schur`
-    - `schurPoly_eq_AC_schurPoly`: relates this definition to `AlgebraicCombinatorics.schurPoly` -/
+    - `schurPoly_eq_AC_schurPoly`: relates this definition to `AlgebraicCombinatorics.schurPoly` @statement_id stmt-src-def.sf.schur
+-/
 def schurPoly {N : ℕ} [NeZero N] (lam : NPartition N) : MvPolynomial (Fin N) ℤ :=
   ∑ f ∈ ssytFillingsYoung lam, fillingMonomialYoung f
 
@@ -689,7 +706,8 @@ def schurPoly {N : ℕ} [NeZero N] (lam : NPartition N) : MvPolynomial (Fin N) �
 
     The complete homogeneous symmetric polynomial h_n is the sum over all monomials
     of degree n: h_n = ∑_{i₁ ≤ i₂ ≤ ... ≤ iₙ} x_{i₁} x_{i₂} ⋯ x_{iₙ}.
-    This equals the Schur polynomial for the single-row partition (n, 0, ..., 0). -/
+    This equals the Schur polynomial for the single-row partition (n, 0, ..., 0). @statement_id stmt-src-thm.sf.schur-row-eq-h
+-/
 theorem schurPoly_row_eq_h [DecidableEq (Fin N)] (n : ℕ) (lam : NPartition N)
     (hlam : lam.parts 0 = n ∧ ∀ i : Fin N, i ≠ 0 → lam.parts i = 0) :
     schurPoly lam = MvPolynomial.hsymm (Fin N) ℤ n := by
@@ -904,7 +922,8 @@ lemma col_partition_ssyt_iff {N : ℕ} [NeZero N] (n : ℕ) (hn : n ≤ N) (lam 
     The elementary symmetric polynomial e_n is the sum over all squarefree monomials
     of degree n: e_n = ∑_{i₁ < i₂ < ... < iₙ} x_{i₁} x_{i₂} ⋯ x_{iₙ}.
     This equals the Schur polynomial for the single-column partition (1, 1, ..., 1, 0, ..., 0)
-    with n ones. -/
+    with n ones. @statement_id stmt-src-thm.sf.schur-col-eq-e
+-/
 theorem schurPoly_col_eq_e (n : ℕ) (hn : n ≤ N) (lam : NPartition N)
     (hlam : (∀ i : Fin N, i.val < n → lam.parts i = 1) ∧
           (∀ i : Fin N, i.val ≥ n → lam.parts i = 0)) :
@@ -1408,7 +1427,8 @@ theorem esymm_2_mul_esymm_1_expansion :
 
     This is computed by summing over all SSYT of shape (2,1), which have the form
     ⌜i j⌝ with i ≤ j and i < k. The sum splits into cases based on the relative
-    ⌞k⌟  order of i, j, k. -/
+    ⌞k⌟  order of i, j, k. @statement_id stmt-src-thm.sf.schur-21-eq
+-/
 theorem schurPoly_21_eq [DecidableEq (Fin N)] (hN : 2 ≤ N) (lam : NPartition N)
     (hlam : lam.parts 0 = 2 ∧ lam.parts ⟨1, by omega⟩ = 1 ∧
             ∀ i : Fin N, 2 ≤ i.val → lam.parts i = 0) :
@@ -1793,12 +1813,14 @@ See also `AlgebraicCombinatorics.skewYoungDiagram` in LittlewoodRichardson.lean 
     Example: Y((4,3,1)/(2,1,0)) consists of cells:
     - Row 0: (0, 2), (0, 3)  (since μ₀ = 2, λ₀ = 4)
     - Row 1: (1, 1), (1, 2)  (since μ₁ = 1, λ₁ = 3)
-    - Row 2: (2, 0)          (since μ₂ = 0, λ₂ = 1) -/
+    - Row 2: (2, 0)          (since μ₂ = 0, λ₂ = 1) @statement_id stmt-src-def.sf.skew-diag
+-/
 def skewYoungDiagram {N : ℕ} [NeZero N] (lam mu : NPartition N) : Finset (Fin N × ℕ) :=
   lam.youngDiagram \ mu.youngDiagram
 
 /-- Membership in a skew Young diagram: (i, j) ∈ Y(λ/μ) iff μ_i ≤ j < λ_i.
-    This is the 0-indexed version of the textbook condition μ_i < j ≤ λ_i. -/
+    This is the 0-indexed version of the textbook condition μ_i < j ≤ λ_i. @statement_id stmt-src-lem.sf.skew-diag-mem
+-/
 theorem mem_skewYoungDiagram {N : ℕ} [NeZero N] {lam mu : NPartition N} {c : Fin N × ℕ} :
     c ∈ skewYoungDiagram lam mu ↔ mu.parts c.1 ≤ c.2 ∧ c.2 < lam.parts c.1 := by
   simp only [skewYoungDiagram, Finset.mem_sdiff, NPartition.mem_youngDiagram]
@@ -1813,7 +1835,8 @@ theorem mem_skewYoungDiagram' {N : ℕ} [NeZero N] {lam mu : NPartition N} {i : 
     (i, j) ∈ skewYoungDiagram lam mu ↔ j ∈ Finset.Ico (mu.parts i) (lam.parts i) := by
   rw [mem_skewYoungDiagram, Finset.mem_Ico]
 
-/-- The skew Young diagram is empty when μ = λ. -/
+/-- The skew Young diagram is empty when μ = λ. @statement_id stmt-src-lem.sf.skew-diag-self
+-/
 @[simp]
 theorem skewYoungDiagram_self {N : ℕ} [NeZero N] (lam : NPartition N) :
     skewYoungDiagram lam lam = ∅ := by
@@ -1824,7 +1847,8 @@ theorem skewYoungDiagram_self {N : ℕ} [NeZero N] (lam : NPartition N) :
     omega
   · simp
 
-/-- The skew Young diagram equals the full diagram when μ = 0. -/
+/-- The skew Young diagram equals the full diagram when μ = 0. @statement_id stmt-src-lem.sf.skew-diag-zero
+-/
 @[simp]
 theorem skewYoungDiagram_zero {N : ℕ} [NeZero N] (lam : NPartition N) :
     skewYoungDiagram lam 0 = lam.youngDiagram := by
@@ -1838,7 +1862,8 @@ theorem skewYoungDiagram_zero {N : ℕ} [NeZero N] (lam : NPartition N) :
 
 /-- Convexity of skew Young diagrams: if (a,b) and (e,f) are in Y(lam/mu), and
     a ≤ c ≤ e and b ≤ d ≤ f, then (c,d) ∈ Y(lam/mu).
-    Lemma \ref{lem.sf.skew-diag.convexity} in the source. -/
+    Lemma \ref{lem.sf.skew-diag.convexity} in the source. @statement_id stmt-src-lem.sf.skew-diag.convexity
+-/
 theorem skewYoungDiagram_convex {N : ℕ} [NeZero N] {lam mu : NPartition N}
     {a e : Fin N} {b f : ℕ}
     (hab : (a, b) ∈ skewYoungDiagram lam mu)
@@ -1871,7 +1896,8 @@ theorem skewYoungDiagram_convex {N : ℕ} [NeZero N] {lam mu : NPartition N}
     Young tableaux of shape λ/μ are often called "skew Young tableaux".
 
     Note: If μ ⊈ λ (i.e., not μ ≤ λ), then there are no Young tableaux of shape λ/μ
-    because the skew diagram would be empty or malformed. -/
+    because the skew diagram would be empty or malformed. @statement_id stmt-src-def.sf.skew-tab
+-/
 structure SkewYoungTableau {N : ℕ} [NeZero N] (lam mu : NPartition N) where
   /-- The filling function T : Y(λ/μ) → [N] -/
   entry : Fin N × ℕ → Fin N
@@ -1923,7 +1949,8 @@ theorem entry_of_not_mem (T : SkewYoungTableau lam mu) {c : Fin N × ℕ}
     (hc : c ∉ skewYoungDiagram lam mu) : T.entry c = 0 :=
   T.support c hc
 
-/-- Entry at a cell (i, j) where j < mu_i is zero -/
+/-- Entry at a cell (i, j) where j < mu_i is zero @statement_id stmt-src-lem.sf.skew-tab-entry-lt-mu
+-/
 theorem entry_of_lt_mu (T : SkewYoungTableau lam mu) {i : Fin N} {j : ℕ}
     (hj : j < mu.parts i) : T.entry (i, j) = 0 := by
   apply T.support
@@ -1932,7 +1959,8 @@ theorem entry_of_lt_mu (T : SkewYoungTableau lam mu) {i : Fin N} {j : ℕ}
   intro _
   omega
 
-/-- Entry at a cell (i, j) where j ≥ lam_i is zero -/
+/-- Entry at a cell (i, j) where j ≥ lam_i is zero @statement_id stmt-src-lem.sf.skew-tab-entry-ge-lam
+-/
 theorem entry_of_ge_lam (T : SkewYoungTableau lam mu) {i : Fin N} {j : ℕ}
     (hj : lam.parts i ≤ j) : T.entry (i, j) = 0 := by
   apply T.support
@@ -1956,7 +1984,8 @@ end SkewYoungTableau
       Uses dependent types. Takes `s : SkewPartition N` as a single bundled argument.
       No `[NeZero N]` requirement. Field names: `rowWeak`, `colStrict`.
 
-    See `SSYTEquiv.lean` for conversions between representations. -/
+    See `SSYTEquiv.lean` for conversions between representations. @statement_id stmt-src-def.sf.skew-ssyt
+-/
 structure SkewSSYT {N : ℕ} [NeZero N] (lam mu : NPartition N) extends SkewYoungTableau lam mu where
   /-- Entries increase weakly along rows -/
   row_weak : ∀ i : Fin N, ∀ j₁ j₂ : ℕ,
@@ -1970,7 +1999,8 @@ structure SkewSSYT {N : ℕ} [NeZero N] (lam mu : NPartition N) extends SkewYoun
 /-! ## Properties of Semistandard Skew Tableaux -/
 
 /-- In a semistandard skew tableau, entries increase weakly along rows (general version).
-    Lemma \ref{lem.sf.skew-ssyt.increase}(a) in the source. -/
+    Lemma \ref{lem.sf.skew-ssyt.increase}(a) in the source. @statement_id stmt-src-lem.sf.skew-ssyt.increase
+-/
 theorem SkewSSYT.row_weak_of_le {N : ℕ} [NeZero N] {lam mu : NPartition N}
     (T : SkewSSYT lam mu) {i : Fin N} {j₁ j₂ : ℕ}
     (h1 : (i, j₁) ∈ skewYoungDiagram lam mu)
@@ -1982,7 +2012,8 @@ theorem SkewSSYT.row_weak_of_le {N : ℕ} [NeZero N] {lam mu : NPartition N}
   · exact T.row_weak i j₁ j₂ h1 h2 hlt
 
 /-- In a semistandard skew tableau, entries increase weakly down columns.
-    Lemma \ref{lem.sf.skew-ssyt.increase}(b) in the source. -/
+    Lemma \ref{lem.sf.skew-ssyt.increase}(b) in the source. @statement_id stmt-src-lem.sf.skew-ssyt.increase
+-/
 theorem SkewSSYT.col_weak {N : ℕ} [NeZero N] {lam mu : NPartition N}
     (T : SkewSSYT lam mu) {i₁ i₂ : Fin N} {j : ℕ}
     (h1 : (i₁, j) ∈ skewYoungDiagram lam mu)
@@ -1994,7 +2025,8 @@ theorem SkewSSYT.col_weak {N : ℕ} [NeZero N] {lam mu : NPartition N}
   · exact le_of_lt (T.col_strict i₁ i₂ j h1 h2 hlt)
 
 /-- In a semistandard skew tableau, entries increase strictly down columns.
-    Lemma \ref{lem.sf.skew-ssyt.increase}(c) in the source. -/
+    Lemma \ref{lem.sf.skew-ssyt.increase}(c) in the source. @statement_id stmt-src-lem.sf.skew-ssyt.increase
+-/
 theorem SkewSSYT.col_strict_of_lt {N : ℕ} [NeZero N] {lam mu : NPartition N}
     (T : SkewSSYT lam mu) {i₁ i₂ : Fin N} {j : ℕ}
     (h1 : (i₁, j) ∈ skewYoungDiagram lam mu)
@@ -2005,7 +2037,8 @@ theorem SkewSSYT.col_strict_of_lt {N : ℕ} [NeZero N] {lam mu : NPartition N}
 
 /-- In a semistandard skew tableau, if (i₁, j₁) ≤ (i₂, j₂) componentwise,
     then T(i₁, j₁) ≤ T(i₂, j₂).
-    Lemma \ref{lem.sf.skew-ssyt.increase}(d) in the source. -/
+    Lemma \ref{lem.sf.skew-ssyt.increase}(d) in the source. @statement_id stmt-src-lem.sf.skew-ssyt.increase
+-/
 theorem SkewSSYT.monotone {N : ℕ} [NeZero N] {lam mu : NPartition N}
     (T : SkewSSYT lam mu) {i₁ i₂ : Fin N} {j₁ j₂ : ℕ}
     (h1 : (i₁, j₁) ∈ skewYoungDiagram lam mu)
@@ -2020,7 +2053,8 @@ theorem SkewSSYT.monotone {N : ℕ} [NeZero N] {lam mu : NPartition N}
 
 /-- In a semistandard skew tableau, if i₁ < i₂ and j₁ ≤ j₂,
     then T(i₁, j₁) < T(i₂, j₂).
-    Lemma \ref{lem.sf.skew-ssyt.increase}(e) in the source. -/
+    Lemma \ref{lem.sf.skew-ssyt.increase}(e) in the source. @statement_id stmt-src-lem.sf.skew-ssyt.increase
+-/
 theorem SkewSSYT.strict_monotone {N : ℕ} [NeZero N] {lam mu : NPartition N}
     (T : SkewSSYT lam mu) {i₁ i₂ : Fin N} {j₁ j₂ : ℕ}
     (h1 : (i₁, j₁) ∈ skewYoungDiagram lam mu)
@@ -2037,7 +2071,8 @@ theorem SkewSSYT.strict_monotone {N : ℕ} [NeZero N] {lam mu : NPartition N}
 
 /-- The monomial x_T associated to a skew Young tableau T.
     Definition \ref{def.sf.ytab.skew-xT} in the source.
-    x_T = ∏_{c ∈ Y(lam/mu)} x_{T(c)} -/
+    x_T = ∏_{c ∈ Y(lam/mu)} x_{T(c)} @statement_id stmt-src-def.sf.ytab.skew-xt
+-/
 def SkewYoungTableau.monomial {N : ℕ} [NeZero N] {lam mu : NPartition N}
     (T : SkewYoungTableau lam mu) : MvPolynomial (Fin N) ℤ :=
   ∏ c ∈ skewYoungDiagram lam mu, X (T.entry c)
@@ -2052,7 +2087,8 @@ def countValue (T : SkewYoungTableau lam mu) (k : Fin N) : ℕ :=
   (skewYoungDiagram lam mu).filter (fun c => T.entry c = k) |>.card
 
 /-- The monomial x_T equals ∏_{k=1}^N x_k^{(# of times k appears in T)}.
-    This is the third equivalent form from Definition \ref{def.sf.ytab.skew-xT}. -/
+    This is the third equivalent form from Definition \ref{def.sf.ytab.skew-xT}. @statement_id stmt-src-lem.sf.skew-tab-monomial-prod-pow
+-/
 theorem monomial_eq_prod_pow (T : SkewYoungTableau lam mu) :
     T.monomial = ∏ k : Fin N, (X k : MvPolynomial (Fin N) ℤ) ^ T.countValue k := by
   unfold monomial countValue
@@ -2124,7 +2160,8 @@ satisfying the SSYT conditions.
 -/
 
 /-- The type of all fillings of a skew diagram with entries in Fin N.
-    This is finite since the diagram is finite and Fin N is finite. -/
+    This is finite since the diagram is finite and Fin N is finite. @statement_id stmt-src-def.sf.filling
+-/
 def SkewFilling {N : ℕ} [NeZero N] (lam mu : NPartition N) : Type :=
   { c // c ∈ skewYoungDiagram lam mu } → Fin N
 
@@ -2136,7 +2173,8 @@ noncomputable instance skewFilling_fintype {N : ℕ} [NeZero N] (lam mu : NParti
 /-- The set of fillings that correspond to valid semistandard tableaux.
     We check the conditions on pairs of cells in the diagram:
     - Row-weak: if c1 and c2 are in the same row with c1 to the left, then f(c1) ≤ f(c2)
-    - Column-strict: if c1 and c2 are in the same column with c1 above, then f(c1) < f(c2) -/
+    - Column-strict: if c1 and c2 are in the same column with c1 above, then f(c1) < f(c2) @statement_id stmt-src-def.sf.filling
+-/
 def isSSYTFilling {N : ℕ} [NeZero N] (lam mu : NPartition N) (f : SkewFilling lam mu) : Prop :=
   -- Row-weak condition: check all pairs in the same row
   (∀ c1 c2 : { c // c ∈ skewYoungDiagram lam mu },
@@ -2166,7 +2204,8 @@ We define equivalences to bridge these representations. -/
     SchurBasics: (i, j) ∈ Y(λ/μ) iff μ_i ≤ j < λ_i
     LittlewoodRichardson: (i, j) ∈ Y(λ/μ) iff μ_i < j ≤ λ_i
     
-    The map (i, j) ↦ (i, j+1) transforms the first to the second. -/
+    The map (i, j) ↦ (i, j+1) transforms the first to the second. @statement_id stmt-src-def.sf.skew-cell-equiv
+-/
 def skewCellEquiv {N : ℕ} [NeZero N] (lam mu : NPartition N) :
     { c // c ∈ skewYoungDiagram lam mu } ≃
     { c // c ∈ AlgebraicCombinatorics.skewYoungDiagram lam.parts mu.parts } where
@@ -2234,12 +2273,14 @@ theorem mem_skewYoungDiagram_iff_mem_LR_shifted {N : ℕ} [NeZero N] (lam mu : N
 
 /-- Filling bijection: convert between SkewFilling and Tableau.
     
-    This bridges the two representations by composing with the cell bijection. -/
+    This bridges the two representations by composing with the cell bijection. @statement_id stmt-src-def.sf.skew-filling-equiv
+-/
 def skewFillingEquiv {N : ℕ} [NeZero N] (lam mu : NPartition N) :
     SkewFilling lam mu ≃ AlgebraicCombinatorics.Tableau lam.parts mu.parts :=
   Equiv.arrowCongr (skewCellEquiv lam mu) (Equiv.refl _)
 
-/-- The filling bijection preserves the SSYT property. -/
+/-- The filling bijection preserves the SSYT property. @statement_id stmt-src-lem.sf.skew-filling-equiv-ssyt
+-/
 theorem skewFillingEquiv_isSSYT {N : ℕ} [NeZero N] (lam mu : NPartition N)
     (f : SkewFilling lam mu) :
     isSSYTFilling lam mu f ↔ AlgebraicCombinatorics.IsSemistandard (skewFillingEquiv lam mu f) := by
@@ -2299,12 +2340,14 @@ theorem skewFillingEquiv_isSSYT {N : ℕ} [NeZero N] (lam mu : NPartition N)
         omega
       · exact hrow
 
-/-- The finite set of all valid SSYT fillings. -/
+/-- The finite set of all valid SSYT fillings. @statement_id stmt-src-def.sf.filling
+-/
 def ssytFillings {N : ℕ} [NeZero N] (lam mu : NPartition N) : Finset (SkewFilling lam mu) :=
   Finset.univ.filter (isSSYTFilling lam mu)
 
 /-- The monomial associated to a filling.
-    x_f = ∏_{c ∈ Y(λ/μ)} x_{f(c)} -/
+    x_f = ∏_{c ∈ Y(λ/μ)} x_{f(c)} @statement_id stmt-src-def.sf.filling
+-/
 def fillingMonomial {N : ℕ} [NeZero N] {lam mu : NPartition N}
     (f : SkewFilling lam mu) : MvPolynomial (Fin N) ℤ :=
   ∏ c : { c // c ∈ skewYoungDiagram lam mu }, X (f c)
@@ -2315,12 +2358,14 @@ def fillingMonomial {N : ℕ} [NeZero N] {lam mu : NPartition N}
     This is related to the monomial by: x_f = ∏_i x_i^{content(f)(i)}
     
     The Bender-Knuth involution BK_k swaps the content of k and k+1:
-    content(BK_k(f))(k) = content(f)(k+1) and content(BK_k(f))(k+1) = content(f)(k) -/
+    content(BK_k(f))(k) = content(f)(k+1) and content(BK_k(f))(k+1) = content(f)(k) @statement_id stmt-src-def.sf.filling-content
+-/
 def fillingContent {N : ℕ} [NeZero N] {lam mu : NPartition N}
     (f : SkewFilling lam mu) : Fin N → ℕ :=
   fun i => Finset.univ.filter (fun c : { c // c ∈ skewYoungDiagram lam mu } => f c = i) |>.card
 
-/-- The fillingMonomial equals the product of X i raised to the content power. -/
+/-- The fillingMonomial equals the product of X i raised to the content power. @statement_id stmt-src-lem.sf.filling-monomial-prod-pow
+-/
 lemma fillingMonomial_eq_prod_pow {N : ℕ} [NeZero N] {lam mu : NPartition N}
     (f : SkewFilling lam mu) :
     fillingMonomial f = ∏ i : Fin N, (X i : MvPolynomial (Fin N) ℤ) ^ fillingContent f i := by
@@ -2348,7 +2393,8 @@ lemma fillingMonomial_eq_prod_pow {N : ℕ} [NeZero N] {lam mu : NPartition N}
     **Proof sketch**: The key is to show that the bijection `skewCellEquiv` induces a bijection
     between `{c | f c = i}` and `{c | (skewFillingEquiv f) c = i}`. Since `skewFillingEquiv`
     is defined as `Equiv.arrowCongr (skewCellEquiv) (Equiv.refl)`, we have
-    `(skewFillingEquiv f) c = f ((skewCellEquiv).symm c)`, so the sets are in bijection. -/
+    `(skewFillingEquiv f) c = f ((skewCellEquiv).symm c)`, so the sets are in bijection. @statement_id stmt-src-lem.sf.skew-filling-equiv-content
+-/
 theorem skewFillingEquiv_content {N : ℕ} [NeZero N] (lam mu : NPartition N)
     (f : SkewFilling lam mu) (i : Fin N) :
     fillingContent f i = AlgebraicCombinatorics.contentTableau (skewFillingEquiv lam mu f) i := by
@@ -2403,12 +2449,14 @@ theorem skewFillingEquiv_content {N : ℕ} [NeZero N] (lam mu : NPartition N)
     - Use **`AlgebraicCombinatorics.skewSchurPoly`** when you need a generic coefficient ring
       or when working with the Littlewood-Richardson rule. It takes unbundled `Fin N → ℕ`.
 
-    **Equivalence:** See `SSYTEquiv.lean` for the bridge between these definitions. -/
+    **Equivalence:** See `SSYTEquiv.lean` for the bridge between these definitions. @statement_id stmt-src-def.sf.skew-schur
+-/
 def skewSchurPoly {N : ℕ} [NeZero N] (lam mu : NPartition N) : MvPolynomial (Fin N) ℤ :=
   ∑ f ∈ ssytFillings lam mu, fillingMonomial f
 
 /-- When mu = 0, the skew Schur polynomial equals the regular Schur polynomial.
-    Remark \ref{rmk.sf.skew-0} in the source. -/
+    Remark \ref{rmk.sf.skew-0} in the source. @statement_id stmt-src-lem.sf.skew-schur-zero-sb
+-/
 theorem skewSchurPoly_zero {N : ℕ} [NeZero N] (lam : NPartition N) :
     skewSchurPoly lam 0 = schurPoly lam := by
   -- Define the equivalence between the diagram subtypes
@@ -2469,7 +2517,8 @@ def applyPermToFilling {N : ℕ} [NeZero N] {lam mu : NPartition N}
     (σ : Equiv.Perm (Fin N)) (f : SkewFilling lam mu) : SkewFilling lam mu :=
   fun c => σ (f c)
 
-/-- Renaming variables in a filling monomial equals applying the permutation to entries. -/
+/-- Renaming variables in a filling monomial equals applying the permutation to entries. @statement_id stmt-src-lem.sf.rename-filling-monomial
+-/
 lemma rename_fillingMonomial_eq {N : ℕ} [NeZero N] {lam mu : NPartition N}
     (f : SkewFilling lam mu) (σ : Equiv.Perm (Fin N)) :
     MvPolynomial.rename σ (fillingMonomial f) = fillingMonomial (applyPermToFilling σ f) := by
@@ -2532,7 +2581,8 @@ theorem simpleTransposition_eq_canonical {N : ℕ} (k : Fin N) (hk : k.val + 1 <
     
     **Implementation**: This bridges to the full implementation in `LittlewoodRichardson.lean`
     via `skewFillingEquiv`. For SSYT fillings, it applies `AlgebraicCombinatorics.benderKnuth`;
-    for non-SSYT fillings, it returns the input unchanged (the lemmas only apply to SSYT anyway). -/
+    for non-SSYT fillings, it returns the input unchanged (the lemmas only apply to SSYT anyway). @statement_id stmt-src-def.sf.bk-invol
+-/
 def benderKnuthInvol {N : ℕ} [NeZero N] (lam mu : NPartition N) 
     (k : Fin N) (hk : k.val + 1 < N) (f : SkewFilling lam mu) : SkewFilling lam mu := by
   classical
@@ -2557,7 +2607,8 @@ lemma benderKnuthInvol_eq_of_ssyt {N : ℕ} [NeZero N] (lam mu : NPartition N)
   simp only [benderKnuthInvol, hT, dite_true]
 
 /-- The Bender-Knuth involution preserves SSYT membership.
-    This is a key property: BK_k maps semistandard tableaux to semistandard tableaux. -/
+    This is a key property: BK_k maps semistandard tableaux to semistandard tableaux. @statement_id stmt-src-lem.sf.bk-mem
+-/
 lemma benderKnuthInvol_mem {N : ℕ} [NeZero N] (lam mu : NPartition N) 
     (k : Fin N) (hk : k.val + 1 < N) (f : SkewFilling lam mu) :
     f ∈ ssytFillings lam mu → benderKnuthInvol lam mu k hk f ∈ ssytFillings lam mu := by
@@ -2575,7 +2626,8 @@ lemma benderKnuthInvol_mem {N : ℕ} [NeZero N] (lam mu : NPartition N)
   convert hT' using 1
   simp only [Equiv.apply_symm_apply]
 
-/-- The Bender-Knuth map is an involution: applying it twice returns the original filling. -/
+/-- The Bender-Knuth map is an involution: applying it twice returns the original filling. @statement_id stmt-src-lem.sf.bk-invol
+-/
 lemma benderKnuthInvol_invol {N : ℕ} [NeZero N] (lam mu : NPartition N) 
     (k : Fin N) (hk : k.val + 1 < N) (f : SkewFilling lam mu) :
     f ∈ ssytFillings lam mu → 
@@ -2628,7 +2680,8 @@ lemma benderKnuthInvol_invol {N : ℕ} [NeZero N] (lam mu : NPartition N)
     
     The proof transfers `benderKnuth_content_swap` from LittlewoodRichardson.lean
     through the `skewFillingEquiv` bijection, using `skewFillingEquiv_content` to
-    relate `fillingContent` and `contentTableau`. -/
+    relate `fillingContent` and `contentTableau`. @statement_id stmt-src-lem.sf.bk-content-swap
+-/
 lemma benderKnuthInvol_content_swap_spec {N : ℕ} [NeZero N] (lam mu : NPartition N) 
     (k : Fin N) (hk : k.val + 1 < N) (f : SkewFilling lam mu) :
     f ∈ ssytFillings lam mu →
@@ -2669,7 +2722,8 @@ lemma benderKnuthInvol_content_swap_spec {N : ℕ} [NeZero N] (lam mu : NPartiti
     in the monomial, which is the key property for proving symmetry.
     
     The proof uses `benderKnuthInvol_content_swap_spec`: if the content swaps k and k+1,
-    then the monomial (which is ∏ i, X i ^ content(f)(i)) is renamed by swap k (k+1). -/
+    then the monomial (which is ∏ i, X i ^ content(f)(i)) is renamed by swap k (k+1). @statement_id stmt-src-lem.sf.bk-mono
+-/
 lemma benderKnuthInvol_mono {N : ℕ} [NeZero N] (lam mu : NPartition N) 
     (k : Fin N) (hk : k.val + 1 < N) (f : SkewFilling lam mu) :
     f ∈ ssytFillings lam mu → 
@@ -2803,7 +2857,8 @@ lemma swap_invariant_of_adj_invariant {N : ℕ} (P : MvPolynomial (Fin N) ℤ)
     1. Define the Bender-Knuth involution BK_k on ssytFillings
     2. Show BK_k is a bijection that preserves the SSYT property
     3. Show fillingMonomial (BK_k f) = rename (swap k (k+1)) (fillingMonomial f)
-    4. Use the bijection to reindex the sum -/
+    4. Use the bijection to reindex the sum @statement_id stmt-src-lem.sf.skew-schur-swap-inv
+-/
 theorem skewSchurPoly_swap_invariant {N : ℕ} [NeZero N] (lam mu : NPartition N)
     (k : Fin N) (hk : k.val + 1 < N) :
     MvPolynomial.rename (simpleTransposition k hk) (skewSchurPoly lam mu) = skewSchurPoly lam mu := by
@@ -2838,7 +2893,8 @@ theorem skewSchurPoly_swap_invariant {N : ℕ} [NeZero N] (lam mu : NPartition N
     3. x_{BK_k(T)} = s_k · x_T (where s_k swaps x_k and x_{k+1})
 
     Since the simple transpositions s_1, ..., s_{N-1} generate S_N, and each BK_k
-    establishes that s_k · s_{λ/μ} = s_{λ/μ}, we conclude that s_{λ/μ} is symmetric. -/
+    establishes that s_k · s_{λ/μ} = s_{λ/μ}, we conclude that s_{λ/μ} is symmetric. @statement_id stmt-src-thm.sf.skew-schur-symm
+-/
 theorem skewSchurPoly_isSymmetric {N : ℕ} [NeZero N] (lam mu : NPartition N) :
     ∀ σ : Equiv.Perm (Fin N), MvPolynomial.rename σ (skewSchurPoly lam mu) = skewSchurPoly lam mu := by
   intro σ
@@ -2862,7 +2918,8 @@ theorem skewSchurPoly_isSymmetric {N : ℕ} [NeZero N] (lam mu : NPartition N) :
     Theorem \ref{thm.sf.schur-symm}(a) in the source.
 
     This follows from `skewSchurPoly_isSymmetric` using the fact that
-    `schurPoly lam = skewSchurPoly lam 0` (see `skewSchurPoly_zero`). -/
+    `schurPoly lam = skewSchurPoly lam 0` (see `skewSchurPoly_zero`). @statement_id stmt-src-thm.sf.schur-symm
+-/
 theorem schurPoly_isSymmetric {N : ℕ} [NeZero N] (lam : NPartition N) :
     ∀ σ : Equiv.Perm (Fin N), MvPolynomial.rename σ (schurPoly lam) = schurPoly lam := by
   intro σ
@@ -2896,7 +2953,8 @@ theorem alternant_eq_AC_alternant {N : ℕ} {R : Type*} [CommRing R] (α : Fin N
 
     See also:
     - `SSYTEquiv.schur_eq_schurPoly_int`: equivalence with `SymmetricFunctions.schur`
-    - `alternant_eq_AC_alternant`: corresponding equivalence for alternants -/
+    - `alternant_eq_AC_alternant`: corresponding equivalence for alternants @statement_id stmt-src-thm.sf.schurpoly-eq-ac-schurpoly
+-/
 theorem schurPoly_eq_AC_schurPoly {N : ℕ} [NeZero N] (lam : NPartition N) :
     schurPoly lam = AlgebraicCombinatorics.schurPoly (R := ℤ) lam.parts := by
   -- Both definitions sum over SSYT of shape λ with the same monomials.
@@ -3046,7 +3104,8 @@ theorem schurPoly_eq_AC_schurPoly {N : ℕ} [NeZero N] (lam : NPartition N) :
     5. Therefore: a_ρ · s_λ = a_{λ + ρ}
 
     **Proof:** We use `schurPoly_eq_alternant_div` from LittlewoodRichardson.lean and
-    bridge the type systems. -/
+    bridge the type systems. @statement_id stmt-src-thm.sf.schur-symm
+-/
 theorem alternant_eq_rho_mul_schur {N : ℕ} [NeZero N] (lam : NPartition N) :
     alternant (R := ℤ) N (fun i => lam.parts i + rhoVector N i) =
       alternant N (rhoVector N) * schurPoly lam := by
@@ -3073,7 +3132,8 @@ omit [NeZero N] in
 /-- An alternant is zero if two entries of α are equal.
     Lemma \ref{lem.sf.alternant-0}(a) in the source.
 
-    This delegates to `AlgebraicCombinatorics.alternant_eq_zero_of_repeated`. -/
+    This delegates to `AlgebraicCombinatorics.alternant_eq_zero_of_repeated`. @statement_id stmt-src-lem.sf.alternant-0
+-/
 theorem alternant_zero_of_eq {R : Type*} [CommRing R] {α : Fin N → ℕ}
     (i j : Fin N) (hij : i ≠ j) (heq : α i = α j) :
     alternant (R := R) N α = 0 :=
@@ -3083,7 +3143,8 @@ omit [NeZero N] in
 /-- Swapping columns of an alternant multiplies it by -1.
     Lemma \ref{lem.sf.alternant-0}(b) in the source.
 
-    This delegates to `AlgebraicCombinatorics.alternant_swap`. -/
+    This delegates to `AlgebraicCombinatorics.alternant_swap`. @statement_id stmt-src-lem.sf.alternant-0
+-/
 theorem alternant_swap {R : Type*} [CommRing R] {α : Fin N → ℕ}
     (i j : Fin N) (hij : i ≠ j) :
     alternant (R := R) N (α ∘ Equiv.swap i j) = -alternant N α :=

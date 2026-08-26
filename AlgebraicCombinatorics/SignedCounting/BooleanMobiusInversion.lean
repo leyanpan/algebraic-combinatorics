@@ -212,7 +212,8 @@ principle.
 -/
 
 /-- A helper lemma for swapping sums over pairs (J, P) with P ⊆ J ⊆ Q
-    to pairs (P, J) with P ⊆ J ⊆ Q. -/
+    to pairs (P, J) with P ⊆ J ⊆ Q. @statement_id stmt-src-lem.pie.sum-swap
+-/
 lemma sum_powerset_powerset_swap {Q : Finset α} {A : Type*} [AddCommGroup A]
     (f : Finset α → Finset α → A) :
     ∑ J ∈ Q.powerset, ∑ P ∈ J.powerset, f J P =
@@ -234,7 +235,8 @@ lemma sum_powerset_powerset_swap {Q : Finset α} {A : Type*} [AddCommGroup A]
     If `b I = ∑_{J ⊆ I} a J` for all I ⊆ S,
     then `a I = ∑_{J ⊆ I} (-1)^|I \ J| b J` for all I ⊆ S.
 
-    Label: thm.pie.moeb, eq.thm.pie.moeb.ass, eq.thm.pie.moeb.claim -/
+    Label: thm.pie.moeb, eq.thm.pie.moeb.ass, eq.thm.pie.moeb.claim @statement_id stmt-src-thm.pie.moeb
+-/
 theorem booleanMobiusInversion {S : Finset α} {A : Type*} [AddCommGroup A]
     (a b : Finset α → A)
     (hab : ∀ I ⊆ S, b I = ∑ J ∈ I.powerset, a J) :
@@ -283,7 +285,8 @@ theorem booleanMobiusInversion {S : Finset α} {A : Type*} [AddCommGroup A]
     exact hQ (mem_powerset.mpr (Subset.refl Q))
 
 /-- Alternative formulation of Boolean Möbius inversion using (-1)^|I \ J| as an integer.
-    This is sometimes more convenient for computation. -/
+    This is sometimes more convenient for computation. @statement_id stmt-src-lem.pie.moeb-module
+-/
 theorem booleanMobiusInversion' {S : Finset α} {A : Type*} [AddCommGroup A] [Module ℤ A]
     (a b : Finset α → A)
     (hab : ∀ I ⊆ S, b I = ∑ J ∈ I.powerset, a J) :

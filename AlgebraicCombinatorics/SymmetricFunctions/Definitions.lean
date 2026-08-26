@@ -62,7 +62,8 @@ The polynomial ring P = K[x₁, x₂, ..., x_N] is `MvPolynomial (Fin N) K` in M
 
 /-- The polynomial ring in N variables over K.
     This corresponds to 𝒫 in the source (Definition def.sf.PS (a)).
-    Label: def.sf.PS -/
+    Label: def.sf.PS @statement_id stmt-src-def.sf.ps
+-/
 abbrev P (K : Type*) [CommRing K] (N : ℕ) : Type _ := MvPolynomial (Fin N) K
 
 /-!
@@ -76,7 +77,8 @@ In Mathlib, this is given by `MvPolynomial.rename σ f` where σ : Equiv.Perm (F
 
 /-- The action of a permutation on a polynomial by renaming variables.
     This is σ · f = f[x_{σ(1)}, ..., x_{σ(N)}] in the source.
-    Label: def.sf.PS -/
+    Label: def.sf.PS @statement_id stmt-src-def.sf.ps
+-/
 noncomputable def permAction (σ : Equiv.Perm (Fin N)) (f : P K N) : P K N :=
   rename σ f
 
@@ -91,13 +93,15 @@ scoped notation:70 σ " •ₚ " f:70 => permAction σ f
 -/
 
 /-- The identity permutation acts trivially (Proposition prop.sf.SN-acts (a)).
-    Label: prop.sf.SN-acts -/
+    Label: prop.sf.SN-acts @statement_id stmt-src-prop.sf.sn-acts
+-/
 theorem permAction_id (f : P K N) : (1 : Equiv.Perm (Fin N)) •ₚ f = f := by
   simp only [permAction, Equiv.Perm.coe_one, rename_id]
   rfl
 
 /-- Composition of permutation actions (Proposition prop.sf.SN-acts (b)).
-    Label: prop.sf.SN-acts -/
+    Label: prop.sf.SN-acts @statement_id stmt-src-prop.sf.sn-acts
+-/
 theorem permAction_mul (σ τ : Equiv.Perm (Fin N)) (f : P K N) :
     (σ * τ) •ₚ f = σ •ₚ (τ •ₚ f) := by
   simp only [permAction, rename_rename]
@@ -130,7 +134,8 @@ The set S of all symmetric polynomials is `symmetricSubalgebra (Fin N) K` in Mat
 
 /-- A polynomial is symmetric if it is invariant under all permutations.
     This is Definition def.sf.PS (c) in the source.
-    Label: def.sf.PS -/
+    Label: def.sf.PS @statement_id stmt-src-def.sf.ps
+-/
 def IsSymm (f : P K N) : Prop := f.IsSymmetric
 
 /-- The ring of symmetric polynomials in N variables over K.
@@ -142,7 +147,8 @@ def IsSymm (f : P K N) : Prop := f.IsSymmetric
     this subalgebra is closed under addition, multiplication, and scalar
     multiplication by elements of K (Theorem thm.sf.S-subalg).
 
-    Label: def.sf.ring-of-symm -/
+    Label: def.sf.ring-of-symm @statement_id stmt-src-def.sf.ring-of-symm
+-/
 abbrev S (K : Type*) [CommRing K] (N : ℕ) : Subalgebra K (P K N) :=
   symmetricSubalgebra (Fin N) K
 
@@ -189,7 +195,8 @@ theorem isSymm_iff_permAction (f : P K N) : IsSymm f ↔ ∀ σ : Equiv.Perm (Fi
   simp only [IsSymm, MvPolynomial.IsSymmetric, permAction_eq_rename]
 
 /-- Example: The sum ∑ xᵢ is symmetric (Example exa.sf.PS1 (a)).
-    Label: exa.sf.PS1 -/
+    Label: exa.sf.PS1 @statement_id stmt-src-lem.sf.sum-x-symmetric
+-/
 theorem isSymm_sum_X : IsSymm (∑ i : Fin N, X i : P K N) := by
   intro σ
   simp only [map_sum, rename_X]
@@ -237,7 +244,8 @@ theorem permAction_inv (σ : Equiv.Perm (Fin N)) (f : P K N) :
 /-- The K-algebra automorphism of P induced by a permutation σ.
     This is the main object of Proposition prop.sf.SN-acts-by-alg-auts:
     for each σ ∈ S_N, the map f ↦ σ · f is a K-algebra automorphism.
-    Label: prop.sf.SN-acts-by-alg-auts -/
+    Label: prop.sf.SN-acts-by-alg-auts @statement_id stmt-src-prop.sf.sn-acts-by-alg-auts
+-/
 noncomputable def permAutomorphism (σ : Equiv.Perm (Fin N)) : P K N ≃ₐ[K] P K N :=
   renameEquiv K σ
 
@@ -295,7 +303,8 @@ theorem permAutomorphism_bijective (σ : Equiv.Perm (Fin N)) :
 /-- The map from S_N to Aut_K(P) is a group homomorphism.
     This is the full content of Proposition prop.sf.SN-acts-by-alg-auts:
     S_N acts on P by K-algebra automorphisms.
-    Label: prop.sf.SN-acts-by-alg-auts -/
+    Label: prop.sf.SN-acts-by-alg-auts @statement_id stmt-src-prop.sf.sn-acts-by-alg-auts
+-/
 noncomputable def permAutomorphismHom :
     Equiv.Perm (Fin N) →* (P K N ≃ₐ[K] P K N) where
   toFun σ := permAutomorphism σ
@@ -336,7 +345,8 @@ and `∈ S K N` (membership in the subalgebra).
     The definition `S K N := symmetricSubalgebra (Fin N) K` directly provides
     the `Subalgebra K (P K N)` structure, which bundles all these properties.
 
-    Label: thm.sf.S-subalg -/
+    Label: thm.sf.S-subalg @statement_id stmt-src-thm.sf.s-subalg
+-/
 def S_subalgebra : Subalgebra K (P K N) := S K N
 
 /-!
@@ -487,16 +497,19 @@ theorem isSymm_prod {ι : Type*} {s : Finset ι} {f : ι → P K N}
 /-- A monomial represented by its exponent vector.
     In the textbook, a monomial is x₁^{a₁} x₂^{a₂} ⋯ x_N^{a_N}.
     We represent it by the exponent vector (a₁, a₂, ..., a_N) ∈ ℕ^N.
-    Label: def.sf.monomial -/
+    Label: def.sf.monomial @statement_id stmt-src-def.sf.monomial
+-/
 abbrev Monomial (N : ℕ) := Fin N →₀ ℕ
 
 /-- Convert a monomial (exponent vector) to the corresponding polynomial x₁^{a₁} ⋯ x_N^{a_N}.
-    Label: def.sf.monomial -/
+    Label: def.sf.monomial @statement_id stmt-src-lem.sf.monomial-topoly
+-/
 noncomputable def Monomial.toPoly (m : Monomial N) : P K N :=
   monomial m 1
 
 /-- The degree of a monomial is the sum of its exponents.
-    Label: def.sf.monomial -/
+    Label: def.sf.monomial @statement_id stmt-src-def.sf.monomial
+-/
 def Monomial.degree (m : Monomial N) : ℕ := m.sum (fun _ a => a)
 
 /-- Alternative characterization: degree equals the support sum.
@@ -506,12 +519,14 @@ theorem Monomial.degree_eq_support_sum (m : Monomial N) :
   simp only [degree, Finsupp.sum]
 
 /-- A monomial is squarefree if all exponents are 0 or 1.
-    Label: def.sf.monomial -/
+    Label: def.sf.monomial @statement_id stmt-src-def.sf.monomial
+-/
 def Monomial.IsSquarefree (m : Monomial N) : Prop := ∀ i, m i ≤ 1
 
 /-- A monomial is primal if at most one exponent is positive.
     This means the monomial is either 1 or a power of a single variable.
-    Label: def.sf.monomial -/
+    Label: def.sf.monomial @statement_id stmt-src-def.sf.monomial
+-/
 def Monomial.IsPrimal (m : Monomial N) : Prop := m.support.card ≤ 1
 
 /-- The degree of a monomial equals the total degree of its polynomial representation
@@ -598,7 +613,8 @@ theorem Monomial.toPoly_add (m₁ m₂ : Monomial N) :
   simp only [toPoly, monomial_mul, one_mul]
 
 /-- The degree of a product of monomials is the sum of degrees.
-    Label: def.sf.monomial -/
+    Label: def.sf.monomial @statement_id stmt-src-lem.sf.monomial-degree-add
+-/
 theorem Monomial.degree_add (m₁ m₂ : Monomial N) :
     (m₁ + m₂).degree = m₁.degree + m₂.degree := by
   simp only [degree]
@@ -607,7 +623,8 @@ theorem Monomial.degree_add (m₁ m₂ : Monomial N) :
   · intro _ _ _; ring
 
 /-- A squarefree monomial has degree at most N.
-    Label: def.sf.monomial -/
+    Label: def.sf.monomial @statement_id stmt-src-lem.sf.monomial-degree-le-squarefree
+-/
 theorem Monomial.degree_le_of_isSquarefree (m : Monomial N) (hm : m.IsSquarefree) :
     m.degree ≤ N := by
   calc m.degree = m.support.sum m := m.degree_eq_support_sum
@@ -622,7 +639,8 @@ theorem Monomial.support_card_le_one_of_isPrimal (m : Monomial N) (hm : m.IsPrim
     m.support.card ≤ 1 := hm
 
 /-- Characterization: a monomial is primal iff it's 0 or a power of a single variable.
-    Label: def.sf.monomial -/
+    Label: def.sf.monomial @statement_id stmt-src-lem.sf.monomial-isprimal-iff
+-/
 theorem Monomial.isPrimal_iff (m : Monomial N) :
     m.IsPrimal ↔ m = 0 ∨ ∃ i k, m = Finsupp.single i k ∧ 0 < k := by
   constructor
@@ -657,12 +675,14 @@ theorem Monomial.isPrimal_iff (m : Monomial N) :
 
 /-- The monomial corresponding to a subset S ⊆ [N] is ∏_{i ∈ S} x_i.
     This is the squarefree monomial with support S.
-    Label: def.sf.monomial -/
+    Label: def.sf.monomial @statement_id stmt-src-lem.sf.monomial-offinset
+-/
 noncomputable def Monomial.ofFinset (s : Finset (Fin N)) : Monomial N :=
   s.sum (Finsupp.single · 1)
 
 /-- The polynomial corresponding to Monomial.ofFinset s is ∏_{i ∈ s} X i.
-    Label: def.sf.monomial -/
+    Label: def.sf.monomial @statement_id stmt-src-lem.sf.monomial-offinset
+-/
 theorem Monomial.toPoly_ofFinset (s : Finset (Fin N)) :
     (Monomial.ofFinset s).toPoly = (∏ i ∈ s, X i : P K N) := by
   unfold ofFinset toPoly
@@ -680,7 +700,8 @@ theorem Monomial.toPoly_ofFinset (s : Finset (Fin N)) :
     rfl
 
 /-- Monomial.ofFinset gives a squarefree monomial.
-    Label: def.sf.monomial -/
+    Label: def.sf.monomial @statement_id stmt-src-lem.sf.monomial-offinset
+-/
 theorem Monomial.isSquarefree_ofFinset (s : Finset (Fin N)) :
     (Monomial.ofFinset s).IsSquarefree := by
   intro i
@@ -707,7 +728,8 @@ theorem Monomial.isSquarefree_ofFinset (s : Finset (Fin N)) :
       omega
 
 /-- The degree of Monomial.ofFinset s is the cardinality of s.
-    Label: def.sf.monomial -/
+    Label: def.sf.monomial @statement_id stmt-src-lem.sf.monomial-offinset
+-/
 @[simp]
 theorem Monomial.degree_ofFinset (s : Finset (Fin N)) :
     (Monomial.ofFinset s).degree = s.card := by
@@ -722,7 +744,8 @@ theorem Monomial.degree_ofFinset (s : Finset (Fin N)) :
     omega
 
 /-- The support of Monomial.ofFinset s equals s.
-    Label: def.sf.monomial -/
+    Label: def.sf.monomial @statement_id stmt-src-lem.sf.monomial-offinset
+-/
 theorem Monomial.support_ofFinset (s : Finset (Fin N)) :
     (Monomial.ofFinset s).support = s := by
   ext i
@@ -765,11 +788,13 @@ In Mathlib, this is `MvPolynomial.esymm (Fin N) K n`.
 -/
 
 /-- The n-th elementary symmetric polynomial.
-    Label: def.sf.ehp -/
+    Label: def.sf.ehp @statement_id stmt-src-def.sf.ehp
+-/
 noncomputable abbrev e (n : ℕ) : P K N := esymm (Fin N) K n
 
 /-- Elementary symmetric polynomials are symmetric.
-    Label: def.sf.ehp -/
+    Label: def.sf.ehp @statement_id stmt-src-lem.sf.e-issymm
+-/
 theorem e_isSymm (n : ℕ) : IsSymm (e (K := K) (N := N) n) := esymm_isSymmetric (Fin N) K n
 
 /-!
@@ -786,19 +811,23 @@ section WithDecidableEq
 variable [DecidableEq (Fin N)]
 
 /-- The n-th complete homogeneous symmetric polynomial.
-    Label: def.sf.ehp -/
+    Label: def.sf.ehp @statement_id stmt-src-def.sf.ehp
+-/
 noncomputable abbrev h (n : ℕ) : P K N := hsymm (Fin N) K n
 
 /-- Complete homogeneous symmetric polynomials are symmetric.
-    Label: def.sf.ehp -/
+    Label: def.sf.ehp @statement_id stmt-src-lem.sf.e-issymm
+-/
 theorem h_isSymm (n : ℕ) : IsSymm (h (K := K) (N := N) n) := hsymm_isSymmetric (Fin N) K n
 
 /-- h_0 = 1 (Example exa.sf.ehp.1 (e)).
-    Label: exa.sf.ehp.1 -/
+    Label: exa.sf.ehp.1 @statement_id stmt-src-lem.sf.basic-values
+-/
 theorem h_zero : h (K := K) (N := N) 0 = 1 := hsymm_zero (Fin N) K
 
 /-- h_1 = ∑ x_i (Example exa.sf.ehp.1 (d)).
-    Label: exa.sf.ehp.1 -/
+    Label: exa.sf.ehp.1 @statement_id stmt-src-lem.sf.basic-values
+-/
 theorem h_one : h (K := K) (N := N) 1 = ∑ i, X i := hsymm_one (Fin N) K
 
 end WithDecidableEq
@@ -815,11 +844,13 @@ Note: Mathlib's definition has p_0 = N (the number of variables), not 1.
 -/
 
 /-- The n-th power sum symmetric polynomial.
-    Label: def.sf.ehp -/
+    Label: def.sf.ehp @statement_id stmt-src-def.sf.ehp
+-/
 noncomputable abbrev p (n : ℕ) : P K N := psum (Fin N) K n
 
 /-- Power sums are symmetric.
-    Label: def.sf.ehp -/
+    Label: def.sf.ehp @statement_id stmt-src-lem.sf.e-issymm
+-/
 theorem p_isSymm (n : ℕ) : IsSymm (p (K := K) (N := N) n) := psum_isSymmetric (Fin N) K n
 
 /-!
@@ -831,20 +862,24 @@ theorem p_isSymm (n : ℕ) : IsSymm (p (K := K) (N := N) n) := psum_isSymmetric 
 -/
 
 /-- e_0 = 1 (Example exa.sf.ehp.1 (e)).
-    Label: exa.sf.ehp.1 -/
+    Label: exa.sf.ehp.1 @statement_id stmt-src-lem.sf.basic-values
+-/
 theorem e_zero : e (K := K) (N := N) 0 = 1 := esymm_zero (Fin N) K
 
 /-- p_0 = N (number of variables).
     Note: The source defines p_0 = 1, but Mathlib defines p_0 = N.
-    Label: exa.sf.ehp.1 -/
+    Label: exa.sf.ehp.1 @statement_id stmt-src-lem.sf.basic-values
+-/
 theorem p_zero : p (K := K) (N := N) 0 = Fintype.card (Fin N) := psum_zero (Fin N) K
 
 /-- e_1 = ∑ x_i (Example exa.sf.ehp.1 (d)).
-    Label: exa.sf.ehp.1 -/
+    Label: exa.sf.ehp.1 @statement_id stmt-src-lem.sf.basic-values
+-/
 theorem e_one : e (K := K) (N := N) 1 = ∑ i, X i := esymm_one (Fin N) K
 
 /-- p_1 = ∑ x_i (Example exa.sf.ehp.1 (d)).
-    Label: exa.sf.ehp.1 -/
+    Label: exa.sf.ehp.1 @statement_id stmt-src-lem.sf.basic-values
+-/
 theorem p_one : p (K := K) (N := N) 1 = ∑ i, X i := psum_one (Fin N) K
 
 /-!
@@ -858,14 +893,16 @@ that match the textbook definitions exactly.
 /-- Integer-indexed elementary symmetric polynomial.
     For n ∈ ℤ: e_n = esymm n if n ≥ 0, e_n = 0 if n < 0.
     This matches Definition def.sf.ehp (a) in the source.
-    Label: def.sf.ehp -/
+    Label: def.sf.ehp @statement_id stmt-src-lem.sf.integer-indexed
+-/
 noncomputable def eZ (n : ℤ) : P K N :=
   if 0 ≤ n then e n.toNat else 0
 
 /-- Integer-indexed complete homogeneous symmetric polynomial.
     For n ∈ ℤ: h_n = hsymm n if n ≥ 0, h_n = 0 if n < 0.
     This matches Definition def.sf.ehp (b) in the source.
-    Label: def.sf.ehp -/
+    Label: def.sf.ehp @statement_id stmt-src-lem.sf.integer-indexed
+-/
 noncomputable def hZ [DecidableEq (Fin N)] (n : ℤ) : P K N :=
   if 0 ≤ n then h n.toNat else 0
 
@@ -875,7 +912,8 @@ noncomputable def hZ [DecidableEq (Fin N)] (n : ℤ) : P K N :=
 
     Note: Mathlib's psum has p_0 = N (number of variables), but the textbook
     defines p_0 = 1. We follow the textbook convention here.
-    Label: def.sf.ehp -/
+    Label: def.sf.ehp @statement_id stmt-src-lem.sf.integer-indexed
+-/
 noncomputable def pZ (n : ℤ) : P K N :=
   if n > 0 then p n.toNat
   else if n = 0 then 1
@@ -955,7 +993,8 @@ The defining formulas for e_n, h_n, p_n as sums over tuples.
 /-- e_n is the sum over all n-element subsets of [N] of the product of variables.
     This is the defining formula in Definition def.sf.ehp (a):
     e_n = ∑_{i₁ < i₂ < ... < i_n} x_{i₁} x_{i₂} ⋯ x_{i_n}
-    Label: def.sf.ehp -/
+    Label: def.sf.ehp @statement_id stmt-src-lem.sf.ehp-alt-characterizations
+-/
 theorem e_eq_sum_prod_subsets (n : ℕ) :
     e (K := K) (N := N) n = ∑ s ∈ powersetCard n (univ : Finset (Fin N)), ∏ i ∈ s, X i := by
   rfl
@@ -977,7 +1016,8 @@ end WithDecidableEq'
 /-- p_n is the sum of n-th powers of all variables.
     This is the defining formula in Definition def.sf.ehp (c):
     p_n = x₁^n + x₂^n + ... + x_N^n
-    Label: def.sf.ehp -/
+    Label: def.sf.ehp @statement_id stmt-src-lem.sf.ehp-alt-characterizations
+-/
 theorem p_eq_sum_pow (n : ℕ) :
     p (K := K) (N := N) n = ∑ i : Fin N, X i ^ n := by
   rfl
@@ -989,7 +1029,8 @@ For n > N, there are no n distinct elements in [N], so e_n = 0.
 -/
 
 /-- e_n = 0 for n > N (Proposition prop.sf.en=0).
-    Label: prop.sf.en=0 -/
+    Label: prop.sf.en=0 @statement_id stmt-src-prop.sf.en-0
+-/
 theorem e_eq_zero_of_gt {n : ℕ} (hn : N < n) : e (K := K) (N := N) n = 0 := by
   simp only [e, esymm]
   apply Finset.sum_eq_zero
@@ -1032,7 +1073,8 @@ private lemma image_preimage_erase_eq {a : Finset (Fin (N + 1))} :
 
 /-- Adding a variable: e_{n+1}(x₁,...,x_N,y) = e_{n+1}(x₁,...,x_N) + y * e_n(x₁,...,x_N).
     This is the recurrence for computing elementary symmetric polynomials.
-    Label: def.sf.ehp -/
+    Label: def.sf.ehp @statement_id stmt-src-lem.sf.esymm-add-var
+-/
 theorem esymm_succ_add_var' (n : ℕ) :
     esymm (Fin (N + 1)) K (n + 1) = 
     rename Fin.castSucc (esymm (Fin N) K (n + 1)) + 
@@ -1130,7 +1172,8 @@ theorem esymm_succ_add_var' (n : ℕ) :
     This is the recurrence for computing elementary symmetric polynomials.
     For n = 0, the second term vanishes since e_{-1} = 0 by convention (but Nat subtraction
     gives e_0 instead, so we use a conditional).
-    Label: def.sf.ehp -/
+    Label: def.sf.ehp @statement_id stmt-src-lem.sf.esymm-add-var
+-/
 theorem esymm_succ_add_var (n : ℕ) :
     esymm (Fin (N + 1)) K n = 
     rename Fin.castSucc (esymm (Fin N) K n) + 
@@ -1153,7 +1196,8 @@ These are implemented in Mathlib as `MvPolynomial.mul_esymm_eq_sum` and related 
 /-- Newton-Girard formula: recurrence for elementary symmetric polynomials.
     k * e_k = (-1)^{k+1} * ∑_{a ∈ antidiagonal k, a.1 < k} (-1)^{a.1} * e_{a.1} * p_{a.2}
     (Theorem thm.sf.NG, equation eq.thm.sf.NG.ep).
-    Label: thm.sf.NG -/
+    Label: thm.sf.NG @statement_id stmt-src-thm.sf.ng
+-/
 theorem newtonGirard_esymm (k : ℕ) :
     (k : P K N) * e k = (-1 : P K N) ^ (k + 1) *
       ∑ a ∈ antidiagonal k with a.1 < k, (-1 : P K N) ^ a.1 * e a.1 * p a.2 :=
@@ -1208,7 +1252,8 @@ private lemma coeff_one_sub_X_mul_C (i : Fin N) (a : ℕ) :
 
 omit [DecidableEq (Fin N)] in
 /-- Geometric series identity: (1 - t·x) * (∑_{k≥0} t^k x^k) = 1.
-    This is the key lemma for the generating function proof of Newton-Girard. -/
+    This is the key lemma for the generating function proof of Newton-Girard. @statement_id stmt-src-lem.sf.geom-series
+-/
 lemma geom_series_mul_one_sub (i : Fin N) :
     (1 - PowerSeries.X * PowerSeries.C (X i : P K N)) *
     PowerSeries.mk (fun k => (X i : P K N) ^ k) = 1 := by
@@ -1255,7 +1300,8 @@ lemma geom_series_mul_one_sub (i : Fin N) :
 
 omit [DecidableEq (Fin N)] in
 /-- Product of geometric series equals 1 when multiplied by ∏(1 - t·x_i).
-    This is the generating function identity E(t) * H(t) = 1. -/
+    This is the generating function identity E(t) * H(t) = 1. @statement_id stmt-src-lem.sf.geom-series
+-/
 lemma prod_geom_series_mul_prod_one_sub :
     (∏ i : Fin N, (1 - PowerSeries.X * PowerSeries.C (X i : P K N))) *
     (∏ i : Fin N, PowerSeries.mk (fun k => (X i : P K N) ^ k)) = 1 := by
@@ -1294,7 +1340,8 @@ private lemma prod_neg_eq' {α R : Type*} [DecidableEq α] [CommRing R] (s : Fin
 /-- Generating function for elementary symmetric polynomials (Proposition prop.sf.e-h-FPS (a)).
     ∏_{i=1}^N (1 - t·x_i) = ∑_{n=0}^N (-1)^n t^n e_n
     This is placed here so it can be used in newtonGirard_eh.
-    Label: prop.sf.e-h-FPS -/
+    Label: prop.sf.e-h-FPS @statement_id stmt-src-prop.sf.e-h-fps
+-/
 theorem esymm_genfunc :
     ∏ i : Fin N, (1 - Polynomial.X * Polynomial.C (X i : P K N)) =
     ∑ n ∈ range (N + 1),
@@ -1357,7 +1404,8 @@ private lemma prod_pow_count_eq_map_prod (n : ℕ) (s : Sym (Fin N) n) :
 
     For n > 0, this coefficient must be 0 (since E(t) * H(t) = 1).
 
-    Label: thm.sf.NG -/
+    Label: thm.sf.NG @statement_id stmt-src-thm.sf.ng
+-/
 theorem newtonGirard_eh (n : ℕ) (hn : 0 < n) :
     ∑ j ∈ range (n + 1), (-1 : P K N) ^ j * e (K := K) (N := N) j * h (n - j) = 0 := by
   -- The proof follows from the generating function identity E(t) * H(t) = 1.
@@ -1552,7 +1600,8 @@ theorem newtonGirard_eh (n : ℕ) (hn : 0 < n) :
 
 /-- Key lemma: For any multiset s of size m, the sum of counts over all elements equals m.
     This is used in the proof of the Newton-Girard formula for h and p.
-    Label: thm.sf.NG -/
+    Label: thm.sf.NG @statement_id stmt-src-lem.sf.sum-count-eq-card
+-/
 theorem sum_count_eq_card (m : ℕ) (s : Sym (Fin N) m) : ∑ i : Fin N, s.1.count i = m := by
   have h1 : s.1.card = m := s.2
   calc ∑ i : Fin N, s.1.count i
@@ -1657,7 +1706,8 @@ private lemma add_sub_replicate (m k : ℕ) (s : Sym (Fin N) m) (i : Fin N) (hk 
     - On LHS: #{(j, t, i) | t.1 + replicate (j+1) i = s.1} = ∑_i count(i,s) = n times
     - On RHS: with coefficient ∑_i count(i,s) = n
 
-    Label: thm.sf.NG -/
+    Label: thm.sf.NG @statement_id stmt-src-thm.sf.ng
+-/
 theorem newtonGirard_hp (n : ℕ) (_hn : 0 < n) :
     ∑ j ∈ range n, h (K := K) (N := N) (n - 1 - j) * p (j + 1) = (n : P K N) * h n := by
   simp only [h, hsymm, p, psum]
@@ -1822,7 +1872,8 @@ private lemma sum_powersetCard_prod_sdiff (j : ℕ) (hj : j ≤ N) :
 /-- Generating function for elementary symmetric polynomials, two-variable version
     (Proposition prop.sf.e-h-FPS (b)).
     ∏_{i=1}^N (u - v·x_i) = ∑_{n=0}^N (-1)^n u^{N-n} v^n e_n
-    Label: prop.sf.e-h-FPS -/
+    Label: prop.sf.e-h-FPS @statement_id stmt-src-prop.sf.e-h-fps
+-/
 theorem esymm_genfunc_two_var :
     ∏ i : Fin N, (MvPolynomial.X (0 : Fin 2) -
       MvPolynomial.X (1 : Fin 2) * MvPolynomial.C (X i : P K N) :
@@ -1901,7 +1952,8 @@ theorem esymm_genfunc_two_var :
     (Proposition prop.sf.e-h-FPS (c)).
     In the ring of formal power series, ∏_{i=1}^N 1/(1 - t·x_i) = ∑_{n≥0} t^n h_n.
     We state this as: (∑ t^n h_n) * ∏(1 - t·x_i) = 1.
-    Label: prop.sf.e-h-FPS -/
+    Label: prop.sf.e-h-FPS @statement_id stmt-src-prop.sf.e-h-fps
+-/
 theorem hsymm_genfunc [DecidableEq (Fin N)] :
     let E : Polynomial (P K N) := ∏ i : Fin N, (1 - Polynomial.X * Polynomial.C (X i : P K N))
     PowerSeries.mk (fun n => h (K := K) (N := N) n) * (E : PowerSeries (P K N)) = 1 := by
@@ -2030,7 +2082,8 @@ Equivalently, the map K[y_1, ..., y_N] → S given by g ↦ g(e_1, ..., e_N) is 
 /-- The elementary symmetric polynomials e_1, ..., e_N generate the symmetric subalgebra
     and the map g ↦ g[e_1, ..., e_N] is a K-algebra isomorphism.
     (Theorem thm.sf.ftsf (a)).
-    Label: thm.sf.ftsf -/
+    Label: thm.sf.ftsf @statement_id stmt-src-thm.sf.ftsf
+-/
 noncomputable def esymmAlgEquiv' : MvPolynomial (Fin N) K ≃ₐ[K] S K N :=
   esymmAlgEquiv (Fin N) K (Fintype.card_fin N)
 
@@ -2077,7 +2130,8 @@ lemma esymmAlgHom_eq_aeval (r : MvPolynomial (Fin N) K) :
 /-- The elementary symmetric polynomials e_1, ..., e_N are algebraically independent.
     This means: if P(e_1, ..., e_N) = 0 for some polynomial P ∈ K[y_1, ..., y_N], then P = 0.
     (Theorem thm.sf.ftsf (a), algebraic independence part).
-    Label: thm.sf.ftsf -/
+    Label: thm.sf.ftsf @statement_id stmt-src-thm.sf.ftsf
+-/
 theorem esymm_algebraicIndependent :
     AlgebraicIndependent K (fun i : Fin N => (esymm (Fin N) K (i + 1) : P K N)) := by
   rw [algebraicIndependent_iff_injective_aeval]
@@ -2088,7 +2142,8 @@ theorem esymm_algebraicIndependent :
 
 /-- Every symmetric polynomial can be uniquely written as a polynomial in e_1, ..., e_N.
     (Theorem thm.sf.ftsf (a), generation part).
-    Label: thm.sf.ftsf -/
+    Label: thm.sf.ftsf @statement_id stmt-src-thm.sf.ftsf
+-/
 theorem esymm_generates_symmetric (f : S K N) :
     ∃! g : MvPolynomial (Fin N) K, esymmAlgHom (Fin N) K N g = f := by
   use (esymmAlgEquiv' (K := K) (N := N)).symm f
@@ -2132,7 +2187,8 @@ variable [DecidableEq (Fin N)]
     4. A surjective algebra endomorphism of K[X_1, ..., X_n] is bijective
     5. Therefore the factored map is bijective, hence aeval hsymm is injective
 
-    Label: thm.sf.ftsf -/
+    Label: thm.sf.ftsf @statement_id stmt-src-thm.sf.ftsf
+-/
 theorem hsymm_algebraicIndependent [IsDomain K] :
     AlgebraicIndependent K (fun i : Fin N => (hsymm (Fin N) K (i + 1) : P K N)) := by
   rw [algebraicIndependent_iff_injective_aeval]
@@ -2470,7 +2526,8 @@ private lemma aeval_esymm_mem_hsymmRange (g : MvPolynomial (Fin N) K) :
 
 /-- Every symmetric polynomial can be uniquely written as a polynomial in h_1, ..., h_N.
     (Theorem thm.sf.ftsf (b), generation part).
-    Label: thm.sf.ftsf -/
+    Label: thm.sf.ftsf @statement_id stmt-src-thm.sf.ftsf
+-/
 theorem hsymm_generates_symmetric [IsDomain K] (f : S K N) :
     ∃! g : MvPolynomial (Fin N) K,
       aeval (fun i : Fin N => (hsymm (Fin N) K (i + 1) : P K N)) g = (f : P K N) := by
@@ -3003,7 +3060,8 @@ private lemma esymm_triangular_poly_aux (psumAeval' : MvPolynomial (Fin N) K →
     4. A surjective algebra endomorphism of K[X_1, ..., X_n] is bijective (transcendence degree argument)
     5. Therefore the factored map is bijective, hence aeval psum is injective
 
-    Label: thm.sf.ftsf -/
+    Label: thm.sf.ftsf @statement_id stmt-src-thm.sf.ftsf
+-/
 theorem psum_algebraicIndependent :
     AlgebraicIndependent K (fun i : Fin N => (psum (Fin N) K (i + 1) : P K N)) := by
   rw [algebraicIndependent_iff_injective_aeval]
@@ -3404,7 +3462,8 @@ private lemma aeval_esymm_mem_psumRange (g : MvPolynomial (Fin N) K) :
 /-- Over a ℚ-algebra, every symmetric polynomial can be uniquely written as a polynomial
     in p_1, ..., p_N.
     (Theorem thm.sf.ftsf (c), generation part).
-    Label: thm.sf.ftsf -/
+    Label: thm.sf.ftsf @statement_id stmt-src-thm.sf.ftsf
+-/
 theorem psum_generates_symmetric (f : S K N) :
     ∃! g : MvPolynomial (Fin N) K,
       aeval (fun i : Fin N => (psum (Fin N) K (i + 1) : P K N)) g = (f : P K N) := by
@@ -3506,7 +3565,8 @@ private lemma rename_swap_eq_of_invariant_simpleTranspositions (f : P K N) (i j 
 
 /-- A polynomial is symmetric iff it is invariant under all simple transpositions.
     (Lemma lem.sf.simples-enough).
-    Label: lem.sf.simples-enough -/
+    Label: lem.sf.simples-enough @statement_id stmt-src-lem.sf.simples-enough
+-/
 theorem isSymm_iff_simpleTranspositions (f : P K N) :
     IsSymm f ↔ ∀ k : Fin (N - 1), simpleTransposition k •ₚ f = f := by
   constructor
@@ -3531,7 +3591,8 @@ The square of an antisymmetric polynomial is symmetric.
 -/
 
 /-- A polynomial is antisymmetric if σ · f = sign(σ) · f for all permutations σ.
-    Label: exa.sf.PS1 -/
+    Label: exa.sf.PS1 @statement_id stmt-src-def.sf.antisymm
+-/
 def IsAntisymm (f : P K N) : Prop :=
   ∀ σ : Equiv.Perm (Fin N), rename σ f = Equiv.Perm.sign σ • f
 
@@ -3543,25 +3604,29 @@ The following lemmas establish that antisymmetric polynomials form a K-submodule
 -/
 
 /-- The zero polynomial is antisymmetric.
-    Label: exa.sf.PS1 -/
+    Label: exa.sf.PS1 @statement_id stmt-src-lem.sf.antisymm-submodule
+-/
 theorem isAntisymm_zero : IsAntisymm (0 : P K N) := by
   intro σ
   simp only [map_zero, smul_zero]
 
 /-- If f is antisymmetric, then -f is antisymmetric.
-    Label: exa.sf.PS1 -/
+    Label: exa.sf.PS1 @statement_id stmt-src-lem.sf.antisymm-submodule
+-/
 theorem isAntisymm_neg {f : P K N} (hf : IsAntisymm f) : IsAntisymm (-f) := by
   intro σ
   simp only [map_neg, hf σ, smul_neg]
 
 /-- If f is antisymmetric, then c • f is antisymmetric for any scalar c.
-    Label: exa.sf.PS1 -/
+    Label: exa.sf.PS1 @statement_id stmt-src-lem.sf.antisymm-submodule
+-/
 theorem isAntisymm_smul (c : K) {f : P K N} (hf : IsAntisymm f) : IsAntisymm (c • f) := by
   intro σ
   simp only [map_smul, hf σ, smul_comm c]
 
 /-- If f and g are antisymmetric, then f + g is antisymmetric.
-    Label: exa.sf.PS1 -/
+    Label: exa.sf.PS1 @statement_id stmt-src-lem.sf.antisymm-submodule
+-/
 theorem isAntisymm_add {f g : P K N} (hf : IsAntisymm f) (hg : IsAntisymm g) :
     IsAntisymm (f + g) := by
   intro σ
@@ -3576,7 +3641,8 @@ theorem isAntisymm_sub {f g : P K N} (hf : IsAntisymm f) (hg : IsAntisymm g) :
 
 /-- The square of an antisymmetric polynomial is symmetric.
     (Example exa.sf.PS1 (d)).
-    Label: exa.sf.PS1 -/
+    Label: exa.sf.PS1 @statement_id stmt-src-lem.sf.antisymm-sq-symmetric
+-/
 theorem isSymm_sq_of_isAntisymm {f : P K N} (hf : IsAntisymm f) : IsSymm (f ^ 2) := by
   intro σ
   simp only [pow_two, map_mul, hf σ, smul_mul_smul]

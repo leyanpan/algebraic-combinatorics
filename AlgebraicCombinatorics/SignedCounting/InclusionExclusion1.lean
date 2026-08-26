@@ -62,7 +62,8 @@ More precisely:
 
 where the empty intersection is taken to be `U`.
 
-This is `Finset.inclusion_exclusion_card_inf_compl` from Mathlib. -/
+This is `Finset.inclusion_exclusion_card_inf_compl` from Mathlib. @statement_id stmt-src-thm.pie.1
+-/
 theorem pie_size_version {α ι : Type*} [DecidableEq α] [Fintype α]
     (s : Finset ι) (A : ι → Finset α) :
     #(s.inf fun i ↦ (A i)ᶜ) = ∑ I ∈ s.powerset, (-1 : ℤ) ^ #I * #(I.inf A) :=
@@ -72,7 +73,8 @@ theorem pie_size_version {α ι : Type*} [DecidableEq α] [Fintype α]
 
 This states: |U \ (A₁ ∪ A₂ ∪ ... ∪ Aₙ)| = ∑_{I ⊆ [n]} (-1)^|I| |⋂_{i ∈ I} Aᵢ|
 
-This is the more common textbook formulation. -/
+This is the more common textbook formulation. @statement_id stmt-src-lem.pie.size-version-prime
+-/
 theorem pie_size_version' {α ι : Type*} [DecidableEq α] [Fintype α]
     (s : Finset ι) (A : ι → Finset α) :
     #((s.biUnion A)ᶜ) = ∑ I ∈ s.powerset, (-1 : ℤ) ^ #I * #(I.inf A) := by
@@ -86,7 +88,8 @@ theorem pie_size_version' {α ι : Type*} [DecidableEq α] [Fintype α]
 For a finite type `α` (the "universe" `U`) and `n` subsets `A₀, A₁, ..., Aₙ₋₁` of `α`:
   |{u ∈ α : u ∉ Aᵢ for all i ∈ Fin n}| = ∑_{I ⊆ Fin n} (-1)^|I| |⋂_{i ∈ I} Aᵢ|
 
-This matches the textbook formulation where `[n] = {1, 2, ..., n}` is replaced by `Fin n`. -/
+This matches the textbook formulation where `[n] = {1, 2, ..., n}` is replaced by `Fin n`. @statement_id stmt-src-lem.pie.size-version-fin
+-/
 theorem pie_size_version_fin {α : Type*} [DecidableEq α] [Fintype α]
     (n : ℕ) (A : Fin n → Finset α) :
     #(Finset.univ.inf fun i ↦ (A i)ᶜ) =
@@ -97,7 +100,8 @@ theorem pie_size_version_fin {α : Type*} [DecidableEq α] [Fintype α]
 
 Given `n` "rules" (encoded as subsets `A₀, ..., Aₙ₋₁` where `Aᵢ` is the set of elements
 satisfying rule `i`), the number of elements violating all rules equals the alternating
-sum over all subsets `I` of the number of elements satisfying all rules in `I`. -/
+sum over all subsets `I` of the number of elements satisfying all rules in `I`. @statement_id stmt-src-lem.pie.rule-breaking
+-/
 theorem pie_rule_breaking {α : Type*} [DecidableEq α] [Fintype α]
     (n : ℕ) (satisfiesRule : Fin n → Finset α) :
     (Finset.univ.filter fun u ↦ ∀ i : Fin n, u ∉ satisfiesRule i).card =
@@ -129,12 +133,14 @@ The number of surjective maps from `Fin m` to `Fin n` is
   ∑_{k=0}^{n} (-1)^k * C(n,k) * (n-k)^m
 -/
 
-/-- The number of surjective maps from `Fin m` to `Fin n`. -/
+/-- The number of surjective maps from `Fin m` to `Fin n`. @statement_id stmt-src-def.pie.numsurj
+-/
 def numSurj (m n : ℕ) : ℕ := Fintype.card {f : Fin m → Fin n // Function.Surjective f}
 
 /-! #### Helper lemmas for the surjection formula -/
 
-/-- Count functions from `Fin m` to `Fin n` whose range avoids a given set `I`. -/
+/-- Count functions from `Fin m` to `Fin n` whose range avoids a given set `I`. @statement_id stmt-src-lem.pie.card_functions_avoiding_set
+-/
 lemma card_functions_avoiding_set (m n : ℕ) (I : Finset (Fin n)) :
     Fintype.card {f : Fin m → Fin n // ∀ i ∈ I, i ∉ Set.range f} = (n - #I) ^ m := by
   classical
@@ -161,7 +167,8 @@ lemma card_functions_avoiding_set (m n : ℕ) (I : Finset (Fin n)) :
 private def S_avoid (m n : ℕ) (i : Fin n) : Finset (Fin m → Fin n) :=
   univ.filter (fun f => i ∉ Set.range f)
 
-/-- The cardinality of the intersection of `S_avoid` sets. -/
+/-- The cardinality of the intersection of `S_avoid` sets. @statement_id stmt-src-lem.pie.card_inf_s_avoid
+-/
 lemma card_inf_S_avoid (m n : ℕ) (t : Finset (Fin n)) :
     #(t.inf (S_avoid m n)) = (n - #t) ^ m := by
   have h1 : t.inf (S_avoid m n) = univ.filter (fun f => ∀ i ∈ t, i ∉ Set.range f) := by
@@ -183,7 +190,8 @@ lemma card_inf_S_avoid (m n : ℕ) (t : Finset (Fin n)) :
 /-- **Theorem `thm.pie.count-sur`**: The number of surjective maps from `Fin m` to `Fin n`
 equals `∑_{k=0}^{n} (-1)^k * C(n,k) * (n-k)^m`.
 
-This is the main formula for counting surjections using inclusion-exclusion. -/
+This is the main formula for counting surjections using inclusion-exclusion. @statement_id stmt-src-thm.pie.count-sur
+-/
 theorem numSurj_formula (m n : ℕ) :
     (numSurj m n : ℤ) = ∑ k ∈ range (n + 1), (-1 : ℤ) ^ k * (n.choose k) * (n - k) ^ m := by
   -- Step 1: Relate numSurj to the PIE formula
@@ -241,7 +249,8 @@ theorem numSurj_formula (m n : ℕ) :
 /-! ### Corollary `cor.pie.count-sur.cors`: Consequences of the surjection formula -/
 
 /-- **Corollary `cor.pie.count-sur.cors` (a)**: When `m < n`, there are no surjections,
-so the alternating sum equals 0. -/
+so the alternating sum equals 0. @statement_id stmt-src-cor.pie.count-sur.cors
+-/
 theorem surjOn_alternating_sum_eq_zero (n : ℕ) (m : ℕ) (h : m < n) :
     ∑ k ∈ range (n + 1), (-1 : ℤ) ^ k * (n.choose k) * (n - k) ^ m = 0 := by
   -- First show that numSurj m n = 0 (no surjections from smaller to larger set)
@@ -257,7 +266,8 @@ theorem surjOn_alternating_sum_eq_zero (n : ℕ) (m : ℕ) (h : m < n) :
   simp
 
 /-- **Corollary `cor.pie.count-sur.cors` (b)**: When `m = n`, the number of surjections
-equals `n!` (the surjections are precisely the permutations). -/
+equals `n!` (the surjections are precisely the permutations). @statement_id stmt-src-cor.pie.count-sur.cors
+-/
 theorem surjOn_alternating_sum_eq_factorial (n : ℕ) :
     ∑ k ∈ range (n + 1), (-1 : ℤ) ^ k * (n.choose k) * (n - k) ^ n = n ! := by
   -- Use the forward difference operator identity:
@@ -301,7 +311,8 @@ theorem surjOn_alternating_sum_eq_factorial (n : ℕ) :
   rw [h3, h1]
 
 /-- **Corollary `cor.pie.count-sur.cors` (c)**: The alternating sum is always nonnegative
-since it counts surjections. -/
+since it counts surjections. @statement_id stmt-src-cor.pie.count-sur.cors
+-/
 theorem surjOn_alternating_sum_nonneg (m n : ℕ) :
     0 ≤ ∑ k ∈ range (n + 1), (-1 : ℤ) ^ k * (n.choose k) * (n - k) ^ m := by
   rw [← numSurj_formula]
@@ -320,7 +331,8 @@ instance permActionOnFun (m n : ℕ) : MulAction (Equiv.Perm (Fin n)) (Fin m →
   one_smul _ := rfl
   mul_smul _ _ _ := rfl
 
-/-- Post-composition with a permutation preserves surjectivity. -/
+/-- Post-composition with a permutation preserves surjectivity. @statement_id stmt-src-lem.pie.surjective_smul
+-/
 lemma surjective_smul {m n : ℕ} (σ : Equiv.Perm (Fin n)) {f : Fin m → Fin n}
     (hf : Function.Surjective f) : Function.Surjective (σ • f) := by
   intro y
@@ -336,7 +348,8 @@ instance permActionOnSurj (m n : ℕ) :
   mul_smul σ τ f := by ext; simp [HSMul.hSMul, SMul.smul]
 
 /-- The action of `Perm (Fin n)` on surjective maps is free: the stabilizer of any
-surjective map is trivial. This is because if `σ ∘ f = f` and `f` is surjective, then `σ = id`. -/
+surjective map is trivial. This is because if `σ ∘ f = f` and `f` is surjective, then `σ = id`. @statement_id stmt-src-lem.pie.stabilizer_surj_eq_bot
+-/
 lemma stabilizer_surj_eq_bot {m n : ℕ} (f : {f : Fin m → Fin n // Function.Surjective f}) :
     MulAction.stabilizer (Equiv.Perm (Fin n)) f = ⊥ := by
   ext σ
@@ -356,7 +369,8 @@ lemma stabilizer_surj_eq_bot {m n : ℕ} (f : {f : Fin m → Fin n // Function.S
     simp [h]
 
 /-- `n!` divides `numSurj m n` because the action of `Perm (Fin n)` on surjective maps
-is free, so each orbit has size `n!`. -/
+is free, so each orbit has size `n!`. @statement_id stmt-src-lem.pie.factorial_dvd_numsurj
+-/
 lemma factorial_dvd_numSurj (m n : ℕ) : n ! ∣ numSurj m n := by
   rw [numSurj]
   classical
@@ -386,7 +400,8 @@ lemma factorial_dvd_numSurj (m n : ℕ) : n ! ∣ numSurj m n := by
   exact dvd_mul_left _ _
 
 /-- **Corollary `cor.pie.count-sur.cors` (d)**: The alternating sum is divisible by `n!`.
-This follows from the orbit-stabilizer theorem applied to the action of `Sₙ` on surjections. -/
+This follows from the orbit-stabilizer theorem applied to the action of `Sₙ` on surjections. @statement_id stmt-src-cor.pie.count-sur.cors
+-/
 theorem surjOn_alternating_sum_dvd_factorial (m n : ℕ) :
     (n ! : ℤ) ∣ ∑ k ∈ range (n + 1), (-1 : ℤ) ^ k * (n.choose k) * (n - k) ^ m := by
   rw [← numSurj_formula]
@@ -416,7 +431,8 @@ This is definitionally equal to `↥(derangements α)` from `Mathlib.Combinatori
 - D₀ = 1: The identity on ∅ is a derangement (vacuously no fixed points)
 - D₁ = 0: The identity on {0} fixes 0, so it's not a derangement
 - D₂ = 1: Only the swap (0 1) is a derangement
-- D₃ = 2: The two 3-cycles (0 1 2) and (0 2 1) are derangements -/
+- D₃ = 2: The two 3-cycles (0 1 2) and (0 2 1) are derangements @statement_id stmt-src-def.pie.dera
+-/
 def Derangement (α : Type*) := {σ : Equiv.Perm α // ∀ x, σ x ≠ x}
 
 instance {α : Type*} [DecidableEq α] [Fintype α] : Fintype (Derangement α) :=
@@ -428,7 +444,8 @@ theorem Derangement.mem_derangements {α : Type*} (σ : Derangement α) :
     σ.val ∈ derangements α := σ.prop
 
 /-- The `Derangement` type is equivalent to the subtype of `derangements α`.
-This establishes that our explicit type is equivalent to Mathlib's set-based definition. -/
+This establishes that our explicit type is equivalent to Mathlib's set-based definition. @statement_id stmt-src-lem.pie.equivderangements
+-/
 def Derangement.equivDerangements (α : Type*) :
     Derangement α ≃ (derangements α : Set (Equiv.Perm α)) where
   toFun σ := ⟨σ.val, σ.mem_derangements⟩
@@ -438,13 +455,15 @@ def Derangement.equivDerangements (α : Type*) :
 
 /-- The identity is a derangement of the empty type.
 This matches the textbook example: D₀ = 1, since the identity has no fixed points
-when there are no elements. -/
+when there are no elements. @statement_id stmt-src-lem.pie.derangement-empty
+-/
 theorem Derangement.id_of_isEmpty {α : Type*} [IsEmpty α] :
     ∃ d : Derangement α, d.val = 1 := by
   use ⟨1, fun x => (IsEmpty.false x).elim⟩
 
 /-- The identity is NOT a derangement when the type is nonempty.
-This matches the textbook example: D₁ = 0, since id(1) = 1 is a fixed point. -/
+This matches the textbook example: D₁ = 0, since id(1) = 1 is a fixed point. @statement_id stmt-src-lem.pie.derangement-nonempty
+-/
 theorem Derangement.id_not_derangement {α : Type*} [Nonempty α] :
     ∀ d : Derangement α, d.val ≠ 1 := by
   intro d hd
@@ -452,7 +471,8 @@ theorem Derangement.id_not_derangement {α : Type*} [Nonempty α] :
   have h := d.prop x
   simp [hd] at h
 
-/-- The cardinality of `Derangement (Fin n)` equals Mathlib's `numDerangements n`. -/
+/-- The cardinality of `Derangement (Fin n)` equals Mathlib's `numDerangements n`. @statement_id stmt-src-lem.pie.card_derangement_eq
+-/
 theorem card_Derangement_eq (n : ℕ) :
     Fintype.card (Derangement (Fin n)) = numDerangements n := by
   unfold Derangement
@@ -462,12 +482,14 @@ theorem card_Derangement_eq (n : ℕ) :
 -- `numDerangements_one`, etc.)
 
 /-- `D₂ = 1`: The only derangement of `{0, 1}` is the swap.
-(Mathlib already provides `numDerangements_zero` and `numDerangements_one` as `@[simp]` lemmas.) -/
+(Mathlib already provides `numDerangements_zero` and `numDerangements_one` as `@[simp]` lemmas.) @statement_id stmt-src-lem.pie.derangement-small-values
+-/
 theorem numDerangements_two' : numDerangements 2 = 1 := by
   native_decide
 
 /-- `D₃ = 2`: There are exactly 2 derangements of `{0, 1, 2}` (the two 3-cycles).
-This matches the textbook: "the derangements are the 3-cycles cyc_{1,2,3} and cyc_{1,3,2}". -/
+This matches the textbook: "the derangements are the 3-cycles cyc_{1,2,3} and cyc_{1,3,2}". @statement_id stmt-src-lem.pie.derangement-small-values
+-/
 theorem numDerangements_three : numDerangements 3 = 2 := by native_decide
 
 /-- `D₄ = 9`: There are exactly 9 derangements of `{0, 1, 2, 3}`.
@@ -483,7 +505,8 @@ theorem numDerangements_five : numDerangements 5 = 44 := by native_decide
 
 This is derived from PIE by considering permutations that violate all "fixed point" rules.
 
-Note: Mathlib's `numDerangements_sum` gives a related formula using ascending factorials. -/
+Note: Mathlib's `numDerangements_sum` gives a related formula using ascending factorials. @statement_id stmt-src-thm.pie.count-der
+-/
 theorem numDerangements_formula (n : ℕ) :
     (numDerangements n : ℤ) = ∑ k ∈ range (n + 1), (-1 : ℤ) ^ k * (n.choose k) * (n - k)! := by
   rw [numDerangements_sum]
@@ -500,7 +523,8 @@ theorem numDerangements_formula (n : ℕ) :
   simp only [Int.natCast_mul]
   ring
 
-/-- Alternative form of the derangement formula: `Dₙ = n! * ∑_{k=0}^{n} (-1)^k / k!` -/
+/-- Alternative form of the derangement formula: `Dₙ = n! * ∑_{k=0}^{n} (-1)^k / k!` @statement_id stmt-src-thm.pie.count-der.rat
+-/
 theorem numDerangements_formula_rat (n : ℕ) :
     (numDerangements n : ℚ) = n ! * ∑ k ∈ range (n + 1), (-1 : ℚ) ^ k / k ! := by
   -- Use numDerangements_formula and convert to rationals
@@ -543,7 +567,8 @@ For a positive integer `c` with prime factorization `p₁^{a₁} * ... * pₙ^{a
 
 This is proved using PIE where rule `i` is "be divisible by pᵢ".
 
-Note: This is essentially `Nat.totient_eq_prod_factorization` in Mathlib. -/
+Note: This is essentially `Nat.totient_eq_prod_factorization` in Mathlib. @statement_id stmt-src-thm.pie.euler-tot
+-/
 theorem totient_eq_prod_one_sub_inv (c : ℕ) (_hc : 0 < c) :
     (Nat.totient c : ℚ) = c * ∏ p ∈ c.primeFactors, (1 - 1 / (p : ℚ)) := by
   rw [Nat.totient_eq_mul_prod_factors]
@@ -584,6 +609,7 @@ This generalizes the size version (Theorem `thm.pie.1`) which is obtained by tak
 The left-hand side sums `w(u)` over all elements `u` that belong to none of the subsets `Aᵢ`.
 The right-hand side is an alternating sum over all subsets `I` of the index set, where we sum
 `w(u)` over elements belonging to all `Aᵢ` with `i ∈ I`.
+@statement_id stmt-src-thm.pie.2
 -/
 theorem weighted_pie {ι U G : Type*} [Fintype ι] [DecidableEq ι] [Fintype U] [DecidableEq U]
     [AddCommGroup G] (A : ι → Finset U) (w : U → G) :
@@ -595,7 +621,8 @@ theorem weighted_pie {ι U G : Type*} [Fintype ι] [DecidableEq ι] [Fintype U] 
 The weighted PIE with an explicit finite index set `s` of "rules".
 
 This version allows indexing by a subset `s` of a larger type `ι`, rather than requiring
-a finite type for the index. -/
+a finite type for the index. @statement_id stmt-src-thm.pie.2.explicit
+-/
 theorem weighted_pie' {ι U G : Type*} [DecidableEq ι] [Fintype U] [DecidableEq U]
     [AddCommGroup G] (s : Finset ι) (A : ι → Finset U) (w : U → G) :
     ∑ u ∈ s.inf fun i ↦ (A i)ᶜ, w u =
@@ -605,7 +632,8 @@ theorem weighted_pie' {ι U G : Type*} [DecidableEq ι] [Fintype U] [DecidableEq
 /-- The size version of PIE (Theorem `thm.pie.1`) follows from the weighted version
 by taking `w(u) = 1` for all `u`.
 
-This demonstrates that `thm.pie.1` is a special case of `thm.pie.2`. -/
+This demonstrates that `thm.pie.1` is a special case of `thm.pie.2`. @statement_id stmt-src-lem.pie.size-from-weighted
+-/
 theorem size_pie_from_weighted {ι U : Type*} [DecidableEq ι] [Fintype U] [DecidableEq U]
     (s : Finset ι) (A : ι → Finset U) :
     ((s.inf fun i ↦ (A i)ᶜ).card : ℤ) = ∑ I ∈ s.powerset, (-1 : ℤ) ^ I.card * (I.inf A).card := by

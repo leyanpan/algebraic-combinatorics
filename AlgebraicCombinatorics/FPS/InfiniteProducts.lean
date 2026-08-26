@@ -96,7 +96,8 @@ private theorem one_sub_X_mul_prod_eq (m : ℕ) :
 
 /-- The product of `(1 + x^{2^i})` for `i` from `0` to `m` equals `(1 - x^{2^{m+1}}) / (1 - x)`.
 This is the finite version of the binary product identity.
-(Label: eq.fps.prod.binary.1) -/
+(Label: eq.fps.prod.binary.1) @statement_id stmt-src-lem.fps.binary-prod-finite
+-/
 theorem prod_one_add_pow_two_eq (m : ℕ) :
     ∏ i ∈ Finset.range (m + 1), (1 + (X : PowerSeries R) ^ (2 ^ i)) =
     (1 - X ^ (2 ^ (m + 1))) * invOfUnit (1 - X) 1 := by
@@ -119,7 +120,8 @@ Definition \ref{def.fps.determines-xn-coeff}
 /-- A finite subset `M` of `I` determines the `x^n`-coefficient in the product of
 a family `(a_i)_{i ∈ I}` if for every finite superset `J` of `M`, the `x^n`-coefficient
 of `∏_{i ∈ J} a_i` equals that of `∏_{i ∈ M} a_i`.
-(Label: def.fps.determines-xn-coeff part (b)) -/
+(Label: def.fps.determines-xn-coeff part (b)) @statement_id stmt-src-def.fps.determines-xn-coeff
+-/
 def DeterminesCoeffInProd (a : I → PowerSeries R) (M : Finset I) (n : ℕ) : Prop :=
   ∀ J : Finset I, M ⊆ J → (∏ i ∈ J, a i).coeff n = (∏ i ∈ M, a i).coeff n
 
@@ -145,7 +147,8 @@ Definition \ref{def.fps.xn-coeff-fin-determined}
 
 /-- The `x^n`-coefficient in the product of `(a_i)_{i ∈ I}` is finitely determined
 if there exists a finite subset `M` that determines it.
-(Label: def.fps.xn-coeff-fin-determined part (b)) -/
+(Label: def.fps.xn-coeff-fin-determined part (b)) @statement_id stmt-src-def.fps.xn-coeff-fin-determined
+-/
 def CoeffFinitelyDeterminedInProd (a : I → PowerSeries R) (n : ℕ) : Prop :=
   ∃ M : Finset I, DeterminesCoeffInProd a M n
 
@@ -273,7 +276,8 @@ Proposition \ref{prop.fps.summable=fin-det}
 -/
 
 /-- A family of FPS is summable if and only if each coefficient in its sum is finitely determined.
-(Label: prop.fps.summable=fin-det part (a)) -/
+(Label: prop.fps.summable=fin-det part (a)) @statement_id stmt-src-prop.fps.summable-fin-det
+-/
 theorem summable_iff_coeff_finitely_determined (a : I → PowerSeries R) :
     (∀ n : ℕ, {i : I | (a i).coeff n ≠ 0}.Finite) ↔
     (∀ n : ℕ, CoeffFinitelyDeterminedInSum a n) := by
@@ -327,14 +331,16 @@ Definition \ref{def.fps.multipliable}
 
 /-- A family `(a_i)_{i ∈ I}` of FPS is multipliable if for each `n ∈ ℕ`,
 the `x^n`-coefficient in its product is finitely determined.
-(Label: def.fps.multipliable part (a)) -/
+(Label: def.fps.multipliable part (a)) @statement_id stmt-src-def.fps.multipliable
+-/
 def Multipliable (a : I → PowerSeries R) : Prop :=
   ∀ n : ℕ, CoeffFinitelyDeterminedInProd a n
 
 /-- For a multipliable family, the `x^n`-coefficient of the infinite product
 is well-defined: it equals the `x^n`-coefficient of any finite partial product
 that determines it.
-(Label: prop.fps.multipliable.prod-wd) -/
+(Label: prop.fps.multipliable.prod-wd) @statement_id stmt-src-prop.fps.multipliable.prod-wd
+-/
 theorem multipliable_coeff_eq_of_determines {a : I → PowerSeries R} {M₁ M₂ : Finset I} {n : ℕ}
     (h₁ : DeterminesCoeffInProd a M₁ n) (h₂ : DeterminesCoeffInProd a M₂ n) :
     (∏ i ∈ M₁, a i).coeff n = (∏ i ∈ M₂, a i).coeff n := by
@@ -381,7 +387,8 @@ theorem tprod_coeff {a : I → PowerSeries R} (ha : Multipliable a) {M : Finset 
   exact multipliable_coeff_eq_of_determines (ha n).choose_spec hM
 
 /-- For a finite family, the infinite product definition agrees with the finite product.
-(Label: prop.fps.multipliable.prod-wd2) -/
+(Label: prop.fps.multipliable.prod-wd2) @statement_id stmt-src-prop.fps.multipliable.prod-wd2
+-/
 theorem tprod_eq_finprod [Fintype I] (a : I → PowerSeries R) (ha : Multipliable a) :
     tprod a ha = ∏ i : I, a i := by
   ext n
@@ -403,7 +410,8 @@ Definition \ref{def.fps.infprod-approx}
 /-- A finite subset `M` is an `x^n`-approximator for a family `(a_i)_{i ∈ I}`
 if it determines the first `n+1` coefficients (i.e., `x^0, x^1, ..., x^n`)
 in the product.
-(Label: def.fps.infprod-approx) -/
+(Label: def.fps.infprod-approx) @statement_id stmt-src-def.fps.infprod-approx
+-/
 def IsXnApproximator (a : I → PowerSeries R) (M : Finset I) (n : ℕ) : Prop :=
   ∀ m ≤ n, DeterminesCoeffInProd a M m
 
@@ -441,7 +449,8 @@ theorem isXnApproximator_determines_coeff {a : I → PowerSeries R} {M : Finset 
   hM n (le_refl n)
 
 /-- For a multipliable family, there exists an `x^n`-approximator for each `n`.
-(Label: lem.fps.mulable.approx) -/
+(Label: lem.fps.mulable.approx) @statement_id stmt-src-lem.fps.mulable.approx
+-/
 theorem exists_xn_approximator [DecidableEq I] (a : I → PowerSeries R) (ha : Multipliable a) (n : ℕ) :
     ∃ M : Finset I, IsXnApproximator a M n := by
   -- For each m ≤ n, get a finite set that determines the x^m coefficient
@@ -469,7 +478,8 @@ Lemma \ref{lem.fps.prod.irlv.1}
 
 /-- If `f` has zero coefficients for `x^0, ..., x^n`, then multiplying by `(1 + f)`
 doesn't change the first `n+1` coefficients.
-(Label: lem.fps.prod.irlv.1) -/
+(Label: lem.fps.prod.irlv.1) @statement_id stmt-src-lem.fps.prod.irlv.1
+-/
 theorem coeff_mul_one_add_eq_of_coeff_zero {a f : PowerSeries R} {n : ℕ}
     (hf : ∀ m ≤ n, f.coeff m = 0) (m : ℕ) (hm : m ≤ n) :
     (a * (1 + f)).coeff m = a.coeff m := by
@@ -490,7 +500,8 @@ theorem coeff_mul_one_add_eq_of_coeff_zero {a f : PowerSeries R} {n : ℕ}
   rw [hf j hj, mul_zero]
 
 /-- Extension of the irrelevant factor lemma to finite products.
-(Label: lem.fps.prod.irlv.fin) -/
+(Label: lem.fps.prod.irlv.fin) @statement_id stmt-src-lem.fps.prod.irlv.fin
+-/
 theorem coeff_mul_prod_one_add_eq {a : PowerSeries R} {J : Finset I} {f : I → PowerSeries R}
     {n : ℕ} (hf : ∀ i ∈ J, ∀ m ≤ n, (f i).coeff m = 0) (m : ℕ) (hm : m ≤ n) :
     (a * ∏ i ∈ J, (1 + f i)).coeff m = a.coeff m := by
@@ -520,7 +531,8 @@ Theorem \ref{thm.fps.1+f-mulable}
 
 /-- If `(f_i)_{i ∈ I}` is a summable family of FPS, then `(1 + f_i)_{i ∈ I}` is multipliable.
 This is the main criterion for multipliability.
-(Label: thm.fps.1+f-mulable) -/
+(Label: thm.fps.1+f-mulable) @statement_id stmt-src-thm.fps.1-f-mulable.lean
+-/
 theorem multipliable_one_add_of_summable {f : I → PowerSeries R}
     (hf : ∀ n : ℕ, {i : I | (f i).coeff n ≠ 0}.Finite) :
     Multipliable (fun i => 1 + f i) := by
@@ -579,7 +591,8 @@ Proposition \ref{prop.fps.1-mulable} and Remark \ref{rmk.fps.0-mulable}
 -/
 
 /-- If all but finitely many entries of a family equal `1`, the family is multipliable.
-(Label: prop.fps.1-mulable) -/
+(Label: prop.fps.1-mulable) @statement_id stmt-src-prop.fps.1-mulable
+-/
 theorem multipliable_of_finite_ne_one (a : I → PowerSeries R)
     (h : {i : I | a i ≠ 1}.Finite) : Multipliable a := by
   classical
@@ -601,7 +614,8 @@ theorem multipliable_of_finite_ne_one (a : I → PowerSeries R)
 
 /-- The constant 1 family is always multipliable.
 The empty set determines all coefficients since `∏_{i ∈ ∅} 1 = 1`.
-(Label: def.fps.multipliable) -/
+(Label: def.fps.multipliable) @statement_id stmt-src-lem.fps.multipliable-const-one
+-/
 @[simp]
 theorem multipliable_const_one : Multipliable (fun _ : I => (1 : PowerSeries R)) := by
   intro n
@@ -610,7 +624,8 @@ theorem multipliable_const_one : Multipliable (fun _ : I => (1 : PowerSeries R))
   simp only [Finset.prod_const_one]
 
 /-- The product of all 1s is 1.
-(Label: def.fps.multipliable) -/
+(Label: def.fps.multipliable) @statement_id stmt-src-lem.fps.tprod-const-one
+-/
 @[simp]
 theorem tprod_const_one (h : Multipliable (fun _ : I => (1 : PowerSeries R)) := multipliable_const_one) :
     tprod (fun _ : I => (1 : PowerSeries R)) h = 1 := by
@@ -623,7 +638,8 @@ theorem tprod_const_one (h : Multipliable (fun _ : I => (1 : PowerSeries R)) := 
 
 /-- For the empty index type, any family is trivially multipliable.
 The empty set determines all coefficients since the product is 1.
-(Label: def.fps.multipliable) -/
+(Label: def.fps.multipliable) @statement_id stmt-src-lem.fps.multipliable-empty
+-/
 @[simp]
 theorem multipliable_empty (a : Empty → PowerSeries R) : Multipliable a := by
   intro n
@@ -651,7 +667,8 @@ theorem tprod_empty (a : Empty → PowerSeries R)
   simp only [Finset.prod_empty]
 
 /-- For a singleton index type, any family is multipliable.
-(Label: def.fps.multipliable) -/
+(Label: def.fps.multipliable) @statement_id stmt-src-lem.fps.multipliable-singleton
+-/
 @[simp]
 theorem multipliable_singleton [Unique I] (a : I → PowerSeries R) : Multipliable a := by
   intro n
@@ -685,7 +702,8 @@ theorem tprod_singleton [Unique I] (a : I → PowerSeries R)
   simp only [Finset.prod_singleton]
 
 /-- If a family contains `0` as an entry, it is multipliable (and the product is `0`).
-(Label: rmk.fps.0-mulable) -/
+(Label: rmk.fps.0-mulable) @statement_id stmt-src-lem.fps.multipliable-of-zero-mem
+-/
 theorem multipliable_of_zero_mem (a : I → PowerSeries R) {j : I} (hj : a j = 0) :
     Multipliable a := by
   intro n
@@ -706,7 +724,8 @@ This is the infinite version of the binary product identity, stating that
 (Label: eq.fps.prod.binary.2)
 -/
 
-/-- The family `(1 + x^{2^i})_{i ∈ ℕ}` is multipliable. -/
+/-- The family `(1 + x^{2^i})_{i ∈ ℕ}` is multipliable. @statement_id stmt-src-lem.fps.binary-prod-mulable
+-/
 theorem multipliable_one_add_pow_two :
     Multipliable (fun i : ℕ => (1 : PowerSeries R) + X ^ (2 ^ i)) := by
   apply multipliable_one_add_of_summable
@@ -805,7 +824,8 @@ private lemma coeff_one_sub_X_pow_mul' [Nontrivial R] {f : R⟦X⟧} {k n : ℕ}
 /-- The infinite product `∏_{i ∈ ℕ} (1 + x^{2^i})` equals `1/(1-x)`.
 This relates to the unique binary representation of natural numbers:
 each natural number can be written uniquely as a sum of distinct powers of 2.
-(Label: eq.fps.prod.binary.2) -/
+(Label: eq.fps.prod.binary.2) @statement_id stmt-src-prop.fps.binary-prod-infinite
+-/
 theorem tprod_one_add_pow_two_eq :
     tprod (fun i : ℕ => (1 : PowerSeries R) + X ^ (2 ^ i)) multipliable_one_add_pow_two =
     invOfUnit (1 - X) 1 := by
@@ -835,7 +855,8 @@ Proposition \ref{prop.fps.union-mulable}
 
 /-- If the subfamilies over `J` and `I \ J` are multipliable, then the entire family
 is multipliable.
-(Label: prop.fps.union-mulable part (a)) -/
+(Label: prop.fps.union-mulable part (a)) @statement_id stmt-src-thm.fps.union-mulable.lean
+-/
 theorem multipliable_of_union {a : I → PowerSeries R} {J : Set I}
     (hJ : Multipliable (fun i : J => a i))
     (hIJ : Multipliable (fun i : ↑(Set.univ \ J) => a i)) :
@@ -950,7 +971,8 @@ theorem multipliable_of_union {a : I → PowerSeries R} {J : Set I}
   rw [hJ_approx i hi, hIJ_approx j hj]
 
 /-- The product over `I` equals the product of subproducts over `J` and `I \ J`.
-(Label: prop.fps.union-mulable part (b)) -/
+(Label: prop.fps.union-mulable part (b)) @statement_id stmt-src-prop.fps.union-mulable
+-/
 theorem tprod_eq_tprod_mul_tprod {a : I → PowerSeries R} {J : Set I}
     (ha : Multipliable a)
     (hJ : Multipliable (fun i : J => a i))
@@ -1090,7 +1112,8 @@ The proof follows the detailed proof in Section sec.details.gf.prod:
 2. Let M = U ∪ V
 3. Show M determines the x^n coefficient for (a_i * b_i)
 4. Use the fact that if two pairs of FPS agree up to degree n,
-   their products also agree up to degree n -/
+   their products also agree up to degree n @statement_id stmt-src-thm.fps.prod-mulable.lean
+-/
 theorem multipliable_mul {a b : I → PowerSeries R}
     (ha : Multipliable a) (hb : Multipliable b) :
     Multipliable (fun i => a i * b i) := by
@@ -1135,7 +1158,8 @@ theorem multipliable_mul {a b : I → PowerSeries R}
   · exact hb_eq j (by omega)
 
 /-- The product of `(a_i * b_i)` equals the product of products.
-(Label: prop.fps.prod-mulable part (b)) -/
+(Label: prop.fps.prod-mulable part (b)) @statement_id stmt-src-thm.fps.prod-mulable-eq.lean
+-/
 theorem tprod_mul_eq_mul_tprod {a b : I → PowerSeries R}
     (ha : Multipliable a) (hb : Multipliable b)
     (hab : Multipliable (fun i => a i * b i) := multipliable_mul ha hb) :
@@ -1210,7 +1234,8 @@ then `(a_i / b_i)` is multipliable.
 
 The proof is similar to multipliable_mul, using the additional fact that
 if two FPS agree up to degree n and both have invertible constant terms,
-then their Ring.inverses also agree up to degree n. -/
+then their Ring.inverses also agree up to degree n. @statement_id stmt-src-thm.fps.div-mulable.lean
+-/
 theorem multipliable_div {a b : I → PowerSeries R}
     (ha : Multipliable a) (hb : Multipliable b)
     (hb_inv : ∀ i, IsUnit ((b i).coeff 0)) :
@@ -1460,7 +1485,8 @@ private lemma isUnit_constantCoeff_prod [DecidableEq I] {M : Finset I} {c : I �
     exact IsUnit.mul (h x (Finset.mem_insert_self x s)) (IH (fun i hi => h i (Finset.mem_insert_of_mem hi)))
 
 /-- The product of `(a_i / b_i)` equals the quotient of products.
-(Label: prop.fps.div-mulable part (b)) -/
+(Label: prop.fps.div-mulable part (b)) @statement_id stmt-src-thm.fps.div-mulable-eq.lean
+-/
 theorem tprod_div_eq_div_tprod {a b : I → PowerSeries R}
     (ha : Multipliable a) (hb : Multipliable b)
     (hb_inv : ∀ i, IsUnit ((b i).coeff 0))
@@ -1615,7 +1641,8 @@ private lemma coeff_eq_of_mul_eq_unit {A B P : PowerSeries R} {n : ℕ}
 /-- Key lemma: If U is an x^n-approximator for the full family, and all FPS are invertible,
 then U ∩ J is an x^n-approximator for the subfamily J.
 This is Lemma lem.fps.prods-mulable-subfams-appr from the tex source.
-The invertibility assumption is essential for this lemma. -/
+The invertibility assumption is essential for this lemma. @statement_id stmt-src-lem.fps.infprod.approx-inter-subfamily
+-/
 lemma isXnApproximator_inter_subfamily {a : I → PowerSeries R}
     {U : Finset I} {n : ℕ}
     (hU : IsXnApproximator a U n)
@@ -1695,7 +1722,8 @@ lemma isXnApproximator_inter_subfamily {a : I → PowerSeries R}
 
 /-- If `(a_i)_{i ∈ I}` is a multipliable family of invertible FPS, then any
 subfamily is also multipliable.
-(Label: prop.fps.prods-mulable-subfams) -/
+(Label: prop.fps.prods-mulable-subfams) @statement_id stmt-src-thm.fps.prods-mulable-subfams.lean
+-/
 theorem multipliable_subfamily {a : I → PowerSeries R}
     (ha : Multipliable a)
     (ha_inv : ∀ i, IsUnit ((a i).coeff 0))
@@ -1827,7 +1855,8 @@ Proposition \ref{prop.fps.prods-mulable-rules.reindex}
 -/
 
 /-- Reindexing a multipliable family via a bijection preserves multipliability.
-(Label: prop.fps.prods-mulable-rules.reindex) -/
+(Label: prop.fps.prods-mulable-rules.reindex) @statement_id stmt-src-prop.fps.prods-mulable-rules.reindex
+-/
 theorem multipliable_reindex {S T : Type*} {f : S → T} (hf : Function.Bijective f)
     {a : T → PowerSeries R} (ha : Multipliable a) :
     Multipliable (a ∘ f) := by
@@ -1884,7 +1913,8 @@ theorem multipliable_reindex {S T : Type*} {f : S → T} (hf : Function.Bijectiv
   rw [h2, h3, h1]
 
 /-- Reindexing a multipliable family via a bijection preserves the product.
-(Label: prop.fps.prods-mulable-rules.reindex) -/
+(Label: prop.fps.prods-mulable-rules.reindex) @statement_id stmt-src-prop.fps.prods-mulable-rules.reindex
+-/
 theorem tprod_reindex {S T : Type*} {f : S → T} (hf : Function.Bijective f)
     {a : T → PowerSeries R} (ha : Multipliable a)
     (haf : Multipliable (a ∘ f) := multipliable_reindex hf ha) :
@@ -1942,7 +1972,8 @@ fiber products `(tprod_{s : f s = w} a_s)_{w ∈ W}` is also multipliable.
 requires invertibility. This Lean proof uses a different approach that avoids the
 invertibility assumption: instead of showing each fiber's tprod is x^n-equivalent to 1
 (which requires invertibility to "cancel" other fibers), we directly relate the outer
-product to the full product via unions of fiber approximators. -/
+product to the full product via unions of fiber approximators. @statement_id stmt-src-thm.fps.prods-mulable-fibers.lean
+-/
 theorem multipliable_prod_fibers {S W : Type*} {f : S → W} {a : S → PowerSeries R}
     (ha : Multipliable a)
     (ha_fibers : ∀ w : W, Multipliable (fun s : {s : S // f s = w} => a s)) :
@@ -2054,7 +2085,8 @@ enables a complete proof. The tex source proof implicitly uses invertibility thr
 Lemma `lem.fps.prods-mulable-subfams-appr`.
 
 When all FPS in the family have unit constant term, we can use `coeff_eq_of_mul_eq_unit`
-to cancel common factors and relate fiber products. -/
+to cancel common factors and relate fiber products. @statement_id stmt-src-prop.fps.prods-mulable-rules.sw1
+-/
 theorem multipliable_prod_fibers_inv {S W : Type*} {f : S → W} {a : S → PowerSeries R}
     (ha : Multipliable a)
     (ha_inv : ∀ s, IsUnit ((a s).coeff 0))
@@ -2247,7 +2279,8 @@ the infinite product within each fiber, and then taking the infinite product of 
 **Proof approach:** Rather than trying to show that `U ∩ fiber(w)` determines the coefficient
 in the fiber product (which requires invertibility to "cancel" other fibers), we use proper
 approximators `M_w` for each fiber from `ha_fibers`, and relate everything through the full
-product approximator. This approach follows `multipliable_prod_fibers`. -/
+product approximator. This approach follows `multipliable_prod_fibers`. @statement_id stmt-src-thm.fps.prods-mulable-fibers-eq.lean
+-/
 theorem tprod_eq_tprod_fibers {S W : Type*} {f : S → W} {a : S → PowerSeries R}
     (ha : Multipliable a)
     (ha_fibers : ∀ w : W, Multipliable (fun s : {s : S // f s = w} => a s))
@@ -2373,7 +2406,8 @@ enables a complete proof. The tex source proof implicitly uses invertibility thr
 Lemma `lem.fps.prods-mulable-subfams-appr`.
 
 When all FPS in the family have unit constant term, we can use `coeff_eq_of_mul_eq_unit`
-to cancel common factors and relate fiber products. -/
+to cancel common factors and relate fiber products. @statement_id stmt-src-prop.fps.prods-mulable-rules.sw1
+-/
 theorem tprod_eq_tprod_fibers_inv {S W : Type*} {f : S → W} {a : S → PowerSeries R}
     (ha : Multipliable a)
     (ha_inv : ∀ s, IsUnit ((a s).coeff 0))
@@ -2671,7 +2705,8 @@ private lemma tprod_fiber_eq_tprod {I J : Type*} (a : I × J → PowerSeries R) 
         exact tprod_reindex hbij ha_I_i
 
 /-- Fubini rule: the iterated product over `I` then `J` is multipliable.
-(Label: prop.fps.prods-mulable-rules.fubini1) -/
+(Label: prop.fps.prods-mulable-rules.fubini1) @statement_id stmt-src-thm.fps.fubini-mulable.lean
+-/
 theorem multipliable_tprod_fubini {I J : Type*} {a : I × J → PowerSeries R}
     (ha : Multipliable a)
     (ha_I : ∀ i : I, Multipliable (fun j => a (i, j))) :
@@ -2728,7 +2763,8 @@ theorem multipliable_tprod_fubini {I J : Type*} {a : I × J → PowerSeries R}
   exact h
 
 /-- Fubini rule: products over `I × J` can be computed as iterated products.
-(Label: prop.fps.prods-mulable-rules.fubini1) -/
+(Label: prop.fps.prods-mulable-rules.fubini1) @statement_id stmt-src-thm.fps.fubini.lean
+-/
 theorem tprod_fubini {I J : Type*} {a : I × J → PowerSeries R}
     (ha : Multipliable a)
     (ha_I : ∀ i : I, Multipliable (fun j => a (i, j)))
@@ -2791,7 +2827,8 @@ private lemma tprod_fiber_eq_tprod_snd {I J : Type*} (a : I × J → PowerSeries
         exact tprod_reindex hbij ha_J_j
 
 /-- Fubini rule (J-first version): the iterated product over `J` then `I` is multipliable.
-(Label: prop.fps.prods-mulable-rules.fubini1) -/
+(Label: prop.fps.prods-mulable-rules.fubini1) @statement_id stmt-src-prop.fps.prods-mulable-rules.fubini1
+-/
 theorem multipliable_tprod_fubini_J {I J : Type*} {a : I × J → PowerSeries R}
     (ha : Multipliable a)
     (ha_J : ∀ j : J, Multipliable (fun i => a (i, j))) :
@@ -2848,7 +2885,8 @@ theorem multipliable_tprod_fubini_J {I J : Type*} {a : I × J → PowerSeries R}
 
 /-- Fubini rule (J-first version): products over `I × J` can be computed as iterated products
 over `J` then `I`.
-(Label: prop.fps.prods-mulable-rules.fubini1) -/
+(Label: prop.fps.prods-mulable-rules.fubini1) @statement_id stmt-src-prop.fps.prods-mulable-rules.fubini1
+-/
 theorem tprod_fubini_J {I J : Type*} {a : I × J → PowerSeries R}
     (ha : Multipliable a)
     (ha_J : ∀ j : J, Multipliable (fun i => a (i, j)))
@@ -2883,7 +2921,8 @@ This combines both directions of the Fubini rule:
 - `∏_{(i,j) ∈ I × J} a_{(i,j)} = ∏_{i ∈ I} ∏_{j ∈ J} a_{(i,j)}`
 - `∏_{(i,j) ∈ I × J} a_{(i,j)} = ∏_{j ∈ J} ∏_{i ∈ I} a_{(i,j)}`
 
-(Label: prop.fps.prods-mulable-rules.fubini1) -/
+(Label: prop.fps.prods-mulable-rules.fubini1) @statement_id stmt-src-prop.fps.prods-mulable-rules.fubini1
+-/
 theorem tprod_fubini_full {I J : Type*} {a : I × J → PowerSeries R}
     (ha : Multipliable a)
     (ha_I : ∀ i : I, Multipliable (fun j => a (i, j)))
@@ -2901,7 +2940,8 @@ theorem tprod_fubini_full {I J : Type*} {a : I × J → PowerSeries R}
   · exact tprod_fubini_J ha ha_J
 
 /-- Fubini rule for invertible FPS: no additional multipliability assumptions needed.
-(Label: prop.fps.prods-mulable-rules.fubini) -/
+(Label: prop.fps.prods-mulable-rules.fubini) @statement_id stmt-src-prop.fps.prods-mulable-rules.fubini
+-/
 theorem fubini_prod_invertible {I J : Type*} {a : I × J → PowerSeries R}
     (ha : Multipliable a)
     (ha_inv : ∀ p, IsUnit ((a p).coeff 0)) :
@@ -2964,7 +3004,8 @@ finite product.
 (Label: prop.fps.infprod-approx-xneq part (a))
 
 This is the x^n-equivalence form of the approximator property: for any finite
-`J ⊇ M`, we have `∏_{i∈J} a_i ≡[x^n] ∏_{i∈M} a_i`. -/
+`J ⊇ M`, we have `∏_{i∈J} a_i ≡[x^n] ∏_{i∈M} a_i`. @statement_id stmt-src-prop.fps.infprod-approx-xneq
+-/
 theorem xn_approximator_superset_xnEquiv {a : I → PowerSeries R} {M : Finset I} {n : ℕ}
     (hM : IsXnApproximator a M n) {J : Finset I} (hMJ : M ⊆ J) :
     (∏ i ∈ J, a i) ≡[x^n] (∏ i ∈ M, a i) := fun m hm =>
@@ -2975,7 +3016,8 @@ over any x^n-approximator.
 (Label: prop.fps.infprod-approx-xneq part (b))
 
 This is the x^n-equivalence form: if `M` is an x^n-approximator for a multipliable
-family `(a_i)_{i∈I}`, then `∏_{i∈I} a_i ≡[x^n] ∏_{i∈M} a_i`. -/
+family `(a_i)_{i∈I}`, then `∏_{i∈I} a_i ≡[x^n] ∏_{i∈M} a_i`. @statement_id stmt-src-prop.fps.infprod-approx-xneq
+-/
 theorem tprod_xnEquiv_approximator {a : I → PowerSeries R}
     (ha : Multipliable a) {M : Finset I} {n : ℕ}
     (hM : IsXnApproximator a M n) :

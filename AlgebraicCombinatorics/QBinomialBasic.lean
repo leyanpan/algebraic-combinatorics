@@ -103,13 +103,15 @@ variable {R : Type*} [CommSemiring R]
 /-- The q-integer `[n]_q = 1 + q + q^2 + ... + q^(n-1)`.
 This is a q-analogue of the natural number n, since `[n]_1 = n`.
 
-See Definition 11.3.1(a) in the source. -/
+See Definition 11.3.1(a) in the source. @statement_id stmt-src-def.pars.qbinom.qint
+-/
 def qInt (n : ℕ) (q : R) : R := ∑ i ∈ range n, q ^ i
 
 /-- The q-factorial `[n]_q! = [1]_q * [2]_q * ... * [n]_q`.
 This is a q-analogue of n!, since `[n]_1! = n!`.
 
-See Definition 11.3.1(b) in the source. -/
+See Definition 11.3.1(b) in the source. @statement_id stmt-src-def.pars.qbinom.qint
+-/
 def qFactorial (n : ℕ) (q : R) : R := ∏ i ∈ range n, qInt (i + 1) q
 
 @[simp]
@@ -128,7 +130,8 @@ theorem qInt_succ (n : ℕ) (q : R) : qInt (n + 1) q = qInt n q + q ^ n := by
   simp [qInt, sum_range_succ]
 
 /-- The q-integer satisfies `[n]_1 = n`.
-See Remark 11.3.2 in the source. -/
+See Remark 11.3.2 in the source. @statement_id stmt-src-lem.pars.qbinom.qint-one
+-/
 @[simp]
 theorem qInt_one_eq (n : ℕ) : qInt n (1 : R) = n := by
   simp [qInt]
@@ -146,7 +149,8 @@ theorem qFactorial_succ (n : ℕ) (q : R) :
   simp [qFactorial, prod_range_succ]
 
 /-- The q-factorial satisfies `[n]_1! = n!`.
-See Remark 11.3.2 in the source. -/
+See Remark 11.3.2 in the source. @statement_id stmt-src-lem.pars.qbinom.qint-one
+-/
 @[simp]
 theorem qFactorial_one_eq (n : ℕ) : qFactorial n (1 : R) = n ! := by
   induction n with
@@ -159,7 +163,8 @@ theorem qFactorial_one_eq (n : ℕ) : qFactorial n (1 : R) = n ! := by
 /-- The q-integer as a rational function: `[n]_q = (1 - q^n) / (1 - q)`.
 This holds in any ring where `1 - q` is invertible, or as formal power series.
 
-See Remark 11.3.2 in the source. -/
+See Remark 11.3.2 in the source. @statement_id stmt-src-lem.pars.qbinom.qint-geom
+-/
 theorem qInt_eq_geom_sum {R : Type*} [CommRing R] (n : ℕ) (q : R) :
     (1 - q) * qInt n q = 1 - q ^ n := by
   induction n with
@@ -173,6 +178,7 @@ theorem qInt_eq_geom_sum {R : Type*} [CommRing R] (n : ℕ) (q : R) :
 This is the key splitting lemma for the factorial form of the q-binomial coefficient.
 It states that [n]_q! can be split as:
   [n]_q! = [n]_q · [n-1]_q · ... · [n-k+1]_q · [n-k]_q!
+@statement_id stmt-src-lem.pars.qbinom.qfactorial-split
 -/
 lemma qFactorial_split (n k : ℕ) (hk : k ≤ n) (q : R) :
     qFactorial n q = (∏ i ∈ range k, qInt (n - i) q) * qFactorial (n - k) q := by
@@ -190,7 +196,8 @@ lemma qFactorial_split (n k : ℕ) (hk : k ≤ n) (q : R) :
     rw [h3, h2]
     ring
 
-/-- qInt n q ≠ 0 when q^n ≠ 1 (i.e., when q is not an n-th root of unity). -/
+/-- qInt n q ≠ 0 when q^n ≠ 1 (i.e., when q is not an n-th root of unity). @statement_id stmt-src-lem.pars.qbinom.qint-ne-zero
+-/
 lemma qInt_ne_zero {R : Type*} [Field R] (n : ℕ) (q : R) (hq : q ^ n ≠ 1) :
     qInt n q ≠ 0 := by
   intro h
@@ -199,7 +206,8 @@ lemma qInt_ne_zero {R : Type*} [Field R] (n : ℕ) (q : R) (hq : q ^ n ≠ 1) :
   have h2 : q ^ n = 1 := (sub_eq_zero.mp h1).symm
   exact hq h2
 
-/-- qFactorial n q ≠ 0 when q^i ≠ 1 for i = 1, ..., n. -/
+/-- qFactorial n q ≠ 0 when q^i ≠ 1 for i = 1, ..., n. @statement_id stmt-src-lem.pars.qbinom.qfactorial-ne-zero
+-/
 lemma qFactorial_ne_zero {R : Type*} [Field R] (n : ℕ) (q : R)
     (hq : ∀ i ∈ range n, q ^ (i + 1) ≠ 1) : qFactorial n q ≠ 0 := by
   simp only [qFactorial, prod_ne_zero_iff]
@@ -230,7 +238,8 @@ def monotoneFunctions (k m : ℕ) : Finset (Fin k → Fin (m + 1)) :=
 This is equivalent to the generating function for partitions fitting in a k × (n-k) box
 (see `qBinomial_eq_partition_gf`).
 
-See Definition 11.2.1(a) and Proposition 11.2.1(a) in the source. -/
+See Definition 11.2.1(a) and Proposition 11.2.1(a) in the source. @statement_id stmt-src-def.pars.qbinom.qbinom
+-/
 noncomputable def qBinomial (n k : ℕ) (q : R) : R :=
   if k ≤ n then
     ∑ f ∈ monotoneFunctions k (n - k), q ^ (∑ i, (f i).val)
@@ -254,7 +263,8 @@ noncomputable def qBinomialPoly (n k : ℕ) : ℤ[X] :=
 
 This is the definition, restated for clarity.
 
-See Proposition 11.2.1(a) in the source. -/
+See Proposition 11.2.1(a) in the source. @statement_id stmt-src-prop.pars.qbinom.alt-defs
+-/
 theorem qBinomial_eq_sum_increasing_tuples (n k : ℕ) (hk : k ≤ n) (q : R) :
     qBinomial n k q = ∑ f ∈ monotoneFunctions k (n - k), q ^ (∑ i, (f i).val) := by
   simp only [qBinomial, if_pos hk]
@@ -392,7 +402,8 @@ This follows from the classical bijection between monotone functions and partiti
 - Forward: f ↦ partition whose parts are the nonzero values of f
 - Backward: μ ↦ monotone function obtained by padding μ.parts to k values and sorting
 
-This is equivalent to the stars-and-bars / lattice path correspondence. -/
+This is equivalent to the stars-and-bars / lattice path correspondence. @statement_id stmt-src-lem.pars.qbinom.monotone-partition-bij
+-/
 lemma card_monotoneFunctions_sum_eq (k m s : ℕ) (_hs : s ≤ k * m) :
     ((monotoneFunctions k m).filter fun f => ∑ i, (f i).val = s).card =
     (partitionsInBox s k m).card := by
@@ -487,7 +498,8 @@ definition over ℤ, when k > n, n - k < 0, so no partition has largest part ≤
 But in Lean with ℕ subtraction, n - k = 0 when k > n, and the empty partition
 vacuously satisfies "all parts ≤ 0".
 
-See Definition 11.2.1(a) in the source. -/
+See Definition 11.2.1(a) in the source. @statement_id stmt-src-lem.pars.qbinom.partition-gf
+-/
 theorem qBinomial_eq_partition_gf (n k : ℕ) (hk : k ≤ n) (q : R) :
     qBinomial n k q = ∑ m ∈ range (k * (n - k) + 1),
       (partitionsInBox m k (n - k)).card • q ^ m := by
@@ -614,7 +626,8 @@ private theorem card_monotoneFunctions_eq_choose' (k m : ℕ) :
 
 /-- At q = 1, the q-binomial coefficient equals the ordinary binomial coefficient.
 
-See Proposition 11.2.1(c) in the source. -/
+See Proposition 11.2.1(c) in the source. @statement_id stmt-src-prop.pars.qbinom.alt-defs
+-/
 @[simp]
 theorem qBinomial_one_eq_binomial (n k : ℕ) : qBinomial n k (1 : R) = Nat.choose n k := by
   by_cases hk : k ≤ n
@@ -631,14 +644,16 @@ theorem qBinomial_one_eq_binomial (n k : ℕ) : qBinomial n k (1 : R) = Nat.choo
 
 /-- The q-binomial coefficient is zero when k > n.
 
-See Proposition 11.2.2 in the source. -/
+See Proposition 11.2.2 in the source. @statement_id stmt-src-prop.pars.qbinom.0
+-/
 @[simp]
 theorem qBinomial_zero_of_lt (n k : ℕ) (hk : n < k) (q : R) : qBinomial n k q = 0 := by
   simp [qBinomial, Nat.not_le.mpr hk]
 
 /-- `⟦n;0⟧_q = 1` for all n.
 
-See Proposition 11.2.3 in the source. -/
+See Proposition 11.2.3 in the source. @statement_id stmt-src-prop.pars.qbinom.n0
+-/
 @[simp]
 theorem qBinomial_n_zero (n : ℕ) (q : R) : qBinomial n 0 q = 1 := by
   simp only [qBinomial, Nat.zero_le, ↓reduceIte, Nat.sub_zero]
@@ -653,7 +668,8 @@ theorem qBinomial_n_zero (n : ℕ) (q : R) : qBinomial n 0 q = 1 := by
 
 /-- `⟦n;n⟧_q = 1` for all n.
 
-See Proposition 11.2.3 in the source. -/
+See Proposition 11.2.3 in the source. @statement_id stmt-src-prop.pars.qbinom.n0
+-/
 @[simp]
 theorem qBinomial_n_n (n : ℕ) (q : R) : qBinomial n n q = 1 := by
   unfold qBinomial
@@ -687,7 +703,8 @@ when `k = 0` due to saturating subtraction. This would make the RHS equal to
 
 See Theorem 11.2.4(a) in the source. The source handles k ∈ ℤ with the convention that
 (n choose k)_q = 0 for negative k, and explicitly notes that when k = 0, the identity
-reduces to 1 = q^(n-k) * 0 + 1. -/
+reduces to 1 = q^(n-k) * 0 + 1. @statement_id stmt-src-thm.pars.qbinom.rec
+-/
 theorem qBinomial_rec_left (n : ℕ) (hn : 0 < n) (k : ℕ) (hk : 0 < k) (q : R) :
     qBinomial n k q = q ^ (n - k) * qBinomial (n - 1) (k - 1) q + qBinomial (n - 1) k q := by
   by_cases hkn : k ≤ n
@@ -946,6 +963,7 @@ private lemma count_ge_complement (m v : ℕ) (hv : v ≤ m) :
       · intro ⟨a, ha⟩; simp only [Fin.ext_iff] at ha; omega
     rw [h_eq, Finset.card_map, Finset.card_univ, Fintype.card_fin]
 
+/-- @statement_id stmt-src-lem.pars.qbinom.transpose-monotone-involutive -/
 lemma transposeMonotone_involutive (k m : ℕ) (f : Fin k → Fin (m + 1)) (hf : Monotone f) :
     transposeMonotone m k (transposeMonotone k m f) = f := by
   funext i
@@ -980,6 +998,7 @@ lemma transposeMonotone_involutive (k m : ℕ) (f : Fin k → Fin (m + 1)) (hf :
   rw [Fin.ext_iff]
   exact count_ge_complement m (f i).val hfi
 
+/-- @statement_id stmt-src-lem.pars.qbinom.transpose-sum-preserved -/
 lemma sum_transposeMonotone (k m : ℕ) (f : Fin k → Fin (m + 1)) :
     ∑ j : Fin m, (transposeMonotone k m f j).val = ∑ i : Fin k, (f i).val := by
   simp only [transposeMonotone]
@@ -1036,7 +1055,8 @@ when `k = 0` due to saturating subtraction. This would make the RHS equal to
 `qBinomial n 0 q = 1`.
 
 See Theorem 11.2.4(b) in the source. The source handles k ∈ ℤ with the convention that
-(n choose k)_q = 0 for negative k. -/
+(n choose k)_q = 0 for negative k. @statement_id stmt-src-thm.pars.qbinom.rec
+-/
 theorem qBinomial_rec_right (n : ℕ) (hn : 0 < n) (k : ℕ) (hk : 0 < k) (q : R) :
     qBinomial n k q = qBinomial (n - 1) (k - 1) q + q ^ k * qBinomial (n - 1) k q := by
   -- Use symmetry: qBinomial n k = qBinomial n (n-k)
@@ -1124,7 +1144,8 @@ Also known as Theorem 11.2.5(a) in the section numbering.
 
 The identity holds over any commutative ring without requiring any divisibility conditions.
 This is the "polynomial form" that avoids fractions, making it easier to substitute values
-for q without worrying about whether denominators are invertible. -/
+for q without worrying about whether denominators are invertible. @statement_id stmt-src-thm.pars.qbinom.quot1
+-/
 theorem qBinomial_quot_formula {R : Type*} [CommRing R] (n k : ℕ) (hk : k ≤ n) (q : R) :
     (∏ i ∈ range k, (1 - q ^ (i + 1))) * qBinomial n k q =
     ∏ i ∈ range k, (1 - q ^ (n - i)) := by
@@ -1198,7 +1219,8 @@ in the denominator are nonzero.
 
 Note: Part (b) is the more intuitive statement showing the q-binomial as a ratio of
 products, but part (a) (`qBinomial_quot_formula`) is easier to work with when substituting
-values for q since it has no denominators. -/
+values for q since it has no denominators. @statement_id stmt-src-thm.pars.qbinom.quot1
+-/
 theorem qBinomial_eq_prod_quot {R : Type*} [Field R] (n k : ℕ) (hk : k ≤ n)
     (q : R) (hq : ∀ i ∈ range k, q ^ (i + 1) ≠ 1) :
     qBinomial n k q = ∏ i ∈ range k, (1 - q ^ (n - i)) / (1 - q ^ (i + 1)) := by
@@ -1217,7 +1239,8 @@ theorem qBinomial_eq_prod_quot {R : Type*} [Field R] (n k : ℕ) (hk : k ≤ n)
 /-- q-binomial coefficient in terms of q-integers (falling factorial form):
 `⟦n;k⟧_q = [n]_q * [n-1]_q * ... * [n-k+1]_q / [k]_q!`
 
-See Theorem 11.2.6 in the source. -/
+See Theorem 11.2.6 in the source. @statement_id stmt-src-lem.pars.qbinom.qint-prod-quot
+-/
 theorem qBinomial_eq_qInt_prod_quot {R : Type*} [Field R] (n k : ℕ) (hk : k ≤ n)
     (q : R) (hq : ∀ i ∈ range k, q ^ (i + 1) ≠ 1) :
     qBinomial n k q = (∏ i ∈ range k, qInt (n - i) q) / qFactorial k q := by
@@ -1269,7 +1292,8 @@ theorem qBinomial_eq_qInt_prod_quot {R : Type*} [Field R] (n k : ℕ) (hk : k �
 `⟦n;k⟧_q = [n]_q! / ([k]_q! * [n-k]_q!)`
 
 See Theorem 11.2.6 in the source.
-This is also Theorem thm.pars.qbinom.quot2 from the text. -/
+This is also Theorem thm.pars.qbinom.quot2 from the text. @statement_id stmt-src-thm.pars.qbinom.quot2
+-/
 theorem qBinomial_eq_qFactorial_quot {R : Type*} [Field R] (n k : ℕ) (hk : k ≤ n)
     (q : R) (hq : ∀ i ∈ range n, q ^ (i + 1) ≠ 1) :
     qBinomial n k q = qFactorial n q / (qFactorial k q * qFactorial (n - k) q) := by
@@ -1295,7 +1319,8 @@ theorem qBinomial_eq_qFactorial_quot {R : Type*} [Field R] (n k : ℕ) (hk : k �
 
 /-- Symmetry of q-binomial coefficients: `⟦n;k⟧_q = ⟦n;n-k⟧_q`.
 
-See Proposition 11.2.7 in the source. -/
+See Proposition 11.2.7 in the source. @statement_id stmt-src-prop.pars.qbinom.symm
+-/
 theorem qBinomial_symm (n k : ℕ) (hk : k ≤ n) (q : R) :
     qBinomial n k q = qBinomial n (n - k) q := by
   have hnk : n - k ≤ n := Nat.sub_le n k
@@ -1378,7 +1403,8 @@ which is the binomial coefficient `(k + ℓ) choose k`.
 This is a consequence of the bijection between such partitions and lattice paths
 from (0,0) to (ℓ,k) using east and north steps.
 
-See discussion before Proposition 11.1.1 in the source. -/
+See discussion before Proposition 11.1.1 in the source. @statement_id stmt-src-lem.pars.qbinom.monotone-count-choose
+-/
 theorem card_monotoneFunctions_eq_choose (k ℓ : ℕ) :
     (monotoneFunctions k ℓ).card = Nat.choose (k + ℓ) k := by
   -- monotoneFunctions k ℓ is a Finset of functions Fin k → Fin (ℓ + 1) that are monotone
@@ -1401,7 +1427,8 @@ equals the binomial coefficient `(k + ℓ - 2) choose (k - 1)`.
 This counts lattice paths from (0,0) to (ℓ,k) that start with an east step
 and end with a north step.
 
-See Proposition 11.1.1 in the source. -/
+See Proposition 11.1.1 in the source. @statement_id stmt-src-prop.pars.qbinom.intro-count-binom-2
+-/
 theorem card_partitions_with_parts_and_largest (k ℓ : ℕ) (hk : 0 < k) (hℓ : 0 < ℓ) :
     (monotoneFunctions (k - 1) (ℓ - 1)).card = Nat.choose (k + ℓ - 2) (k - 1) := by
   rw [card_monotoneFunctions_eq_choose]

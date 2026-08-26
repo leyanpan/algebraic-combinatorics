@@ -65,7 +65,8 @@ variable {α : Type*} [Fintype α]
 the other by repeated application of the permutation. This is the equivalence from
 Proposition \ref{prop.perm.cycs.same}.
 
-The forward direction uses that for finite types, zpow can be replaced by pow. -/
+The forward direction uses that for finite types, zpow can be replaced by pow. @statement_id stmt-src-prop.perm.cycs.same
+-/
 theorem sameCycle_iff_exists_pow (f : Perm α) (i j : α) :
     f.SameCycle i j ↔ ∃ p : ℕ, (f ^ p) i = j := by
   constructor
@@ -113,7 +114,8 @@ variable {α : Type*} [DecidableEq α] [Fintype α]
 This counts all cycles in the DCD as defined in the source text.
 
 Note: Mathlib's `cycleFactorsFinset` only includes cycles of length ≥ 2.
-To get the total count including 1-cycles, we add the number of fixed points. -/
+To get the total count including 1-cycles, we add the number of fixed points. @statement_id stmt-src-lem.numcyclestotal
+-/
 def numCyclesTotal (σ : Perm α) : ℕ :=
   σ.cycleFactorsFinset.card + (Fintype.card α - σ.support.card)
 
@@ -131,7 +133,8 @@ This is a natural base case for reasoning about cycle decompositions. -/
   simp [numCycles]
 
 /-- Existence of DCD: Every permutation is a product of disjoint cycles.
-This is Theorem \ref{thm.perm.dcd.main} (a). -/
+This is Theorem \ref{thm.perm.dcd.main} (a). @statement_id stmt-src-thm.perm.dcd.main
+-/
 theorem exists_dcd (σ : Perm α) :
     ∃ (cycs : Finset (Perm α)),
       (∀ c ∈ cycs, c.IsCycle) ∧
@@ -151,7 +154,8 @@ That result is essentially trivial: any DCD of σ yields the same multiset of cy
 (the cycle type), and different DCDs are just reorderings/rotations of the same cycles.
 
 This theorem is a deeper result about when two *different* permutations have the same
-cycle structure. -/
+cycle structure. @statement_id stmt-src-lem.cycletype_eq_iff_isconj
+-/
 theorem cycleType_eq_iff_isConj (σ τ : Perm α) :
     σ.cycleType = τ.cycleType ↔ IsConj σ τ :=
   isConj_iff_cycleType_eq.symm
@@ -162,7 +166,8 @@ uniquely determined up to swapping and rotation, hence they have the same length
 
 In Mathlib's formalization, there is a canonical DCD (`cycleFactorsFinset`), so this is trivial:
 any DCD must produce the same set of cycles as `cycleFactorsFinset`, just possibly listed
-in a different order or with different rotations. -/
+in a different order or with different rotations. @statement_id stmt-src-thm.perm.dcd.main
+-/
 theorem dcd_unique_cycleType (σ : Perm α) :
     ∀ (cycs : Finset (Perm α)),
       (∀ c ∈ cycs, c.IsCycle) →
@@ -219,7 +224,8 @@ Note: This only includes cycles of length ≥ 2 (non-trivial cycles).
 Fixed points (1-cycles) are not included, following Mathlib's convention.
 See `numCyclesTotal` for the total count including 1-cycles.
 
-(Definition \ref{def.perm.cycs.cycs} (a)) -/
+(Definition \ref{def.perm.cycs.cycs} (a)) @statement_id stmt-src-def.perm.cycs.cycs
+-/
 def cycles (σ : Perm α) : Finset (Perm α) := σ.cycleFactorsFinset
 
 /-- The identity permutation has no cycles (of length ≥ 2).
@@ -239,7 +245,8 @@ theorem mem_cycles_iff (σ : Perm α) (c : Perm α) :
 theorem cycles_mem_isCycle (σ : Perm α) (c : Perm α) (hc : c ∈ cycles σ) : c.IsCycle :=
   (mem_cycles_iff σ c).mp hc |>.1
 
-/-- The cycles of σ are pairwise disjoint (their supports are disjoint). -/
+/-- The cycles of σ are pairwise disjoint (their supports are disjoint). @statement_id stmt-src-lem.cycles_pairwise_disjoint
+-/
 theorem cycles_pairwise_disjoint (σ : Perm α) :
     (cycles σ : Set (Perm α)).Pairwise Disjoint :=
   cycleFactorsFinset_pairwise_disjoint σ
@@ -249,7 +256,8 @@ theorem cycles_mem_commute (σ : Perm α) :
     (cycles σ : Set (Perm α)).Pairwise Commute :=
   cycleFactorsFinset_mem_commute σ
 
-/-- The product of cycles equals σ. -/
+/-- The product of cycles equals σ. @statement_id stmt-src-lem.cycles_noncommprod_eq
+-/
 theorem cycles_noncommProd_eq (σ : Perm α) :
     (cycles σ).noncommProd id (cycles_mem_commute σ) = σ :=
   cycleFactorsFinset_noncommProd σ
@@ -263,14 +271,16 @@ theorem cycles_support_card_ge_two (σ : Perm α) (c : Perm α) (hc : c ∈ cycl
 /-- The cardinality of `cycles σ` equals the number of non-trivial cycles. -/
 theorem cycles_card_eq_numCycles (σ : Perm α) : (cycles σ).card = numCycles σ := rfl
 
-/-- The cycle of σ containing x (when x is not a fixed point) is in `cycles σ`. -/
+/-- The cycle of σ containing x (when x is not a fixed point) is in `cycles σ`. @statement_id stmt-src-lem.cycleof_mem_cycles
+-/
 theorem cycleOf_mem_cycles (σ : Perm α) (x : α) (hx : x ∈ σ.support) :
     σ.cycleOf x ∈ cycles σ := by
   rwa [cycles_eq_cycleFactorsFinset, cycleOf_mem_cycleFactorsFinset_iff]
 
 /-- The cycle lengths partition of σ is the partition of |X| obtained by
 listing the lengths of cycles in weakly decreasing order.
-(Definition \ref{def.perm.cycs.cycs} (b)) -/
+(Definition \ref{def.perm.cycs.cycs} (b)) @statement_id stmt-src-def.perm.cycs.cycs
+-/
 def cycleLengthsPartition (σ : Perm α) : (Fintype.card α).Partition := σ.partition
 
 /-- The cycle lengths partition of the identity permutation consists of all 1s.
@@ -280,7 +290,8 @@ theorem cycleLengthsPartition_one_parts :
     (cycleLengthsPartition (1 : Perm α)).parts = Multiset.replicate (Fintype.card α) 1 := by
   simp [cycleLengthsPartition, Equiv.Perm.parts_partition]
 
-/-- The cycle type as a multiset of cycle lengths. -/
+/-- The cycle type as a multiset of cycle lengths. @statement_id stmt-src-def.cyclelengths
+-/
 def cycleLengths (σ : Perm α) : Multiset ℕ := σ.cycleType
 
 /-- The identity permutation has empty cycle lengths.
@@ -292,7 +303,8 @@ theorem cycleLengths_one : cycleLengths (1 : Perm α) = 0 := by
 /-- The cycle lengths equal the cycle type from Mathlib. -/
 theorem cycleLengths_eq_cycleType (σ : Perm α) : cycleLengths σ = σ.cycleType := rfl
 
-/-- The sum of cycle lengths equals the size of the support. -/
+/-- The sum of cycle lengths equals the size of the support. @statement_id stmt-src-lem.cyclelengths_sum
+-/
 theorem cycleLengths_sum_eq_support_card (σ : Perm α) :
     (cycleLengths σ).sum = σ.support.card :=
   sum_cycleType σ
@@ -303,7 +315,8 @@ theorem cycleLengths_card_eq_numCycles (σ : Perm α) :
   simp only [cycleLengths, cycleType_def, Multiset.card_map, ← Finset.card_def]
   rfl
 
-/-- Every element of the cycle lengths multiset is at least 2. -/
+/-- Every element of the cycle lengths multiset is at least 2. @statement_id stmt-src-lem.cyclelengths_mem_ge_two
+-/
 theorem cycleLengths_mem_ge_two (σ : Perm α) (m : ℕ) (hm : m ∈ cycleLengths σ) :
     2 ≤ m :=
   two_le_of_mem_cycleType hm
@@ -314,7 +327,8 @@ theorem cycleLengthsPartition_parts (σ : Perm α) :
       (Fintype.card α - σ.support.card) 1 := by
   simp only [cycleLengthsPartition, Equiv.Perm.partition]
 
-/-- The cycle lengths partition sums to |X|. -/
+/-- The cycle lengths partition sums to |X|. @statement_id stmt-src-lem.cyclelengthspartition_sum
+-/
 theorem cycleLengthsPartition_sum (σ : Perm α) :
     (cycleLengthsPartition σ).parts.sum = Fintype.card α := by
   exact (cycleLengthsPartition σ).parts_sum
@@ -328,13 +342,15 @@ and cyclically rotated lists give the same permutation via `List.formPerm_rotate
 
 omit [Fintype α] in
 /-- Cyclic rotation of a list gives the same cycle permutation.
-This formalizes the textbook statement that (3, 1, 4) and (1, 4, 3) are the same cycle. -/
+This formalizes the textbook statement that (3, 1, 4) and (1, 4, 3) are the same cycle. @statement_id stmt-src-lem.cyc_rotate_eq
+-/
 theorem cyc_rotate_eq {l : List α} (hl : l.Nodup) (k : ℕ) :
     l.formPerm = (l.rotate k).formPerm :=
   (List.formPerm_rotate l hl k).symm
 
 omit [Fintype α] in
-/-- Two lists that are cyclic rotations of each other give the same cycle. -/
+/-- Two lists that are cyclic rotations of each other give the same cycle. @statement_id stmt-src-lem.cyc_eq_of_isrotated
+-/
 theorem cyc_eq_of_isRotated {l₁ l₂ : List α} (h : l₁.IsRotated l₂) (hl : l₁.Nodup) :
     l₁.formPerm = l₂.formPerm := by
   obtain ⟨k, hk⟩ := h
@@ -350,7 +366,8 @@ are not contained in any cycle's support. For fixed points `i = j`, we have
 
 This is an auxiliary characterization connecting cycle membership (in terms of
 `cycleFactorsFinset`) to the `SameCycle` relation. The main characterization of
-Proposition \ref{prop.perm.cycs.same} is `sameCycle_iff_exists_pow` above. -/
+Proposition \ref{prop.perm.cycs.same} is `sameCycle_iff_exists_pow` above. @statement_id stmt-src-lem.mem_same_cycle_iff
+-/
 theorem mem_same_cycle_iff (σ : Perm α) (i j : α) (hi : i ∈ σ.support) :
     (∃ c ∈ cycles σ, i ∈ c.support ∧ j ∈ c.support) ↔ σ.SameCycle i j := by
   constructor
@@ -413,7 +430,8 @@ We prove this using Mathlib's `sign_of_cycleType` which gives:
   `sign f = (-1)^(cycleType.sum + cycleType.card)`
 
 The key insight is that for a permutation with k total cycles (including 1-cycles),
-we have n - k = Σ(m_i - 1) where m_i are the cycle lengths. -/
+we have n - k = Σ(m_i - 1) where m_i are the cycle lengths. @statement_id stmt-src-prop.perm.cycs.sign
+-/
 theorem sign_eq_neg_one_pow_card_sub_numCycles (σ : Perm (Fin n)) :
     Equiv.Perm.sign σ = (-1 : ℤˣ) ^ (n - numCyclesTotal σ) := by
   rw [numCyclesTotal, sign_of_cycleType]
@@ -441,7 +459,8 @@ theorem sign_eq_neg_one_pow_card_sub_numCycles (σ : Perm (Fin n)) :
   conv_lhs => rw [Int.units_pow_eq_pow_mod_two, h_parity, ← Int.units_pow_eq_pow_mod_two]
 
 /-- The sign of a permutation can also be expressed as `(-1)^(Σ(m_i - 1))` where
-m_i are the cycle lengths (of length ≥ 2). -/
+m_i are the cycle lengths (of length ≥ 2). @statement_id stmt-src-lem.sign_eq_neg_one_pow_sum_cycle_lengths_minus_one
+-/
 theorem sign_eq_neg_one_pow_sum_cycle_lengths_minus_one (σ : Perm (Fin n)) :
     Equiv.Perm.sign σ = (-1 : ℤˣ) ^ (σ.cycleType.sum - σ.cycleType.card) := by
   rw [sign_of_cycleType]
@@ -460,7 +479,8 @@ theorem sign_eq_neg_one_pow_sum_cycle_lengths_minus_one (σ : Perm (Fin n)) :
 
 /-- The sign of a k-cycle is `(-1)^(k-1)`.
 Note: Mathlib's `IsCycle.sign` gives `sign σ = -(-1)^(support.card)` which equals
-`(-1)^(support.card - 1)` since `-(-1)^n = (-1)^(n-1)` for n ≥ 1. -/
+`(-1)^(support.card - 1)` since `-(-1)^n = (-1)^(n-1)` for n ≥ 1. @statement_id stmt-src-lem.sign_cycle
+-/
 theorem sign_cycle (σ : Perm (Fin n)) (hσ : σ.IsCycle) :
     Equiv.Perm.sign σ = (-1 : ℤˣ) ^ (σ.support.card - 1) := by
   rw [hσ.sign]
@@ -495,12 +515,14 @@ We build the canonical DCD by:
 3. Sorting by decreasing first element
 -/
 
-/-- Get the minimum element of a cycle's support. -/
+/-- Get the minimum element of a cycle's support. @statement_id stmt-src-def.cycleminelem
+-/
 noncomputable def cycleMinElem (c : Perm α) (hc : c.IsCycle) : α :=
   c.support.min' hc.nonempty_support
 
 omit [Inhabited α] in
-/-- The minimum element is in the support. -/
+/-- The minimum element is in the support. @statement_id stmt-src-lem.cycleminelem_mem_support
+-/
 lemma cycleMinElem_mem_support (c : Perm α) (hc : c.IsCycle) :
     cycleMinElem c hc ∈ c.support := Finset.min'_mem _ _
 
@@ -510,7 +532,8 @@ lemma cycleMinElem_ne (c : Perm α) (hc : c.IsCycle) :
     c (cycleMinElem c hc) ≠ cycleMinElem c hc :=
   mem_support.mp (cycleMinElem_mem_support c hc)
 
-/-- Get the canonical list representation of a cycle starting from its minimum element. -/
+/-- Get the canonical list representation of a cycle starting from its minimum element. @statement_id stmt-src-def.cycletocanonicallist
+-/
 noncomputable def cycleToCanonicalList (c : Perm α) (hc : c.IsCycle) : List α :=
   toList c (cycleMinElem c hc)
 
@@ -537,7 +560,8 @@ lemma cycleToCanonicalList_head (c : Perm α) (hc : c.IsCycle) :
 
 
 omit [Inhabited α] in
-/-- The first element is minimal in the canonical list. -/
+/-- The first element is minimal in the canonical list. @statement_id stmt-src-lem.cycletocanonicallist_head_le
+-/
 lemma cycleToCanonicalList_head_le (c : Perm α) (hc : c.IsCycle) (x : α)
     (hx : x ∈ cycleToCanonicalList c hc) :
     (cycleToCanonicalList c hc).head (cycleToCanonicalList_ne_nil c hc) ≤ x := by
@@ -551,7 +575,8 @@ lemma cycleToCanonicalList_head_le (c : Perm α) (hc : c.IsCycle) (x : α)
 
 
 omit [Inhabited α] in
-/-- formPerm of the canonical list equals the cycle. -/
+/-- formPerm of the canonical list equals the cycle. @statement_id stmt-src-lem.cycletocanonicallist_formperm
+-/
 lemma cycleToCanonicalList_formPerm (c : Perm α) (hc : c.IsCycle) :
     (cycleToCanonicalList c hc).formPerm = c := by
   unfold cycleToCanonicalList
@@ -559,13 +584,15 @@ lemma cycleToCanonicalList_formPerm (c : Perm α) (hc : c.IsCycle) :
   exact hc.cycleOf_eq (cycleMinElem_ne c hc)
 
 omit [Inhabited α] in
-/-- The canonical list is nodup. -/
+/-- The canonical list is nodup. @statement_id stmt-src-lem.cycletocanonicallist_nodup
+-/
 lemma cycleToCanonicalList_nodup (c : Perm α) (hc : c.IsCycle) :
     (cycleToCanonicalList c hc).Nodup := Perm.nodup_toList c _
 
 
 omit [Inhabited α] in
-/-- Elements of the canonical list are exactly the support. -/
+/-- Elements of the canonical list are exactly the support. @statement_id stmt-src-lem.mem_cycletocanonicallist_iff
+-/
 lemma mem_cycleToCanonicalList_iff (c : Perm α) (hc : c.IsCycle) (x : α) :
     x ∈ cycleToCanonicalList c hc ↔ x ∈ c.support := by
   simp only [cycleToCanonicalList, Perm.mem_toList_iff]
@@ -579,7 +606,8 @@ lemma mem_cycleToCanonicalList_iff (c : Perm α) (hc : c.IsCycle) (x : α) :
 
 
 omit [Inhabited α] in
-/-- Canonical lists of disjoint cycles are List.Disjoint. -/
+/-- Canonical lists of disjoint cycles are List.Disjoint. @statement_id stmt-src-lem.cycletocanonicallist_disjoint
+-/
 lemma cycleToCanonicalList_disjoint {c d : Perm α} (hc : c.IsCycle) (hd : d.IsCycle)
     (h : Disjoint c d) :
     List.Disjoint (cycleToCanonicalList c hc) (cycleToCanonicalList d hd) := by
@@ -607,7 +635,8 @@ lemma cyclesList_pairwise_disjoint (σ : Perm α) (cyclesList : List (List α))
 
 
 omit [Inhabited α] in
-/-- The flatten of cyclesList is nodup. -/
+/-- The flatten of cyclesList is nodup. @statement_id stmt-src-lem.cycleslist_flatten_nodup
+-/
 lemma cyclesList_flatten_nodup (σ : Perm α) (cyclesList : List (List α))
     (hcl : cyclesList = σ.cycleFactorsFinset.toList.attach.map fun ⟨c, hc⟩ =>
         let hcycle := (mem_cycleFactorsFinset_iff.mp (Finset.mem_toList.mp hc)).1
@@ -624,7 +653,8 @@ lemma cyclesList_flatten_nodup (σ : Perm α) (cyclesList : List (List α))
 
 
 omit [Inhabited α] in
-/-- The flatten of cyclesList covers exactly σ.support. -/
+/-- The flatten of cyclesList covers exactly σ.support. @statement_id stmt-src-lem.cycleslist_flatten_eq_support
+-/
 lemma cyclesList_flatten_eq_support (σ : Perm α) (cyclesList : List (List α))
     (hcl : cyclesList = σ.cycleFactorsFinset.toList.attach.map fun ⟨c, hc⟩ =>
         let hcycle := (mem_cycleFactorsFinset_iff.mp (Finset.mem_toList.mp hc)).1
@@ -651,7 +681,8 @@ lemma cyclesList_flatten_eq_support (σ : Perm α) (cyclesList : List (List α))
 
 
 omit [Inhabited α] in
-/-- The product of formPerms of cyclesList equals σ. -/
+/-- The product of formPerms of cyclesList equals σ. @statement_id stmt-src-lem.dcdlisttoperm_cycleslist_eq
+-/
 lemma dcdListToPerm_cyclesList_eq (σ : Perm α) (cyclesList : List (List α))
     (hcl : cyclesList = σ.cycleFactorsFinset.toList.attach.map fun ⟨c, hc⟩ =>
         let hcycle := (mem_cycleFactorsFinset_iff.mp (Finset.mem_toList.mp hc)).1
@@ -715,7 +746,8 @@ lemma singleton_disjoint_cyclesList (σ : Perm α) (x : α) (hx : x ∉ σ.suppo
 
 /-- Convert a list of lists representing cycles to a permutation by taking the product
 of the cycle permutations. Each list `[a₁, a₂, ..., aₖ]` represents the k-cycle
-`cyc_{a₁, a₂, ..., aₖ}` that sends a₁ → a₂ → ... → aₖ → a₁. -/
+`cyc_{a₁, a₂, ..., aₖ}` that sends a₁ → a₂ → ... → aₖ → a₁. @statement_id stmt-src-def.dcdlisttoperm
+-/
 def dcdListToPerm (cycleReps : List (List α)) : Perm α :=
   (cycleReps.map List.formPerm).prod
 
@@ -1044,6 +1076,7 @@ private lemma heads_nodup_of_pairwise_disjoint {L : List (List α)}
     hpwd.forall (fun _ _ h => h.symm) hli hlj hne''
   exact hdisj hhead_i hhead_j
 
+/-- @statement_id stmt-src-thm.perm.dcd.main -/
 theorem canonicalDcd_exists_unique (σ : Perm α) :
     ∃! (cycleReps : List (List α)),
       -- Each list is nonempty

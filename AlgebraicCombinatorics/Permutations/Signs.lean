@@ -102,7 +102,8 @@ variable {n : ℕ}
 **Definition (def.perm.sign)**: The sign of σ ∈ Sₙ is defined as (-1)^ℓ(σ),
 where ℓ(σ) is the length (number of inversions) of σ.
 
-This theorem proves that Mathlib's `Equiv.Perm.sign` equals the textbook definition. -/
+This theorem proves that Mathlib's `Equiv.Perm.sign` equals the textbook definition. @statement_id stmt-src-def.perm.sign
+-/
 theorem sign_eq_neg_one_pow_invCount (σ : Perm (Fin n)) :
     sign σ = (-1 : ℤˣ) ^ AlgebraicCombinatorics.Perm.invCount σ := by
   rw [σ.sign_eq_prod_prod_Ioi]
@@ -147,7 +148,8 @@ theorem sign_eq_neg_one_pow_invCount (σ : Perm (Fin n)) :
   exact equiv_card
 
 /-- Corollary: sign as an integer equals (-1)^invCount.
-**Definition (def.perm.sign)** -/
+**Definition (def.perm.sign)** @statement_id stmt-src-def.perm.sign
+-/
 theorem sign_coe_eq_neg_one_pow_invCount (σ : Perm (Fin n)) :
     (sign σ : ℤ) = (-1 : ℤ) ^ AlgebraicCombinatorics.Perm.invCount σ := by
   rw [sign_eq_neg_one_pow_invCount]
@@ -156,21 +158,25 @@ theorem sign_coe_eq_neg_one_pow_invCount (σ : Perm (Fin n)) :
 end SignDefinition
 
 /-- A permutation is **even** if its sign is 1 (equivalently, if its length is even).
-**Definition (def.perm.even-odd)** -/
+**Definition (def.perm.even-odd)** @statement_id stmt-src-def.perm.even-odd
+-/
 def IsEven (σ : Perm α) : Prop := sign σ = 1
 
 /-- A permutation is **odd** if its sign is -1 (equivalently, if its length is odd).
-**Definition (def.perm.even-odd)** -/
+**Definition (def.perm.even-odd)** @statement_id stmt-src-def.perm.even-odd
+-/
 def IsOdd (σ : Perm α) : Prop := sign σ = -1
 
 theorem isEven_iff_sign_eq_one {σ : Perm α} : σ.IsEven ↔ sign σ = 1 := Iff.rfl
 
 theorem isOdd_iff_sign_eq_neg_one {σ : Perm α} : σ.IsOdd ↔ sign σ = -1 := Iff.rfl
 
+/-- @statement_id stmt-src-lem.perm.iseven_iff_mem_alternatinggroup -/
 theorem isEven_iff_mem_alternatingGroup {σ : Perm α} :
     σ.IsEven ↔ σ ∈ alternatingGroup α :=
   mem_alternatingGroup.symm
 
+/-- @statement_id stmt-src-lem.perm.isodd_iff_not_mem_alternatinggroup -/
 theorem isOdd_iff_not_mem_alternatingGroup {σ : Perm α} :
     σ.IsOdd ↔ σ ∉ alternatingGroup α := by
   rw [isOdd_iff_sign_eq_neg_one, mem_alternatingGroup]
@@ -184,7 +190,8 @@ theorem isOdd_iff_not_mem_alternatingGroup {σ : Perm α} :
     · exact hsign
 
 /-- The identity permutation is even.
-This is a useful base case when reasoning about permutation parity. -/
+This is a useful base case when reasoning about permutation parity. @statement_id stmt-src-lem.perm.iseven_one
+-/
 @[simp]
 theorem isEven_one : IsEven (1 : Perm α) := by
   simp [IsEven]
@@ -196,18 +203,21 @@ theorem not_isOdd_one : ¬IsOdd (1 : Perm α) := by
 
 /-- A transposition (swap) is an odd permutation.
 This provides a cleaner interface when working with the `IsOdd` predicate
-rather than directly with sign values. -/
+rather than directly with sign values. @statement_id stmt-src-lem.perm.isodd_swap
+-/
 theorem isOdd_swap {x y : α} (hxy : x ≠ y) : IsOdd (swap x y) := by
   simp [IsOdd, sign_swap hxy]
 
 /-- Every permutation is either even or odd.
-This follows from the fact that sign takes values in {1, -1}. -/
+This follows from the fact that sign takes values in {1, -1}. @statement_id stmt-src-lem.perm.iseven_or_isodd
+-/
 theorem isEven_or_isOdd (σ : Perm α) : σ.IsEven ∨ σ.IsOdd := by
   rcases Int.units_eq_one_or (sign σ) with h | h
   · left; exact h
   · right; exact h
 
-/-- A permutation cannot be both even and odd. -/
+/-- A permutation cannot be both even and odd. @statement_id stmt-src-lem.perm.not_iseven_and_isodd
+-/
 theorem not_isEven_and_isOdd (σ : Perm α) : ¬(σ.IsEven ∧ σ.IsOdd) := by
   rintro ⟨heven, hodd⟩
   rw [isEven_iff_sign_eq_one] at heven
@@ -218,11 +228,13 @@ theorem not_isEven_and_isOdd (σ : Perm α) : ¬(σ.IsEven ∧ σ.IsOdd) := by
 /-! ### Properties of the sign (Proposition prop.perm.sign.props) -/
 
 /-- **(a)** The sign of the identity permutation is 1.
-**Proposition (prop.perm.sign.props)(a)** -/
+**Proposition (prop.perm.sign.props)(a)** @statement_id stmt-src-prop.perm.sign.props
+-/
 theorem sign_id : sign (1 : Perm α) = 1 := sign_one
 
 /-- **(b)** The sign of a transposition is -1.
-**Proposition (prop.perm.sign.props)(b)** -/
+**Proposition (prop.perm.sign.props)(b)** @statement_id stmt-src-prop.perm.sign.props
+-/
 theorem sign_transposition {x y : α} (hxy : x ≠ y) : sign (swap x y) = -1 :=
   sign_swap hxy
 
@@ -230,18 +242,21 @@ theorem sign_transposition {x y : α} (hxy : x ≠ y) : sign (swap x y) = -1 :=
 **Proposition (prop.perm.sign.props)(c)**
 
 This follows from the fact that a k-cycle has support of size k and
-sign(σ) = -(-1)^|support(σ)| for cycles. -/
+sign(σ) = -(-1)^|support(σ)| for cycles. @statement_id stmt-src-prop.perm.sign.props
+-/
 theorem sign_isCycle {σ : Perm α} (hσ : σ.IsCycle) :
     sign σ = -(-1 : ℤˣ) ^ σ.support.card :=
   hσ.sign
 
 /-- **(d)** The sign is multiplicative: sign(στ) = sign(σ) · sign(τ).
-**Proposition (prop.perm.sign.props)(d)** -/
+**Proposition (prop.perm.sign.props)(d)** @statement_id stmt-src-prop.perm.sign.props
+-/
 theorem sign_mul' (σ τ : Perm α) : sign (σ * τ) = sign σ * sign τ :=
   sign_mul σ τ
 
 /-- **(e)** The sign of a product equals the product of signs.
-**Proposition (prop.perm.sign.props)(e)** -/
+**Proposition (prop.perm.sign.props)(e)** @statement_id stmt-src-prop.perm.sign.props
+-/
 theorem sign_prod_list (l : List (Perm α)) :
     sign l.prod = (l.map sign).prod := by
   induction l with
@@ -249,7 +264,8 @@ theorem sign_prod_list (l : List (Perm α)) :
   | cons σ l ih => simp [sign_mul, ih]
 
 /-- **(f)** The sign of the inverse equals the sign of the permutation.
-**Proposition (prop.perm.sign.props)(f)** -/
+**Proposition (prop.perm.sign.props)(f)** @statement_id stmt-src-prop.perm.sign.props
+-/
 theorem sign_inv' (σ : Perm α) : sign σ⁻¹ = sign σ :=
   sign_inv σ
 
@@ -267,6 +283,7 @@ theorem sign_inv' (σ : Perm α) : sign σ⁻¹ = sign σ :=
 
 For any elements x₁, ..., xₙ of a commutative ring and σ ∈ Sₙ:
 ∏_{i < j} (x_{σ(i)} - x_{σ(j)}) = sign(σ) · ∏_{i < j} (xᵢ - xⱼ)
+@statement_id stmt-src-prop.perm.sign.props
 -/
 theorem prod_diff_comp_perm {n : ℕ} {R : Type*} [CommRing R] (σ : Perm (Fin n)) (x : Fin n → R) :
     ∏ i, ∏ j ∈ Ioi i, (x (σ i) - x (σ j)) = sign σ * ∏ i, ∏ j ∈ Ioi i, (x i - x j) := by
@@ -278,7 +295,8 @@ theorem prod_diff_comp_perm {n : ℕ} {R : Type*} [CommRing R] (σ : Perm (Fin n
 
 For σ ∈ Sₙ: sign(σ) = ∏_{1 ≤ i < j ≤ n} (σ(i) - σ(j)) / (i - j)
 
-We state this in a slightly different but equivalent form using the indicator function. -/
+We state this in a slightly different but equivalent form using the indicator function. @statement_id stmt-src-prop.perm.sign.props
+-/
 theorem sign_eq_prod_pairs {n : ℕ} (σ : Perm (Fin n)) :
     sign σ = ∏ i, ∏ j ∈ Ioi i, (if σ i < σ j then 1 else -1) :=
   σ.sign_eq_prod_prod_Ioi
@@ -292,7 +310,8 @@ This is captured by `Equiv.Perm.sign : Perm α →* ℤˣ` being a `MonoidHom`.
 /-- **Corollary (cor.perm.sign.hom)**
 The sign is a group homomorphism from Sₙ to {1, -1}.
 
-In Mathlib, this is expressed by `Equiv.Perm.sign` being a `MonoidHom`. -/
+In Mathlib, this is expressed by `Equiv.Perm.sign` being a `MonoidHom`. @statement_id stmt-src-cor.perm.sign.hom
+-/
 theorem sign_hom_mul (σ τ : Perm α) : sign (σ * τ) = sign σ * sign τ :=
   sign_mul σ τ
 
@@ -303,7 +322,8 @@ The set of even permutations forms a normal subgroup of Sₙ, called the alterna
 
 /-- **Corollary (cor.perm.altgp)**
 The set of all even permutations in Sₙ is a normal subgroup.
-This is the alternating group Aₙ. -/
+This is the alternating group Aₙ. @statement_id stmt-src-cor.perm.altgp
+-/
 theorem alternatingGroup_isNormal : (alternatingGroup α).Normal :=
   alternatingGroup.normal
 
@@ -315,13 +335,15 @@ and both equal n!/2.
 
 /-- **Corollary (cor.perm.num-even)**
 The number of even permutations in Sₙ equals n!/2 for n ≥ 2.
-More precisely, |Aₙ| = (card α)!/2. -/
+More precisely, |Aₙ| = (card α)!/2. @statement_id stmt-src-cor.perm.num-even
+-/
 theorem card_even_perms [Nontrivial α] :
     Fintype.card (alternatingGroup α) = (Fintype.card α).factorial / 2 :=
   card_alternatingGroup
 
 /-- The number of odd permutations equals the number of even permutations.
-This follows from the bijection σ ↦ σ * swap(a,b) for any distinct a, b. -/
+This follows from the bijection σ ↦ σ * swap(a,b) for any distinct a, b. @statement_id stmt-src-cor.perm.num-even
+-/
 theorem card_odd_eq_card_even [Nontrivial α] :
     (univ.filter fun σ : Perm α => sign σ = -1).card =
     (univ.filter fun σ : Perm α => sign σ = 1).card := by
@@ -348,6 +370,7 @@ theorem card_odd_eq_card_even [Nontrivial α] :
 The sum of signs over all permutations is 0 for n ≥ 2.
 
 ∑_{σ ∈ Sₙ} sign(σ) = 0 for n ≥ 2
+@statement_id stmt-src-lem.perm.sum-sign-eq-zero
 -/
 theorem sum_sign_eq_zero [Nontrivial α] :
     ∑ σ : Perm α, (sign σ : ℤ) = 0 := by
@@ -401,18 +424,21 @@ This is independent of the choice of φ.
 /-- **Proposition (prop.perm.sign.X)(a)**
 The sign of a permutation of a finite set is independent of the chosen bijection.
 
-For any bijections φ₁, φ₂ : X → [n], we have sign_{φ₁}(σ) = sign_{φ₂}(σ). -/
+For any bijections φ₁, φ₂ : X → [n], we have sign_{φ₁}(σ) = sign_{φ₂}(σ). @statement_id stmt-src-prop.perm.sign.x
+-/
 theorem sign_conj_eq {β : Type*} [DecidableEq β] [Fintype β]
     (σ : Perm α) (e : α ≃ β) :
     sign ((e.symm.trans σ).trans e) = sign σ :=
   sign_symm_trans_trans σ e
 
 /-- **Proposition (prop.perm.sign.X)(b)**
-The identity permutation of any finite set has sign 1. -/
+The identity permutation of any finite set has sign 1. @statement_id stmt-src-prop.perm.sign.x
+-/
 theorem sign_id_finiteSet : sign (1 : Perm α) = 1 := sign_one
 
 /-- **Proposition (prop.perm.sign.X)(c)**
-The sign is multiplicative for permutations of any finite set. -/
+The sign is multiplicative for permutations of any finite set. @statement_id stmt-src-prop.perm.sign.x
+-/
 theorem sign_mul_finiteSet (σ τ : Perm α) :
     sign (σ * τ) = sign σ * sign τ := sign_mul σ τ
 

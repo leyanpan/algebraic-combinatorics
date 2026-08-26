@@ -128,24 +128,28 @@ namespace IversonBracket
     - 1 if `P` is true
     - 0 if `P` is false
 
-    In Mathlib, this is `if P then 1 else 0` or `(decide P).toNat` for naturals. -/
+    In Mathlib, this is `if P then 1 else 0` or `(decide P).toNat` for naturals. @statement_id stmt-src-def.pars.iverson
+-/
 abbrev iverson (P : Prop) [Decidable P] {α : Type*} [Zero α] [One α] : α :=
   if P then 1 else 0
 
 /-- Notation `⦃P⦄` for the Iverson bracket. -/
 scoped notation "⦃" P "⦄" => iverson P
 
-/-- The Iverson bracket of a true proposition is 1. -/
+/-- The Iverson bracket of a true proposition is 1. @statement_id stmt-src-def.pars.iverson
+-/
 @[simp]
 theorem iverson_true {α : Type*} [Zero α] [One α] {P : Prop} [Decidable P] (h : P) :
     (⦃P⦄ : α) = 1 := if_pos h
 
-/-- The Iverson bracket of a false proposition is 0. -/
+/-- The Iverson bracket of a false proposition is 0. @statement_id stmt-src-def.pars.iverson
+-/
 @[simp]
 theorem iverson_false {α : Type*} [Zero α] [One α] {P : Prop} [Decidable P] (h : ¬P) :
     (⦃P⦄ : α) = 0 := if_neg h
 
-/-- The Iverson bracket equals 1 iff the proposition is true. -/
+/-- The Iverson bracket equals 1 iff the proposition is true. @statement_id stmt-src-lem.pars.iverson-eq-one-iff
+-/
 theorem iverson_eq_one_iff {α : Type*} [Zero α] [One α] [NeZero (1 : α)]
     {P : Prop} [Decidable P] : (⦃P⦄ : α) = 1 ↔ P := by
   constructor
@@ -155,7 +159,8 @@ theorem iverson_eq_one_iff {α : Type*} [Zero α] [One α] [NeZero (1 : α)]
   · intro h
     simp [h]
 
-/-- The Iverson bracket equals 0 iff the proposition is false (assuming 1 ≠ 0). -/
+/-- The Iverson bracket equals 0 iff the proposition is false (assuming 1 ≠ 0). @statement_id stmt-src-lem.pars.iverson-eq-zero-iff
+-/
 theorem iverson_eq_zero_iff {α : Type*} [Zero α] [One α] [NeZero (1 : α)]
     {P : Prop} [Decidable P] : (⦃P⦄ : α) = 0 ↔ ¬P := by
   constructor
@@ -174,7 +179,8 @@ example : (⦃2 + 2 = 5⦄ : ℕ) = 0 := by simp
 /-- The Kronecker delta is a special case of the Iverson bracket: δ_{i,j} = [i = j].
 
     In Mathlib, this is represented by `Pi.single i 1 j` for dependent functions,
-    or `if i = j then 1 else 0` directly. -/
+    or `if i = j then 1 else 0` directly. @statement_id stmt-src-def.pars.iverson
+-/
 theorem kronecker_eq_iverson {α : Type*} [DecidableEq α] {R : Type*} [Zero R] [One R]
     (i j : α) : (if i = j then (1 : R) else 0) = ⦃i = j⦄ := rfl
 
@@ -185,13 +191,15 @@ theorem iverson_nat_eq_toNat (P : Prop) [Decidable P] :
   | inl h => simp [iverson, h]
   | inr h => simp [iverson, h]
 
-/-- Sum of Iverson brackets equals cardinality of the filtered set. -/
+/-- Sum of Iverson brackets equals cardinality of the filtered set. @statement_id stmt-src-lem.pars.sum-iverson-eq-card
+-/
 theorem sum_iverson_eq_card {α : Type*} (s : Finset α) (p : α → Prop) [DecidablePred p] :
     ∑ x ∈ s, (⦃p x⦄ : ℕ) = (s.filter p).card := by
   simp only [iverson, Finset.card_filter]
 
 /-- The Iverson bracket is multiplicative for conjunctions:
-    [P ∧ Q] = [P] * [Q] when the propositions are decidable. -/
+    [P ∧ Q] = [P] * [Q] when the propositions are decidable. @statement_id stmt-src-lem.pars.iverson-and
+-/
 theorem iverson_and {α : Type*} [MulZeroOneClass α] {P Q : Prop} [Decidable P] [Decidable Q] :
     (⦃P ∧ Q⦄ : α) = ⦃P⦄ * ⦃Q⦄ := by
   simp only [iverson]
@@ -255,13 +263,15 @@ These are formalized in Mathlib as `Int.floor` and `Int.ceil`.
 /-- The floor of a real number is the largest integer ≤ a.
     (Definition \ref{def.pars.floor-ceil})
 
-    This is the characterization: n ≤ ⌊a⌋ iff n ≤ a. -/
+    This is the characterization: n ≤ ⌊a⌋ iff n ≤ a. @statement_id stmt-src-def.pars.floor-ceil
+-/
 theorem floor_def (a : ℝ) (n : ℤ) : n ≤ ⌊a⌋ ↔ n ≤ a := Int.le_floor
 
 /-- The ceiling of a real number is the smallest integer ≥ a.
     (Definition \ref{def.pars.floor-ceil})
 
-    This is the characterization: ⌈a⌉ ≤ n iff a ≤ n. -/
+    This is the characterization: ⌈a⌉ ≤ n iff a ≤ n. @statement_id stmt-src-def.pars.floor-ceil
+-/
 theorem ceil_def (a : ℝ) (n : ℤ) : ⌈a⌉ ≤ n ↔ a ≤ n := Int.ceil_le
 
 /-- The floor is at most the original number. -/
@@ -274,11 +284,13 @@ theorem le_ceil (a : ℝ) : a ≤ ⌈a⌉ := Int.le_ceil a
 theorem floor_le_ceil (a : ℝ) : ⌊a⌋ ≤ ⌈a⌉ := Int.floor_le_ceil a
 
 /-- The floor of an integer is itself.
-    (Example from the textbook: ⌊n⌋ = n for n ∈ ℤ) -/
+    (Example from the textbook: ⌊n⌋ = n for n ∈ ℤ) @statement_id stmt-src-def.pars.floor-ceil
+-/
 theorem floor_of_int (n : ℤ) : ⌊(n : ℝ)⌋ = n := Int.floor_intCast n
 
 /-- The ceiling of an integer is itself.
-    (Example from the textbook: ⌈n⌉ = n for n ∈ ℤ) -/
+    (Example from the textbook: ⌈n⌉ = n for n ∈ ℤ) @statement_id stmt-src-def.pars.floor-ceil
+-/
 theorem ceil_of_int (n : ℤ) : ⌈(n : ℝ)⌉ = n := Int.ceil_intCast n
 
 /-- For integers, floor equals ceiling.
@@ -305,7 +317,8 @@ example : ⌈(-3.14 : ℚ)⌉ = -3 := by native_decide
 /-! ### Connection to natural number division -/
 
 /-- Natural number division equals the floor of rational division.
-    This connects `n / m` (natural number division) to `⌊n/m⌋` (floor of rational division). -/
+    This connects `n / m` (natural number division) to `⌊n/m⌋` (floor of rational division). @statement_id stmt-src-def.pars.floor-ceil
+-/
 theorem nat_div_eq_floor (n m : ℕ) (_hm : m ≠ 0) : n / m = Nat.floor ((n : ℚ) / m) := by
   haveI : NeZero m := ⟨_hm⟩
   have h : Nat.floor ((n : ℚ) / ((m : ℕ) : ℚ)) = n / m := Nat.floor_div_eq_div (K := ℚ) n m
@@ -416,21 +429,24 @@ redefining it, and provide wrapper lemmas for the key properties. -/
     (Definition \ref{def.pars.parts} (c))
 
     For a partition of n, the size is n. This is guaranteed by `Partition.parts_sum`.
-    The type `Partition n` itself encodes that the partition has size n. -/
+    The type `Partition n` itself encodes that the partition has size n. @statement_id stmt-src-def.pars.parts
+-/
 theorem size_eq {n : ℕ} (p : Partition n) : p.parts.sum = n := p.parts_sum
 
 /-- All parts of a partition are positive.
     (Definition \ref{def.pars.parts} (a) - "tuple of positive integers")
 
     This is a fundamental property: every entry in a partition is ≥ 1.
-    This is the defining property that distinguishes partitions from weak compositions. -/
+    This is the defining property that distinguishes partitions from weak compositions. @statement_id stmt-src-def.pars.parts
+-/
 theorem parts_pos' {n : ℕ} (p : Partition n) (i : ℕ) (hi : i ∈ p.parts) : 0 < i :=
   p.parts_pos hi
 
 /-- A partition of n has all parts ≤ n.
     (Consequence of Definition \ref{def.pars.parts})
 
-    Since parts are positive and sum to n, each individual part is bounded by n. -/
+    Since parts are positive and sum to n, each individual part is bounded by n. @statement_id stmt-src-lem.pars.parts-le
+-/
 theorem parts_le {n : ℕ} (p : Partition n) (i : ℕ) (hi : i ∈ p.parts) : i ≤ n := by
   calc i ≤ p.parts.sum := Multiset.single_le_sum (fun _ _ => Nat.zero_le _) _ hi
     _ = n := p.parts_sum
@@ -438,12 +454,14 @@ theorem parts_le {n : ℕ} (p : Partition n) (i : ℕ) (hi : i ∈ p.parts) : i 
 /-- The empty partition is the unique partition of 0.
     (Definition \ref{def.pars.parts} (a) - empty tuple case)
 
-    The partition of 0 has no parts. -/
+    The partition of 0 has no parts. @statement_id stmt-src-lem.pars.parts-zero
+-/
 theorem parts_eq_zero_of_partition_zero (p : Partition 0) : p.parts = 0 :=
   partition_zero_parts p
 
 /-- The length of the partition of 0 is 0.
-    (Definition \ref{def.pars.parts} (a) - empty tuple has length 0) -/
+    (Definition \ref{def.pars.parts} (a) - empty tuple has length 0) @statement_id stmt-src-lem.pars.parts-card-zero
+-/
 theorem parts_card_zero (p : Partition 0) : p.parts.card = 0 := by
   simp only [partition_zero_parts, Multiset.card_zero]
 
@@ -461,7 +479,8 @@ theorem indiscrete_parts' {n : ℕ} (hn : n ≠ 0) : (indiscrete n).parts = {n} 
     (Definition \ref{def.pars.parts} (a) - the tuple representation)
 
     Given a list of positive integers that sums to n, we can construct a partition of n.
-    The list need not be sorted; Mathlib's `Partition` uses multisets. -/
+    The list need not be sorted; Mathlib's `Partition` uses multisets. @statement_id stmt-src-def.pars.parts
+-/
 def ofList' {n : ℕ} (l : List ℕ) (hl_pos : ∀ i ∈ l, 0 < i) (hl_sum : l.sum = n) : Partition n :=
   ⟨↑l, @fun i hi => hl_pos i (Multiset.mem_coe.mp hi), by simp only [Multiset.sum_coe, hl_sum]⟩
 
@@ -472,7 +491,8 @@ theorem ofList'_parts {n : ℕ} (l : List ℕ) (hl_pos : ∀ i ∈ l, 0 < i) (hl
     (ofList' l hl_pos hl_sum).parts = ↑l := rfl
 
 /-- Two partitions are equal iff their parts are equal.
-    (Definition \ref{def.pars.parts} - partitions are determined by their parts) -/
+    (Definition \ref{def.pars.parts} - partitions are determined by their parts) @statement_id stmt-src-def.pars.parts
+-/
 theorem eq_iff_parts_eq {n : ℕ} (p q : Partition n) : p = q ↔ p.parts = q.parts := by
   constructor
   · intro h; rw [h]
@@ -516,7 +536,8 @@ example : Fintype.card (Partition 5) = 7 := by native_decide
 
 /-! ### Auxiliary lemmas -/
 
-/-- The cardinality of a multiset of positive naturals is at most its sum. -/
+/-- The cardinality of a multiset of positive naturals is at most its sum. @statement_id stmt-src-lem.pars.card-le-sum-of-pos
+-/
 theorem card_le_sum_of_pos (s : Multiset ℕ) (h : ∀ i ∈ s, 0 < i) : s.card ≤ s.sum := by
   induction s using Multiset.induction with
   | empty => simp
@@ -610,20 +631,24 @@ lemma sum_filter_positive (s : Multiset ℕ) : (s.filter (· > 0)).sum = s.sum :
 /-! ### Partition counting functions -/
 
 /-- The partition function `p(n)`: the number of partitions of `n`.
-    (Definition \ref{def.pars.pn-pkn} (b)) -/
+    (Definition \ref{def.pars.pn-pkn} (b)) @statement_id stmt-src-def.pars.pn-pkn
+-/
 def partitionCount (n : ℕ) : ℕ := Fintype.card (Partition n)
 
 /-- The function `p_k(n)`: the number of partitions of `n` into exactly `k` parts.
-    (Definition \ref{def.pars.pn-pkn} (a)) -/
+    (Definition \ref{def.pars.pn-pkn} (a)) @statement_id stmt-src-def.pars.pn-pkn
+-/
 def partsCount (k n : ℕ) : ℕ :=
   (Finset.univ : Finset (Partition n)).filter (fun p => Multiset.card p.parts = k) |>.card
 
 /-- The number of partitions of `n` with all parts ≤ `m`.
-    (Used in Theorem \ref{thm.pars.main-gf-parts-n}) -/
+    (Used in Theorem \ref{thm.pars.main-gf-parts-n}) @statement_id stmt-src-def.pars.pn-pkn
+-/
 def partsLeqCount (m n : ℕ) : ℕ := (restricted n (· ≤ m)).card
 
 /-- The number of partitions of `n` with all parts in a set `I`.
-    (Used in Theorem \ref{thm.pars.main-gf-parts-I}) -/
+    (Used in Theorem \ref{thm.pars.main-gf-parts-I}) @statement_id stmt-src-def.pars.pn-pkn
+-/
 def partsInCount (I : Set ℕ) [DecidablePred (· ∈ I)] (n : ℕ) : ℕ := (restricted n (· ∈ I)).card
 
 /-! ### Basic API for partition counting functions -/
@@ -640,7 +665,8 @@ theorem partitionCount_zero : partitionCount 0 = 1 := by
 theorem partitionCount_one : partitionCount 1 = 1 := by native_decide
 
 /-- `p(n) > 0` for all `n ∈ ℕ`: there is always at least one partition of any natural number.
-    For n > 0, the partition (n) has one part. For n = 0, the empty partition works. -/
+    For n > 0, the partition (n) has one part. For n = 0, the empty partition works. @statement_id stmt-src-lem.pars.partitioncount-pos
+-/
 theorem partitionCount_pos (n : ℕ) : 0 < partitionCount n := by
   simp only [partitionCount]
   exact Fintype.card_pos
@@ -706,7 +732,8 @@ private lemma fold_max_le_of_all_le' (s : Multiset ℕ) (m : ℕ) (h : ∀ i ∈
     The proof uses:
     1. Corollary \ref{cor.pars.p0kn=dual}: the sum equals the count of partitions with largest part ≤ m
     2. This lemma: "largest part ≤ m" is equivalent to "all parts ≤ m"
-    3. Theorem \ref{thm.pars.main-gf-parts-n}: the generating function for "all parts ≤ m" -/
+    3. Theorem \ref{thm.pars.main-gf-parts-n}: the generating function for "all parts ≤ m" @statement_id stmt-src-lem.pars.largestpart-le-iff
+-/
 theorem largestPart_le_iff_all_parts_le {n m : ℕ} (p : Partition n) :
     p.largestPart ≤ m ↔ ∀ i ∈ p.parts, i ≤ m := by
   unfold largestPart
@@ -719,7 +746,8 @@ theorem largestPart_le_iff_all_parts_le {n m : ℕ} (p : Partition n) :
 /-- The set of partitions with largest part ≤ m equals the set of partitions
     with all parts ≤ m (i.e., `restricted n (· ≤ m)`).
 
-    This is a key equivalence used in the proof of Theorem \ref{thm.pars.main-gf-0n}. -/
+    This is a key equivalence used in the proof of Theorem \ref{thm.pars.main-gf-0n}. @statement_id stmt-src-lem.pars.filter-largestpart-le-eq-restricted
+-/
 theorem filter_largestPart_le_eq_restricted (n m : ℕ) :
     (Finset.univ : Finset (Partition n)).filter (fun p => p.largestPart ≤ m) =
     restricted n (· ≤ m) := by
@@ -736,13 +764,15 @@ theorem numParts_zero (p : Partition 0) : p.numParts = 0 := by
     (Convention conv.pars.largest-part-0)
     
     Since the partition of 0 has no parts, the largest part (defined as the 
-    maximum of all parts, with 0 as the default) is 0. -/
+    maximum of all parts, with 0 as the default) is 0. @statement_id stmt-src-lem.pars.largestpart-zero
+-/
 @[simp]
 theorem largestPart_zero (p : Partition 0) : p.largestPart = 0 := by
   simp only [largestPart, partition_zero_parts, Multiset.fold_zero]
 
 /-- For a partition of n, the largest part is at most n.
-    This parallels the existing `numParts_le` lemma which states `p.numParts ≤ n`. -/
+    This parallels the existing `numParts_le` lemma which states `p.numParts ≤ n`. @statement_id stmt-src-lem.pars.largestpart-le
+-/
 theorem largestPart_le {n : ℕ} (p : Partition n) : p.largestPart ≤ n := by
   rw [largestPart_le_iff_all_parts_le]
   exact fun i hi => parts_le p i hi
@@ -752,7 +782,8 @@ theorem largestPart_le {n : ℕ} (p : Partition n) : p.largestPart ≤ n := by
 
     Since n > 0, the partition has at least one part (by `numParts_pos`),
     and all parts are positive (by `parts_pos`). The largest part
-    (fold max 0) of a non-empty multiset of positive numbers is positive. -/
+    (fold max 0) of a non-empty multiset of positive numbers is positive. @statement_id stmt-src-lem.pars.largestpart-pos
+-/
 theorem largestPart_pos {n : ℕ} (hn : n > 0) (p : Partition n) : 0 < p.largestPart := by
   unfold largestPart
   have hne : p.parts ≠ 0 := by
@@ -764,14 +795,16 @@ theorem largestPart_pos {n : ℕ} (hn : n > 0) (p : Partition n) : 0 < p.largest
   have hxpos := p.parts_pos hx
   exact lt_of_lt_of_le hxpos (fold_max_ge_of_mem p.parts x hx)
 
-/-- A partition has at most n parts. -/
+/-- A partition has at most n parts. @statement_id stmt-src-lem.pars.numparts-le
+-/
 theorem numParts_le {n : ℕ} (p : Partition n) : p.numParts ≤ n := by
   simp only [numParts]
   calc p.parts.card ≤ p.parts.sum := card_le_sum_of_pos p.parts (fun i hi => p.parts_pos hi)
     _ = n := p.parts_sum
 
 /-- For a partition of n > 0, the number of parts is positive.
-    This parallels `numParts_zero` (for n = 0) and `numParts_le`. -/
+    This parallels `numParts_zero` (for n = 0) and `numParts_le`. @statement_id stmt-src-lem.pars.numparts-pos
+-/
 theorem numParts_pos {n : ℕ} (hn : n > 0) (p : Partition n) : 0 < p.numParts := by
   simp only [numParts]
   by_contra hc
@@ -781,7 +814,8 @@ theorem numParts_pos {n : ℕ} (hn : n > 0) (p : Partition n) : 0 < p.numParts :
   omega
 
 /-- There are no partitions of `n` into more than `n` parts.
-    (Proposition \ref{prop.pars.basics} (b)) -/
+    (Proposition \ref{prop.pars.basics} (b)) @statement_id stmt-src-prop.pars.basics
+-/
 theorem partsCount_of_gt {k n : ℕ} (h : k > n) : partsCount k n = 0 := by
   simp only [partsCount, filter_eq_empty_iff, Finset.card_eq_zero]
   intro p _
@@ -800,7 +834,8 @@ theorem partsCount_of_gt' {k n : ℕ} (h : n < k) : partsCount k n = 0 :=
   partsCount_of_gt h
 
 /-- `p_0(n) = [n = 0]`: the only partition into 0 parts is the empty partition of 0.
-    (Proposition \ref{prop.pars.basics} (c)) -/
+    (Proposition \ref{prop.pars.basics} (c)) @statement_id stmt-src-prop.pars.basics
+-/
 theorem partsCount_zero (n : ℕ) : partsCount 0 n = if n = 0 then 1 else 0 := by
   simp only [partsCount]
   split_ifs with hn
@@ -828,7 +863,8 @@ theorem partsCount_zero_left (n : ℕ) (hn : n > 0) : partsCount 0 n = 0 := by
   simp only [Nat.pos_iff_ne_zero.mp hn, ↓reduceIte]
 
 /-- `partsCount k n = 0` iff `k > n` or `k = 0 ∧ n > 0`.
-    This provides a complete characterization of when the partition count is zero. -/
+    This provides a complete characterization of when the partition count is zero. @statement_id stmt-src-lem.pars.partscount-eq-zero-iff
+-/
 theorem partsCount_eq_zero_iff (k n : ℕ) :
     partsCount k n = 0 ↔ k > n ∨ (k = 0 ∧ n > 0) := by
   constructor
@@ -883,7 +919,8 @@ theorem partsCount_eq_zero_iff (k n : ℕ) :
       simp only [Nat.pos_iff_ne_zero.mp hn, ↓reduceIte]
 
 /-- `p_1(n) = [n > 0]`: the only partition of a positive `n` into 1 part is `(n)`.
-    (Proposition \ref{prop.pars.basics} (d)) -/
+    (Proposition \ref{prop.pars.basics} (d)) @statement_id stmt-src-prop.pars.basics
+-/
 theorem partsCount_one (n : ℕ) : partsCount 1 n = if n > 0 then 1 else 0 := by
   simp only [partsCount]
   split_ifs with hn
@@ -950,6 +987,7 @@ private lemma partsWithOne_union_partsWithoutOne {k n : ℕ} :
     · left; exact ⟨hk', h⟩
     · right; exact ⟨hk', h⟩
 
+/-- @statement_id stmt-src-lem.pars.partscount-split -/
 lemma partsCount_split {k n : ℕ} :
     partsCount k n = (partsWithOne k n).card + (partsWithoutOne k n).card := by
   simp only [partsCount]
@@ -988,7 +1026,8 @@ private lemma filter_ne_zero_of_all_pos {s : Multiset ℕ} (h : ∀ x ∈ s, x >
   intro x hx
   exact Nat.pos_iff_ne_zero.mp (h x hx)
 
-/-- Remove one 1 from a partition containing 1 to get a partition of n-1. -/
+/-- Remove one 1 from a partition containing 1 to get a partition of n-1. @statement_id stmt-src-def.pars.removeone-addone
+-/
 def removeOne {n : ℕ} (p : Partition n) (h : 1 ∈ p.parts) : Partition (n - 1) :=
   Partition.ofSums (n - 1) (p.parts.erase 1) (by
     have hsum : p.parts.sum = (p.parts.erase 1).sum + 1 := by
@@ -996,17 +1035,20 @@ def removeOne {n : ℕ} (p : Partition n) (h : 1 ∈ p.parts) : Partition (n - 1
     rw [p.parts_sum] at hsum
     omega)
 
-/-- Add one 1 to a partition to get a partition of n+1. -/
+/-- Add one 1 to a partition to get a partition of n+1. @statement_id stmt-src-def.pars.removeone-addone
+-/
 def addOne {n : ℕ} (p : Partition n) : Partition (n + 1) :=
   Partition.ofSums (n + 1) (1 ::ₘ p.parts) (by simp [p.parts_sum, add_comm])
 
-/-- Subtract 1 from each part of a partition (when all parts > 1) to get a partition of n - k. -/
+/-- Subtract 1 from each part of a partition (when all parts > 1) to get a partition of n - k. @statement_id stmt-src-def.pars.subtractonefromeach-addonetoeach
+-/
 def subtractOneFromEach {n k : ℕ} (p : Partition n) (hk : p.parts.card = k)
     (h : ∀ x ∈ p.parts, x > 1) : Partition (n - k) :=
   Partition.ofSums (n - k) (p.parts.map (· - 1)) (by
     rw [sum_map_sub_one_eq h, p.parts_sum, hk])
 
-/-- Add 1 to each part of a partition to get a partition of n + k. -/
+/-- Add 1 to each part of a partition to get a partition of n + k. @statement_id stmt-src-def.pars.subtractonefromeach-addonetoeach
+-/
 def addOneToEach {n k : ℕ} (p : Partition n) (hk : p.parts.card = k) : Partition (n + k) :=
   Partition.ofSums (n + k) (p.parts.map (· + 1)) (by
     simp only [Multiset.sum_map_add, Multiset.map_id', Multiset.map_const', p.parts_sum, hk]
@@ -1099,7 +1141,8 @@ private def castPartition {n m : ℕ} (h : n = m) (p : Partition n) : Partition 
 private lemma castPartition_parts {n m : ℕ} (h : n = m) (p : Partition n) :
     (castPartition h p).parts = p.parts := rfl
 
-/-- Bijection: partsWithOne k n ↔ partitions of (n-1) into (k-1) parts. -/
+/-- Bijection: partsWithOne k n ↔ partitions of (n-1) into (k-1) parts. @statement_id stmt-src-lem.pars.partswithone-card-eq
+-/
 lemma partsWithOne_card_eq {k n : ℕ} (hk : k > 0) (hn : n > 0) :
     (partsWithOne k n).card = partsCount (k - 1) (n - 1) := by
   simp only [partsWithOne, partsCount]
@@ -1132,7 +1175,8 @@ lemma partsWithOne_card_eq {k n : ℕ} (hk : k > 0) (hn : n > 0) :
     · ext
       simp only [removeOne_parts, p, castPartition_parts, hp'_parts, Multiset.erase_cons_head]
 
-/-- Bijection: partsWithoutOne k n ↔ partitions of (n-k) into k parts. -/
+/-- Bijection: partsWithoutOne k n ↔ partitions of (n-k) into k parts. @statement_id stmt-src-lem.pars.partswithoutone-card-eq
+-/
 lemma partsWithoutOne_card_eq {k n : ℕ} (hk : k > 0) :
     (partsWithoutOne k n).card = partsCount k (n - k) := by
   simp only [partsWithoutOne, partsCount]
@@ -1245,7 +1289,8 @@ lemma partsWithoutOne_card_eq {k n : ℕ} (hk : k > 0) :
     1. {partitions of n into k parts containing 1} ↔ {partitions of n-1 into k-1 parts}
        via removeOne/addOne
     2. {partitions of n into k parts not containing 1} ↔ {partitions of n-k into k parts}
-       via subtractOneFromEach/addOneToEach -/
+       via subtractOneFromEach/addOneToEach @statement_id stmt-src-prop.pars.basics
+-/
 theorem partsCount_recurrence {k n : ℕ} (hk : k > 0) (hn : n > 0) :
     partsCount k n = partsCount k (n - k) + partsCount (k - 1) (n - 1) := by
   rw [partsCount_split, add_comm]
@@ -1253,7 +1298,8 @@ theorem partsCount_recurrence {k n : ℕ} (hk : k > 0) (hn : n > 0) :
   · exact partsWithoutOne_card_eq hk
   · exact partsWithOne_card_eq hk hn
 
-/-- A partition into 2 parts has the form {n-b, b} for some 1 ≤ b ≤ n/2. -/
+/-- A partition into 2 parts has the form {n-b, b} for some 1 ≤ b ≤ n/2. @statement_id stmt-src-lem.pars.partition-two-parts-form
+-/
 lemma partition_two_parts_form {n : ℕ} (p : Partition n) (hp : p.parts.card = 2) :
     ∃ b : ℕ, 1 ≤ b ∧ 2 * b ≤ n ∧ p.parts = {n - b, b} := by
   rw [Multiset.card_eq_two] at hp
@@ -1323,7 +1369,8 @@ private lemma smallerPartOf_ofSmallerPart (n b : ℕ) (hb1 : 1 ≤ b) (hb2 : 2 *
 /-- `p_2(n) = ⌊n/2⌋` for `n ∈ ℕ`.
     (Proposition \ref{prop.pars.basics} (f))
 
-    The partitions of n into 2 parts are (n-1,1), (n-2,2), ..., (⌈n/2⌉, ⌊n/2⌋). -/
+    The partitions of n into 2 parts are (n-1,1), (n-2,2), ..., (⌈n/2⌉, ⌊n/2⌋). @statement_id stmt-src-prop.pars.basics
+-/
 theorem partsCount_two (n : ℕ) : partsCount 2 n = n / 2 := by
   simp only [partsCount]
   -- Establish bijection with Finset.Icc 1 (n/2)
@@ -1359,7 +1406,8 @@ theorem partsCount_two (n : ℕ) : partsCount 2 n = n / 2 := by
     · exact smallerPartOf_ofSmallerPart n b hb.1 hb2
 
 /-- `p(n) = p_0(n) + p_1(n) + ... + p_n(n)` for `n ∈ ℕ`.
-    (Proposition \ref{prop.pars.basics} (g)) -/
+    (Proposition \ref{prop.pars.basics} (g)) @statement_id stmt-src-prop.pars.basics
+-/
 theorem partitionCount_sum (n : ℕ) :
     partitionCount n = ∑ k ∈ Finset.range (n + 1), partsCount k n := by
   simp only [partitionCount, partsCount]
@@ -1386,7 +1434,8 @@ variable {R : Type*} [CommSemiring R] [TopologicalSpace R] [T2Space R] [IsTopolo
     multiplying by 1/(1-x^k) = ∑_{j≥0} x^{kj} doesn't affect the first k coefficients.
 
     The proof uses Mathlib's `hasProd_powerSeriesMk_card_restricted` with the trivially
-    true predicate. -/
+    true predicate. @statement_id stmt-src-thm.pars.main-gf
+-/
 theorem partitionCount_genFun :
     HasProd (fun k => ∑' j : ℕ, (X : R⟦X⟧) ^ ((k + 1) * j))
       (PowerSeries.mk fun n => (partitionCount n : R)) := by
@@ -1406,7 +1455,8 @@ theorem partitionCount_genFun :
 
     This is a finite product version of the partition generating function.
     The product is over k from 1 to m, expressed here with shifted index as
-    a conditional infinite product. -/
+    a conditional infinite product. @statement_id stmt-src-thm.pars.main-gf-parts-n
+-/
 theorem partitionCount_genFun_partsLeq (m : ℕ) :
     HasProd (fun k => if k + 1 ≤ m then ∑' j : ℕ, (X : R⟦X⟧) ^ ((k + 1) * j) else 1)
       (PowerSeries.mk fun n => (partsLeqCount m n : R)) := by
@@ -1420,7 +1470,8 @@ theorem partitionCount_genFun_partsLeq (m : ℕ) :
     as an equality of power series rather than a `HasProd` statement.
 
     The product `∏_{k=1}^m (∑_{j≥0} x^{kj})` equals `∏_{k=1}^m 1/(1-x^k)` since
-    the geometric series `1/(1-x^k) = ∑_{j≥0} x^{kj}` converges in the power series topology. -/
+    the geometric series `1/(1-x^k) = ∑_{j≥0} x^{kj}` converges in the power series topology. @statement_id stmt-src-thm.pars.main-gf-parts-n
+-/
 theorem partitionCount_genFun_partsLeq_finprod (m : ℕ) :
     (∏ k ∈ range m, (∑' j : ℕ, (X : R⟦X⟧) ^ ((k + 1) * j))) =
     PowerSeries.mk fun n => ((restricted n (· ≤ m)).card : R) := by
@@ -1464,7 +1515,8 @@ theorem partsLeqCount_eq_coeff (m n : ℕ) :
     family `(u_i)_{i∈I}` of nonnegative integers to the partition containing each
     `i ∈ I` exactly `u_i` times. The coefficient of `X^n` on the product side counts
     such families with `∑_{i∈I} i·u_i = n`, which bijects with partitions of `n`
-    having all parts in `I`. -/
+    having all parts in `I`. @statement_id stmt-src-thm.pars.main-gf-parts-i
+-/
 theorem partitionCount_genFun_partsIn (I : Set ℕ) [DecidablePred (· ∈ I)] :
     HasProd (fun k => if (k + 1) ∈ I then ∑' j : ℕ, (X : R⟦X⟧) ^ ((k + 1) * j) else 1)
       (PowerSeries.mk fun n => (partsInCount I n : R)) := by
@@ -1539,14 +1591,16 @@ The maps A and B are mutually inverse, establishing the bijection.
     (Definition \ref{def.pars.odd-dist-parts} (a))
 
     For example, (7), (5,1,1), (3,3,1), (3,1,1,1,1), (1,1,1,1,1,1,1) are the
-    partitions of 7 into odd parts. -/
+    partitions of 7 into odd parts. @statement_id stmt-src-def.pars.odd-dist-parts
+-/
 def IsOddParts {n : ℕ} (p : Partition n) : Prop := ∀ i ∈ p.parts, Odd i
 
 /-- A partition into distinct parts is a partition whose parts are all different.
     (Definition \ref{def.pars.odd-dist-parts} (b))
 
     For example, (7), (6,1), (5,2), (4,3), (4,2,1) are the partitions of 7 into
-    distinct parts. Note that repeated parts are not allowed. -/
+    distinct parts. Note that repeated parts are not allowed. @statement_id stmt-src-def.pars.odd-dist-parts
+-/
 def IsDistinctParts {n : ℕ} (p : Partition n) : Prop := p.parts.Nodup
 
 /-- The number of partitions of n into odd parts: `p_odd(n)`.
@@ -1554,7 +1608,8 @@ def IsDistinctParts {n : ℕ} (p : Partition n) : Prop := p.parts.Nodup
 
     This counts the partitions of n where every part is an odd number.
     Uses Mathlib's `Nat.Partition.odds` which filters partitions by the
-    predicate `¬Even` (equivalent to `Odd` for positive integers). -/
+    predicate `¬Even` (equivalent to `Odd` for positive integers). @statement_id stmt-src-def.pars.odd-dist-parts
+-/
 def oddPartsCount (n : ℕ) : ℕ := (odds n).card
 
 /-- The number of partitions of n into distinct parts: `p_dist(n)`.
@@ -1562,7 +1617,8 @@ def oddPartsCount (n : ℕ) : ℕ := (odds n).card
 
     This counts the partitions of n where all parts are different (no repeats).
     Uses Mathlib's `Nat.Partition.distincts` which filters partitions by
-    the `Nodup` predicate on the parts multiset. -/
+    the `Nodup` predicate on the parts multiset. @statement_id stmt-src-def.pars.odd-dist-parts
+-/
 def distinctPartsCount (n : ℕ) : ℕ := (distincts n).card
 
 instance {n : ℕ} (p : Partition n) : Decidable (IsOddParts p) :=
@@ -1615,16 +1671,19 @@ theorem isOddParts_zero (p : Partition 0) : p.IsOddParts := by
 theorem isDistinctParts_zero (p : Partition 0) : p.IsDistinctParts := by
   simp only [IsDistinctParts, partition_zero_parts, Multiset.nodup_zero]
 
-/-- A partition is into odd parts iff all its parts satisfy `Odd`. -/
+/-- A partition is into odd parts iff all its parts satisfy `Odd`. @statement_id stmt-src-lem.pars.isoddparts-iff
+-/
 theorem isOddParts_iff {n : ℕ} (p : Partition n) :
     p.IsOddParts ↔ ∀ i ∈ p.parts, Odd i := Iff.rfl
 
-/-- A partition is into distinct parts iff its parts multiset has no duplicates. -/
+/-- A partition is into distinct parts iff its parts multiset has no duplicates. @statement_id stmt-src-lem.pars.isdistinctparts-iff
+-/
 theorem isDistinctParts_iff {n : ℕ} (p : Partition n) :
     p.IsDistinctParts ↔ p.parts.Nodup := Iff.rfl
 
 /-- Alternative characterization: a partition is into distinct parts iff
-    each part appears at most once. -/
+    each part appears at most once. @statement_id stmt-src-lem.pars.isdistinctparts-iff-count
+-/
 theorem isDistinctParts_iff_count_le_one {n : ℕ} (p : Partition n) :
     p.IsDistinctParts ↔ ∀ i, p.parts.count i ≤ 1 := by
   simp only [IsDistinctParts, Multiset.nodup_iff_count_le_one]
@@ -1683,11 +1742,13 @@ theorem distinctPartsCount_eq_filter_card (n : ℕ) :
 
     The bijective proof (sketched in the module docstring) works by:
     - Merging pairs of equal parts (odd → distinct)
-    - Splitting even parts into halves (distinct → odd) -/
+    - Splitting even parts into halves (distinct → odd) @statement_id stmt-src-thm.pars.odd-dist-equal
+-/
 theorem odd_eq_distinct (n : ℕ) : (odds n).card = (distincts n).card :=
   card_odds_eq_card_distincts n
 
-/-- Euler's odd-distinct identity in terms of counting functions. -/
+/-- Euler's odd-distinct identity in terms of counting functions. @statement_id stmt-src-thm.pars.odd-dist-equal
+-/
 theorem oddPartsCount_eq_distinctPartsCount (n : ℕ) : oddPartsCount n = distinctPartsCount n :=
   odd_eq_distinct n
 
@@ -1717,7 +1778,8 @@ theorem card_isOddParts_eq_card_isDistinctParts (n : ℕ) :
     - |λᵗ| = |λ| (same size)
     - (λᵗ)ᵗ = λ (involution)
     - length(λᵗ) = largest part of λ
-    - largest part of λᵗ = length(λ) -/
+    - largest part of λᵗ = length(λ) @statement_id stmt-src-lem.pars.transpose-def
+-/
 noncomputable def transpose {n : ℕ} (p : Partition n) : Partition n := by
   -- The transpose has parts: for each i from 1 to (largest part of p),
   -- the i-th part of the transpose is the number of parts of p that are ≥ i
@@ -1743,7 +1805,8 @@ noncomputable def transpose {n : ℕ} (p : Partition n) : Partition n := by
     exact h1
 
 /-- Helper lemma: for a sorted decreasing list, the count of elements > i is > j iff the j-th element > i.
-    This is the key bijection for the Young diagram transpose. -/
+    This is the key bijection for the Young diagram transpose. @statement_id stmt-src-lem.pars.sorted-countp-gt-iff
+-/
 lemma sorted_countP_gt_iff {sl : List ℕ} (hsl : sl.Pairwise (· ≥ ·)) (j : ℕ) (hj : j < sl.length)
     (i : ℕ) : sl.countP (· > i) > j ↔ sl[j] > i := by
   -- Helper for sorted lists: earlier elements are larger
@@ -1811,7 +1874,8 @@ lemma sorted_countP_gt_iff {sl : List ℕ} (hsl : sl.Pairwise (· ≥ ·)) (j : 
     - Applying transpose again: #{j : μⱼ ≥ i} = λᵢ for all i
 
     This is because the number of columns of height ≥ i in the Young diagram of λᵗ
-    equals the i-th row length of λ. -/
+    equals the i-th row length of λ. @statement_id stmt-src-lem.pars.transpose-involution
+-/
 theorem transpose_transpose {n : ℕ} (p : Partition n) : p.transpose.transpose = p := by
   -- We need to show the parts multisets are equal
   apply Partition.ext
@@ -2076,7 +2140,8 @@ theorem transpose_transpose {n : ℕ} (p : Partition n) : p.transpose.transpose 
         -- Final step: count k in both multisets
         rw [h_ttp_parts, h_ttp_eq]
 
-/-- The transpose preserves size. -/
+/-- The transpose preserves size. @statement_id stmt-src-lem.pars.transpose-size
+-/
 theorem transpose_size {n : ℕ} (p : Partition n) : p.transpose.parts.sum = n :=
   p.transpose.parts_sum
 
@@ -2091,7 +2156,8 @@ private lemma fold_max_le_of_all_le (s : Multiset ℕ) (i : ℕ) (h : ∀ x ∈ 
     have hs : ∀ x ∈ s, x ≤ i := fun x hx => h x (Multiset.mem_cons_of_mem hx)
     exact max_le ha (ih hs)
 
-/-- Key lemma: for i < largest, the filter count is positive -/
+/-- Key lemma: for i < largest, the filter count is positive @statement_id stmt-src-lem.pars.filter-card-pos-of-lt-largest
+-/
 lemma filter_card_pos_of_lt_largest {n : ℕ} (p : Partition n) (i : ℕ)
     (hi : i < p.parts.fold max 0) : 0 < (p.parts.filter (· > i)).card := by
   have h : ∃ x ∈ p.parts, x > i := by
@@ -2105,7 +2171,8 @@ lemma filter_card_pos_of_lt_largest {n : ℕ} (p : Partition n) (i : ℕ)
   have : x ∈ p.parts.filter (· > i) := Multiset.mem_filter.mpr ⟨hx_mem, hx_gt⟩
   simp [heq] at this
 
-/-- The length of the transpose equals the largest part of the original partition. -/
+/-- The length of the transpose equals the largest part of the original partition. @statement_id stmt-src-lem.pars.transpose-length-eq-largestpart
+-/
 theorem transpose_length_eq_largestPart {n : ℕ} (p : Partition n) :
     p.transpose.numParts = p.largestPart := by
   unfold transpose numParts largestPart
@@ -2144,6 +2211,7 @@ private lemma parts_empty_of_fold_max_zero {n : ℕ} (p : Partition n) (h : p.pa
   omega
 
 -- Key lemma: filtering positive elements preserves cardinality for partition parts
+/-- @statement_id stmt-src-lem.pars.filter-gt-zero-card-eq -/
 lemma filter_gt_zero_card_eq {n : ℕ} (p : Partition n) :
     (p.parts.filter (· > 0)).card = p.parts.card := by
   congr 1
@@ -2154,7 +2222,8 @@ lemma filter_gt_zero_card_eq {n : ℕ} (p : Partition n) :
   rw [eq_comm, Multiset.count_eq_zero]
   exact fun h => (p.parts_pos h).ne rfl
 
-/-- The largest part of the transpose equals the length of the original partition. -/
+/-- The largest part of the transpose equals the length of the original partition. @statement_id stmt-src-lem.pars.transpose-largestpart-eq-length
+-/
 theorem transpose_largestPart_eq_length {n : ℕ} (p : Partition n) :
     p.transpose.largestPart = p.numParts := by
   unfold transpose largestPart numParts
@@ -2216,7 +2285,8 @@ theorem transpose_largestPart_eq_length {n : ℕ} (p : Partition n) :
     (Proposition \ref{prop.pars.pkn=dual})
 
     This follows from the fact that transpose is a bijection that swaps
-    "number of parts" with "largest part". -/
+    "number of parts" with "largest part". @statement_id stmt-src-prop.pars.pkn-dual
+-/
 theorem partsCount_eq_largestPartCount (n k : ℕ) :
     partsCount k n =
     ((Finset.univ : Finset (Partition n)).filter (fun p => p.largestPart = k)).card := by
@@ -2249,7 +2319,8 @@ theorem partsCount_eq_largestPartCount (n k : ℕ) :
 
 /-- Corollary: `p_0(n) + p_1(n) + ... + p_k(n)` equals the number of partitions
     of n whose largest part is ≤ k.
-    (Corollary \ref{cor.pars.p0kn=dual}) -/
+    (Corollary \ref{cor.pars.p0kn=dual}) @statement_id stmt-src-cor.pars.p0kn-dual
+-/
 theorem partsCount_sum_eq_largestPartLeq (n k : ℕ) :
     ∑ i ∈ Finset.range (k + 1), partsCount i n =
     ((Finset.univ : Finset (Partition n)).filter (fun p => p.largestPart ≤ k)).card := by
@@ -2267,7 +2338,8 @@ theorem partsCount_sum_eq_largestPartLeq (n k : ℕ) :
 /-- The sum `p_0(n) + p_1(n) + ... + p_m(n)` equals the count of partitions with all parts ≤ m.
 
     This combines Corollary \ref{cor.pars.p0kn=dual} (sum equals count with largest part ≤ m)
-    with the equivalence "largest part ≤ m" ↔ "all parts ≤ m" from `filter_largestPart_le_eq_restricted`. -/
+    with the equivalence "largest part ≤ m" ↔ "all parts ≤ m" from `filter_largestPart_le_eq_restricted`. @statement_id stmt-src-lem.pars.partscount-sum-eq-partsleqcount
+-/
 theorem partsCount_sum_eq_partsLeqCount (n m : ℕ) :
     ∑ k ∈ Finset.range (m + 1), partsCount k n = partsLeqCount m n := by
   rw [partsCount_sum_eq_largestPartLeq, filter_largestPart_le_eq_restricted]
@@ -2290,7 +2362,8 @@ variable {R : Type*} [CommSemiring R] [TopologicalSpace R] [T2Space R] [IsTopolo
        with all parts ≤ m is `∏_{k=1}^m 1/(1-x^k)`.
 
     The product `∏_{k=1}^m 1/(1-x^k)` is represented here as `∏_{k=0}^{m-1} (∑_{j≥0} x^{(k+1)j})`
-    since the geometric series `1/(1-x^k) = ∑_{j≥0} x^{kj}` converges in the power series topology. -/
+    since the geometric series `1/(1-x^k) = ∑_{j≥0} x^{kj}` converges in the power series topology. @statement_id stmt-src-thm.pars.main-gf-0n
+-/
 theorem partsCountSum_genFun (m : ℕ) :
     PowerSeries.mk (fun n => (∑ k ∈ range (m + 1), partsCount k n : R)) =
     ∏ k ∈ range m, (∑' j : ℕ, (X : R⟦X⟧) ^ ((k + 1) * j)) := by
@@ -2305,14 +2378,16 @@ end GenFun2
 
 /-! ### Counting partitions by parts and largest part -/
 
-/-- The count of partitions with exactly k parts and largest part ℓ, for a specific size n. -/
+/-- The count of partitions with exactly k parts and largest part ℓ, for a specific size n. @statement_id stmt-src-def.pars.partsandlargestcount
+-/
 def partsAndLargestCount (k ℓ n : ℕ) : ℕ :=
   ((Finset.univ : Finset (Partition n)).filter
     (fun p => p.numParts = k ∧ p.largestPart = ℓ)).card
 
 /-- The total count of partitions with exactly k parts and largest part ℓ (summed over all sizes).
     The size ranges from k (minimum, when all parts are 1 except the largest) to k*ℓ (maximum,
-    when all parts equal ℓ). -/
+    when all parts equal ℓ). @statement_id stmt-src-def.pars.partsandlargestcount
+-/
 def partsAndLargestCountTotal (k ℓ : ℕ) : ℕ :=
   ∑ n ∈ Finset.Icc k (k * ℓ), partsAndLargestCount k ℓ n
 
@@ -2368,7 +2443,8 @@ private def symToPartsMultiset (ℓ : ℕ) (s : Sym (Fin ℓ) n) : Multiset ℕ 
   ℓ ::ₘ (s.val.map (fun x => x.val + 1))
 
 variable {n : ℕ} in
-/-- All parts in symToPartsMultiset are positive. -/
+/-- All parts in symToPartsMultiset are positive. @statement_id stmt-src-lem.pars.symtopartsmultiset-props
+-/
 lemma symToPartsMultiset_pos (ℓ : ℕ) (hℓ : ℓ ≥ 1) (s : Sym (Fin ℓ) n) :
     ∀ x ∈ symToPartsMultiset ℓ s, 0 < x := by
   intro x hx
@@ -2378,13 +2454,15 @@ lemma symToPartsMultiset_pos (ℓ : ℕ) (hℓ : ℓ ≥ 1) (s : Sym (Fin ℓ) n
   · omega
 
 variable {n : ℕ} in
-/-- The cardinality of symToPartsMultiset is n + 1. -/
+/-- The cardinality of symToPartsMultiset is n + 1. @statement_id stmt-src-lem.pars.symtopartsmultiset-props
+-/
 lemma symToPartsMultiset_card (ℓ : ℕ) (s : Sym (Fin ℓ) n) :
     (symToPartsMultiset ℓ s).card = n + 1 := by
   simp [symToPartsMultiset, Multiset.card_cons, Multiset.card_map]
 
 variable {n : ℕ} in
-/-- The largest part (fold max 0) of symToPartsMultiset is ℓ. -/
+/-- The largest part (fold max 0) of symToPartsMultiset is ℓ. @statement_id stmt-src-lem.pars.symtopartsmultiset-props
+-/
 lemma symToPartsMultiset_fold_max (ℓ : ℕ) (s : Sym (Fin ℓ) n) :
     (symToPartsMultiset ℓ s).fold max 0 = ℓ := by
   simp only [symToPartsMultiset, Multiset.fold_cons_left]
@@ -2398,12 +2476,14 @@ lemma symToPartsMultiset_fold_max (ℓ : ℕ) (s : Sym (Fin ℓ) n) :
   omega
 
 variable {n : ℕ} in
-/-- Erasing ℓ from symToPartsMultiset recovers the mapped parts. -/
+/-- Erasing ℓ from symToPartsMultiset recovers the mapped parts. @statement_id stmt-src-lem.pars.symtopartsmultiset-props
+-/
 lemma symToPartsMultiset_erase (ℓ : ℕ) (s : Sym (Fin ℓ) n) :
     (symToPartsMultiset ℓ s).erase ℓ = s.val.map (fun x => x.val + 1) := by
   simp [symToPartsMultiset, Multiset.erase_cons_head]
 
-/-- The sum of symToPartsMultiset lies in [k, k*ℓ] for s : Sym (Fin ℓ) (k-1). -/
+/-- The sum of symToPartsMultiset lies in [k, k*ℓ] for s : Sym (Fin ℓ) (k-1). @statement_id stmt-src-lem.pars.symtopartsmultiset-props
+-/
 lemma symToPartsMultiset_sum_range (k ℓ : ℕ) (hk : k ≥ 1) (hℓ : ℓ ≥ 1)
     (s : Sym (Fin ℓ) (k - 1)) : (symToPartsMultiset ℓ s).sum ∈ Finset.Icc k (k * ℓ) := by
   simp only [symToPartsMultiset, Multiset.sum_cons, Finset.mem_Icc]
@@ -2456,7 +2536,8 @@ lemma symToPartsMultiset_sum_range (k ℓ : ℕ) (hk : k ≥ 1) (hℓ : ℓ ≥ 
     1. Each λᵢ ∈ {1, ..., ℓ}, so λᵢ - 1 ∈ {0, ..., ℓ-1} = Fin ℓ
     2. Each aᵢ ∈ Fin ℓ gives aᵢ + 1 ∈ {1, ..., ℓ}
     3. The resulting partition has largest part ℓ (which is explicitly the first part)
-    4. The partition has k parts (one ℓ, plus k-1 from the multiset) -/
+    4. The partition has k parts (one ℓ, plus k-1 from the multiset) @statement_id stmt-src-prop.pars.qbinom.intro-count-binom
+-/
 theorem partsAndLargestCountTotal_eq (k ℓ : ℕ) (hk : k ≥ 1) (hℓ : ℓ ≥ 1) :
     partsAndLargestCountTotal k ℓ = (k + ℓ - 2).choose (k - 1) := by
   -- The proof uses a bijection with Sym (Fin ℓ) (k-1), whose cardinality is
@@ -2855,10 +2936,12 @@ Comparing coefficients of `x^n` on both sides:
 This proves the theorem.
 -/
 
-/-- The partition generating function P = ∑_{n≥0} p(n) x^n, specialized to ℤ coefficients. -/
+/-- The partition generating function P = ∑_{n≥0} p(n) x^n, specialized to ℤ coefficients. @statement_id stmt-src-def.pars.genfun-p-s
+-/
 noncomputable def P : ℤ⟦X⟧ := genFun (fun _ _ => 1)
 
-/-- The coefficient of x^n in P equals p(n). -/
+/-- The coefficient of x^n in P equals p(n). @statement_id stmt-src-lem.pars.coeff-p
+-/
 lemma coeff_P (n : ℕ) : coeff n P = partitionCount n := by
   simp only [P, coeff_genFun, partitionCount]
   conv_lhs =>
@@ -2867,7 +2950,8 @@ lemma coeff_P (n : ℕ) : coeff n P = partitionCount n := by
     rw [show p.parts.toFinsupp.prod (fun _ _ => (1 : ℤ)) = 1 by simp [Finsupp.prod]]
   rw [sum_const, Finset.card_univ, nsmul_eq_mul, mul_one]
 
-/-- The divisor sum generating function S = ∑_{k≥1} σ(k) x^k. -/
+/-- The divisor sum generating function S = ∑_{k≥1} σ(k) x^k. @statement_id stmt-src-def.pars.genfun-p-s
+-/
 noncomputable def S : ℤ⟦X⟧ := PowerSeries.mk fun n => if n = 0 then 0 else divisorSum n
 
 /-- The coefficient of x^n in S. -/
@@ -2876,7 +2960,8 @@ lemma coeff_S (n : ℕ) : coeff n S = if n = 0 then 0 else divisorSum n := by
   simp only [S, coeff_mk]
   split_ifs <;> simp
 
-/-- The coefficient of x^n in X · P' equals n · p(n). -/
+/-- The coefficient of x^n in X · P' equals n · p(n). @statement_id stmt-src-lem.pars.coeff-x-mul-derivative-p
+-/
 lemma coeff_X_mul_derivative_P (n : ℕ) :
     coeff n (X * d⁄dX ℤ P) = n * coeff n P := by
   rcases n with _ | n
@@ -2885,7 +2970,8 @@ lemma coeff_X_mul_derivative_P (n : ℕ) :
     rw [coeff_succ_X_mul, coeff_derivativeFun]
     ring
 
-/-- The coefficient of x^n in S · P equals ∑_{k=1}^n σ(k) · p(n-k). -/
+/-- The coefficient of x^n in S · P equals ∑_{k=1}^n σ(k) · p(n-k). @statement_id stmt-src-lem.pars.coeff-s-mul-p
+-/
 lemma coeff_S_mul_P (n : ℕ) :
     coeff n (S * P) = ∑ k ∈ Finset.range n, divisorSum (k + 1) * partitionCount (n - k - 1) := by
   rw [coeff_mul]
@@ -2916,7 +3002,8 @@ private lemma replicate_le_of_count_ge {s : Multiset ℕ} {a : ℕ} {j : ℕ}
   · subst hba; exact h
   · exact Nat.zero_le _
 
-/-- Sum of parts equals sum over distinct parts weighted by count. -/
+/-- Sum of parts equals sum over distinct parts weighted by count. @statement_id stmt-src-lem.pars.sum-parts-as-weighted-count
+-/
 lemma sum_parts_as_weighted_count {n : ℕ} (p : Partition n) :
     p.parts.sum = (p.parts.toFinset).sum (fun d => d * p.parts.count d) := by
   induction p.parts using Multiset.induction with
@@ -2945,7 +3032,8 @@ lemma sum_parts_as_weighted_count {n : ℕ} (p : Partition n) :
       have hxa : x ≠ a := fun h => ha (h ▸ (Multiset.mem_toFinset.mp hx))
       simp [Multiset.count_cons_of_ne hxa]
 
-/-- LHS of the identity equals sum of parts over all partitions. -/
+/-- LHS of the identity equals sum of parts over all partitions. @statement_id stmt-src-lem.pars.lhs-eq-sum-parts
+-/
 lemma lhs_eq_sum_parts (I : Set ℕ) [DecidablePred (· ∈ I)] (n : ℕ) :
     n * (restricted n (· ∈ I)).card =
     (restricted n (· ∈ I)).sum (fun p => p.parts.sum) := by
@@ -2961,7 +3049,8 @@ These lemmas establish the key pieces needed for the double-counting proof:
 -/
 
 /-- Remove j copies of element d from a partition, getting a partition of n - d*j.
-    This is the forward direction of the bijection. -/
+    This is the forward direction of the bijection. @statement_id stmt-src-lem.pars.removepartcopies
+-/
 def removePartCopies {n : ℕ} (p : Partition n) (d j : ℕ) (_hd : d > 0) (hj : j ≤ p.parts.count d) :
     Partition (n - d * j) := by
   let newParts := p.parts - Multiset.replicate j d
@@ -2975,7 +3064,8 @@ def removePartCopies {n : ℕ} (p : Partition n) (d j : ℕ) (_hd : d > 0) (hj :
   exact ⟨newParts, hpos, hsum⟩
 
 /-- Add j copies of element d to a partition, getting a partition of m + d*j.
-    This is the backward direction of the bijection. -/
+    This is the backward direction of the bijection. @statement_id stmt-src-lem.pars.removepartcopies
+-/
 def addPartCopies {m : ℕ} (q : Partition m) (d j : ℕ) (hd : d > 0) :
     Partition (m + d * j) := by
   let newParts := q.parts + Multiset.replicate j d
@@ -3057,7 +3147,8 @@ private lemma count_le_of_partition_aux (n d : ℕ) (p : Partition n) : p.parts.
       _ = n := h
 
 /-- Helper: count(d, p) ≤ n/d for any partition of n and d > 0.
-    This is the tight bound: at most n/d copies of d can fit in a partition of n. -/
+    This is the tight bound: at most n/d copies of d can fit in a partition of n. @statement_id stmt-src-lem.pars.count-le-div
+-/
 lemma count_le_div_of_partition (n d : ℕ) (p : Partition n) (hd : 0 < d) :
     p.parts.count d ≤ n / d := by
   have h1 : Multiset.replicate (p.parts.count d) d ≤ p.parts :=
@@ -3076,7 +3167,8 @@ lemma count_le_div_of_partition (n d : ℕ) (p : Partition n) (hd : 0 < d) :
     This is the standard identity that sum of values equals sum of "at least j" counts.
 
     The proof uses double counting: each partition p with count(d,p) = c contributes
-    c to the LHS and is counted in exactly c of the sets {p : count(d,p) ≥ j+1} for j < c. -/
+    c to the LHS and is counted in exactly c of the sets {p : count(d,p) ≥ j+1} for j < c. @statement_id stmt-src-lem.pars.sum-count-eq-sum-card-ge
+-/
 lemma sum_count_eq_sum_card_ge (n : ℕ) (s : Finset (Partition n)) (d : ℕ) :
     s.sum (fun p => p.parts.count d) =
     (Finset.range (n + 1)).sum (fun j =>
@@ -3089,7 +3181,8 @@ lemma sum_count_eq_sum_card_ge (n : ℕ) (s : Finset (Partition n)) (d : ℕ) :
     Specifically, {p ∈ restricted n I : count(d,p) ≥ j} ≃ restricted (n - d*j) I.
 
     Forward: remove j copies of d
-    Backward: add j copies of d -/
+    Backward: add j copies of d @statement_id stmt-src-lem.pars.card-count-ge-eq-restricted
+-/
 lemma card_count_ge_eq_restricted (I : Set ℕ) [DecidablePred (· ∈ I)]
     (hI : ∀ i ∈ I, i > 0) (n d j : ℕ) (hd : d ∈ I) (hdj : d * j ≤ n) :
     ((restricted n (· ∈ I)).filter (fun p => p.parts.count d ≥ j)).card =
@@ -3163,7 +3256,8 @@ lemma card_count_ge_eq_restricted (I : Set ℕ) [DecidablePred (· ∈ I)]
     The bijection is: (k, d) ↔ (d, j) where k = d*j - 1, j = (k+1)/d.
     This transforms the constraint "d | k+1" to "k = d*j - 1 for some j ≥ 1".
 
-    Used in the proof of partitionCount_divisorSum_restricted. -/
+    Used in the proof of partitionCount_divisorSum_restricted. @statement_id stmt-src-lem.pars.divisor-sum-reindex
+-/
 lemma divisor_sum_reindex (I : Set ℕ) [DecidablePred (· ∈ I)] (n : ℕ) (f : ℕ → ℕ) :
     ∑ k ∈ Finset.range n, ∑ d ∈ (Nat.divisors (k + 1)).filter (· ∈ I), d * f (n - k - 1) =
     ∑ d ∈ (Finset.Icc 1 n).filter (· ∈ I),
@@ -3270,7 +3364,8 @@ lemma divisor_sum_reindex (I : Set ℕ) [DecidablePred (· ∈ I)] (n : ℕ) (f 
     Equivalently, both sides count weighted pairs:
     - LHS = ∑_p (sum of parts) = ∑_p ∑_d d·count(d,p)
     - RHS = ∑_{m=1}^n σ_I(m)·p_I(n-m) = ∑_d d·∑_{j≥1} p_I(n-d·j)
-    - Both equal ∑_{d∈I, d≤n} d·∑_{j=1}^{n/d} p_I(n-d·j) -/
+    - Both equal ∑_{d∈I, d≤n} d·∑_{j=1}^{n/d} p_I(n-d·j) @statement_id stmt-src-thm.pars.sigma1-i
+-/
 theorem partitionCount_divisorSum_restricted (I : Set ℕ) [DecidablePred (· ∈ I)]
     (hI : ∀ i ∈ I, i > 0) (n : ℕ) :
     n * (restricted n (· ∈ I)).card =
@@ -3424,7 +3519,8 @@ theorem partitionCount_divisorSum_restricted (I : Set ℕ) [DecidablePred (· �
     (Theorem \ref{thm.pars.sigma1})
 
     This is proved using the generalized identity `partitionCount_divisorSum_restricted`
-    specialized to I = all positive integers. -/
+    specialized to I = all positive integers. @statement_id stmt-src-thm.pars.sigma1
+-/
 theorem partitionCount_divisorSum (n : ℕ) :
     n * partitionCount n = ∑ k ∈ Finset.range n, divisorSum (k + 1) * partitionCount (n - k - 1) := by
   -- Specialize partitionCount_divisorSum_restricted with I = Set.Ioi 0 (positive integers)
@@ -3453,7 +3549,8 @@ theorem partitionCount_divisorSum (n : ℕ) :
 /-- The key generating function identity: X · P' = S · P.
 
 This follows from the combinatorial identity `partitionCount_divisorSum` by
-comparing coefficients. -/
+comparing coefficients. @statement_id stmt-src-thm.pars.x-mul-derivative-p-eq-s-mul-p
+-/
 theorem X_mul_derivative_P_eq_S_mul_P : X * d⁄dX ℤ P = S * P := by
   ext n
   rw [coeff_X_mul_derivative_P, coeff_S_mul_P, coeff_P]

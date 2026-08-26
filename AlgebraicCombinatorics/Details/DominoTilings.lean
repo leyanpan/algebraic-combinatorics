@@ -634,7 +634,8 @@ existing dominos to the right. They form the inverse maps in the bijection:
     creating a tiling of Rectangle (n+1) 2.
 
     This is one of the inverse maps in the Fibonacci recurrence bijection.
-    The vertical domino covers the entire first column, creating a fault at x=1. -/
+    The vertical domino covers the entire first column, creating a fault at x=1. @statement_id stmt-src-lem.details.domino.prependvertical
+-/
 def prependVertical (T : DominoTiling n 2) : DominoTiling (n + 1) 2 where
   dominos := insert vertical_1_1 (T.dominos.image (fun d => d.shiftNat 1))
   dominos_in_rect := by
@@ -808,7 +809,8 @@ def prependVertical (T : DominoTiling n 2) : DominoTiling (n + 1) 2 where
     creating a tiling of Rectangle (n+2) 2.
 
     This is one of the inverse maps in the Fibonacci recurrence bijection.
-    The two horizontal dominos cover the first two columns, creating a fault at x=2. -/
+    The two horizontal dominos cover the first two columns, creating a fault at x=2. @statement_id stmt-src-lem.details.domino.prependhorizontalpair
+-/
 def prependHorizontalPair (T : DominoTiling n 2) : DominoTiling (n + 2) 2 where
   dominos := insert horizontal_1_1 (insert horizontal_1_2 (T.dominos.image (fun d => d.shiftNat 2)))
   dominos_in_rect := by
@@ -1148,7 +1150,8 @@ lemma domino_col_ge_two_of_ne_vertical (T : DominoTiling (n + 1) 2) (hv : vertic
     that has vertical_1_1 as its first domino.
 
     This removes vertical_1_1 and shifts all remaining dominos one column left.
-    It is the left inverse of prependVertical. -/
+    It is the left inverse of prependVertical. @statement_id stmt-src-lem.details.domino.restrictaftervertical
+-/
 def restrictAfterVertical (T : DominoTiling (n + 1) 2) (hv : vertical_1_1 ∈ T.dominos) :
     DominoTiling n 2 where
   dominos := (T.dominos.erase vertical_1_1).attach.image fun ⟨d, hd⟩ =>
@@ -1284,7 +1287,8 @@ def restrictAfterVertical (T : DominoTiling (n + 1) 2) (hv : vertical_1_1 ∈ T.
     that has horizontal_1_1 and horizontal_1_2 as its first dominos.
 
     This removes the two horizontal dominos and shifts remaining dominos two columns left.
-    It is the left inverse of prependHorizontalPair. -/
+    It is the left inverse of prependHorizontalPair. @statement_id stmt-src-lem.details.domino.restrictafterhorizontalpair
+-/
 def restrictAfterHorizontalPair (T : DominoTiling (n + 2) 2)
     (hh1 : horizontal_1_1 ∈ T.dominos) (hh2 : horizontal_1_2 ∈ T.dominos) :
     DominoTiling n 2 where
@@ -1670,7 +1674,8 @@ These lemmas establish that every 2×(n+2) tiling either:
 
 This is the key dichotomy needed for the bijection. -/
 
-/-- In a 2×(n+1) tiling, cell (1,1) is covered by some domino. -/
+/-- In a 2×(n+1) tiling, cell (1,1) is covered by some domino. @statement_id stmt-src-lem.details.domino.exists-domino-covering-11
+-/
 lemma exists_domino_covering_11 (T : DominoTiling (n + 1) 2) :
     ∃ d ∈ T.dominos, (1, 1) ∈ d.cells := by
   have h11 : (1, 1) ∈ Rectangle (n + 1) 2 := by
@@ -1680,7 +1685,8 @@ lemma exists_domino_covering_11 (T : DominoTiling (n + 1) 2) :
   simp only [Finset.mem_biUnion] at h11
   exact h11
 
-/-- Any domino covering cell (1,1) in a 2×(n+2) tiling has cells = {(1,1), (1,2)} or {(1,1), (2,1)}. -/
+/-- Any domino covering cell (1,1) in a 2×(n+2) tiling has cells = {(1,1), (1,2)} or {(1,1), (2,1)}. @statement_id stmt-src-lem.details.domino.domino-covering-11-cells
+-/
 lemma domino_covering_11_cells (T : DominoTiling (n + 2) 2) (d : Domino) (hd : d ∈ T.dominos)
     (hcov : (1, 1) ∈ d.cells) : d.cells = {(1, 1), (1, 2)} ∨ d.cells = {(1, 1), (2, 1)} := by
   have hd_in := T.dominos_in_rect d hd
@@ -1727,7 +1733,8 @@ lemma domino_covering_11_cells (T : DominoTiling (n + 2) 2) (d : Domino) (hd : d
         simp only [Domino.cells, hc1, heq.symm, Finset.pair_comm]
 
 /-- If a domino in a 2×(n+2) tiling covers (1,1) with a horizontal domino (cells = {(1,1), (2,1)}),
-    then there must be another domino covering (1,2). -/
+    then there must be another domino covering (1,2). @statement_id stmt-src-lem.details.domino.exists-horizontal-12
+-/
 lemma exists_domino_covering_12_of_horizontal (T : DominoTiling (n + 2) 2) (d : Domino)
     (hd : d ∈ T.dominos) (hcells : d.cells = {(1, 1), (2, 1)}) :
     ∃ d' ∈ T.dominos, d' ≠ d ∧ (1, 2) ∈ d'.cells := by
@@ -2169,7 +2176,8 @@ instance (T : DominoTiling (n + 2) 2) : Decidable (hasVerticalFirstColumn T) := 
   unfold hasVerticalFirstColumn
   infer_instance
 
-/-- The dichotomy: every 2×(n+2) tiling either has a vertical first column or a horizontal pair. -/
+/-- The dichotomy: every 2×(n+2) tiling either has a vertical first column or a horizontal pair. @statement_id stmt-src-lem.details.domino.hasverticalfirstcolumn-or-horizontalpair
+-/
 lemma hasVerticalFirstColumn_or_horizontalPair (T : DominoTiling (n + 2) 2) :
     hasVerticalFirstColumn T ∨
     (∃ d₁ ∈ T.dominos, d₁.cells = ({(1, 1), (2, 1)} : Finset Cell)) ∧
@@ -2345,7 +2353,8 @@ def tiling_2_from_sum : (DominoTiling n 2) ⊕ (DominoTiling (n + 1) 2) → Domi
 /-- The roundtrip `tiling_2_to_sum (tiling_2_from_sum x) = x`.
     This is the key property establishing that `tiling_2_from_sum` is a right inverse
     of `tiling_2_to_sum`, which proves surjectivity of `tiling_2_to_sum` and
-    injectivity of `tiling_2_from_sum`. -/
+    injectivity of `tiling_2_from_sum`. @statement_id stmt-src-lem.details.domino.tiling-2-to-sum-from-sum
+-/
 lemma tiling_2_to_sum_from_sum (x : (DominoTiling n 2) ⊕ (DominoTiling (n + 1) 2)) :
     tiling_2_to_sum (tiling_2_from_sum x) = x := by
   unfold tiling_2_to_sum tiling_2_from_sum
@@ -2497,7 +2506,8 @@ private lemma insert_insert_erase_erase_image_eq {α β : Type*} [DecidableEq α
     **Proof status**: FULLY PROVED
     - Vertical case: PROVED (uses helper lemmas `image_preserved_under_double_roundtrip'`
       and `insert_erase_image_eq'`)
-    - Horizontal case: PROVED (uses helper lemma `insert_insert_erase_erase_image_eq`) -/
+    - Horizontal case: PROVED (uses helper lemma `insert_insert_erase_erase_image_eq`) @statement_id stmt-src-lem.details.domino.tiling-2-roundtrip
+-/
 lemma tiling_2_roundtrip_TilingEquiv (T : DominoTiling (n + 2) 2) :
     TilingEquiv (tiling_2_from_sum (tiling_2_to_sum T)) T := by
   unfold TilingEquiv tiling_2_to_sum tiling_2_from_sum
@@ -2602,7 +2612,8 @@ lemma tiling_2_roundtrip_TilingEquiv (T : DominoTiling (n + 2) 2) :
     **Note**: Structural equality (`=`) fails for the `left_inv` direction because tilings
     may use "flipped" dominos (e.g., `vertical_1_1_flip` instead of `vertical_1_1`).
     However, the mathematical content is correct: the roundtrip preserves cell coverage
-    (`TilingEquiv`), and the bijection at the cell level is established. -/
+    (`TilingEquiv`), and the bijection at the cell level is established. @statement_id stmt-src-lem.details.domino.tiling-2-from-sum-surjective
+-/
 lemma tiling_2_from_sum_surjective_up_to_TilingEquiv (T : DominoTiling (n + 2) 2) :
     ∃ x, TilingEquiv (tiling_2_from_sum x) T :=
   ⟨tiling_2_to_sum T, tiling_2_roundtrip_TilingEquiv T⟩
@@ -2711,7 +2722,8 @@ def topDominos (n : ℕ) : Finset Domino :=
     - Horizontal middle and top dominos filling the interior
     - A vertical domino (right wall) in the top two squares of column n
 
-    (def.gf.weighted-set.domino.Rn3.ABC (a)) -/
+    (def.gf.weighted-set.domino.Rn3.ABC (a)) @statement_id stmt-src-def.gf.weighted-set.domino.rn3.abc
+-/
 def TilingA (n : ℕ) (hn : Even n) (hn_ge : n ≥ 2) : DominoTiling n 3 where
   dominos := basementDominos n ∪ {leftWall} ∪ {rightWall n} ∪
              middleDominos n ∪ topDominos n
@@ -3400,7 +3412,8 @@ def bottomDominosB (n : ℕ) : Finset Domino :=
     This is the reflection of A_n across the horizontal axis.
     It has a vertical domino in the bottom two squares of column 1.
 
-    (def.gf.weighted-set.domino.Rn3.ABC (b)) -/
+    (def.gf.weighted-set.domino.Rn3.ABC (b)) @statement_id stmt-src-def.gf.weighted-set.domino.rn3.abc
+-/
 def TilingB (n : ℕ) (hn : Even n) (hn_ge : n ≥ 2) : DominoTiling n 3 where
   dominos := basementDominosB n ∪ {leftWallB} ∪ {rightWallB n} ∪
              middleDominos n ∪ bottomDominosB n
@@ -4036,7 +4049,8 @@ C is the unique faultfree tiling of R_{2,3} consisting of three horizontal domin
     - {(1, 2), (2, 2)} (middle row)
     - {(1, 3), (2, 3)} (top row)
 
-    (def.gf.weighted-set.domino.Rn3.ABC (c)) -/
+    (def.gf.weighted-set.domino.Rn3.ABC (c)) @statement_id stmt-src-def.gf.weighted-set.domino.rn3.abc
+-/
 def TilingC : DominoTiling 2 3 where
   dominos := {
     { cell1 := (1, 1), cell2 := (2, 1),
@@ -4219,7 +4233,8 @@ private lemma reflectCell3_surjective_on_rect {n : ℕ} {c : Cell}
     ext <;> omega
 
 /-- Reflect a tiling of R_{n,3} across the horizontal axis.
-    This operation is well-defined and produces a valid tiling. -/
+    This operation is well-defined and produces a valid tiling. @statement_id stmt-src-def.details.domino.reflecttiling3
+-/
 noncomputable def reflectTiling3 {n : ℕ} (T : DominoTiling n 3) : DominoTiling n 3 where
   dominos := T.dominos.attach.map ⟨fun ⟨d, hd⟩ =>
     reflectDomino3 d
@@ -4304,7 +4319,8 @@ private lemma reflectDomino3_maxCol {d : Domino} (h1 : d.cell1.2 ≤ 3) (h2 : d.
 
 /-- Key property: For each domino in T, there's a corresponding reflected domino in reflectTiling3 T
     with the same minCol and maxCol. This captures the essential fact that horizontal reflection
-    only changes row coordinates, not column coordinates. -/
+    only changes row coordinates, not column coordinates. @statement_id stmt-src-lem.details.domino.reflecttiling3-mincol-maxcol
+-/
 lemma reflectTiling3_dominos_minCol_maxCol {n : ℕ} (T : DominoTiling n 3) :
     ∀ d ∈ T.dominos, ∃ d' ∈ (reflectTiling3 T).dominos, d'.minCol = d.minCol ∧ d'.maxCol = d.maxCol := by
   intro d hd
@@ -4325,7 +4341,8 @@ lemma reflectTiling3_dominos_minCol_maxCol {n : ℕ} (T : DominoTiling n 3) :
     The proof uses the key observation that horizontal reflection only changes row coordinates,
     not column coordinates. Therefore, minCol and maxCol of each domino are preserved.
     Since faults are determined solely by whether dominos span column boundaries
-    (i.e., whether minCol ≤ k < maxCol for some k), reflection preserves faultfreeness. -/
+    (i.e., whether minCol ≤ k < maxCol for some k), reflection preserves faultfreeness. @statement_id stmt-src-lem.details.domino.reflecttiling3-faultfree
+-/
 theorem reflectTiling3_isFaultfree {n : ℕ} (T : DominoTiling n 3) (hfree : T.isFaultfree) :
     (reflectTiling3 T).isFaultfree := by
   intro k hk_ge1 hk_lt_n hfault
@@ -4346,7 +4363,8 @@ theorem reflectTiling3_isFaultfree {n : ℕ} (T : DominoTiling n 3) (hfree : T.i
   -- But T is faultfree, contradiction
   exact hfree k hk_ge1 hk_lt_n hfault_T
 
-/-- Reflection swaps top and bottom vertical dominos. -/
+/-- Reflection swaps top and bottom vertical dominos. @statement_id stmt-src-lem.details.domino.reflecttiling3-top-bottom
+-/
 theorem reflectTiling3_hasTopVertical_iff_hasBottomVertical {n : ℕ} (T : DominoTiling n 3) (c : ℕ) :
     (reflectTiling3 T).hasTopVerticalInCol c ↔ T.hasBottomVerticalInCol c := by
   constructor
@@ -4396,7 +4414,8 @@ theorem reflectTiling3_hasTopVertical_iff_hasBottomVertical {n : ℕ} (T : Domin
       · right; constructor <;> omega
       · left; constructor <;> omega
 
-/-- Reflection is an involution. -/
+/-- Reflection is an involution. @statement_id stmt-src-lem.details.domino.reflecttiling3-involutive
+-/
 theorem reflectTiling3_involutive {n : ℕ} (T : DominoTiling n 3) :
     reflectTiling3 (reflectTiling3 T) = T := by
   -- Two DominoTilings are equal iff their dominos are equal (proof irrelevance for the rest)
@@ -4455,7 +4474,8 @@ theorem reflectTiling3_involutive {n : ℕ} (T : DominoTiling n 3) :
       rfl
 
 /-- reflectTiling3 preserves TilingEquiv: if T₁ ≃ T₂ (same cell images),
-    then reflectTiling3 T₁ ≃ reflectTiling3 T₂. -/
+    then reflectTiling3 T₁ ≃ reflectTiling3 T₂. @statement_id stmt-src-lem.details.domino.reflecttiling3-preserves-equiv
+-/
 theorem reflectTiling3_preserves_TilingEquiv {n : ℕ} (T₁ T₂ : DominoTiling n 3)
     (h : DominoTiling.TilingEquiv T₁ T₂) :
     DominoTiling.TilingEquiv (reflectTiling3 T₁) (reflectTiling3 T₂) := by
@@ -4497,7 +4517,8 @@ theorem reflectTiling3_preserves_TilingEquiv {n : ℕ} (T₁ T₂ : DominoTiling
     · exact ⟨d₁, hd₁, rfl⟩
     · rw [reflectDomino3_cells, hcells]
 
-/-- TilingB is the reflection of TilingA. -/
+/-- TilingB is the reflection of TilingA. @statement_id stmt-src-lem.details.domino.tilingb-eq-reflect
+-/
 theorem TilingB_eq_reflectTiling3_TilingA (n : ℕ) (hn : Even n) (hn_ge : n ≥ 2) :
     TilingB n hn hn_ge = reflectTiling3 (TilingA n hn hn_ge) := by
   -- Two DominoTiling structures are equal if their dominos fields are equal
@@ -4757,7 +4778,8 @@ private lemma TilingA_row3_covered (n col : ℕ) (hn : Even n) (hn_ge : n ≥ 2)
 /-- The tilings A_n are faultfree.
 
     The basement dominos prevent faults between columns 2i-1 and 2i,
-    while the top dominos prevent faults between columns 2i and 2i+1. -/
+    while the top dominos prevent faults between columns 2i and 2i+1. @statement_id stmt-src-lem.details.domino.tilinga-faultfree
+-/
 theorem TilingA_isFaultfree (n : ℕ) (hn : Even n) (hn_ge : n ≥ 2) :
     (TilingA n hn hn_ge).isFaultfree := by
   intro k hk_ge1 hk_lt_n
@@ -4819,13 +4841,15 @@ theorem TilingA_isFaultfree (n : ℕ) (hn : Even n) (hn_ge : n ≥ 2) :
         simp only [max_def]
         split_ifs <;> omega
 
-/-- The tilings B_n are faultfree (by reflection symmetry with A_n). -/
+/-- The tilings B_n are faultfree (by reflection symmetry with A_n). @statement_id stmt-src-lem.details.domino.tilingb-faultfree
+-/
 theorem TilingB_isFaultfree (n : ℕ) (hn : Even n) (hn_ge : n ≥ 2) :
     (TilingB n hn hn_ge).isFaultfree := by
   rw [TilingB_eq_reflectTiling3_TilingA]
   exact reflectTiling3_isFaultfree (TilingA n hn hn_ge) (TilingA_isFaultfree n hn hn_ge)
 
-/-- The tiling C is faultfree. -/
+/-- The tiling C is faultfree. @statement_id stmt-src-lem.details.domino.tilingc-faultfree
+-/
 theorem TilingC_isFaultfree : TilingC.isFaultfree := by
   intro k hk_ge1 hk_lt2
   -- k must be 1 (since 1 ≤ k < 2)
@@ -4850,7 +4874,8 @@ theorem TilingC_isFaultfree : TilingC.isFaultfree := by
     simp only [Domino.maxCol]
     decide
 
-/-- Tiling A_n has a vertical domino in the top two squares of column 1. -/
+/-- Tiling A_n has a vertical domino in the top two squares of column 1. @statement_id stmt-src-lem.details.domino.tilinga-hastopvertical
+-/
 theorem TilingA_hasTopVertical (n : ℕ) (hn : Even n) (hn_ge : n ≥ 2) :
     (TilingA n hn hn_ge).hasTopVerticalInCol 1 := by
   -- We show that leftWall is in the dominos and satisfies the property
@@ -4871,7 +4896,8 @@ theorem TilingA_hasTopVertical (n : ℕ) (hn : Even n) (hn_ge : n ≥ 2) :
       left
       constructor <;> rfl
 
-/-- Tiling B_n has a vertical domino in the bottom two squares of column 1. -/
+/-- Tiling B_n has a vertical domino in the bottom two squares of column 1. @statement_id stmt-src-lem.details.domino.tilingb-hasbottomvertical
+-/
 theorem TilingB_hasBottomVertical (n : ℕ) (hn : Even n) (hn_ge : n ≥ 2) :
     (TilingB n hn hn_ge).hasBottomVerticalInCol 1 := by
   unfold DominoTiling.hasBottomVerticalInCol
@@ -4892,7 +4918,8 @@ theorem TilingB_hasBottomVertical (n : ℕ) (hn : Even n) (hn_ge : n ≥ 2) :
         right
         simp [leftWallB]
 
-/-- Tiling C has no vertical domino in column 1. -/
+/-- Tiling C has no vertical domino in column 1. @statement_id stmt-src-lem.details.domino.tilingc-novertical
+-/
 theorem TilingC_noVerticalInCol1 : ¬TilingC.hasVerticalInCol 1 := by
   simp only [DominoTiling.hasVerticalInCol, TilingC, Finset.mem_insert, Finset.mem_singleton,
     Domino.isVertical]
@@ -4907,7 +4934,8 @@ They are placed before the main classification theorems since the proofs depend 
 -/
 
 /-- A tiling with a vertical domino in the top of column c has n ≥ c.
-    This follows because the domino must be within the rectangle. -/
+    This follows because the domino must be within the rectangle. @statement_id stmt-src-lem.details.domino.hastopvertical-implies-n-ge
+-/
 lemma hasTopVerticalInCol_implies_n_ge (n : ℕ) (T : DominoTiling n 3) (c : ℕ)
     (htop : T.hasTopVerticalInCol c) : n ≥ c := by
   obtain ⟨d, hd_mem, hd_vert, hd_col, hd_rows⟩ := htop
@@ -4926,7 +4954,8 @@ lemma hasTopVerticalInCol_implies_n_ge (n : ℕ) (T : DominoTiling n 3) (c : ℕ
 /-- A rectangle R_{n,3} can only be tiled by dominos if n is even or n = 0.
 
     This follows from the parity argument: 3n squares must be covered by dominos
-    (each covering 2 squares), so 3n must be even, hence n must be even. -/
+    (each covering 2 squares), so 3n must be even, hence n must be even. @statement_id stmt-src-lem.details.domino.parity
+-/
 theorem rectangle_tileable_iff_even (n : ℕ) :
     Nonempty (DominoTiling n 3) → Even n ∨ n = 0 := by
   intro ⟨T⟩
@@ -4957,7 +4986,8 @@ theorem rectangle_tileable_iff_even (n : ℕ) :
 
 /-- Helper lemma for the base case: If T has a top vertical domino in column 1,
     then the cell (1,1) must be covered by a horizontal domino going right.
-    This gives us the basement domino {(1,1), (2,1)} for i=1. -/
+    This gives us the basement domino {(1,1), (2,1)} for i=1. @statement_id stmt-src-lem.details.domino.base-case-basement
+-/
 lemma base_case_basement (n : ℕ) (T : DominoTiling n 3)
     (htop : T.hasTopVerticalInCol 1) (hn : n ≥ 2) :
     ∃ d ∈ T.dominos, d.cells = {(1, 1), (2, 1)} := by
@@ -5350,7 +5380,8 @@ private lemma maxCol_eq_c_add_1_of_cells_eq_c1_c_add_1_1 (c : ℕ) (d : Domino) 
     cell orderings, since the `Domino` structure allows either cell to be `cell1` or `cell2`.
     This makes the theorem provable for arbitrary tilings.
 
-    This is proved by induction on i. -/
+    This is proved by induction on i. @statement_id stmt-src-lem.details.domino.claim1
+-/
 theorem claim1_basement_middle_top (n : ℕ) (T : DominoTiling n 3)
     (hfree : T.isFaultfree) (htop : T.hasTopVerticalInCol 1)
     (i : ℕ) (hi_pos : i ≥ 1) (hi_lt : i < n / 2) :
@@ -5766,7 +5797,8 @@ theorem claim1_basement_middle_top (n : ℕ) (T : DominoTiling n 3)
 /-- Claim 2 from the proof: The width n must be even.
 
     Alternative proof: Since T tiles R_{n,3} with dominos, the total number of squares
-    (which is 3n) must be even. Hence n must be even. -/
+    (which is 3n) must be even. Hence n must be even. @statement_id stmt-src-lem.details.domino.claim2
+-/
 theorem claim2_n_even (n : ℕ) (T : DominoTiling n 3)
     (_hfree : T.isFaultfree) (_htop : T.hasTopVerticalInCol 1) :
     Even n := by
@@ -5784,7 +5816,8 @@ theorem claim2_n_even (n : ℕ) (T : DominoTiling n 3)
   exact even_iff_two_dvd.mpr h_dvd
 
 /-- A faultfree tiling with a vertical domino in the top of column 1 has n ≥ 2.
-    This follows because n is even (from claim2_n_even) and n ≥ 1. -/
+    This follows because n is even (from claim2_n_even) and n ≥ 1. @statement_id stmt-src-lem.details.domino.faultfree-hastopvertical-implies-n-ge-two
+-/
 lemma faultfree_hasTopVerticalInCol_implies_n_ge_two (n : ℕ) (T : DominoTiling n 3)
     (hfree : T.isFaultfree) (htop : T.hasTopVerticalInCol 1) : n ≥ 2 := by
   have hn_even := claim2_n_even n T hfree htop
@@ -5905,7 +5938,8 @@ private lemma domino_at_n1_options (n : ℕ) (d : Domino)
     Implementation note: The faultfree hypothesis `_hfree` is not used in this proof.
     In the source material, faultfree is used to argue there can't be a third column,
     but since this theorem is specifically for 2×3 rectangles (n = 2), this is automatic
-    from the type signature. -/
+    from the type signature. @statement_id stmt-src-lem.details.domino.classification-part-c
+-/
 theorem faultfree_no_vertical_unique (T : DominoTiling 2 3)
     (_hfree : T.isFaultfree) (hno_vert : ¬T.hasVerticalInCol 1) :
     DominoTiling.TilingEquiv T TilingC := by
@@ -6155,7 +6189,8 @@ theorem faultfree_no_vertical_unique (T : DominoTiling 2 3)
 
     Note: We use TilingEquiv instead of = because the Domino structure distinguishes
     between {cell1 := (1, 2), cell2 := (1, 3)} and {cell1 := (1, 3), cell2 := (1, 2)}
-    as different dominos, even though they cover the same cells. -/
+    as different dominos, even though they cover the same cells. @statement_id stmt-src-lem.details.domino.classification-part-a
+-/
 theorem faultfree_top_vertical_classification (n : ℕ) (T : DominoTiling n 3)
     (hfree : T.isFaultfree) (htop : T.hasTopVerticalInCol 1) :
     Even n ∧ ∃ (hn : Even n) (hn_ge : n ≥ 2), DominoTiling.TilingEquiv T (TilingA n hn hn_ge) := by
@@ -6463,7 +6498,8 @@ theorem faultfree_top_vertical_classification (n : ℕ) (T : DominoTiling n 3)
     This follows from part (a) by reflection across the horizontal axis.
 
     Note: We use TilingEquiv instead of = because the Domino structure distinguishes
-    between different cell orderings. -/
+    between different cell orderings. @statement_id stmt-src-lem.details.domino.classification-part-b
+-/
 theorem faultfree_bottom_vertical_classification (n : ℕ) (T : DominoTiling n 3)
     (hfree : T.isFaultfree) (hbot : T.hasBottomVerticalInCol 1) :
     Even n ∧ ∃ (hn : Even n) (hn_ge : n ≥ 2), DominoTiling.TilingEquiv T (TilingB n hn hn_ge) := by
@@ -6499,7 +6535,8 @@ theorem faultfree_bottom_vertical_classification (n : ℕ) (T : DominoTiling n 3
 
 /-- For height 3, a vertical domino in column 1 must be either in the top two squares
     (rows 2-3) or the bottom two squares (rows 1-2). There's no other option since
-    a vertical domino covers 2 adjacent rows and we only have 3 rows. -/
+    a vertical domino covers 2 adjacent rows and we only have 3 rows. @statement_id stmt-src-lem.details.domino.vertical-trichotomy
+-/
 lemma vertical_in_col1_trichotomy (n : ℕ) (T : DominoTiling n 3) :
     T.hasVerticalInCol 1 → T.hasTopVerticalInCol 1 ∨ T.hasBottomVerticalInCol 1 := by
   intro ⟨d, hd_mem, hd_vert, hd_col⟩
@@ -6557,7 +6594,8 @@ lemma vertical_in_col1_trichotomy (n : ℕ) (T : DominoTiling n 3) :
     three horizontal dominos extending into column 2. This covers all of column 2,
     so if n > 2, there would be a fault between columns 2 and 3.
 
-    Note: requires n ≥ 1 (for n = 0, the empty tiling is a counterexample). -/
+    Note: requires n ≥ 1 (for n = 0, the empty tiling is a counterexample). @statement_id stmt-src-lem.details.domino.no-vertical-implies-n-eq-2
+-/
 lemma no_vertical_implies_n_eq_2 (n : ℕ) (T : DominoTiling n 3)
     (hfree : T.isFaultfree) (hno_vert : ¬T.hasVerticalInCol 1) (hn : n ≥ 1) :
     n = 2 := by
@@ -6825,7 +6863,8 @@ lemma no_vertical_implies_n_eq_2 (n : ℕ) (T : DominoTiling n 3)
 
     Note: requires n ≥ 1 (for n = 0, the empty tiling is a counterexample).
 
-    (prop.gf.weighted-set.domino.Rn3.ABC) -/
+    (prop.gf.weighted-set.domino.Rn3.ABC) @statement_id stmt-src-prop.gf.weighted-set.domino.rn3.abc
+-/
 theorem faultfree_classification (n : ℕ) (T : DominoTiling n 3) (hfree : T.isFaultfree)
     (hn : n ≥ 1) :
     (∃ (hn : Even n) (hn_ge : n ≥ 2), DominoTiling.TilingEquiv T (TilingA n hn hn_ge)) ∨

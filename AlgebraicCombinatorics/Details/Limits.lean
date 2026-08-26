@@ -55,7 +55,8 @@ These lemmas provide the foundational facts about sequence stabilization.
 -/
 
 /-- If a sequence stabilizes to a limit, that limit is unique.
-(Used in the proof of Lemma `lem.fps.lim.xn-equiv`) -/
+(Used in the proof of Lemma `lem.fps.lim.xn-equiv`) @statement_id stmt-src-lem.fps.lim.stab-unique-detail
+-/
 theorem stabilizesTo_unique' {a : ℕ → K} {lim₁ lim₂ : K}
     (h₁ : StabilizesTo a lim₁) (h₂ : StabilizesTo a lim₂) : lim₁ = lim₂ := by
   obtain ⟨N₁, hN₁⟩ := h₁
@@ -144,7 +145,8 @@ The proof proceeds as follows:
 5. This means `f_i ≡[x^n] f`.
 
 This result is used together with `prop.fps.lim.sum-prod.L` (the analogous statement for `g_i → g`)
-to prove the main proposition. -/
+to prove the main proposition. @statement_id stmt-src-prop.fps.lim.sum-prod.k
+-/
 theorem exists_xnEquiv_K
     {f : ℕ → PowerSeries K} {lf : PowerSeries K}
     (hf : CoeffStabilizesTo f lf) (n : ℕ) :
@@ -161,7 +163,8 @@ This is the second intermediate step in the detailed proof of Proposition `prop.
 It is the exact same statement as `prop.fps.lim.sum-prod.K`, but applied to the sequence `(g_i)`.
 
 Together with `prop.fps.lim.sum-prod.K`, this allows us to set `P = max{K, L}` and conclude
-that for all `i ≥ P`, both `f_i ≡[x^n] f` and `g_i ≡[x^n] g` hold simultaneously. -/
+that for all `i ≥ P`, both `f_i ≡[x^n] f` and `g_i ≡[x^n] g` hold simultaneously. @statement_id stmt-src-prop.fps.lim.sum-prod.l
+-/
 theorem exists_xnEquiv_L
     {g : ℕ → PowerSeries K} {lg : PowerSeries K}
     (hg : CoeffStabilizesTo g lg) (n : ℕ) :
@@ -176,7 +179,8 @@ then for each `n ∈ ℕ`, there exists `P ∈ ℕ` such that for all `i ≥ P`:
 - `g_i ≡[x^n] g`
 
 This is the key step that allows us to apply the compatibility of x^n-equivalence with
-arithmetic operations. -/
+arithmetic operations. @statement_id stmt-src-prop.fps.lim.sum-prod.both
+-/
 theorem exists_xnEquiv_both
     {f g : ℕ → PowerSeries K} {lf lg : PowerSeries K}
     (hf : CoeffStabilizesTo f lf) (hg : CoeffStabilizesTo g lg) (n : ℕ) :
@@ -190,7 +194,8 @@ theorem exists_xnEquiv_both
 /-- Limits respect addition - detailed proof.
 (Proposition `prop.fps.lim.sum-prod`, label: prop.fps.lim.sum-prod)
 
-The same argument as for multiplication, but using the additivity of x^n-equivalence. -/
+The same argument as for multiplication, but using the additivity of x^n-equivalence. @statement_id stmt-src-prop.fps.lim.sum-prod.add-detail
+-/
 theorem coeffStabilizesTo_add'
     {f g : ℕ → PowerSeries K} {lf lg : PowerSeries K}
     (hf : CoeffStabilizesTo f lf) (hg : CoeffStabilizesTo g lg) :
@@ -212,7 +217,8 @@ theorem coeffStabilizesTo_add'
   exact h_sum n (le_refl n)
 
 /-- Limits respect multiplication - detailed proof.
-(Proposition `prop.fps.lim.sum-prod`, label: prop.fps.lim.sum-prod) -/
+(Proposition `prop.fps.lim.sum-prod`, label: prop.fps.lim.sum-prod) @statement_id stmt-src-prop.fps.lim.sum-prod.mul-detail
+-/
 theorem coeffStabilizesTo_mul'
     {f g : ℕ → PowerSeries K} {lf lg : PowerSeries K}
     (hf : CoeffStabilizesTo f lf) (hg : CoeffStabilizesTo g lg) :
@@ -282,6 +288,7 @@ The proof follows the tex source structure:
    - `[x^n] g = ∑_{k ∈ ℕ} [x^n] f_k = ∑_{k=0}^{i} [x^n] f_k` (since terms for `k > m` are 0)
    - `[x^n] g_i = ∑_{k=0}^{i} [x^n] f_k`
 5. Therefore `[x^n] g_i = [x^n] g` for `i ≥ m`.
+@statement_id stmt-src-lem.fps.lim.partial-sum-detail
 -/
 theorem coeffStabilizesTo_partial_sum'
     {f : ℕ → PowerSeries K} (hf : IsSummable f) :
@@ -315,6 +322,7 @@ The proof follows the tex source structure:
    `[x^n](∏_{k ∈ {0,...,i}} f_k) = [x^n](∏_{k ∈ M} f_k)`.
 5. By definition of the infinite product, `[x^n] g = [x^n](∏_{k ∈ M} f_k)`.
 6. Therefore `[x^n] g_i = [x^n] g` for `i ≥ m`.
+@statement_id stmt-src-lem.fps.lim.partial-prod-detail
 -/
 theorem coeffStabilizesTo_partial_prod'
     {f : ℕ → PowerSeries K} (hf : IsMultipliable f) :
@@ -364,6 +372,7 @@ The proof follows the tex source structure:
    - Therefore `[x^n] f_i = 0`.
 5. All but finitely many `k` have `[x^n] f_k = 0`.
 6. This holds for all `n`, so `(f_n)` is summable.
+@statement_id stmt-src-lem.fps.lim.summable-of-partial-sum-detail
 -/
 theorem isSummable_of_coeffStabilizesTo_partial_sum'
     {f : ℕ → PowerSeries K} {lim : PowerSeries K}
@@ -377,6 +386,7 @@ theorem isSummable_of_coeffStabilizesTo_partial_sum'
 Once we know the family is summable, we can apply Theorem `thm.fps.lim.sum-lim`
 to conclude that the partial sums converge to the infinite sum.
 Since limits are unique, the limit must equal the infinite sum.
+@statement_id stmt-src-lem.fps.lim.tsum-eq-detail
 -/
 theorem tsum'_eq_of_coeffStabilizesTo_partial_sum'
     {f : ℕ → PowerSeries K} {lim : PowerSeries K}
@@ -431,6 +441,7 @@ The proof follows the tex source structure:
 
 4. For any finite `J ⊇ M`, we have `[x^n](∏_{k ∈ J} f_k) = [x^n](∏_{k ∈ M} f_k)`.
 5. This shows `M` determines the x^n-coefficient.
+@statement_id stmt-src-lem.fps.lim.multipliable-of-partial-prod-detail
 -/
 theorem isMultipliable_of_coeffStabilizesTo_partial_prod'
     {f : ℕ → PowerSeries K} {lim : PowerSeries K}
@@ -445,6 +456,7 @@ theorem isMultipliable_of_coeffStabilizesTo_partial_prod'
 Once we know the family is multipliable, we can apply Theorem `thm.fps.lim.prod-lim`
 to conclude that the partial products converge to the infinite product.
 Since limits are unique, the limit must equal the infinite product.
+@statement_id stmt-src-lem.fps.lim.tprod-eq-detail
 -/
 theorem tprod'_eq_of_coeffStabilizesTo_partial_prod'
     {f : ℕ → PowerSeries K} {lim : PowerSeries K}

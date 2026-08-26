@@ -68,17 +68,21 @@ by `K[[x₁, x₂, ..., xₖ]]` in the source. In Mathlib, this is `MvPowerSerie
 -/
 
 /-- The algebra of formal power series in `k` variables over `R`.
-    This corresponds to `K[[x₁, x₂, ..., xₖ]]` in the source notation. -/
+    This corresponds to `K[[x₁, x₂, ..., xₖ]]` in the source notation. @statement_id stmt-src-def.fps.mulvar.algebra
+-/
 abbrev FPS (k : ℕ) (R : Type*) [CommSemiring R] := MvPowerSeries (Fin k) R
 
 /-- The algebra of formal power series in 2 variables (bivariate).
-    This corresponds to `K[[x, y]]` in the source. -/
+    This corresponds to `K[[x, y]]` in the source. @statement_id stmt-src-def.fps.mulvar.algebra
+-/
 abbrev BivFPS (R : Type*) [CommSemiring R] := MvPowerSeries (Fin 2) R
 
-/-- The first variable `x` in a bivariate power series ring. -/
+/-- The first variable `x` in a bivariate power series ring. @statement_id stmt-src-def.fps.mulvar.algebra
+-/
 noncomputable def BivFPS.x : BivFPS R := MvPowerSeries.X 0
 
-/-- The second variable `y` in a bivariate power series ring. -/
+/-- The second variable `y` in a bivariate power series ring. @statement_id stmt-src-def.fps.mulvar.algebra
+-/
 noncomputable def BivFPS.y : BivFPS R := MvPowerSeries.X 1
 
 /-!
@@ -93,11 +97,13 @@ coefficient of `x^n` in `f_k`.
 /-- Embedding of a sequence of univariate power series `f : ℕ → PowerSeries R` into a
     bivariate power series `∑_k f_k y^k` in `K[[x, y]]`.
 
-    The coefficient of `x^n y^k` in the result is the coefficient of `x^n` in `f_k`. -/
+    The coefficient of `x^n y^k` in the result is the coefficient of `x^n` in `f_k`. @statement_id stmt-src-def.fps.mulvar.embedunivinbiv
+-/
 noncomputable def embedUnivInBiv (f : ℕ → PowerSeries R) : BivFPS R :=
   fun nm => (f (nm 1)).coeff (nm 0)
 
-/-- The coefficient of `x^n y^k` in `embedUnivInBiv f` is the coefficient of `x^n` in `f k`. -/
+/-- The coefficient of `x^n y^k` in `embedUnivInBiv f` is the coefficient of `x^n` in `f k`. @statement_id stmt-src-lem.fps.mulvar.coeff-embed
+-/
 @[simp]
 theorem coeff_embedUnivInBiv (f : ℕ → PowerSeries R) (n k : ℕ) :
     (embedUnivInBiv f) (Finsupp.single 0 n + Finsupp.single 1 k) = (f k).coeff n := by
@@ -109,7 +115,8 @@ theorem coeff_embedUnivInBiv (f : ℕ → PowerSeries R) (n k : ℕ) :
     `f` and `g` satisfy `∑_k f_k y^k = ∑_k g_k y^k` in `K[[x,y]]`, then `f_k = g_k` for each `k`.
 
     This is the key tool for "comparing coefficients in front of `y^k`" to extract
-    univariate identities from bivariate manipulations. -/
+    univariate identities from bivariate manipulations. @statement_id stmt-src-prop.fps.mulvar.comp-y-coeff
+-/
 theorem eq_of_embedUnivInBiv_eq (f g : ℕ → PowerSeries R)
     (h : embedUnivInBiv f = embedUnivInBiv g) :
     f = g := by
@@ -138,18 +145,21 @@ This is equation `eq.fps.mulvar.exa1.res1` in the source.
 -/
 
 /-- The generating function for binomial coefficients as a bivariate power series:
-    `∑_{n,k∈ℕ} C(n,k) x^n y^k`. -/
+    `∑_{n,k∈ℕ} C(n,k) x^n y^k`. @statement_id stmt-src-def.fps.mulvar.binomialgenfun
+-/
 noncomputable def binomialGenFun : BivFPS ℚ :=
   fun nm => (nm 0).choose (nm 1)
 
-/-- The closed form `1/(1 - x(1+y))` for the binomial generating function. -/
+/-- The closed form `1/(1 - x(1+y))` for the binomial generating function. @statement_id stmt-src-def.fps.mulvar.binomialgenfunclosedform
+-/
 noncomputable def binomialGenFunClosedForm : BivFPS ℚ :=
   MvPowerSeries.invOfUnit (1 - BivFPS.x * (1 + BivFPS.y)) 1
 
 /-- The binomial generating function equals its closed form.
     `∑_{n,k∈ℕ} C(n,k) x^n y^k = 1/(1 - x(1+y))`
 
-    This is the main computation in the example from the source. -/
+    This is the main computation in the example from the source. @statement_id stmt-src-thm.fps.mulvar.binomialgenfun-eq
+-/
 theorem binomialGenFun_eq : binomialGenFun = binomialGenFunClosedForm := by
   -- Helper lemmas for index manipulation
   have single_0_1_le_iff : ∀ nm : Fin 2 →₀ ℕ, single (0 : Fin 2) 1 ≤ nm ↔ 1 ≤ nm 0 :=
@@ -244,14 +254,16 @@ theorem binomialGenFun_eq : binomialGenFun = binomialGenFunClosedForm := by
     exact denom_mul_eq_one
   rw [h1, h2]
 
-/-- The inverse of `1 - X` in `ℚ⟦X⟧` equals the power series with all coefficients 1. -/
+/-- The inverse of `1 - X` in `ℚ⟦X⟧` equals the power series with all coefficients 1. @statement_id stmt-src-lem.fps.mulvar.one-sub-x-inv
+-/
 lemma one_sub_X_inv_eq_mk_one : (1 - PowerSeries.X : PowerSeries ℚ)⁻¹ = PowerSeries.mk 1 := by
   rw [PowerSeries.inv_eq_iff_mul_eq_one]
   · exact PowerSeries.mk_one_mul_one_sub_eq_one ℚ
   · simp [PowerSeries.constantCoeff_one, PowerSeries.constantCoeff_X]
 
 /-- The univariate identity `X^k * (1-X)⁻¹^(k+1) = ∑_n C(n,k) X^n`.
-    This is used to prove `binomialGenFun_xyk_eq`. -/
+    This is used to prove `binomialGenFun_xyk_eq`. @statement_id stmt-src-lem.fps.mulvar.x-pow-mul-inv
+-/
 lemma X_pow_mul_inv_one_sub_pow_eq_mk_choose (k : ℕ) :
     (PowerSeries.X : PowerSeries ℚ) ^ k * (1 - PowerSeries.X)⁻¹ ^ (k + 1) =
     PowerSeries.mk (fun n => (n.choose k : ℚ)) := by
@@ -271,7 +283,8 @@ lemma X_pow_mul_inv_one_sub_pow_eq_mk_choose (k : ℕ) :
     expressed as equality of embedded univariate sequences. The left side is the
     sequence `k ↦ x^k/(1-x)^{k+1}` and the right side is `k ↦ ∑_{n∈ℕ} C(n,k) x^n`.
 
-    This equation is used to derive `eq.fps.mulvar.exa1.res1` by comparing coefficients. -/
+    This equation is used to derive `eq.fps.mulvar.exa1.res1` by comparing coefficients. @statement_id stmt-src-thm.fps.mulvar.exa1.xyk
+-/
 theorem binomialGenFun_xyk_eq :
     embedUnivInBiv (fun k => (PowerSeries.X : PowerSeries ℚ) ^ k *
                             (1 - PowerSeries.X)⁻¹ ^ (k + 1)) =
@@ -283,7 +296,8 @@ theorem binomialGenFun_xyk_eq :
 /-- **Equation `eq.fps.mulvar.exa1.res1`**: The generating function identity
     `x^k / (1-x)^{k+1} = ∑_{n∈ℕ} C(n,k) x^n` for each `k ∈ ℕ`.
 
-    This is derived from the bivariate identity by comparing coefficients of `y^k`. -/
+    This is derived from the bivariate identity by comparing coefficients of `y^k`. @statement_id stmt-src-thm.fps.mulvar.exa1.res1
+-/
 theorem sum_choose_pow_eq (k : ℕ) :
     (PowerSeries.X : PowerSeries ℚ) ^ k * (1 - PowerSeries.X)⁻¹ ^ (k + 1) =
     PowerSeries.mk (fun n => (n.choose k : ℚ)) := by
@@ -303,7 +317,8 @@ for `f = ∑_m a_m x^m`, we have `∂f/∂x_i = ∑_m m_i · a_m · x^{m - e_i}`
 
 /-- The partial derivative of a multivariate power series with respect to variable `i`.
     For `f = ∑_m a_m x^m`, we have `∂f/∂x_i = ∑_m m_i · a_m · x^{m - e_i}`
-    where `e_i` is the `i`-th standard basis vector. -/
+    where `e_i` is the `i`-th standard basis vector. @statement_id stmt-src-def.fps.mulvar.partialderiv
+-/
 noncomputable def partialDeriv {σ : Type*} [DecidableEq σ] (i : σ) :
     MvPowerSeries σ R →ₗ[R] MvPowerSeries σ R where
   toFun f := fun m =>
@@ -319,14 +334,16 @@ noncomputable def partialDeriv {σ : Type*} [DecidableEq σ] (i : σ) :
     change _ = c * _
     ring
 
-/-- The coefficient of `partialDeriv i f` at `m` is `(m + single i 1) i * coeff (m + single i 1) f`. -/
+/-- The coefficient of `partialDeriv i f` at `m` is `(m + single i 1) i * coeff (m + single i 1) f`. @statement_id stmt-src-lem.fps.mulvar.coeff-partialderiv
+-/
 lemma coeff_partialDeriv {σ : Type*} [DecidableEq σ] (i : σ) (f : MvPowerSeries σ R) (m : σ →₀ ℕ) :
     coeff m (partialDeriv i f) = (DFunLike.coe (m + Finsupp.single i 1) i : R) * coeff (m + Finsupp.single i 1) f := by
   simp only [partialDeriv, LinearMap.coe_mk, AddHom.coe_mk]
   rfl
 
 /-- The map `(a, b) ↦ (a + single i 1, b)` gives a bijection from `antidiagonal m` to
-    the subset of `antidiagonal (m + single i 1)` where `single i 1 ≤ a`. -/
+    the subset of `antidiagonal (m + single i 1)` where `single i 1 ≤ a`. @statement_id stmt-src-lem.fps.mulvar.antidiag-shift-fst
+-/
 lemma antidiag_shift_fst {σ : Type*} [DecidableEq σ] (i : σ) (m : σ →₀ ℕ) :
     (antidiagonal m).map ⟨fun p => (p.1 + Finsupp.single i 1, p.2), fun p q h => by
       simp only [Prod.mk.injEq] at h
@@ -350,7 +367,8 @@ lemma antidiag_shift_fst {σ : Type*} [DecidableEq σ] (i : σ) (m : σ →₀ �
     · rw [tsub_add_cancel_of_le hle]
 
 /-- The map `(a, b) ↦ (a, b + single i 1)` gives a bijection from `antidiagonal m` to
-    the subset of `antidiagonal (m + single i 1)` where `single i 1 ≤ b`. -/
+    the subset of `antidiagonal (m + single i 1)` where `single i 1 ≤ b`. @statement_id stmt-src-lem.fps.mulvar.antidiag-shift-snd
+-/
 lemma antidiag_shift_snd {σ : Type*} [DecidableEq σ] (i : σ) (m : σ →₀ ℕ) :
     (antidiagonal m).map ⟨fun p => (p.1, p.2 + Finsupp.single i 1), fun p q h => by
       simp only [Prod.mk.injEq] at h
@@ -373,7 +391,8 @@ lemma antidiag_shift_snd {σ : Type*} [DecidableEq σ] (i : σ) (m : σ →₀ �
       exact add_right_cancel this
     · rw [tsub_add_cancel_of_le hle]
 
-/-- Terms where `p.1 i = 0` contribute zero to the first derivative sum. -/
+/-- Terms where `p.1 i = 0` contribute zero to the first derivative sum. @statement_id stmt-src-lem.fps.mulvar.sum-filter-zero-fst
+-/
 lemma sum_filter_zero_fst {σ : Type*} [DecidableEq σ] (i : σ) (m : σ →₀ ℕ)
     (f g : MvPowerSeries σ R) :
     ∑ p ∈ (antidiagonal (m + Finsupp.single i 1)).filter (fun p => ¬(Finsupp.single i (1 : ℕ) ≤ p.1)),
@@ -384,7 +403,8 @@ lemma sum_filter_zero_fst {σ : Type*} [DecidableEq σ] (i : σ) (m : σ →₀ 
   have : p.1 i = 0 := by omega
   simp [this]
 
-/-- Terms where `p.2 i = 0` contribute zero to the second derivative sum. -/
+/-- Terms where `p.2 i = 0` contribute zero to the second derivative sum. @statement_id stmt-src-lem.fps.mulvar.sum-filter-zero-snd
+-/
 lemma sum_filter_zero_snd {σ : Type*} [DecidableEq σ] (i : σ) (m : σ →₀ ℕ)
     (f g : MvPowerSeries σ R) :
     ∑ p ∈ (antidiagonal (m + Finsupp.single i 1)).filter (fun p => ¬(Finsupp.single i (1 : ℕ) ≤ p.2)),
@@ -395,7 +415,8 @@ lemma sum_filter_zero_snd {σ : Type*} [DecidableEq σ] (i : σ) (m : σ →₀ 
   have : p.2 i = 0 := by omega
   simp [this]
 
-/-- The partial derivative satisfies the product rule. -/
+/-- The partial derivative satisfies the product rule. @statement_id stmt-src-thm.fps.mulvar.partialderiv-mul
+-/
 theorem partialDeriv_mul {σ : Type*} [DecidableEq σ] (i : σ)
     (f g : MvPowerSeries σ R) :
     partialDeriv i (f * g) = partialDeriv i f * g + f * partialDeriv i g := by

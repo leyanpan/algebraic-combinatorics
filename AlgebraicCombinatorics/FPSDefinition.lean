@@ -82,7 +82,8 @@ The extractor `PowerSeries.coeff n : R⟦X⟧ → R` retrieves the n-th coeffici
     This formalizes Definition def.fps.fps from the source: a formal power series
     is a sequence (a₀, a₁, a₂, ...) of elements of R.
 
-    The forward direction extracts coefficients, the inverse constructs the FPS. -/
+    The forward direction extracts coefficients, the inverse constructs the FPS. @statement_id stmt-src-def.fps.fps
+-/
 noncomputable def fpsEquivSeq : R⟦X⟧ ≃ (ℕ → R) where
   toFun f := fun n => coeff n f
   invFun a := PowerSeries.mk a
@@ -94,7 +95,8 @@ noncomputable def fpsEquivSeq : R⟦X⟧ ≃ (ℕ → R) where
 theorem fps_mk_eq_symm (a : ℕ → R) : PowerSeries.mk a = fpsEquivSeq.symm a := rfl
 
 /-- Extracting coefficients from an FPS gives back the original sequence
-    (Definition def.fps.fps). -/
+    (Definition def.fps.fps). @statement_id stmt-src-def.fps.coeff
+-/
 theorem fps_coeff_mk (a : ℕ → R) (n : ℕ) : coeff n (PowerSeries.mk a) = a n := coeff_mk n a
 
 /-- Any FPS equals the FPS constructed from its coefficient sequence
@@ -104,7 +106,8 @@ theorem fps_eq_mk_coeff (f : R⟦X⟧) : f = PowerSeries.mk (fun n => coeff n f)
   simp [coeff_mk]
 
 /-- Two FPS are equal iff they have the same coefficients (Definition def.fps.fps).
-    This is the extensionality principle for FPS. -/
+    This is the extensionality principle for FPS. @statement_id stmt-src-lem.fps.ext
+-/
 theorem fps_ext_iff (f g : R⟦X⟧) : f = g ↔ ∀ n, coeff n f = coeff n g :=
   ⟨fun h _ => by rw [h], fun h => ext h⟩
 
@@ -129,14 +132,16 @@ theorem one_fps_eq : (1 : R⟦X⟧) = PowerSeries.mk (fun n => if n = 0 then 1 e
 -/
 
 /-- (a) Sum of FPS is componentwise (eq. pf.thm.fps.ring.xn(a+b)=)
-    Label: pf.thm.fps.ring.xn(a+b)= -/
+    Label: pf.thm.fps.ring.xn(a+b)= @statement_id stmt-src-def.fps.ops
+-/
 @[simp]
 theorem coeff_add_fps (n : ℕ) (f g : R⟦X⟧) :
     coeff n (f + g) = coeff n f + coeff n g := by
   simp [map_add]
 
 /-- (b) Difference of FPS is componentwise (eq. pf.thm.fps.ring.xn(a-b)=)
-    Label: pf.thm.fps.ring.xn(a-b)= -/
+    Label: pf.thm.fps.ring.xn(a-b)= @statement_id stmt-src-def.fps.ops
+-/
 @[simp]
 theorem coeff_sub_fps (n : ℕ) (f g : R⟦X⟧) :
     coeff n (f - g) = coeff n f - coeff n g := by
@@ -150,33 +155,38 @@ theorem coeff_neg_fps (n : ℕ) (f : R⟦X⟧) :
   simp [map_neg]
 
 /-- (c) Scalar multiplication (eq. pf.thm.fps.ring.xn(la)=)
-    Label: pf.thm.fps.ring.xn(la)= -/
+    Label: pf.thm.fps.ring.xn(la)= @statement_id stmt-src-def.fps.ops
+-/
 @[simp]
 theorem coeff_smul_fps (n : ℕ) (c : R) (f : R⟦X⟧) :
     coeff n (c • f) = c * coeff n f := by
   simp [smul_eq_mul]
 
 /-- (d) Product of FPS uses convolution (eq. pf.thm.fps.ring.xn(ab)=2)
-    Label: pf.thm.fps.ring.xn(ab)=2 -/
+    Label: pf.thm.fps.ring.xn(ab)=2 @statement_id stmt-src-def.fps.ops
+-/
 theorem coeff_mul_fps (n : ℕ) (f g : R⟦X⟧) :
     coeff n (f * g) = ∑ p ∈ antidiagonal n, coeff p.1 f * coeff p.2 g :=
   coeff_mul n f g
 
 /-- Alternative form of product formula (eq. pf.thm.fps.ring.xn(ab)=3)
-    Label: pf.thm.fps.ring.xn(ab)=3 -/
+    Label: pf.thm.fps.ring.xn(ab)=3 @statement_id stmt-src-lem.fps.coeff_mul_range
+-/
 theorem coeff_mul_fps' (n : ℕ) (f g : R⟦X⟧) :
     coeff n (f * g) = ∑ i ∈ range (n + 1), coeff i f * coeff (n - i) g := by
   rw [coeff_mul_fps]
   rw [Finset.Nat.sum_antidiagonal_eq_sum_range_succ (fun i j => coeff i f * coeff j g)]
 
-/-- (e) Constant FPS: C a = (a, 0, 0, ...) -/
+/-- (e) Constant FPS: C a = (a, 0, 0, ...) @statement_id stmt-src-def.fps.ops
+-/
 theorem coeff_C_fps (n : ℕ) (a : R) :
     coeff n (C a : R⟦X⟧) = if n = 0 then a else 0 :=
   coeff_C n a
 
 /-- The constant term of a product is the product of constant terms
     (eq. pf.thm.fps.ring.x0(ab)=)
-    Label: pf.thm.fps.ring.x0(ab)= -/
+    Label: pf.thm.fps.ring.x0(ab)= @statement_id stmt-src-lem.fps.coeff.zero.mul
+-/
 theorem coeff_zero_mul_fps (f g : R⟦X⟧) :
     coeff 0 (f * g) = coeff 0 f * coeff 0 g := by
   rw [coeff_mul_fps]
@@ -196,7 +206,8 @@ Note: Mathlib already provides these structures on `PowerSeries R`:
 - `Module R R⟦X⟧` instance exists via the algebra structure
 -/
 
-/-- (c) Scaling commutes with multiplication (Theorem thm.fps.ring (c)) -/
+/-- (c) Scaling commutes with multiplication (Theorem thm.fps.ring (c)) @statement_id stmt-src-thm.fps.ring
+-/
 theorem smul_mul_fps (c : R) (f g : R⟦X⟧) :
     c • (f * g) = (c • f) * g := by
   rw [smul_eq_C_mul, smul_eq_C_mul, mul_assoc]
@@ -205,7 +216,8 @@ theorem smul_mul_fps' (c : R) (f g : R⟦X⟧) :
     c • (f * g) = f * (c • g) := by
   rw [smul_eq_C_mul, smul_eq_C_mul, mul_left_comm]
 
-/-- (d) Scaling equals multiplication by constant (Theorem thm.fps.ring (d)) -/
+/-- (d) Scaling equals multiplication by constant (Theorem thm.fps.ring (d)) @statement_id stmt-src-thm.fps.ring
+-/
 theorem smul_eq_C_mul_fps (c : R) (f : R⟦X⟧) :
     c • f = C c * f :=
   smul_eq_C_mul f c
@@ -226,10 +238,12 @@ noncomputable example (n : ℕ) (f : R⟦X⟧) : R := coeff n f
 x = (0, 1, 0, 0, ...) is the FPS with [x^1] x = 1 and [x^i] x = 0 for i ≠ 1.
 -/
 
-/-- x = (0, 1, 0, 0, ...) (Definition def.fps.x) -/
+/-- x = (0, 1, 0, 0, ...) (Definition def.fps.x) @statement_id stmt-src-def.fps.x
+-/
 @[simp]
 theorem X_coeff_one : coeff 1 (X : R⟦X⟧) = 1 := coeff_one_X
 
+/-- @statement_id stmt-src-def.fps.x -/
 theorem X_coeff_ne_one (i : ℕ) (hi : i ≠ 1) : coeff i (X : R⟦X⟧) = 0 := by
   rw [coeff_X]
   simp [hi]
@@ -245,17 +259,20 @@ This is equivalent to:
 - [x^0](X·f) = 0
 -/
 
-/-- Multiplying by x shifts coefficients: [x^{n+1}](X·f) = [x^n]f (Lemma lem.fps.xa) -/
+/-- Multiplying by x shifts coefficients: [x^{n+1}](X·f) = [x^n]f (Lemma lem.fps.xa) @statement_id stmt-src-lem.fps.xa
+-/
 theorem X_mul_shift (f : R⟦X⟧) (n : ℕ) :
     coeff (n + 1) (X * f) = coeff n f :=
   coeff_succ_X_mul n f
 
-/-- Multiplying by x on the right shifts coefficients: [x^{n+1}](f·X) = [x^n]f -/
+/-- Multiplying by x on the right shifts coefficients: [x^{n+1}](f·X) = [x^n]f @statement_id stmt-src-lem.fps.mul_x_shift
+-/
 theorem mul_X_shift (f : R⟦X⟧) (n : ℕ) :
     coeff (n + 1) (f * X) = coeff n f :=
   coeff_succ_mul_X n f
 
-/-- The constant term of X * f is 0 (Lemma lem.fps.xa, case n = 0) -/
+/-- The constant term of X * f is 0 (Lemma lem.fps.xa, case n = 0) @statement_id stmt-src-lem.fps.xa
+-/
 @[simp]
 theorem X_mul_coeff_zero (f : R⟦X⟧) :
     coeff 0 (X * f) = 0 := by
@@ -272,7 +289,8 @@ theorem mul_X_coeff_zero (f : R⟦X⟧) :
 /-- Complete characterization of multiplication by X (Lemma lem.fps.xa, unified form)
 
     If f = (a₀, a₁, a₂, ...), then X * f = (0, a₀, a₁, a₂, ...)
-    This is equivalent to: [x^n](X·f) = if n = 0 then 0 else [x^{n-1}]f -/
+    This is equivalent to: [x^n](X·f) = if n = 0 then 0 else [x^{n-1}]f @statement_id stmt-src-lem.fps.xa
+-/
 theorem coeff_X_mul (f : R⟦X⟧) (n : ℕ) :
     coeff n (X * f) = if n = 0 then 0 else coeff (n - 1) f := by
   cases n with
@@ -305,7 +323,8 @@ theorem mul_X_eq_shift (f : R⟦X⟧) :
 
 /-- X^k * f shifts f by k positions (generalization of Lemma lem.fps.xa)
 
-    If f = (a₀, a₁, a₂, ...), then X^k * f = (0, ..., 0, a₀, a₁, a₂, ...) with k leading zeros. -/
+    If f = (a₀, a₁, a₂, ...), then X^k * f = (0, ..., 0, a₀, a₁, a₂, ...) with k leading zeros. @statement_id stmt-src-lem.fps.xk.mul.shift
+-/
 theorem coeff_X_pow_mul (k : ℕ) (f : R⟦X⟧) (n : ℕ) :
     coeff n (X ^ k * f) = if n < k then 0 else coeff (n - k) f := by
   induction k generalizing n with
@@ -318,7 +337,8 @@ theorem coeff_X_pow_mul (k : ℕ) (f : R⟦X⟧) (n : ℕ) :
       rw [coeff_succ_X_mul, ih]
       simp [Nat.succ_sub_succ]
 
-/-- f * X^k shifts f by k positions (generalization of Lemma lem.fps.xa) -/
+/-- f * X^k shifts f by k positions (generalization of Lemma lem.fps.xa) @statement_id stmt-src-lem.fps.mul_x_pow_shift
+-/
 theorem coeff_mul_X_pow (k : ℕ) (f : R⟦X⟧) (n : ℕ) :
     coeff n (f * X ^ k) = if n < k then 0 else coeff (n - k) f := by
   rw [mul_comm, coeff_X_pow_mul]
@@ -329,7 +349,8 @@ theorem coeff_mul_X_pow (k : ℕ) (f : R⟦X⟧) (n : ℕ) :
 x^k = (0, 0, ..., 0, 1, 0, 0, ...) with k zeros before the 1.
 -/
 
-/-- x^k has 1 in position k and 0 elsewhere (Proposition prop.fps.xk) -/
+/-- x^k has 1 in position k and 0 elsewhere (Proposition prop.fps.xk) @statement_id stmt-src-prop.fps.xk
+-/
 theorem X_pow_coeff (k n : ℕ) :
     coeff n ((X : R⟦X⟧) ^ k) = if n = k then 1 else 0 :=
   coeff_X_pow n k
@@ -348,13 +369,15 @@ This requires the notion of summable families of FPS.
 
 /-- The family (aₙ x^n)_{n ∈ ℕ} represents the FPS with coefficients (aₙ).
     This is essentially saying PowerSeries.mk a = ∑ a n * X^n
-    (Corollary cor.fps.sumakxk) -/
+    (Corollary cor.fps.sumakxk) @statement_id stmt-src-cor.fps.sumakxk
+-/
 theorem fps_eq_tsum_coeff (f : R⟦X⟧) :
     f = PowerSeries.mk (fun n => coeff n f) := by
   ext n
   simp [coeff_mk]
 
-/-- aₙ x^n has coefficient aₙ in position n and 0 elsewhere -/
+/-- aₙ x^n has coefficient aₙ in position n and 0 elsewhere @statement_id stmt-src-lem.fps.coeff_monomial_x_pow
+-/
 theorem coeff_monomial_mul_X_pow (a : R) (k n : ℕ) :
     coeff n (C a * (X : R⟦X⟧) ^ k) = if n = k then a else 0 := by
   simp [coeff_C_mul, coeff_X_pow]
@@ -375,7 +398,8 @@ See `PowerSeries.WithPiTopology` for details.
 
 /-- A family of FPS is summable if for each coefficient index n,
     all but finitely many family members have that coefficient equal to zero.
-    (Definition def.fps.summable) -/
+    (Definition def.fps.summable) @statement_id stmt-src-def.fps.summable
+-/
 def SummableFPS {ι : Type*} (f : ι → R⟦X⟧) : Prop :=
   ∀ n : ℕ, {i | coeff n (f i) ≠ 0}.Finite
 
@@ -383,7 +407,8 @@ def SummableFPS {ι : Type*} (f : ι → R⟦X⟧) : Prop :=
     (Definition def.fps.summable, eq. eq.def.fps.summable.sum)
 
     For a summable family (fᵢ)_{i ∈ I}, the sum ∑_{i ∈ I} fᵢ is the FPS whose
-    n-th coefficient is ∑_{i ∈ I} [x^n] fᵢ (an essentially finite sum). -/
+    n-th coefficient is ∑_{i ∈ I} [x^n] fᵢ (an essentially finite sum). @statement_id stmt-src-def.fps.summable
+-/
 noncomputable def summableFPSSum {ι : Type*} (f : ι → R⟦X⟧) (_hf : SummableFPS f) : R⟦X⟧ :=
   PowerSeries.mk (fun n => ∑ᶠ i, coeff n (f i))
 
@@ -398,7 +423,8 @@ theorem summableFPS_finsum_finite {ι : Type*} (f : ι → R⟦X⟧) (hf : Summa
     (Function.support (fun i => coeff n (f i))).Finite := hf n
 
 /-- Any subfamily of a summable family of FPS is summable.
-    (Proposition prop.fps.summable.sub) -/
+    (Proposition prop.fps.summable.sub) @statement_id stmt-src-prop.fps.summable.sub
+-/
 theorem summableFPS_subfamily {ι : Type*} {f : ι → R⟦X⟧} (J : Set ι)
     (hf : SummableFPS f) : SummableFPS (fun i : J => f i) := by
   intro n
@@ -419,7 +445,8 @@ theorem summableFPS_zero {ι : Type*} : SummableFPS (fun _ : ι => (0 : R⟦X⟧
 theorem summableFPS_single (f : R⟦X⟧) : SummableFPS (fun _ : Unit => f) :=
   summableFPS_of_finite _
 
-/-- Sum of two summable families is summable. -/
+/-- Sum of two summable families is summable. @statement_id stmt-src-lem.fps.summable.add
+-/
 theorem summableFPS_add {ι : Type*} {f g : ι → R⟦X⟧}
     (hf : SummableFPS f) (hg : SummableFPS g) : SummableFPS (fun i => f i + g i) := by
   intro n
@@ -431,7 +458,8 @@ theorem summableFPS_add {ι : Type*} {f g : ι → R⟦X⟧}
     simp [h.1, h.2] at hi
   exact Set.Finite.subset (Set.Finite.union (hf n) (hg n)) h
 
-/-- Negation of a summable family is summable. -/
+/-- Negation of a summable family is summable. @statement_id stmt-src-lem.fps.summable.neg
+-/
 theorem summableFPS_neg {ι : Type*} {f : ι → R⟦X⟧}
     (hf : SummableFPS f) : SummableFPS (fun i => -f i) := by
   intro n
@@ -441,7 +469,8 @@ theorem summableFPS_neg {ι : Type*} {f : ι → R⟦X⟧}
   rw [h]
   exact hf n
 
-/-- Subtraction of two summable families is summable. -/
+/-- Subtraction of two summable families is summable. @statement_id stmt-src-lem.fps.summable.sub
+-/
 theorem summableFPS_sub {ι : Type*} {f g : ι → R⟦X⟧}
     (hf : SummableFPS f) (hg : SummableFPS g) : SummableFPS (fun i => f i - g i) := by
   simp only [sub_eq_add_neg]
@@ -458,7 +487,8 @@ theorem summableFPS_smul {ι : Type*} {f : ι → R⟦X⟧} (c : R)
     simp [hfi] at hi
   exact Set.Finite.subset (hf n) h
 
-/-- An essentially finite family of FPS is summable. -/
+/-- An essentially finite family of FPS is summable. @statement_id stmt-src-lem.fps.summable.of_essfin
+-/
 theorem summableFPS_of_essentiallyFinite {ι : Type*} (f : ι → R⟦X⟧)
     (hf : {i | f i ≠ 0}.Finite) : SummableFPS f := by
   intro n
@@ -468,7 +498,8 @@ theorem summableFPS_of_essentiallyFinite {ι : Type*} (f : ι → R⟦X⟧)
 
 /-- The family (C(aₙ) * X^n)_{n ∈ ℕ} is summable for any sequence (aₙ).
     This is the canonical example showing that any FPS can be written as
-    an infinite sum ∑_{n ∈ ℕ} aₙ x^n. -/
+    an infinite sum ∑_{n ∈ ℕ} aₙ x^n. @statement_id stmt-src-cor.fps.sumakxk
+-/
 theorem summableFPS_monomial_family (a : ℕ → R) :
     SummableFPS (fun n => C (a n) * (X : R⟦X⟧) ^ n) := by
   intro m
@@ -509,7 +540,8 @@ Such an infinite sum is said to be essentially finite.
     `{i | f i ≠ 0}.Finite` = `(Function.support f).Finite` by definition.
 
     For the full API (including `_root_.EssentiallyFinite.add`, `_root_.EssentiallyFinite.neg`,
-    `_root_.EssentiallyFinite.toFinsupp`, etc.), see `FPS/InfiniteProducts2.lean`. -/
+    `_root_.EssentiallyFinite.toFinsupp`, etc.), see `FPS/InfiniteProducts2.lean`. @statement_id stmt-src-def.infsum.essfin
+-/
 abbrev EssentiallyFinite {ι : Type*} (f : ι → R) : Prop :=
   _root_.EssentiallyFinite f
 
@@ -542,20 +574,23 @@ theorem essentiallyFinite_zero {ι : Type*} : EssentiallyFinite (fun _ : ι => (
   _root_.EssentiallyFinite.zero
 
 /-- Sum of two essentially finite families is essentially finite.
-    (Delegates to `_root_.EssentiallyFinite.add`) -/
+    (Delegates to `_root_.EssentiallyFinite.add`) @statement_id stmt-src-lem.fps.essfin.add
+-/
 theorem essentiallyFinite_add {ι : Type*} {f g : ι → R}
     (hf : EssentiallyFinite f) (hg : EssentiallyFinite g) :
     EssentiallyFinite (fun i => f i + g i) :=
   _root_.EssentiallyFinite.add hf hg
 
 /-- Negation of an essentially finite family is essentially finite.
-    (Delegates to `_root_.EssentiallyFinite.neg`) -/
+    (Delegates to `_root_.EssentiallyFinite.neg`) @statement_id stmt-src-lem.fps.essfin.neg
+-/
 theorem essentiallyFinite_neg {ι : Type*} {f : ι → R} (hf : EssentiallyFinite f) :
     EssentiallyFinite (fun i => -f i) :=
   _root_.EssentiallyFinite.neg hf
 
 /-- Subtraction of two essentially finite families is essentially finite.
-    (Delegates to `_root_.EssentiallyFinite.sub`) -/
+    (Delegates to `_root_.EssentiallyFinite.sub`) @statement_id stmt-src-lem.fps.essfin.sub
+-/
 theorem essentiallyFinite_sub {ι : Type*} {f g : ι → R}
     (hf : EssentiallyFinite f) (hg : EssentiallyFinite g) :
     EssentiallyFinite (fun i => f i - g i) :=
@@ -581,7 +616,8 @@ We connect this to Mathlib's `Finsupp.sum` infrastructure.
 -/
 
 /-- The sum of an essentially finite family, defined as the finite sum over non-zero elements.
-    (Definition def.infsum.essfin (b)) -/
+    (Definition def.infsum.essfin (b)) @statement_id stmt-src-def.fps.essfinsum
+-/
 noncomputable def essFinSum {ι : Type*} (f : ι → R) (hf : EssentiallyFinite f) : R :=
   ∑ i ∈ hf.toFinset, f i
 
@@ -642,7 +678,8 @@ theorem essFinSum_eq_finsupp_sum {ι : Type*} (f : ι → R) (hf : EssentiallyFi
   simp only [essFinSum, essentiallyFiniteToFinsupp, Finsupp.ofSupportFinite,
              Finsupp.sum, Finsupp.coe_mk]
 
-/-- Additivity: the essentially finite sum of a sum is the sum of essentially finite sums -/
+/-- Additivity: the essentially finite sum of a sum is the sum of essentially finite sums @statement_id stmt-src-lem.fps.essfinsum.add
+-/
 theorem essFinSum_add {ι : Type*} [DecidableEq ι] {f g : ι → R}
     (hf : EssentiallyFinite f) (hg : EssentiallyFinite g)
     (hfg : EssentiallyFinite (fun i => f i + g i)) :
@@ -678,7 +715,8 @@ theorem essFinSum_add {ι : Type*} [DecidableEq ι] {f g : ι → R}
             simp only [Set.Finite.mem_toFinset, Function.mem_support, not_not] at hx
             exact hx
 
-/-- Scalar multiplication: c * (∑ aᵢ) = ∑ (c * aᵢ) -/
+/-- Scalar multiplication: c * (∑ aᵢ) = ∑ (c * aᵢ) @statement_id stmt-src-lem.fps.essfinsum.smul
+-/
 theorem essFinSum_smul {ι : Type*} {f : ι → R} (c : R) (hf : EssentiallyFinite f)
     (hcf : EssentiallyFinite (fun i => c * f i)) :
     essFinSum (fun i => c * f i) hcf = c * essFinSum f hf := by
@@ -714,7 +752,8 @@ applied coefficient-wise.
 
     Note: The actual sum computation requires Mathlib's topological sum machinery.
     This theorem states that the summability condition on the product implies
-    summability of the iterated sums. -/
+    summability of the iterated sums. @statement_id stmt-src-prop.fps.summable-sums-rule
+-/
 theorem summableFPS_fubini {ι κ : Type*} {f : ι × κ → R⟦X⟧}
     (hf : SummableFPS f) :
     (∀ i, SummableFPS (fun j => f (i, j))) ∧
@@ -738,9 +777,11 @@ The (ordinary) generating function of a sequence (a₀, a₁, a₂, ...) is
 the FPS (a₀, a₁, a₂, ...) = a₀ + a₁x + a₂x² + ...
 -/
 
-/-- The generating function of a sequence is just the FPS with those coefficients -/
+/-- The generating function of a sequence is just the FPS with those coefficients @statement_id stmt-src-def.fps.gf
+-/
 def generatingFunction (a : ℕ → R) : R⟦X⟧ := PowerSeries.mk a
 
+/-- @statement_id stmt-src-lem.fps.gf.coeff -/
 theorem generatingFunction_coeff (a : ℕ → R) (n : ℕ) :
     coeff n (generatingFunction a) = a n := by
   simp [generatingFunction, coeff_mk]
@@ -795,12 +836,14 @@ For a, b, n ∈ ℕ: C(a+b, n) = ∑_{k=0}^n C(a,k) C(b, n-k)
 -/
 
 /-- Vandermonde's identity for natural numbers (Proposition prop.binom.vandermonde.NN)
-    Label: eq.prop.binom.vandermonde.NN.eq -/
+    Label: eq.prop.binom.vandermonde.NN.eq @statement_id stmt-src-prop.binom.vandermonde.nn
+-/
 theorem vandermonde_nat (a b n : ℕ) :
     (a + b).choose n = ∑ ij ∈ antidiagonal n, a.choose ij.1 * b.choose ij.2 :=
   Nat.add_choose_eq a b n
 
-/-- Alternative form using range -/
+/-- Alternative form using range @statement_id stmt-src-lem.fps.vandermonde_nat_range
+-/
 theorem vandermonde_nat' (a b n : ℕ) :
     (a + b).choose n = ∑ k ∈ range (n + 1), a.choose k * b.choose (n - k) := by
   rw [vandermonde_nat]
@@ -820,7 +863,8 @@ that agree on ℕ × ℕ, hence they agree everywhere.
     Label: eq.prop.binom.vandermonde.CC.eq
 
     This generalizes Vandermonde's identity from natural numbers to any binomial ring
-    (including ℚ, ℝ, ℂ, and polynomial rings). -/
+    (including ℚ, ℝ, ℂ, and polynomial rings). @statement_id stmt-src-thm.binom.vandermonde.cc
+-/
 theorem chuVandermonde {S : Type*} [CommRing S] [BinomialRing S] (a b : S) (n : ℕ) :
     Ring.choose (a + b) n = ∑ ij ∈ antidiagonal n, Ring.choose a ij.1 * Ring.choose b ij.2 :=
   Ring.add_choose_eq n (Commute.all a b)

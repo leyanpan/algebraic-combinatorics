@@ -89,7 +89,8 @@ order-preserving embeddings of U and V into [n] and [m].
     ## Implementation
     
     In Mathlib, `Matrix.submatrix` takes functions for row and column selection.
-    For finite sets, we use the canonical order-preserving embedding `orderEmbOfFin`. -/
+    For finite sets, we use the canonical order-preserving embedding `orderEmbOfFin`. @statement_id stmt-src-def.det.sub
+-/
 noncomputable def submatrixOfFinset {n m : ℕ} (A : Matrix (Fin n) (Fin m) R)
     (U : Finset (Fin n)) (V : Finset (Fin m)) :
     Matrix (Fin U.card) (Fin V.card) R :=
@@ -183,7 +184,8 @@ theorem principalMinor_eq_minor {n : ℕ} (A : Matrix (Fin n) (Fin n) R)
     principalMinor A P = minor A P P := by
   simp [principalMinor, minor]
 
-/-- The minor of the empty set is 1 (determinant of 0×0 matrix). -/
+/-- The minor of the empty set is 1 (determinant of 0×0 matrix). @statement_id stmt-src-lem.minor.empty
+-/
 theorem minor_empty {n m : ℕ} (A : Matrix (Fin n) (Fin m) R) :
     minor A ∅ ∅ = 1 := by
   simp only [minor, Finset.card_empty, ↓reduceDIte]
@@ -226,7 +228,8 @@ Special cases:
 
     The general Cauchy-Binet formula for non-square matrices involves a sum
     over order-preserving embeddings. This special case is what Mathlib provides
-    directly as `Matrix.det_mul`. -/
+    directly as `Matrix.det_mul`. @statement_id stmt-src-thm.det.cb.square
+-/
 theorem cauchyBinet_square {n : Type*} [DecidableEq n] [Fintype n]
     (A B : Matrix n n R) :
     (A * B).det = A.det * B.det :=
@@ -244,7 +247,8 @@ noncomputable def rowsSubmatrix {n m : ℕ} (B : Matrix (Fin m) (Fin n) R)
     (S : Finset (Fin m)) (hcard : S.card = n) : Matrix (Fin n) (Fin n) R :=
   B.submatrix (S.orderEmbOfFin hcard) id
 
-/-- Helper lemma: when f is not injective, the alternating sum over permutations is 0. -/
+/-- Helper lemma: when f is not injective, the alternating sum over permutations is 0. @statement_id stmt-src-lem.det.cb.nonsquare
+-/
 lemma det_mul_aux_nonsquare {n m : ℕ} {A : Matrix (Fin n) (Fin m) R} {B : Matrix (Fin m) (Fin n) R}
     {f : Fin n → Fin m} (hf : ¬Function.Injective f) :
     (∑ σ : Equiv.Perm (Fin n), (Equiv.Perm.sign σ : R) * ∏ i, A (σ i) (f i) * B (f i) i) = 0 := by
@@ -262,7 +266,8 @@ lemma det_mul_aux_nonsquare {n m : ℕ} {A : Matrix (Fin n) (Fin m) R} {B : Matr
     (fun σ _ _ => (not_congr Equiv.mul_swap_eq_iff).mpr hij)
     (fun _ _ => Finset.mem_univ _) (fun σ _ => Equiv.mul_swap_involutive i j σ)
 
-/-- Key identity: for a fixed subset S, the sum over permutations gives det(cols_S A) * det(rows_S B). -/
+/-- Key identity: for a fixed subset S, the sum over permutations gives det(cols_S A) * det(rows_S B). @statement_id stmt-src-lem.det.cb.subset_factor
+-/
 lemma sum_over_subset_eq_det_mul {n m : ℕ} (A : Matrix (Fin n) (Fin m) R) (B : Matrix (Fin m) (Fin n) R)
     (S : Finset (Fin m)) (hcard : S.card = n) :
     ∑ τ : Equiv.Perm (Fin n), ∑ σ : Equiv.Perm (Fin n), 
@@ -400,7 +405,8 @@ private lemma sum_injective_eq_sum_over_subsets {n m : ℕ} (F : (Fin n → Fin 
 
     Special cases:
     - If m < n, the sum is empty (no n-element subsets), so det(AB) = 0
-    - If m = n, there's only one term S = [m], giving det(A)·det(B) -/
+    - If m = n, there's only one term S = [m], giving det(A)·det(B) @statement_id stmt-src-thm.det.cb
+-/
 theorem cauchyBinet {n m : ℕ} (A : Matrix (Fin n) (Fin m) R) (B : Matrix (Fin m) (Fin n) R) :
     (A * B).det = ∑ S ∈ (Finset.univ : Finset (Fin m)).powersetCard n,
       if h : S.card = n then
@@ -472,7 +478,8 @@ and det(B) (P=Q=∅) as special terms.
 
     Note: This is named `finsetSumFin` to distinguish from `AlgebraicCombinatorics.QBinomialRec.finsetSumNat`,
     which computes the sum of elements in a `Finset ℕ` directly.
-    Both compute "the sum of elements" but for different element types. -/
+    Both compute "the sum of elements" but for different element types. @statement_id stmt-src-def.finsetsumfin
+-/
 def finsetSumFin {n : ℕ} (P : Finset (Fin n)) : ℕ := ∑ i ∈ P, i.val
 
 /-- The sum over the empty set is 0. -/
@@ -521,7 +528,8 @@ specific unfolding behavior with `simp [imageFinset]`.
 /-- The image of a finset under a permutation.
     
     This is definitionally equal to `PermFinset.imageFinset` (see `imageFinset_eq_permFinset`).
-    New code should prefer `PermFinset.imageFinset`. -/
+    New code should prefer `PermFinset.imageFinset`. @statement_id stmt-src-def.finsetsumfin
+-/
 def imageFinset {n : ℕ} (σ : Equiv.Perm (Fin n)) (P : Finset (Fin n)) : Finset (Fin n) :=
   P.map ⟨σ, σ.injective⟩
 
@@ -532,7 +540,8 @@ theorem imageFinset_card {n : ℕ} (σ : Equiv.Perm (Fin n)) (P : Finset (Fin n)
   simp [imageFinset]
 
 /-- The image of a complement equals the complement of the image.
-    See also `PermFinset.imageFinset_compl`. -/
+    See also `PermFinset.imageFinset_compl`. @statement_id stmt-src-lem.imagefinset.compl
+-/
 lemma imageFinset_compl {n : ℕ} (σ : Equiv.Perm (Fin n)) (P : Finset (Fin n)) :
     imageFinset σ Pᶜ = (imageFinset σ P)ᶜ := by
   ext x
@@ -553,12 +562,14 @@ lemma imageFinset_compl {n : ℕ} (σ : Equiv.Perm (Fin n)) (P : Finset (Fin n))
 /-- The set of permutations that map P to Q.
     
     This is definitionally equal to `PermFinset.permsMapping` (see `permsMapping_eq_permFinset`).
-    New code should prefer `PermFinset.permsMapping`. -/
+    New code should prefer `PermFinset.permsMapping`. @statement_id stmt-src-def.finsetsumfin
+-/
 def permsMapping {n : ℕ} (P Q : Finset (Fin n)) : Finset (Equiv.Perm (Fin n)) :=
   Finset.univ.filter (fun σ => imageFinset σ P = Q)
 
 /-- If |P| ≠ |Q|, no permutation maps P to Q.
-    See also `PermFinset.permsMapping_empty_of_card_ne`. -/
+    See also `PermFinset.permsMapping_empty_of_card_ne`. @statement_id stmt-src-lem.permsmapping.empty
+-/
 theorem permsMapping_empty_of_card_ne {n : ℕ} (P Q : Finset (Fin n))
     (h : P.card ≠ Q.card) : permsMapping P Q = ∅ := by
   simp only [permsMapping, Finset.filter_eq_empty_iff, Finset.mem_univ, true_implies]
@@ -578,7 +589,8 @@ theorem permsMapping_eq_permFinset {n : ℕ} (P Q : Finset (Fin n)) :
 
     This expands det(A+B) = ∑_σ sign(σ) ∏_i (A + B)_{σ(i),i}
     into ∑_σ sign(σ) ∑_P (∏_{i∈P} A_{σ(i),i}) · (∏_{i∈Pᶜ} B_{σ(i),i})
-    using the product rule for (a + b). -/
+    using the product rule for (a + b). @statement_id stmt-src-lem.det.add.step1
+-/
 theorem det_add_expand_step1 {n : ℕ} (A B : Matrix (Fin n) (Fin n) R) :
     (A + B).det = ∑ σ : Equiv.Perm (Fin n), Equiv.Perm.sign σ •
       ∑ P : Finset (Fin n), (∏ i ∈ P, A (σ i) i) * (∏ i ∈ Pᶜ, B (σ i) i) := by
@@ -591,7 +603,8 @@ theorem det_add_expand_step1 {n : ℕ} (A B : Matrix (Fin n) (Fin n) R) :
     simp only [add_apply]
   simp only [h, Fintype.prod_add, smul_sum]
 
-/-- Second step: swap the order of summation over σ and P. -/
+/-- Second step: swap the order of summation over σ and P. @statement_id stmt-src-lem.det.add.step2
+-/
 theorem det_add_expand_step2 {n : ℕ} (A B : Matrix (Fin n) (Fin n) R) :
     (A + B).det = ∑ P : Finset (Fin n), ∑ σ : Equiv.Perm (Fin n),
       Equiv.Perm.sign σ • ((∏ i ∈ P, A (σ i) i) * (∏ i ∈ Pᶜ, B (σ i) i)) := by
@@ -599,7 +612,8 @@ theorem det_add_expand_step2 {n : ℕ} (A B : Matrix (Fin n) (Fin n) R) :
   simp only [smul_sum]
   rw [Finset.sum_comm]
 
-/-- Third step: partition the sum over σ based on σ(P) = Q. -/
+/-- Third step: partition the sum over σ based on σ(P) = Q. @statement_id stmt-src-lem.det.add.step3
+-/
 theorem det_add_expand_step3 {n : ℕ} (A B : Matrix (Fin n) (Fin n) R) :
     (A + B).det = ∑ P : Finset (Fin n), ∑ Q : Finset (Fin n),
       ∑ σ ∈ permsMapping P Q,
@@ -673,7 +687,8 @@ lemma sigma_orderEmb_compl_mem_of_imageFinset {n : ℕ} (P Q : Finset (Fin n))
     
     Specifically, if p₁ < p₂ < ... < pₖ are the elements of P and 
     q₁ < q₂ < ... < qₖ are the elements of Q, then α is defined by
-    σ(pᵢ) = q_{α(i)}. -/
+    σ(pᵢ) = q_{α(i)}. @statement_id stmt-src-def.extract
+-/
 noncomputable def extractAlpha {n : ℕ} (P Q : Finset (Fin n)) (hcard : P.card = Q.card)
     (σ : Equiv.Perm (Fin n)) (hσ : imageFinset σ P = Q) : Equiv.Perm (Fin P.card) := by
   let pEmb := P.orderEmbOfFin rfl
@@ -690,7 +705,8 @@ noncomputable def extractAlpha {n : ℕ} (P Q : Finset (Fin n)) (hcard : P.card 
   exact Equiv.ofBijective f ⟨hf_inj, hf_surj⟩
 
 /-- Extract β from σ: For σ with σ(P) = Q, extract the permutation β ∈ Perm(Fin |Pᶜ|)
-    that describes how σ permutes the elements of Pᶜ. -/
+    that describes how σ permutes the elements of Pᶜ. @statement_id stmt-src-def.extract
+-/
 noncomputable def extractBeta {n : ℕ} (P Q : Finset (Fin n)) (hcard : P.card = Q.card)
     (σ : Equiv.Perm (Fin n)) (hσ : imageFinset σ P = Q) : Equiv.Perm (Fin Pᶜ.card) := by
   have hcard' : Pᶜ.card = Qᶜ.card := by simp only [Finset.card_compl, Fintype.card_fin, hcard]
@@ -834,7 +850,8 @@ private lemma sign_extractAlpha_univ {n : ℕ}
   exact (List.idxOf_finRange (σ x)).symm
 
 /-- Given α ∈ Perm(Fin |P|) and β ∈ Perm(Fin |Pᶜ|), construct σ ∈ Perm(Fin n) with σ(P) = Q.
-    This is the inverse of the (extractAlpha, extractBeta) bijection. -/
+    This is the inverse of the (extractAlpha, extractBeta) bijection. @statement_id stmt-src-def.constructsigma
+-/
 noncomputable def constructSigma {n : ℕ} (P Q : Finset (Fin n)) (hcard : P.card = Q.card)
     (α : Equiv.Perm (Fin P.card)) (β : Equiv.Perm (Fin Pᶜ.card)) : Equiv.Perm (Fin n) := by
   have hcardC : Pᶜ.card = Qᶜ.card := by simp only [Finset.card_compl, Fintype.card_fin, hcard]
@@ -879,7 +896,8 @@ noncomputable def constructSigma {n : ℕ} (P Q : Finset (Fin n)) (hcard : P.car
       exact this
   exact Equiv.ofBijective f ⟨hf_inj, Finite.injective_iff_surjective.mp hf_inj⟩
 
-/-- The constructed permutation maps P to Q. -/
+/-- The constructed permutation maps P to Q. @statement_id stmt-src-def.constructsigma
+-/
 lemma constructSigma_imageFinset {n : ℕ} (P Q : Finset (Fin n)) (hcard : P.card = Q.card)
     (α : Equiv.Perm (Fin P.card)) (β : Equiv.Perm (Fin Pᶜ.card)) :
     imageFinset (constructSigma P Q hcard α β) P = Q := by
@@ -914,7 +932,8 @@ lemma constructSigma_imageFinset {n : ℕ} (P Q : Finset (Fin n)) (hcard : P.car
       -- Q.orderEmbOfFin _ (qIso.symm ⟨x, hx⟩) = x
       exact orderEmbOfFin_symm Q hcard.symm x hx
 
-/-- The constructed permutation is in permsMapping P Q. -/
+/-- The constructed permutation is in permsMapping P Q. @statement_id stmt-src-def.constructsigma
+-/
 lemma constructSigma_mem_permsMapping {n : ℕ} (P Q : Finset (Fin n)) (hcard : P.card = Q.card)
     (α : Equiv.Perm (Fin P.card)) (β : Equiv.Perm (Fin Pᶜ.card)) :
     constructSigma P Q hcard α β ∈ permsMapping P Q := by
@@ -1141,7 +1160,8 @@ lemma preservesPrefix_of_imageFinset_prefix {n k : ℕ} (hk : k ≤ n)
     exact hj
 
 /-- A "left shift" replaces P with s_i(P) where i ∉ P and i+1 ∈ P.
-    This decrements finsetSumFin P by 1. -/
+    This decrements finsetSumFin P by 1. @statement_id stmt-src-lem.shift.sum
+-/
 lemma finsetSumFin_swap_of_left_shift {n : ℕ} (P : Finset (Fin n)) (i : Fin n) (hi : i.val + 1 < n)
     (hi_notP : i ∉ P) (hiplus_P : (⟨i.val + 1, hi⟩ : Fin n) ∈ P) :
     finsetSumFin (imageFinset (Equiv.swap i ⟨i.val + 1, hi⟩) P) = finsetSumFin P - 1 := by
@@ -1186,7 +1206,8 @@ lemma sign_swap_mul {n : ℕ} (σ : Equiv.Perm (Fin n)) (i j : Fin n) (hij : i �
     the product (-1)^(finsetSumFin P + finsetSumFin Q) * sign(σ) is preserved,
     provided i ∉ P and i+1 ∈ P (so finsetSumFin decreases by 1).
     
-    This is the key invariant for the shift reduction in the proof of sign_decomposition. -/
+    This is the key invariant for the shift reduction in the proof of sign_decomposition. @statement_id stmt-src-lem.shift.combined.sign
+-/
 lemma leftShift_preserves_combined_sign {n : ℕ} 
     (P Q : Finset (Fin n)) (σ : Equiv.Perm (Fin n))
     (hσ : imageFinset σ P = Q)
@@ -1647,7 +1668,8 @@ private lemma downward_closure_aux {n : ℕ} (P : Finset (Fin n))
       exact ih (d - 1) (by omega) j' hj'_in hi_lt_j' hd'
 
 /-- If P has card k and P ≠ prefixFinset, then there's a shift opportunity:
-    some i with i ∉ P and i+1 ∈ P. This is because P has a "gap" that can be shifted. -/
+    some i with i ∉ P and i+1 ∈ P. This is because P has a "gap" that can be shifted. @statement_id stmt-src-lem.shift.exists
+-/
 lemma exists_shift_opportunity {n k : ℕ} (hk : k ≤ n) (hk_pos : 0 < k) (_hn : k < n) 
     (P : Finset (Fin n)) 
     (hcard : P.card = k) (hne : P ≠ prefixFinset n k hk) :
@@ -1926,7 +1948,8 @@ lemma sign_eq_of_cast_eq {m n : ℕ} (h : m = n) (α : Equiv.Perm (Fin m)) (β :
   cases h
   rfl
 
-/-- Base case of sign_decomposition: when P = Q = prefixFinset n k hk. -/
+/-- Base case of sign_decomposition: when P = Q = prefixFinset n k hk. @statement_id stmt-src-lem.sign.decomposition.prefix
+-/
 lemma sign_decomposition_prefix {n k : ℕ} (hk : k ≤ n)
     (σ : Equiv.Perm (Fin n)) 
     (hσ : imageFinset σ (prefixFinset n k hk) = prefixFinset n k hk) :
@@ -2099,7 +2122,8 @@ lemma swap_orderEmbOfFin_eq {n : ℕ} (P : Finset (Fin n)) (i : Fin n) (hi : i.v
     - If P_j ≠ i+1: P'_j' = P_j for some j', and σ'(P'_j') = σ(P_j)
     - If P_j = i+1: P'_j' = i, and σ'(i) = σ(swap(i)) = σ(i+1) = σ(P_j)
     
-    Since the images are the same, extractAlpha' = extractAlpha. -/
+    Since the images are the same, extractAlpha' = extractAlpha. @statement_id stmt-src-lem.shift.extract
+-/
 lemma extractAlpha_leftShift_eq {n : ℕ} (P Q : Finset (Fin n)) (hcard : P.card = Q.card)
     (σ : Equiv.Perm (Fin n)) (hσ : imageFinset σ P = Q)
     (i : Fin n) (hi : i.val + 1 < n)
@@ -2159,7 +2183,8 @@ lemma extractAlpha_leftShift_eq {n : ℕ} (P Q : Finset (Fin n)) (hcard : P.card
     
     Similar reasoning to extractAlpha: the complement P'ᶜ has the same structure
     as Pᶜ (with i and i+1 swapped), and the bijection from sorted P'ᶜ to sorted Qᶜ
-    via σ' is the same as from sorted Pᶜ to sorted Qᶜ via σ. -/
+    via σ' is the same as from sorted Pᶜ to sorted Qᶜ via σ. @statement_id stmt-src-lem.shift.extract
+-/
 lemma extractBeta_leftShift_eq {n : ℕ} (P Q : Finset (Fin n)) (hcard : P.card = Q.card)
     (σ : Equiv.Perm (Fin n)) (hσ : imageFinset σ P = Q)
     (i : Fin n) (hi : i.val + 1 < n)
@@ -2330,7 +2355,8 @@ lemma extractBeta_leftShift_eq {n : ℕ} (P Q : Finset (Fin n)) (hcard : P.card 
     2. extractAlpha_leftShift_eq: sign(extractAlpha) is preserved
     3. extractBeta_leftShift_eq: sign(extractBeta) is preserved
     
-    Together, these show that if the formula holds for (P', Q, σ'), it holds for (P, Q, σ). -/
+    Together, these show that if the formula holds for (P', Q, σ'), it holds for (P, Q, σ). @statement_id stmt-src-lem.shift.invariant
+-/
 lemma sign_decomposition_leftShift_invariant {n : ℕ} (P Q : Finset (Fin n)) (hcard : P.card = Q.card)
     (σ : Equiv.Perm (Fin n)) (hσ : imageFinset σ P = Q)
     (i : Fin n) (hi : i.val + 1 < n)
@@ -2643,7 +2669,8 @@ lemma extractBeta_leftCoShift_eq {n : ℕ} (P Q : Finset (Fin n)) (hcard : P.car
     2. extractAlpha_leftCoShift_eq: sign(extractAlpha) is preserved
     3. extractBeta_leftCoShift_eq: sign(extractBeta) is preserved
     
-    Together, these show that if the formula holds for (P, Q', σ'), it holds for (P, Q, σ). -/
+    Together, these show that if the formula holds for (P, Q', σ'), it holds for (P, Q, σ). @statement_id stmt-src-lem.coshift.invariant
+-/
 lemma sign_decomposition_leftCoShift_invariant {n : ℕ} (P Q : Finset (Fin n)) (hcard : P.card = Q.card)
     (σ : Equiv.Perm (Fin n)) (hσ : imageFinset σ P = Q)
     (i : Fin n) (hi : i.val + 1 < n)
@@ -2726,6 +2753,7 @@ lemma sign_decomposition_leftCoShift_invariant {n : ℕ} (P Q : Finset (Fin n)) 
     - Inductive case: Either P or Q can be shifted towards prefixFinset
       - If P ≠ prefixFinset: apply left shift (sign_decomposition_leftShift_invariant)
       - If P = prefixFinset but Q ≠ prefixFinset: apply co-shift (sign_decomposition_leftCoShift_invariant)
+@statement_id stmt-src-lem.sign.decomposition
 -/
 theorem sign_decomposition {n : ℕ} (P Q : Finset (Fin n)) (hcard : P.card = Q.card)
     (σ : Equiv.Perm (Fin n)) (hσ : imageFinset σ P = Q) :
@@ -2936,7 +2964,8 @@ private lemma prod_over_finset_eq_prod_fin {n : ℕ} {R : Type*} [CommMonoid R]
   simp [Finset.orderEmbOfFin]
 
 /-- The key property of extractAlpha: σ(pⱼ) = q_{α(j)} where pⱼ and qⱼ are the j-th elements
-    of P and Q in sorted order. -/
+    of P and Q in sorted order. @statement_id stmt-src-lem.extract.spec
+-/
 lemma extractAlpha_spec {n : ℕ} (P Q : Finset (Fin n)) (hcard : P.card = Q.card)
     (σ : Equiv.Perm (Fin n)) (hσ : imageFinset σ P = Q) (j : Fin P.card) :
     σ (P.orderEmbOfFin rfl j) = Q.orderEmbOfFin (hcard.symm ▸ rfl) (extractAlpha P Q hcard σ hσ j) := by
@@ -2949,7 +2978,8 @@ lemma extractAlpha_spec {n : ℕ} (P Q : Finset (Fin n)) (hcard : P.card = Q.car
   exact (congrArg Subtype.val hiso).symm
 
 /-- The key property of extractBeta: σ(pᶜⱼ) = qᶜ_{β(j)} where pᶜⱼ and qᶜⱼ are the j-th elements
-    of Pᶜ and Qᶜ in sorted order. -/
+    of Pᶜ and Qᶜ in sorted order. @statement_id stmt-src-lem.extract.spec
+-/
 lemma extractBeta_spec {n : ℕ} (P Q : Finset (Fin n)) (hcard : P.card = Q.card)
     (σ : Equiv.Perm (Fin n)) (hσ : imageFinset σ P = Q) (j : Fin Pᶜ.card) :
     σ (Pᶜ.orderEmbOfFin rfl j) = 
@@ -2964,7 +2994,8 @@ lemma extractBeta_spec {n : ℕ} (P Q : Finset (Fin n)) (hcard : P.card = Q.card
              OrderEmbedding.subtype_apply, Finset.coe_orderIsoOfFin_apply]
   exact (congrArg Subtype.val hiso).symm
 
-/-- Round-trip lemma: extractAlpha of constructSigma equals the original α. -/
+/-- Round-trip lemma: extractAlpha of constructSigma equals the original α. @statement_id stmt-src-lem.roundtrip
+-/
 lemma extractAlpha_constructSigma {n : ℕ} (P Q : Finset (Fin n)) (hcard : P.card = Q.card)
     (α : Equiv.Perm (Fin P.card)) (β : Equiv.Perm (Fin Pᶜ.card)) 
     (hσ : imageFinset (constructSigma P Q hcard α β) P = Q) :
@@ -2993,7 +3024,8 @@ lemma extractAlpha_constructSigma {n : ℕ} (P Q : Finset (Fin n)) (hcard : P.ca
   simp only [Fin.val_inj]
   exact h_goal
 
-/-- Round-trip lemma: extractBeta of constructSigma equals the original β. -/
+/-- Round-trip lemma: extractBeta of constructSigma equals the original β. @statement_id stmt-src-lem.roundtrip
+-/
 lemma extractBeta_constructSigma {n : ℕ} (P Q : Finset (Fin n)) (hcard : P.card = Q.card)
     (α : Equiv.Perm (Fin P.card)) (β : Equiv.Perm (Fin Pᶜ.card)) 
     (hσ : imageFinset (constructSigma P Q hcard α β) P = Q) :
@@ -3026,7 +3058,8 @@ lemma extractBeta_constructSigma {n : ℕ} (P Q : Finset (Fin n)) (hcard : P.car
   exact h_goal
 
 /-- Round-trip lemma: constructSigma of (extractAlpha, extractBeta) equals the original σ.
-    This is the other direction of the bijection, showing that extract ∘ construct = id. -/
+    This is the other direction of the bijection, showing that extract ∘ construct = id. @statement_id stmt-src-lem.roundtrip
+-/
 lemma constructSigma_extract {n : ℕ} (P Q : Finset (Fin n)) (hcard : P.card = Q.card)
     (σ : Equiv.Perm (Fin n)) (hσ : imageFinset σ P = Q) :
     constructSigma P Q hcard (extractAlpha P Q hcard σ hσ) (extractBeta P Q hcard σ hσ) = σ := by
@@ -3081,7 +3114,8 @@ lemma constructSigma_extract {n : ℕ} (P Q : Finset (Fin n)) (hcard : P.card = 
     exact hQCiso
 
 /-- The product over P factors through the submatrix determinant.
-    ∑_{σ : σ(P)=Q} sign(σ) · ∏_{i∈P} A_{σ(i),i} relates to det(sub_Q^P A). -/
+    ∑_{σ : σ(P)=Q} sign(σ) · ∏_{i∈P} A_{σ(i),i} relates to det(sub_Q^P A). @statement_id stmt-src-lem.prod.factor
+-/
 theorem prod_P_eq_submatrix_det {n : ℕ} (A : Matrix (Fin n) (Fin n) R)
     (P Q : Finset (Fin n)) (hcard : P.card = Q.card) 
     (σ : Equiv.Perm (Fin n)) (hσ : imageFinset σ P = Q) :
@@ -3093,7 +3127,8 @@ theorem prod_P_eq_submatrix_det {n : ℕ} (A : Matrix (Fin n) (Fin n) R)
   ext j
   rw [extractAlpha_spec P Q hcard σ hσ j]
 
-/-- The product over Pᶜ factors through the submatrix determinant. -/
+/-- The product over Pᶜ factors through the submatrix determinant. @statement_id stmt-src-lem.prod.factor
+-/
 theorem prod_Pc_eq_submatrix_det {n : ℕ} (B : Matrix (Fin n) (Fin n) R)
     (P Q : Finset (Fin n)) (hcard : P.card = Q.card) 
     (σ : Equiv.Perm (Fin n)) (hσ : imageFinset σ P = Q) :
@@ -3123,7 +3158,8 @@ theorem prod_Pc_eq_submatrix_det {n : ℕ} (B : Matrix (Fin n) (Fin n) R)
     - Each left shift decrements sum(P) by 1 and flips both (-1)^(sum P + sum Q) and (-1)^σ
     - After sum(P) - (1+2+...+k) left shifts, P becomes [k]
     - Similarly for Q via "left co-shifts"
-    - When P = Q = [k], the sign identity reduces to ℓ(σ) = ℓ(α) + ℓ(β) (inversion counting) -/
+    - When P = Q = [k], the sign identity reduces to ℓ(σ) = ℓ(α) + ℓ(β) (inversion counting) @statement_id stmt-src-lem.det.sumpq
+-/
 theorem sum_perms_mapping_eq_det_product {n : ℕ} (A B : Matrix (Fin n) (Fin n) R)
     (P Q : Finset (Fin n)) (hcard : P.card = Q.card) :
     ∑ σ ∈ permsMapping P Q,
@@ -3373,7 +3409,8 @@ theorem sum_perms_mapping_eq_det_product {n : ℕ} (A B : Matrix (Fin n) (Fin n)
     1. Expand using Leibniz formula: det(A+B) = ∑_σ sign(σ) ∏_i (A+B)_{σ(i),i}
     2. Apply product rule: ∏(a+b) = ∑_P (∏_{i∈P} a_i)(∏_{i∈Pᶜ} b_i)
     3. Swap summation order and partition by Q = σ(P)
-    4. Apply sum_perms_mapping_eq_det_product for each (P, Q) pair -/
+    4. Apply sum_perms_mapping_eq_det_product for each (P, Q) pair @statement_id stmt-src-thm.det.det-a-b-
+-/
 theorem det_add_sum {n : ℕ} (A B : Matrix (Fin n) (Fin n) R) :
     (A + B).det = ∑ P : Finset (Fin n), ∑ Q : Finset (Fin n),
       if h : Q.card = P.card then
@@ -3406,7 +3443,8 @@ For a diagonal matrix D with entries d₁, d₂, ..., dₙ:
 
 /-- Part (a): Principal minors of a diagonal matrix are products of diagonal entries.
     (Lemma lem.det.minors-diag (a))
-    Label: lem.det.minors-diag.a -/
+    Label: lem.det.minors-diag.a @statement_id stmt-src-lem.det.minors-diag
+-/
 theorem det_diagonal_submatrix_eq {n : ℕ} (d : Fin n → R) (P : Finset (Fin n)) :
     ((Matrix.diagonal d).submatrix (P.orderEmbOfFin rfl) (P.orderEmbOfFin rfl)).det =
     ∏ i ∈ P, d i := by
@@ -3423,7 +3461,8 @@ theorem det_diagonal_submatrix_eq {n : ℕ} (d : Fin n → R) (P : Finset (Fin n
 
 /-- Part (b): Off-diagonal submatrices of a diagonal matrix have zero determinant.
     (Lemma lem.det.minors-diag (b))
-    Label: lem.det.minors-diag.b -/
+    Label: lem.det.minors-diag.b @statement_id stmt-src-lem.det.minors-diag
+-/
 theorem det_diagonal_submatrix_off_diag {n : ℕ} (d : Fin n → R)
     (P Q : Finset (Fin n)) (hcard : P.card = Q.card) (hne : P ≠ Q) :
     ((Matrix.diagonal d).submatrix (P.orderEmbOfFin rfl)
@@ -3466,7 +3505,8 @@ The cross terms vanish because det(sub_P̃^Q̃ D) = 0 when P ≠ Q.
     Label: thm.det.det(A+D)
 
     This follows from det_add_sum by observing that off-diagonal submatrices
-    of D have zero determinant. -/
+    of D have zero determinant. @statement_id stmt-src-thm.det.det-a-d-
+-/
 theorem det_add_diagonal {n : ℕ} (A : Matrix (Fin n) (Fin n) R) (d : Fin n → R) :
     (A + Matrix.diagonal d).det =
     ∑ P : Finset (Fin n),
@@ -3618,14 +3658,16 @@ lemma card_nonfixed_ne_one {n : ℕ} (σ : Equiv.Perm (Fin n)) :
 def constMatrix {n : ℕ} (x : R) : Matrix (Fin n) (Fin n) R :=
   fun _ _ => x
 
-/-- constPlusDiagMatrix = constMatrix + diagonal d -/
+/-- constPlusDiagMatrix = constMatrix + diagonal d @statement_id stmt-src-lem.constplusdiag.decomp
+-/
 lemma constPlusDiagMatrix_eq_add {n : ℕ} (x : R) (d : Fin n → R) :
     constPlusDiagMatrix x d = constMatrix x + Matrix.diagonal d := by
   ext i j
   simp only [constPlusDiagMatrix, constMatrix, Matrix.add_apply, Matrix.diagonal_apply]
 
 /-- For a submatrix of a constant matrix, if the submatrix has size ≥ 2, its determinant is 0.
-    This is because all rows are identical. -/
+    This is because all rows are identical. @statement_id stmt-src-lem.det.const.matrix.zero
+-/
 lemma det_submatrix_constMatrix_eq_zero {n : ℕ} (x : R) (P : Finset (Fin n)) (hP : 2 ≤ P.card) :
     ((constMatrix x).submatrix (P.orderEmbOfFin rfl) (P.orderEmbOfFin rfl)).det = 0 := by
   have hrows : ∀ i j : Fin P.card,
@@ -3637,7 +3679,8 @@ lemma det_submatrix_constMatrix_eq_zero {n : ℕ} (x : R) (P : Finset (Fin n)) (
   have h0 : (⟨0, by omega⟩ : Fin P.card) ≠ ⟨1, by omega⟩ := by simp
   exact Matrix.det_zero_of_row_eq h0 (hrows _ _)
 
-/-- For a 1×1 constant matrix, the determinant is x. -/
+/-- For a 1×1 constant matrix, the determinant is x. @statement_id stmt-src-lem.det.const.matrix.singleton
+-/
 lemma det_submatrix_constMatrix_singleton {n : ℕ} (x : R) (P : Finset (Fin n))
     (hP : P.card = 1) :
     ((constMatrix x).submatrix (P.orderEmbOfFin rfl) (P.orderEmbOfFin rfl)).det = x := by
@@ -3667,7 +3710,8 @@ lemma det_submatrix_constMatrix_empty {n : ℕ} (x : R) (P : Finset (Fin n))
     For |P| = 0, P = ∅: det(sub_P^P A) = 1 (0×0 matrix)
 
     So only the P = ∅ term and the P = {i} terms survive:
-    det F = 1 · ∏_i d_i + ∑_i x · ∏_{j≠i} d_j = ∏_i d_i + x · ∑_i ∏_{j≠i} d_j -/
+    det F = 1 · ∏_i d_i + ∑_i x · ∏_{j≠i} d_j = ∏_i d_i + x · ∑_i ∏_{j≠i} d_j @statement_id stmt-src-prop.det.x-ai
+-/
 theorem det_const_add_diagonal {n : ℕ} (x : R) (d : Fin n → R) :
     (constPlusDiagMatrix x d).det =
     (∏ i : Fin n, d i) + x * ∑ i : Fin n, ∏ j ∈ Finset.univ.erase i, d j := by
@@ -3766,7 +3810,8 @@ The coefficient of x^{n-k} is the sum of all k×k principal minors of A.
     This gives an explicit formula for the coefficients of the characteristic polynomial:
       det(A + xI) = ∑_{P ⊆ [n]} det(sub_P^P A) · x^{n-|P|}
     
-    See also `det_charPoly_coeff'` for the equivalent form grouped by powers of x. -/
+    See also `det_charPoly_coeff'` for the equivalent form grouped by powers of x. @statement_id stmt-src-prop.det.charpol-explicit
+-/
 theorem det_charPoly_coeff {n : ℕ} (A : Matrix (Fin n) (Fin n) R) (x : R) :
     (A + x • (1 : Matrix (Fin n) (Fin n) R)).det =
     ∑ P : Finset (Fin n),
@@ -3788,7 +3833,8 @@ theorem det_charPoly_coeff {n : ℕ} (A : Matrix (Fin n) (Fin n) R) (x : R) :
     (n-k) × (n-k) principal minors of A. In particular:
     - The coefficient of x^n is 1 (the only principal minor of size 0 is det(∅) = 1)
     - The coefficient of x^{n-1} is Tr(A) (the sum of 1×1 principal minors)
-    - The constant term is det(A) (the only principal minor of size n) -/
+    - The constant term is det(A) (the only principal minor of size n) @statement_id stmt-src-prop.det.charpol-explicit
+-/
 theorem det_charPoly_coeff' {n : ℕ} (A : Matrix (Fin n) (Fin n) R) (x : R) :
     (A + x • (1 : Matrix (Fin n) (Fin n) R)).det =
     ∑ k ∈ Finset.range (n + 1),
@@ -3890,7 +3936,8 @@ private lemma sum_choose_mul_choose (m n : ℕ) :
 /-- The Pascal matrix with entries C(i+j, i).
     (Proposition prop.det.pascal-LU)
 
-    Note: We use 0-indexing, so entry (i,j) is C(i+j, i). -/
+    Note: We use 0-indexing, so entry (i,j) is C(i+j, i). @statement_id stmt-src-def.pascal
+-/
 def pascalMatrix (n : ℕ) : Matrix (Fin n) (Fin n) ℕ :=
   fun i j => (i.val + j.val).choose i.val
 
@@ -3899,7 +3946,8 @@ theorem pascalMatrix_apply (n : ℕ) (i j : Fin n) :
     pascalMatrix n i j = (i.val + j.val).choose i.val := rfl
 
 /-- The lower triangular factor L in the LU decomposition of the Pascal matrix.
-    L_{i,k} = C(i, k) -/
+    L_{i,k} = C(i, k) @statement_id stmt-src-def.pascal
+-/
 def pascalLowerTriangular (n : ℕ) : Matrix (Fin n) (Fin n) ℕ :=
   fun i k => i.val.choose k.val
 
@@ -3908,7 +3956,8 @@ theorem pascalLowerTriangular_apply (n : ℕ) (i k : Fin n) :
     pascalLowerTriangular n i k = i.val.choose k.val := rfl
 
 /-- The upper triangular factor U in the LU decomposition of the Pascal matrix.
-    U_{k,j} = C(j, k) -/
+    U_{k,j} = C(j, k) @statement_id stmt-src-def.pascal
+-/
 def pascalUpperTriangular (n : ℕ) : Matrix (Fin n) (Fin n) ℕ :=
   fun k j => j.val.choose k.val
 
@@ -3919,7 +3968,8 @@ theorem pascalUpperTriangular_apply (n : ℕ) (k j : Fin n) :
 /-- The Pascal matrix factors as L * U where L and U are lower and upper triangular.
     This is the LU decomposition of the Pascal matrix.
 
-    The proof uses Vandermonde's identity: C(i+j, i) = ∑_k C(i,k) * C(j,k). -/
+    The proof uses Vandermonde's identity: C(i+j, i) = ∑_k C(i,k) * C(j,k). @statement_id stmt-src-lem.pascal.lu
+-/
 theorem pascal_eq_LU (n : ℕ) :
     (pascalMatrix n).map (↑· : ℕ → ℤ) =
     (pascalLowerTriangular n).map (↑· : ℕ → ℤ) *
@@ -3959,23 +4009,27 @@ theorem pascal_eq_LU (n : ℕ) :
   -- Finally use symmetry
   rw [Nat.choose_symm_add]
 
-/-- The lower triangular factor L has all diagonal entries equal to 1. -/
+/-- The lower triangular factor L has all diagonal entries equal to 1. @statement_id stmt-src-lem.pascal.triangular
+-/
 theorem pascalLowerTriangular_diag (n : ℕ) (i : Fin n) :
     pascalLowerTriangular n i i = 1 := by
   simp [pascalLowerTriangular, Nat.choose_self]
 
-/-- The upper triangular factor U has all diagonal entries equal to 1. -/
+/-- The upper triangular factor U has all diagonal entries equal to 1. @statement_id stmt-src-lem.pascal.triangular
+-/
 theorem pascalUpperTriangular_diag (n : ℕ) (i : Fin n) :
     pascalUpperTriangular n i i = 1 := by
   simp [pascalUpperTriangular, Nat.choose_self]
 
-/-- The lower triangular factor L is indeed lower triangular. -/
+/-- The lower triangular factor L is indeed lower triangular. @statement_id stmt-src-lem.pascal.triangular
+-/
 theorem pascalLowerTriangular_is_lower (n : ℕ) (i k : Fin n) (h : i < k) :
     pascalLowerTriangular n i k = 0 := by
   simp only [pascalLowerTriangular]
   exact Nat.choose_eq_zero_of_lt (Fin.val_fin_lt.mpr h)
 
-/-- The upper triangular factor U is indeed upper triangular. -/
+/-- The upper triangular factor U is indeed upper triangular. @statement_id stmt-src-lem.pascal.triangular
+-/
 theorem pascalUpperTriangular_is_upper (n : ℕ) (k j : Fin n) (h : k > j) :
     pascalUpperTriangular n k j = 0 := by
   simp only [pascalUpperTriangular]
@@ -3984,7 +4038,8 @@ theorem pascalUpperTriangular_is_upper (n : ℕ) (k j : Fin n) (h : k > j) :
 /-- The determinant of the lower triangular factor is 1.
 
     The proof uses that L is lower triangular with 1s on the diagonal,
-    so its determinant is the product of diagonal entries, which is 1. -/
+    so its determinant is the product of diagonal entries, which is 1. @statement_id stmt-src-lem.pascal.l.det
+-/
 theorem det_pascalLowerTriangular (n : ℕ) :
     ((pascalLowerTriangular n).map (↑· : ℕ → ℤ)).det = 1 := by
   have hLower : ∀ i j : Fin n, i < j → ((pascalLowerTriangular n).map (↑· : ℕ → ℤ)) i j = 0 := by
@@ -4006,7 +4061,8 @@ theorem det_pascalLowerTriangular (n : ℕ) :
 /-- The determinant of the upper triangular factor is 1.
 
     The proof uses that U is upper triangular with 1s on the diagonal,
-    so its determinant is the product of diagonal entries, which is 1. -/
+    so its determinant is the product of diagonal entries, which is 1. @statement_id stmt-src-lem.pascal.u.det
+-/
 theorem det_pascalUpperTriangular (n : ℕ) :
     ((pascalUpperTriangular n).map (↑· : ℕ → ℤ)).det = 1 := by
   have hUpper : ((pascalUpperTriangular n).map (↑· : ℕ → ℤ)).BlockTriangular id := by
@@ -4030,7 +4086,8 @@ theorem det_pascalUpperTriangular (n : ℕ) :
     1. Factor P = L * U where L is lower triangular and U is upper triangular
     2. Both L and U have 1s on the diagonal (since C(n,n) = 1)
     3. Determinant of a triangular matrix is the product of diagonal entries
-    4. Therefore det(P) = det(L) * det(U) = 1 * 1 = 1 -/
+    4. Therefore det(P) = det(L) * det(U) = 1 * 1 = 1 @statement_id stmt-src-prop.det.pascal-lu
+-/
 theorem det_pascal_matrix (n : ℕ) :
     ((pascalMatrix n).map (↑· : ℕ → ℤ)).det = 1 := by
   rw [pascal_eq_LU, Matrix.det_mul, det_pascalLowerTriangular, det_pascalUpperTriangular]

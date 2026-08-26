@@ -247,7 +247,8 @@ private lemma inversions_inv_card_eq (σ : Perm (Fin n)) :
 
 /-- The bijection between inversions of σ and inversions of σ⁻¹.
 If (i,j) is an inversion of σ (meaning i < j and σ(i) > σ(j)),
-then (σ(j), σ(i)) is an inversion of σ⁻¹. -/
+then (σ(j), σ(i)) is an inversion of σ⁻¹. @statement_id stmt-src-def.perm.inversionsbijection
+-/
 noncomputable def inversionsBijection (σ : Perm (Fin n)) :
     inversions σ ≃ inversions σ⁻¹ := by
   refine Equiv.ofBijective
@@ -266,7 +267,8 @@ noncomputable def inversionsBijection (σ : Perm (Fin n)) :
 of its inverse: ℓ(σ⁻¹) = ℓ(σ).
 
 The proof establishes a bijection between inversions of σ and inversions of σ⁻¹:
-if (i,j) is an inversion of σ, then (σ(j), σ(i)) is an inversion of σ⁻¹. -/
+if (i,j) is an inversion of σ, then (σ(j), σ(i)) is an inversion of σ⁻¹. @statement_id stmt-src-prop.perm.len.inv
+-/
 theorem length_inv (σ : Perm (Fin n)) : ℓ σ⁻¹ = ℓ σ := by
   unfold length
   exact inversions_inv_card_eq σ
@@ -438,7 +440,8 @@ a simple transposition s_k:
 - If σ(k) < σ(k+1), then ℓ(σ·s_k) = ℓ(σ) + 1
 - If σ(k) > σ(k+1), then ℓ(σ·s_k) = ℓ(σ) - 1
 
-This lemma is fundamental for understanding how length changes under composition. -/
+This lemma is fundamental for understanding how length changes under composition. @statement_id stmt-src-lem.perm.len.ssl
+-/
 theorem length_mul_swap_right (σ : Perm (Fin n)) (k : Fin (n - 1))
     (h : n > 1) :
     ℓ (σ * s k) =
@@ -483,7 +486,8 @@ a simple transposition s_k:
 - If σ⁻¹(k) < σ⁻¹(k+1), then ℓ(s_k·σ) = ℓ(σ) + 1
 - If σ⁻¹(k) > σ⁻¹(k+1), then ℓ(s_k·σ) = ℓ(σ) - 1
 
-Note: σ⁻¹(i) is the position where i appears in the one-line notation of σ. -/
+Note: σ⁻¹(i) is the position where i appears in the one-line notation of σ. @statement_id stmt-src-lem.perm.len.ssl
+-/
 theorem length_mul_swap_left (σ : Perm (Fin n)) (k : Fin (n - 1))
     (h : n > 1) :
     ℓ (s k * σ) =
@@ -511,13 +515,15 @@ lemma mem_inversions_iff (σ : Perm (Fin n)) (a b : Fin n) :
 
 /-- The set Q from Proposition prop.perm.lisitij:
 Q = {k ∈ {i+1, ..., j-1} | σ(i) > σ(k) > σ(j)}
-This counts elements between i and j whose images are strictly between σ(j) and σ(i). -/
+This counts elements between i and j whose images are strictly between σ(j) and σ(i). @statement_id stmt-src-def.perm.setq
+-/
 def setQ (σ : Perm (Fin n)) (i j : Fin n) : Finset (Fin n) :=
   Finset.filter (fun k => i < k ∧ k < j ∧ σ j < σ k ∧ σ k < σ i) Finset.univ
 
 /-- The set R from Proposition prop.perm.lisitij:
 R = {k ∈ {i+1, ..., j-1} | σ(i) < σ(k) < σ(j)}
-This counts elements between i and j whose images are strictly between σ(i) and σ(j). -/
+This counts elements between i and j whose images are strictly between σ(i) and σ(j). @statement_id stmt-src-def.perm.setr
+-/
 def setR (σ : Perm (Fin n)) (i j : Fin n) : Finset (Fin n) :=
   Finset.filter (fun k => i < k ∧ k < j ∧ σ i < σ k ∧ σ k < σ j) Finset.univ
 
@@ -530,7 +536,8 @@ def setAbove (σ : Perm (Fin n)) (i j : Fin n) : Finset (Fin n) :=
   Finset.filter (fun k => i < k ∧ k < j ∧ σ i ≤ σ k) Finset.univ
 
 /-- Key symmetry: Q for σ * swap i j equals R for σ (when σ(i) < σ(j)).
-This allows us to reduce the case σ(i) < σ(j) to the case σ(i) > σ(j). -/
+This allows us to reduce the case σ(i) < σ(j) to the case σ(i) > σ(j). @statement_id stmt-src-lem.perm.setq_swap_eq_setr
+-/
 lemma setQ_swap_eq_setR (σ : Perm (Fin n)) (i j : Fin n) :
     setQ (σ * Equiv.swap i j) i j = setR σ i j := by
   ext k
@@ -550,12 +557,14 @@ lemma setQ_swap_eq_setR (σ : Perm (Fin n)) (i j : Fin n) :
     exact ⟨hik, hkj, hσik, hσkj⟩
 
 /-- The set A: elements a < i with σ(j) < σ(a) < σ(i).
-These contribute to both lost and gained inversions (paired). -/
+These contribute to both lost and gained inversions (paired). @statement_id stmt-src-def.perm.seta
+-/
 def setA (σ : Perm (Fin n)) (i j : Fin n) : Finset (Fin n) :=
   Finset.filter (fun a => a < i ∧ σ j < σ a ∧ σ a < σ i) Finset.univ
 
 /-- The set B: elements b > j with σ(j) < σ(b) < σ(i).
-These contribute to both lost and gained inversions (paired). -/
+These contribute to both lost and gained inversions (paired). @statement_id stmt-src-def.perm.setb
+-/
 def setB (σ : Perm (Fin n)) (i j : Fin n) : Finset (Fin n) :=
   Finset.filter (fun b => j < b ∧ σ j < σ b ∧ σ b < σ i) Finset.univ
 
@@ -588,7 +597,8 @@ lemma setQ_setB_disjoint (σ : Perm (Fin n)) (i j : Fin n) :
   intro ⟨_, ha_lt_j, _, _⟩ hj_lt_a
   exact absurd ha_lt_j (not_lt.mpr (le_of_lt hj_lt_a))
 
-/-- For k ∈ Q: (i, k) is a lost inversion. -/
+/-- For k ∈ Q: (i, k) is a lost inversion. @statement_id stmt-src-lem.perm.ik_lost_for_k_in_q
+-/
 lemma ik_lost_for_k_in_Q (σ : Perm (Fin n)) (i j k : Fin n)
     (hk : k ∈ setQ σ i j) : (i, k) ∈ inversions σ \ inversions (σ * Equiv.swap i j) := by
   simp only [setQ, Finset.mem_filter, Finset.mem_univ, true_and] at hk
@@ -602,7 +612,8 @@ lemma ik_lost_for_k_in_Q (σ : Perm (Fin n)) (i j k : Fin n)
     simp only [Equiv.swap_apply_left, Equiv.swap_apply_of_ne_of_ne hk_ne_i hk_ne_j]
     exact le_of_lt hk.2.2.1
 
-/-- For k ∈ Q: (k, j) is a lost inversion. -/
+/-- For k ∈ Q: (k, j) is a lost inversion. @statement_id stmt-src-lem.perm.kj_lost_for_k_in_q
+-/
 lemma kj_lost_for_k_in_Q (σ : Perm (Fin n)) (i j k : Fin n)
     (hk : k ∈ setQ σ i j) : (k, j) ∈ inversions σ \ inversions (σ * Equiv.swap i j) := by
   simp only [setQ, Finset.mem_filter, Finset.mem_univ, true_and] at hk
@@ -616,7 +627,8 @@ lemma kj_lost_for_k_in_Q (σ : Perm (Fin n)) (i j k : Fin n)
     simp only [Equiv.swap_apply_right, Equiv.swap_apply_of_ne_of_ne hk_ne_i hk_ne_j]
     exact le_of_lt hk.2.2.2
 
-/-- (i, j) is a lost inversion when σ(j) < σ(i). -/
+/-- (i, j) is a lost inversion when σ(j) < σ(i). @statement_id stmt-src-lem.perm.ij_lost
+-/
 lemma ij_lost (σ : Perm (Fin n)) (i j : Fin n) (hij : i < j) (h : σ j < σ i) :
     (i, j) ∈ inversions σ \ inversions (σ * Equiv.swap i j) := by
   simp only [Finset.mem_sdiff, inversions, Finset.mem_filter, Finset.mem_univ,
@@ -625,7 +637,8 @@ lemma ij_lost (σ : Perm (Fin n)) (i j : Fin n) (hij : i < j) (h : σ j < σ i) 
   · exact ⟨hij, h⟩
   · intro _; exact le_of_lt h
 
-/-- For a ∈ A: (a, i) is a gained inversion. -/
+/-- For a ∈ A: (a, i) is a gained inversion. @statement_id stmt-src-lem.perm.ai_gained_for_a_in_a
+-/
 lemma ai_gained_for_a_in_A (σ : Perm (Fin n)) (i j a : Fin n) (hij : i < j)
     (ha : a ∈ setA σ i j) : (a, i) ∈ inversions (σ * Equiv.swap i j) \ inversions σ := by
   simp only [setA, Finset.mem_filter, Finset.mem_univ, true_and] at ha
@@ -640,7 +653,8 @@ lemma ai_gained_for_a_in_A (σ : Perm (Fin n)) (i j a : Fin n) (hij : i < j)
       exact ha.2.1
   · intro _; exact le_of_lt ha.2.2
 
-/-- For b ∈ B: (j, b) is a gained inversion. -/
+/-- For b ∈ B: (j, b) is a gained inversion. @statement_id stmt-src-lem.perm.jb_gained_for_b_in_b
+-/
 lemma jb_gained_for_b_in_B (σ : Perm (Fin n)) (i j b : Fin n) (hij : i < j)
     (hb : b ∈ setB σ i j) : (j, b) ∈ inversions (σ * Equiv.swap i j) \ inversions σ := by
   simp only [setB, Finset.mem_filter, Finset.mem_univ, true_and] at hb
@@ -655,7 +669,8 @@ lemma jb_gained_for_b_in_B (σ : Perm (Fin n)) (i j b : Fin n) (hij : i < j)
       exact hb.2.2
   · intro _; exact le_of_lt hb.2.1
 
-/-- For a ∈ A: (a, j) is a lost inversion. -/
+/-- For a ∈ A: (a, j) is a lost inversion. @statement_id stmt-src-lem.perm.aj_lost_for_a_in_a
+-/
 lemma aj_lost_for_a_in_A (σ : Perm (Fin n)) (i j a : Fin n) (hij : i < j) (_h : σ j < σ i)
     (ha : a ∈ setA σ i j) : (a, j) ∈ inversions σ \ inversions (σ * Equiv.swap i j) := by
   simp only [setA, Finset.mem_filter, Finset.mem_univ, true_and] at ha
@@ -669,7 +684,8 @@ lemma aj_lost_for_a_in_A (σ : Perm (Fin n)) (i j a : Fin n) (hij : i < j) (_h :
     simp only [Equiv.swap_apply_of_ne_of_ne ha_ne_i ha_ne_j, Equiv.swap_apply_right]
     exact le_of_lt hσai
 
-/-- For b ∈ B: (i, b) is a lost inversion. -/
+/-- For b ∈ B: (i, b) is a lost inversion. @statement_id stmt-src-lem.perm.ib_lost_for_b_in_b
+-/
 lemma ib_lost_for_b_in_B (σ : Perm (Fin n)) (i j b : Fin n) (hij : i < j) (_h : σ j < σ i)
     (hb : b ∈ setB σ i j) : (i, b) ∈ inversions σ \ inversions (σ * Equiv.swap i j) := by
   simp only [setB, Finset.mem_filter, Finset.mem_univ, true_and] at hb
@@ -683,7 +699,8 @@ lemma ib_lost_for_b_in_B (σ : Perm (Fin n)) (i j b : Fin n) (hij : i < j) (_h :
     simp only [Equiv.swap_apply_of_ne_of_ne hb_ne_i hb_ne_j, Equiv.swap_apply_left]
     exact le_of_lt hσjb
 
-/-- Completeness: every lost inversion is one of the five types. -/
+/-- Completeness: every lost inversion is one of the five types. @statement_id stmt-src-lem.perm.lost_inversion_complete
+-/
 lemma lost_inversion_complete (σ : Perm (Fin n)) (i j a b : Fin n) (hij : i < j) (h : σ j < σ i)
     (hmem : (a, b) ∈ inversions σ \ inversions (σ * Equiv.swap i j)) :
     (a = i ∧ b = j) ∨
@@ -771,7 +788,8 @@ lemma lost_inversion_complete (σ : Perm (Fin n)) (i j a b : Fin n) (hij : i < j
           simp only [hswap_a, hswap_b] at hne
           exact not_lt.mpr hne hσba
 
-/-- Completeness: every gained inversion is one of the two types. -/
+/-- Completeness: every gained inversion is one of the two types. @statement_id stmt-src-lem.perm.gained_inversion_complete
+-/
 lemma gained_inversion_complete (σ : Perm (Fin n)) (i j a b : Fin n) (hij : i < j) (h : σ j < σ i)
     (hmem : (a, b) ∈ inversions (σ * Equiv.swap i j) \ inversions σ) :
     (a ∈ setA σ i j ∧ b = i) ∨
@@ -861,7 +879,8 @@ The proof proceeds by partitioning pairs (a, b) with a < b into categories:
 5. Pairs (i, k) and (k, j) for i < k < j, k ∉ Q: unchanged or swap, net 0
 6. Other pairs: unchanged
 
-Total: lost - gained = 2|Q| + 1 -/
+Total: lost - gained = 2|Q| + 1 @statement_id stmt-src-lem.perm.lost-minus-gained
+-/
 lemma lost_minus_gained_eq (σ : Perm (Fin n)) (i j : Fin n) (hij : i < j) (h : σ j < σ i) :
     (inversions σ \ inversions (σ * Equiv.swap i j)).card =
     (inversions (σ * Equiv.swap i j) \ inversions σ).card + 2 * (setQ σ i j).card + 1 := by
@@ -1089,7 +1108,8 @@ lemma lost_minus_gained_eq (σ : Perm (Fin n)) (i j : Fin n) (hij : i < j) (h : 
 - If σ(i) > σ(j): ℓ(σ·t_{i,j}) = ℓ(σ) - 2|Q| - 1
 - If σ(i) < σ(j): ℓ(σ·t_{i,j}) = ℓ(σ) + 2|R| + 1
 
-where Q and R are the sets of "intermediate" elements. -/
+where Q and R are the sets of "intermediate" elements. @statement_id stmt-src-prop.perm.lisitij
+-/
 theorem length_mul_transposition (σ : Perm (Fin n)) (i j : Fin n) (hij : i < j) :
     ℓ (σ * Equiv.swap i j) =
       if σ j < σ i
@@ -1169,7 +1189,8 @@ The length decreases if (i,j) was an inversion, increases if it wasn't.
 
 This follows immediately from part (b): when σ(i) > σ(j), the formula gives
 ℓ(σ·t_{i,j}) = ℓ(σ) - 2|Q| - 1 < ℓ(σ), and when σ(i) < σ(j), the formula gives
-ℓ(σ·t_{i,j}) = ℓ(σ) + 2|R| + 1 > ℓ(σ). -/
+ℓ(σ·t_{i,j}) = ℓ(σ) + 2|R| + 1 > ℓ(σ). @statement_id stmt-src-prop.perm.lisitij
+-/
 theorem length_mul_transposition_compare (σ : Perm (Fin n)) (i j : Fin n) (hij : i < j) :
     (σ j < σ i → ℓ (σ * Equiv.swap i j) < ℓ σ) ∧
     (σ i < σ j → ℓ σ < ℓ (σ * Equiv.swap i j)) := by
@@ -1195,14 +1216,17 @@ theorem length_mul_transposition_compare (σ : Perm (Fin n)) (i j : Fin n) (hij 
 
 /-! ### First reduced word theorem (Theorem thm.perm.len.redword1) -/
 
-/-- A word is a list of indices representing simple transpositions. -/
+/-- A word is a list of indices representing simple transpositions. @statement_id stmt-src-def.perm.word
+-/
 abbrev Word (n : ℕ) := List (Fin (n - 1))
 
-/-- The product of simple transpositions corresponding to a word. -/
+/-- The product of simple transpositions corresponding to a word. @statement_id stmt-src-def.perm.wordprod
+-/
 def wordProd (w : Word n) : Perm (Fin n) :=
   (w.map s).prod
 
-/-- A word is reduced if its length equals the length of the permutation it represents. -/
+/-- A word is reduced if its length equals the length of the permutation it represents. @statement_id stmt-src-def.perm.isreduced
+-/
 def IsReduced (w : Word n) : Prop :=
   w.length = ℓ (wordProd w)
 
@@ -1419,7 +1443,8 @@ composition of ℓ(σ) simple transpositions.
 This is proved by induction on ℓ(σ): if σ has an inversion at position k
 (meaning σ(k) > σ(k+1)), then ℓ(σ·s_k) = ℓ(σ) - 1, so by induction
 σ·s_k can be written with ℓ(σ) - 1 simples, and thus σ = (σ·s_k)·s_k
-can be written with ℓ(σ) simples. -/
+can be written with ℓ(σ) simples. @statement_id stmt-src-thm.perm.len.redword1
+-/
 theorem exists_reduced_word (σ : Perm (Fin n)) :
     ∃ w : Word n, IsReduced w ∧ wordProd w = σ := by
   induction' h : ℓ σ using Nat.strong_induction_on with m ih generalizing σ
@@ -1476,7 +1501,8 @@ theorem exists_reduced_word (σ : Perm (Fin n)) :
 of simple transpositions needed to express σ.
 
 This follows from the fact that multiplying by a simple transposition
-changes the length by at most 1. -/
+changes the length by at most 1. @statement_id stmt-src-thm.perm.len.redword1
+-/
 theorem length_le_word_length (w : Word n) :
     ℓ (wordProd w) ≤ w.length := by
   induction w with
@@ -1505,7 +1531,8 @@ theorem length_le_word_length (w : Word n) :
       _ = ℓ (wordProd w) + 1 := rfl
       _ ≤ w.length + 1 := by omega
 
-/-- Combining parts (a) and (b): ℓ(σ) is exactly the minimum word length. -/
+/-- Combining parts (a) and (b): ℓ(σ) is exactly the minimum word length. @statement_id stmt-src-thm.perm.len.eq-min
+-/
 theorem length_eq_min_word_length (σ : Perm (Fin n)) :
     ℓ σ = (exists_reduced_word σ).choose.length := by
   -- From exists_reduced_word, we get a word w such that:
@@ -1589,7 +1616,8 @@ private lemma length_mul_wordProd_mod_two (σ : Perm (Fin n)) (w : Word n) :
 parity as the sum of lengths: ℓ(στ) ≡ ℓ(σ) + ℓ(τ) (mod 2).
 
 This follows from the fact that multiplying by a simple transposition
-always changes the length by exactly 1 (either +1 or -1). -/
+always changes the length by exactly 1 (either +1 or -1). @statement_id stmt-src-cor.perm.red.sigtau
+-/
 theorem length_mul_mod_two (σ τ : Perm (Fin n)) :
     ℓ (σ * τ) % 2 = (ℓ σ + ℓ τ) % 2 := by
   -- Get a reduced word for τ
@@ -1604,7 +1632,8 @@ theorem length_mul_mod_two (σ τ : Perm (Fin n)) :
 /-- **Corollary cor.perm.red.sigtau (b)**: The length of a product is at most
 the sum of lengths: ℓ(στ) ≤ ℓ(σ) + ℓ(τ).
 
-This is the triangle inequality for the length function. -/
+This is the triangle inequality for the length function. @statement_id stmt-src-cor.perm.red.sigtau
+-/
 theorem length_mul_le (σ τ : Perm (Fin n)) :
     ℓ (σ * τ) ≤ ℓ σ + ℓ τ := by
   -- Get reduced words for σ and τ
@@ -1661,7 +1690,8 @@ private theorem word_length_parity (w : Word n) :
     omega
 
 /-- **Corollary cor.perm.red.sigtau (c)**: For any word representing σ,
-the word length is at least ℓ(σ) and has the same parity as ℓ(σ). -/
+the word length is at least ℓ(σ) and has the same parity as ℓ(σ). @statement_id stmt-src-cor.perm.red.sigtau
+-/
 theorem word_length_ge_and_parity (w : Word n) :
     w.length ≥ ℓ (wordProd w) ∧ w.length % 2 = ℓ (wordProd w) % 2 :=
   ⟨length_le_word_length w, word_length_parity w⟩
@@ -1684,7 +1714,8 @@ private lemma wordProd_mem_closure (w : Word n) :
 /-- **Corollary cor.perm.generated**: The symmetric group S_n is generated by
 the simple transpositions s_1, s_2, ..., s_{n-1}.
 
-This is a direct consequence of the first reduced word theorem. -/
+This is a direct consequence of the first reduced word theorem. @statement_id stmt-src-cor.perm.generated
+-/
 theorem generated_by_simples :
     Subgroup.closure {σ : Perm (Fin n) | ∃ k : Fin (n - 1), σ = s k} = ⊤ := by
   rw [Subgroup.eq_top_iff']
@@ -1712,14 +1743,16 @@ def lehmerCode (σ : Perm (Fin n)) : List ℕ :=
   AlgebraicCombinatorics.Perm.lehmerCode_toList σ
 
 /-- A cell (i, j) is in the Rothe diagram of σ if σ(i) > j and σ⁻¹(j) > i.
-These are the cells that are not "hit" by the Lehmer lasers. -/
+These are the cells that are not "hit" by the Lehmer lasers. @statement_id stmt-src-def.perm.inrothediagram
+-/
 def inRotheDiagram (σ : Perm (Fin n)) (i j : Fin n) : Prop :=
   j < σ i ∧ i < σ⁻¹ j
 
 instance (σ : Perm (Fin n)) (i j : Fin n) : Decidable (inRotheDiagram σ i j) :=
   inferInstanceAs (Decidable (_ ∧ _))
 
-/-- The number of cells in the Rothe diagram equals the length. -/
+/-- The number of cells in the Rothe diagram equals the length. @statement_id stmt-src-lem.perm.rothediagram_card_eq_length
+-/
 theorem rotheDiagram_card_eq_length (σ : Perm (Fin n)) :
     (Finset.filter (fun p : Fin n × Fin n => inRotheDiagram σ p.1 p.2) Finset.univ).card =
     ℓ σ := by
@@ -1764,7 +1797,8 @@ theorem rotheDiagram_card_eq_length (σ : Perm (Fin n)) :
 
 /-- The Lehmer entry at position i is strictly less than n - i.
 This is because ℓ_i(σ) counts elements j > i such that σ(j) < σ(i),
-and there are only n - 1 - i elements greater than i. -/
+and there are only n - 1 - i elements greater than i. @statement_id stmt-src-lem.perm.lehmerentry_lt2
+-/
 lemma lehmerEntry_lt (σ : Perm (Fin n)) (i : Fin n) : lehmerEntry σ i < n - i := by
   simp only [lehmerEntry, AlgebraicCombinatorics.Perm.lehmerEntry]
   calc (Finset.filter (fun j => i < j ∧ σ i > σ j) Finset.univ).card
@@ -1780,7 +1814,8 @@ lemma lehmerEntry_lt (σ : Perm (Fin n)) (i : Fin n) : lehmerEntry σ i < n - i 
 
 /-- Key characterization: σ(0) equals the Lehmer entry at position 0.
 This is because lehmerEntry σ 0 counts how many of σ(1), ..., σ(n-1) are less than σ(0),
-which equals σ(0) since σ is a bijection onto {0, ..., n-1}. -/
+which equals σ(0) since σ is a bijection onto {0, ..., n-1}. @statement_id stmt-src-lem.perm.sigma_zero_eq_lehmerentry
+-/
 lemma sigma_zero_eq_lehmerEntry (σ : Perm (Fin n)) (hn : n > 0) :
     (σ ⟨0, hn⟩).val = lehmerEntry σ ⟨0, hn⟩ := by
   simp only [lehmerEntry, AlgebraicCombinatorics.Perm.lehmerEntry]
@@ -1871,7 +1906,8 @@ theorem lehmerEntry_add_le' (σ : Perm (Fin n)) (i : Fin n) :
   have h3 : (Finset.Ioi i).card = n - 1 - i.val := @Fin.card_Ioi n i
   omega
 
-/-- The sum of Lehmer entries equals the length. -/
+/-- The sum of Lehmer entries equals the length. @statement_id stmt-src-lem.perm.sum-lehmer-eq-length
+-/
 theorem sum_lehmerEntry_eq_length (σ : Perm (Fin n)) :
     ∑ i : Fin n, lehmerEntry σ i = ℓ σ := by
   simp only [length, inversions, lehmerEntry, AlgebraicCombinatorics.Perm.lehmerEntry]
@@ -1907,12 +1943,14 @@ This is a descending sequence of simple transpositions.
 If ℓ_i(σ) = 0, this is the empty list.
 
 The product of this block is the cycle (i', i'-1, ..., i) which moves element
-at position i to position i'. -/
+at position i to position i'. @statement_id stmt-src-def.perm.lehmerblock
+-/
 def lehmerBlock (σ : Perm (Fin n)) (i : Fin n) : Word n :=
   (List.finRange (lehmerEntry σ i)).map fun k =>
     ⟨i.val + lehmerEntry σ i - 1 - k.val, lehmerBlock_idx_bound σ i k.val k.isLt⟩
 
-/-- The length of a Lehmer block equals the Lehmer entry. -/
+/-- The length of a Lehmer block equals the Lehmer entry. @statement_id stmt-src-lem.perm.lehmerblock_length
+-/
 theorem lehmerBlock_length (σ : Perm (Fin n)) (i : Fin n) :
     (lehmerBlock σ i).length = lehmerEntry σ i := by
   unfold lehmerBlock
@@ -2149,16 +2187,19 @@ private lemma wordProd_lehmerBlock_shift (σ : Perm (Fin n)) (i : Fin n) (hn : n
 
 /-! ### Key characterization lemmas for the canonical reduced word proof -/
 
-/-- Number of j < i with σ(j) < σ(i). This counts positions before i with smaller values. -/
+/-- Number of j < i with σ(j) < σ(i). This counts positions before i with smaller values. @statement_id stmt-src-def.perm.smallerbefore
+-/
 def smallerBefore (σ : Perm (Fin n)) (i : Fin n) : ℕ :=
   (Finset.filter (fun j : Fin n => j < i ∧ σ j < σ i) Finset.univ).card
 
-/-- Number of j < i with σ(j) > σ(i). This counts inversions with i as second element. -/
+/-- Number of j < i with σ(j) > σ(i). This counts inversions with i as second element. @statement_id stmt-src-def.perm.largerbefore
+-/
 def largerBefore (σ : Perm (Fin n)) (i : Fin n) : ℕ :=
   (Finset.filter (fun j : Fin n => j < i ∧ σ j > σ i) Finset.univ).card
 
 /-- Key identity: smallerBefore + largerBefore = i.
-The elements j < i are partitioned into those with σ(j) < σ(i) and those with σ(j) > σ(i). -/
+The elements j < i are partitioned into those with σ(j) < σ(i) and those with σ(j) > σ(i). @statement_id stmt-src-lem.perm.smallerbefore_add_largerbefore
+-/
 lemma smallerBefore_add_largerBefore (σ : Perm (Fin n)) (i : Fin n) :
     smallerBefore σ i + largerBefore σ i = i.val := by
   unfold smallerBefore largerBefore
@@ -2199,7 +2240,8 @@ lemma largerBefore_eq (σ : Perm (Fin n)) (i : Fin n) :
   omega
 
 /-- Key characterization: σ(i) = smallerBefore(σ, i) + lehmerEntry(σ, i).
-This is the fundamental formula connecting the permutation value to the Lehmer code. -/
+This is the fundamental formula connecting the permutation value to the Lehmer code. @statement_id stmt-src-lem.perm.sigma-eq-formula
+-/
 lemma sigma_eq_smallerBefore_add_lehmerEntry (σ : Perm (Fin n)) (i : Fin n) :
     (σ i).val = smallerBefore σ i + lehmerEntry σ i := by
   unfold smallerBefore
@@ -2239,7 +2281,8 @@ lemma sigma_eq_smallerBefore_add_lehmerEntry (σ : Perm (Fin n)) (i : Fin n) :
   omega
 
 /-- Key formula: The final position after applying all blocks is σ(p).
-This follows from p + lehmerEntry σ p - largerBefore σ p = σ(p). -/
+This follows from p + lehmerEntry σ p - largerBefore σ p = σ(p). @statement_id stmt-src-lem.perm.final_position_formula
+-/
 lemma final_position_formula (σ : Perm (Fin n)) (p : Fin n) :
     p.val + lehmerEntry σ p - largerBefore σ p = (σ p).val := by
   have h1 := sigma_eq_smallerBefore_add_lehmerEntry σ p
@@ -2247,7 +2290,8 @@ lemma final_position_formula (σ : Perm (Fin n)) (p : Fin n) :
   have h3 := smallerBefore_add_largerBefore σ p
   omega
 
-/-- Key formula: The upper bound of block i's range equals σ(i) + largerBefore(σ, i). -/
+/-- Key formula: The upper bound of block i's range equals σ(i) + largerBefore(σ, i). @statement_id stmt-src-lem.perm.lehmerentry_range_upper
+-/
 lemma lehmerEntry_range_upper (σ : Perm (Fin n)) (i : Fin n) :
     i.val + lehmerEntry σ i = (σ i).val + largerBefore σ i := by
   have h1 := sigma_eq_smallerBefore_add_lehmerEntry σ i
@@ -2255,7 +2299,8 @@ lemma lehmerEntry_range_upper (σ : Perm (Fin n)) (i : Fin n) :
   omega
 
 /-- Key characterization: lehmerEntry(σ, i) ≥ lehmerEntry(σ, i+1) + 1 iff σ(i) > σ(i+1).
-This is crucial for determining when block i shifts a position. -/
+This is crucial for determining when block i shifts a position. @statement_id stmt-src-lem.perm.lehmerentry_diff_iff_inversion
+-/
 lemma lehmerEntry_diff_iff_inversion (σ : Perm (Fin n)) (i : Fin n) (hi : i.val + 1 < n) :
     let i' : Fin n := ⟨i.val + 1, hi⟩
     lehmerEntry σ i ≥ lehmerEntry σ i' + 1 ↔ σ i > σ i' := by
@@ -2338,7 +2383,8 @@ lemma lehmerEntry_diff_iff_inversion (σ : Perm (Fin n)) (i : Fin n) (hi : i.val
 
 /-- Two permutations with the same inversions are equal.
 This is because the inversions determine the relative order of all values,
-which uniquely determines the permutation. -/
+which uniquely determines the permutation. @statement_id stmt-src-lem.perm.eq_of_inversions_eq
+-/
 lemma eq_of_inversions_eq (σ τ : Perm (Fin n))
     (h : ∀ i j : Fin n, i < j → (σ j < σ i ↔ τ j < τ i)) : σ = τ := by
   ext i
@@ -2399,14 +2445,16 @@ For each i, define a_i = cyc_{i', i'-1, ..., i} = s_{i'-1} s_{i'-2} ... s_i
 where i' = i + ℓ_i(σ). Then σ = a_1 a_2 ... a_n.
 
 This gives an explicit algorithm to construct a reduced word from the Lehmer code.
-The word is constructed by concatenating the Lehmer blocks for each position i = 0, 1, ..., n-1. -/
+The word is constructed by concatenating the Lehmer blocks for each position i = 0, 1, ..., n-1. @statement_id stmt-src-def.perm.canonicalreducedword
+-/
 def canonicalReducedWord (σ : Perm (Fin n)) : Word n :=
   ((List.finRange n).map (lehmerBlock σ)).flatten
 
 
 /-- The length of the canonical reduced word equals the length of σ.
 This follows from the fact that each row word has length equal to the
-corresponding Lehmer entry, and the sum of Lehmer entries equals ℓ(σ). -/
+corresponding Lehmer entry, and the sum of Lehmer entries equals ℓ(σ). @statement_id stmt-src-lem.perm.canonicalreducedword-length
+-/
 theorem canonicalReducedWord_length (σ : Perm (Fin n)) :
     (canonicalReducedWord σ).length = ℓ σ := by
   unfold canonicalReducedWord
@@ -2993,7 +3041,8 @@ The blocks are applied in the order: B_{n-1} first, then B_{n-2}, ..., then B_0.
                   = smallerBefore σ p + lehmerEntry σ p  (since p = smallerBefore + largerBefore)
                   = σ(p)  (by sigma_eq_smallerBefore_add_lehmerEntry).
 
-The detailed combinatorial argument is in Exercise 5.21 of detnotes. -/
+The detailed combinatorial argument is in Exercise 5.21 of detnotes. @statement_id stmt-src-prop.perm.redword-lehmer
+-/
 theorem canonicalReducedWord_prod (σ : Perm (Fin n)) :
     wordProd (canonicalReducedWord σ) = σ := by
   -- We prove by extensionality: for each position p, track where it ends up.
@@ -3047,7 +3096,8 @@ theorem canonicalReducedWord_prod (σ : Perm (Fin n)) :
   have hfinal := final_position_formula σ p
   simp only [hsc0, hfinal]
 
-/-- The canonical reduced word is indeed reduced. -/
+/-- The canonical reduced word is indeed reduced. @statement_id stmt-src-thm.perm.canonicalreducedword-isreduced
+-/
 theorem canonicalReducedWord_isReduced (σ : Perm (Fin n)) :
     IsReduced (canonicalReducedWord σ) := by
   unfold IsReduced

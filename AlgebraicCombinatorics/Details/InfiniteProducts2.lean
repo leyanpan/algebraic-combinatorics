@@ -86,7 +86,8 @@ This corresponds to `S^I_fin` in the source.
 For the full API (including `_root_.EssentiallyFinite.add`, `_root_.EssentiallyFinite.neg`,
 `_root_.EssentiallyFinite.toFinsupp`, etc.), see `FPS/InfiniteProducts2.lean`.
 
-This version is specialized to `ℕ` for use in product rule proofs. -/
+This version is specialized to `ℕ` for use in product rule proofs. @statement_id stmt-src-def.fps.infprod.essfinite
+-/
 abbrev EssentiallyFinite {I : Type*} (f : I → ℕ) : Prop :=
   _root_.EssentiallyFinite f
 
@@ -121,20 +122,24 @@ The following definitions and lemmas support the product rule proofs.
 
 /-- For a summable family `(p_{i,k})`, the set `T_m` of pairs `(i,k)` with nonzero
 `[x^m] p_{i,k}` is finite. This corresponds to equation (pf.prop.fps.prodrule-fin-inf.Tm-def).
-(label: pf.prop.fps.prodrule-fin-inf.Tm-def) -/
+(label: pf.prop.fps.prodrule-fin-inf.Tm-def) @statement_id stmt-src-def.fps.infprod.coeffsupportset
+-/
 def CoeffSupportSet {I : Type*} (p : I → ℕ → PowerSeries K) (m : ℕ) : Set (I × ℕ) :=
   {ik : I × ℕ | ik.2 ≠ 0 ∧ coeff m (p ik.1 ik.2) ≠ 0}
 
 /-- The union of coefficient support sets up to degree n.
-This corresponds to `T'_n = T_0 ∪ T_1 ∪ ... ∪ T_n`. -/
+This corresponds to `T'_n = T_0 ∪ T_1 ∪ ... ∪ T_n`. @statement_id stmt-src-def.fps.infprod.coeffsupportsetunion
+-/
 def CoeffSupportSetUnion {I : Type*} (p : I → ℕ → PowerSeries K) (n : ℕ) : Set (I × ℕ) :=
   ⋃ m ∈ Finset.range (n + 1), CoeffSupportSet p m
 
-/-- The index set `I_n` of first components appearing in `T'_n`. -/
+/-- The index set `I_n` of first components appearing in `T'_n`. @statement_id stmt-src-def.fps.infprod.indexsetin
+-/
 def IndexSetIn {I : Type*} (p : I → ℕ → PowerSeries K) (n : ℕ) : Set I :=
   {i : I | ∃ k, (i, k) ∈ CoeffSupportSetUnion p n}
 
-/-- The value set `K_n` of second components appearing in `T'_n`. -/
+/-- The value set `K_n` of second components appearing in `T'_n`. @statement_id stmt-src-def.fps.infprod.valuesetkn
+-/
 def ValueSetKn {I : Type*} (p : I → ℕ → PowerSeries K) (n : ℕ) : Set ℕ :=
   {k : ℕ | ∃ i, (i, k) ∈ CoeffSupportSetUnion p n}
 
@@ -147,7 +152,8 @@ For `(i,k) ∈ S̄ \ T'_n`, we have `[x^m] p_{i,k} = 0` for all `m ∈ {0,1,...,
 
 /-- Claim 3: If `(i,k)` is not in the coefficient support union up to `n`, then
 all coefficients up to degree `n` vanish.
-(Claim 3, label: pf.prop.fps.prodrule-fin-inf.Tm-def) -/
+(Claim 3, label: pf.prop.fps.prodrule-fin-inf.Tm-def) @statement_id stmt-src-lem.fps.infprod.claim3
+-/
 theorem prodRule_claim3 {I : Type*} (p : I → ℕ → PowerSeries K) (n : ℕ)
     (i : I) (k : ℕ) (hk : k ≠ 0)
     (hnotin : (i, k) ∉ CoeffSupportSetUnion p n) :
@@ -167,7 +173,8 @@ If `(k_i)_{i ∈ I}` is essentially finite, then `(p_{i,k_i})_{i ∈ I}` is mult
 
 /-- Claim 4: For an essentially finite family `(k_i)` with `p_{i,0} = 1`,
 the family `(p_{i,k_i})` is multipliable (all but finitely many terms are 1).
-(Claim 4) -/
+(Claim 4) @statement_id stmt-src-lem.fps.infprod.claim4
+-/
 theorem prodRule_claim4 {I : Type*} (p : I → ℕ → PowerSeries K)
     (hp0 : ∀ i, p i 0 = 1) (k : I → ℕ) (hk : EssentiallyFinite k) :
     {i : I | p i (k i) ≠ 1}.Finite := by
@@ -194,7 +201,8 @@ private lemma order_gt_of_coeff_eq_zero {n : ℕ} {f : PowerSeries K}
 
 /-- Claim 5: If some `j ∈ I` satisfies `(j, k_j) ∉ T'_n`, then
 `[x^n](∏_{i ∈ I} p_{i,k_i}) = 0`.
-(Claim 5) -/
+(Claim 5) @statement_id stmt-src-lem.fps.infprod.claim5
+-/
 theorem prodRule_claim5 {I : Type*} [DecidableEq I] (p : I → ℕ → PowerSeries K)
     (n : ℕ) (k : I → ℕ) (_hk : EssentiallyFinite k) (_hp0 : ∀ i, p i 0 = 1)
     (j : I) (hkj : k j ≠ 0) (hnotin : (j, k j) ∉ CoeffSupportSetUnion p n) :
@@ -221,7 +229,8 @@ For families outside `S^I_{I_n}`, the product coefficient vanishes.
 
 /-- Claim 6: If `(k_i) ∈ S^I_fin \ S^I_{I_n}` (i.e., some `k_j ≠ 0` for `j ∉ I_n`),
 then `[x^n](∏_{i ∈ I} p_{i,k_i}) = 0`.
-(Claim 6) -/
+(Claim 6) @statement_id stmt-src-lem.fps.infprod.claim6
+-/
 theorem prodRule_claim6 {I : Type*} [DecidableEq I] (p : I → ℕ → PowerSeries K)
     (n : ℕ) (k : I → ℕ) (hk : EssentiallyFinite k) (hp0 : ∀ i, p i 0 = 1)
     (j : I) (hj_notin : j ∉ IndexSetIn p n) (hkj : k j ≠ 0) :
@@ -276,7 +285,8 @@ Note: Property 1 is made explicit in the statement since the product is over the
 For the infinite product interpretation (with p_{i,0} = 1), this constraint follows from
 the fact that factors with k_i ≠ 0 for i ∉ I_n would have vanishing coefficients up to
 degree n, making the product coefficient zero (by Claim 5/6).
-(Claim 7) -/
+(Claim 7) @statement_id stmt-src-lem.fps.infprod.claim7
+-/
 theorem prodRule_claim7 {I : Type*} [DecidableEq I] (p : I → ℕ → PowerSeries K)
     (_hp0 : ∀ i, p i 0 = 1) (n : ℕ)
     (_hTn_finite : (CoeffSupportSetUnion p n).Finite)
@@ -340,11 +350,13 @@ The coefficient of the sum over essentially finite families equals
 the coefficient of the sum over a finite index set.
 -/
 
-/-- Extend a function from a finite subset to the full type by setting values to 0 outside. -/
+/-- Extend a function from a finite subset to the full type by setting values to 0 outside. @statement_id stmt-src-def.fps.infprod.extendfromfinset
+-/
 def extendFromFinset {I : Type*} [DecidableEq I] (In : Finset I) (f : (i : In) → ℕ) : I → ℕ :=
   fun i => if h : i ∈ In then f ⟨i, h⟩ else 0
 
-/-- Restrict a function to a finite subset. -/
+/-- Restrict a function to a finite subset. @statement_id stmt-src-def.fps.infprod.restricttofinset
+-/
 def restrictToFinset {I : Type*} (In : Finset I) (k : I → ℕ) : (i : In) → ℕ :=
   fun i => k i.1
 
@@ -359,7 +371,8 @@ Note: The hypotheses `hValInS` and `hComplete` ensure that `essFinFamilies` is e
 the set of extensions of functions in the piFinset. These are needed to establish the
 bijection between the two index sets.
 
-(Claim 8) -/
+(Claim 8) @statement_id stmt-src-lem.fps.infprod.claim8
+-/
 theorem prodRule_claim8 {I : Type*} [DecidableEq I]
     (p : I → ℕ → PowerSeries K) (n : ℕ) (_hp0 : ∀ i, p i 0 = 1)
     (In : Finset I) (_hIn : ∀ i, i ∉ In → i ∉ IndexSetIn p n)
@@ -414,7 +427,8 @@ up to degree `n`.
 
 /-- Claim 9: For `i ∉ I_n`, we have `[x^m](∑_{k ∈ S_i \ {0}} p_{i,k}) = 0`
 for each `m ∈ {0,1,...,n}`.
-(Claim 9) -/
+(Claim 9) @statement_id stmt-src-lem.fps.infprod.claim9
+-/
 theorem prodRule_claim9 {I : Type*} (p : I → ℕ → PowerSeries K) (n : ℕ)
     (i : I) (hi : i ∉ IndexSetIn p n) (Si : Finset ℕ)
     (_hSi : 0 ∈ Si) :
@@ -470,7 +484,8 @@ The proof uses:
 2. By Claim 9, `[x^m](∑_{k ∈ S_i \ {0}} p_{i,k}) = 0` for all `m ≤ n` when `i ∉ I_n`
 3. By Lemma lem.fps.prod.irlv.inf, these factors don't affect the coefficient
 
-(Claim 10) -/
+(Claim 10) @statement_id stmt-src-lem.fps.infprod.claim10
+-/
 theorem prodRule_claim10 {I : Type*} [DecidableEq I]
     (p : I → ℕ → PowerSeries K) (n : ℕ) (hp0 : ∀ i, p i 0 = 1)
     (In : Finset I) (hIn : ∀ i, i ∉ In → i ∉ IndexSetIn p n)
@@ -503,7 +518,8 @@ For a finite index set, the product of sums equals the sum of products.
 
 /-- Claim 11: For finite `I_n`, `∏_{i ∈ I_n} ∑_{k ∈ S_i} p_{i,k} =
 ∑_{(k_i) ∈ S^{I_n}} ∏_{i ∈ I_n} p_{i,k_i}`.
-(Claim 11) -/
+(Claim 11) @statement_id stmt-src-lem.fps.infprod.claim11
+-/
 theorem prodRule_claim11 {I : Type*} [DecidableEq I]
     (p : I → ℕ → PowerSeries K) (In : Finset I) (S : I → Finset ℕ) :
     ∏ i ∈ In, ∑ k ∈ S i, p i k =
@@ -525,7 +541,8 @@ Proposition prop.fps.prodrule-inf-inf:
 `∏_{i ∈ I} ∑_{k ∈ S_i} p_{i,k} = ∑_{(k_i)_{i ∈ I} ∈ S^I_fin} ∏_{i ∈ I} p_{i,k_i}`
 -/
 
-/-- The set `S^I_fin` of essentially finite families in `∏_{i ∈ I} S_i`. -/
+/-- The set `S^I_fin` of essentially finite families in `∏_{i ∈ I} S_i`. @statement_id stmt-src-def.fps.infprod.sfini
+-/
 def SfinI {I : Type*} (S : I → Set ℕ) : Set (I → ℕ) :=
   {k : I → ℕ | (∀ i, k i ∈ S i) ∧ EssentiallyFinite k}
 
@@ -605,7 +622,8 @@ For any finite approximation of the index sets and value sets, the coefficient o
 the product of sums equals the coefficient of the sum of products.
 
 This is a direct consequence of Claim 11 (finite product-sum interchange).
-(Proposition prop.fps.prodrule-inf-inf, coefficient form) -/
+(Proposition prop.fps.prodrule-inf-inf, coefficient form) @statement_id stmt-src-lem.fps.prodrule-inf-inf-coeff
+-/
 theorem prodRule_infInf_coeff {I : Type*} [DecidableEq I]
     (p : I → ℕ → PowerSeries K) (n : ℕ) (M : Finset I) (Sfin : I → Finset ℕ) :
     coeff n (∏ i ∈ M, ∑ k ∈ Sfin i, p i k) =
@@ -621,7 +639,8 @@ The following results establish that composition distributes over infinite produ
 
 /-- Finite product composition rule: For finite `I`, `(∏_{i ∈ I} f_i) ∘ g = ∏_{i ∈ I} (f_i ∘ g)`.
 This is proved by induction on `|I|`.
-(Lemma lem.fps.subs.rule-infprod-fin) -/
+(Lemma lem.fps.subs.rule-infprod-fin) @statement_id stmt-src-lem.fps.subs.rule-infprod-fin
+-/
 theorem comp_prod_finite {ι : Type*} [DecidableEq ι] (s : Finset ι)
     (f : ι → PowerSeries K) (g : PowerSeries K) (hg : constantCoeff g = 0) :
     (∏ i ∈ s, f i).subst g = ∏ i ∈ s, (f i).subst g := by
@@ -639,7 +658,8 @@ theorem comp_prod_finite {ι : Type*} [DecidableEq ι] (s : Finset ι)
     rw [ih]
 
 /-- x^n-equivalence is preserved under composition when the inner series has zero constant term.
-This is a consequence of Proposition prop.fps.xneq.comp. -/
+This is a consequence of Proposition prop.fps.xneq.comp. @statement_id stmt-src-lem.fps.infprod.xnequiv-comp
+-/
 theorem xnEquiv_comp {n : ℕ} {f₁ f₂ g : PowerSeries K}
     (hf : ∀ k ≤ n, coeff k f₁ = coeff k f₂) (hg : constantCoeff g = 0) :
     ∀ k ≤ n, coeff k (f₁.subst g) = coeff k (f₂.subst g) := by
@@ -669,7 +689,8 @@ determines the x^n-coefficient in the product of `(f_i ∘ g)`.
 (Claim 1 in proof of prop.fps.subs.rule-infprod)
 
 Note: An x^n-approximator is a finite subset M that determines the first n+1 coefficients
-in the product, i.e., for all k ≤ n and all J ⊇ M, coeff k (∏ i ∈ J, f i) = coeff k (∏ i ∈ M, f i). -/
+in the product, i.e., for all k ≤ n and all J ⊇ M, coeff k (∏ i ∈ J, f i) = coeff k (∏ i ∈ M, f i). @statement_id stmt-src-lem.fps.infprod.comp-approx
+-/
 theorem comp_prod_approx_determines {I : Type*} [DecidableEq I]
     (f : I → PowerSeries K) (g : PowerSeries K) (hg : constantCoeff g = 0)
     (n : ℕ) (M : Finset I)
@@ -690,7 +711,8 @@ theorem comp_prod_approx_determines {I : Type*} [DecidableEq I]
   exact hM_approx k hk J hMJ
 
 /-- If `(f_i)_{i ∈ I}` is multipliable and `[x^0]g = 0`, then `(f_i ∘ g)_{i ∈ I}` is multipliable.
-(Proposition prop.fps.subs.rule-infprod, first part) -/
+(Proposition prop.fps.subs.rule-infprod, first part) @statement_id stmt-src-prop.fps.subs.rule-infprod-mulable
+-/
 theorem comp_prod_multipliable {I : Type*} [DecidableEq I]
     (f : I → PowerSeries K) (g : PowerSeries K) (hg : constantCoeff g = 0)
     (hf_mulable : ∀ n, ∃ M : Finset I, ∀ J : Finset I, M ⊆ J →
@@ -769,7 +791,8 @@ theorem comp_prod_infinite {I : Type*} [DecidableEq I]
 
 /-- If `u` divides `v` and the first `n+1` coefficients of `u` are zero,
 then the first `n+1` coefficients of `v` are also zero.
-(Lemma lem.fps.prod.irlv.mul) -/
+(Lemma lem.fps.prod.irlv.mul) @statement_id stmt-src-lem.fps.prod.irlv.mul-dvd
+-/
 theorem coeff_zero_of_dvd {n : ℕ} {u v : PowerSeries K}
     (hdvd : u ∣ v) (hu : ∀ m ≤ n, coeff m u = 0) :
     ∀ m ≤ n, coeff m v = 0 := by
