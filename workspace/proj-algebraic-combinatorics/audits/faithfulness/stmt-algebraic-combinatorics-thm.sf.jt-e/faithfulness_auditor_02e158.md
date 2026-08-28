@@ -1,0 +1,17 @@
+Declaration: SymmetricFunctions.jacobiTrudi_e
+Module: AlgebraicCombinatorics.SymmetricFunctions.PieriJacobiTrudi
+
+Statement id: stmt-algebraic-combinatorics-thm.sf.jt-e
+
+## INFORMAL STATEMENT
+Second Jacobi–Trudi formula
+
+Let $\lambda $ and $\mu $ be two partitions. Let $\lambda ^{t}$ and $\mu ^{t}$ be the transposes of $\lambda $ and $\mu $. Let $M\in \mathbb {N}$ be such that both $\lambda ^{t}$ and $\mu ^{t}$ have length $\leq M$. We extend the partitions $\lambda ^{t}$ and $\mu ^{t}$ to $M$-tuples (by inserting zeroes at the end). Write these $M$-tuples $\lambda ^{t}$ and $\mu ^{t}$ as $\lambda ^{t}=\left( \lambda _{1}^{t},\lambda _{2}^{t},\ldots ,\lambda _{M}^{t}\right) $ and $\mu ^{t}=\left( \mu _{1}^{t},\mu _{2}^{t},\ldots ,\mu _{M}^{t}\right) $. Then,
+
+\[  s_{\lambda /\mu }=\det \left( \left( e_{\lambda _{i}^{t}-\mu _{j}^{t}-i+j}\right) _{1\leq i\leq M,\  1\leq j\leq M}\right) .  \]
+
+## VERDICT
+{
+  "verdict": "unstatable",
+  "justification": "Q1: No. Q2: Yes, only as a restricted specialization. The informal theorem chooses the determinant size independently: \u201cLet M \u2208 \u2115 be such that both \u03bb\u1d57 and \u03bc\u1d57 have length \u2264 M,\u201d while the surrounding source fixes an independent number N of polynomial variables. The source explicitly clarifies for Jacobi\u2013Trudi that tableau entries remain in \u201c[N]\u201d when the partitions are M-tuples. In contrast, the elaborated signature has a single parameter N: `lam mu lamt muT : Fin N \u2192 \u2115`, forms an `N \u00d7 N` determinant, and uses `esymm (Fin N) R`. Thus N simultaneously controls the row representation of \u03bb and \u03bc, the padded transposes, the determinant size, and the polynomial alphabet. The module itself confirms this discrepancy: \u201cIn the source, M is the length of the partition tuples \u2026 while N is the number of variables \u2026 We use a single parameter N for simplicity.\u201d Moreover, because `NPartition.IsTranspose lam lamt` is two-sided and both functions have domain `Fin N`, it restricts the represented partitions and their transposes to fit inside an N-by-N box, whereas the informal theorem only requires a freely chosen M large enough for the transposes. There is a second restriction at the target binder `hcontained : \u2200 i, mu i \u2264 lam i`: the informal statement quantifies over \u201ctwo partitions\u201d without this hypothesis, and its referenced skew-Schur definition assigns no tableaux, hence polynomial zero, when \u03bc is not contained in \u03bb. The formal `SkewPartition` instead has a mandatory `contained` field, so `skewSchur` cannot even express those source cases. Consequently, the general informal theorem specializes to the formal equality, but the formal theorem cannot imply the independent-M or noncontained cases. Making the source meaning statable requires changing the dependency definitions `SkewPartition`, `SkewSSYT`, and `skewSchur` so the shape dimension and tableau alphabet dimension are separate and noncontained shapes yield zero; then `jacobiTrudi_e` must introduce an independent binder `M`, take `lamt muT : Fin M \u2192 \u2115`, and use a `Matrix (Fin M) (Fin M)` while retaining `esymm (Fin N) R`."
+}
