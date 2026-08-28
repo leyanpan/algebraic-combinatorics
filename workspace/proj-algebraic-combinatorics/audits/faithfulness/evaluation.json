@@ -1,0 +1,395 @@
+{
+  "total": 20,
+  "arms": [
+    "agent",
+    "one_shot"
+  ],
+  "project": "algebraic-combinatorics",
+  "concurrency": {
+    "agent": 5,
+    "one_shot": 10
+  },
+  "statement_ids": [
+    "stmt-algebraic-combinatorics-prop.det.charpol-explicit",
+    "stmt-algebraic-combinatorics-prop.det.x-ai",
+    "stmt-algebraic-combinatorics-thm.sf.pieri",
+    "stmt-algebraic-combinatorics-thm.sf.schur-symm-jt",
+    "stmt-algebraic-combinatorics-cor.lgv.binom-det-nonneg",
+    "stmt-algebraic-combinatorics-cor.lgv.catalan-hankel-det-0",
+    "stmt-algebraic-combinatorics-prop.fps.subs.rule-infprod-mulable",
+    "stmt-algebraic-combinatorics-thm.det.det-a-d-",
+    "stmt-algebraic-combinatorics-thm.sf.jt-e",
+    "stmt-algebraic-combinatorics-thm.sf.jt-h-nonskew",
+    "stmt-algebraic-combinatorics-thm.sf.lr-zy",
+    "stmt-algebraic-combinatorics-thm.sf.skew-schur-symm-jt",
+    "stmt-algebraic-combinatorics-cor.lgv.kpaths.wt-np",
+    "stmt-algebraic-combinatorics-cor.pars.pn-rec",
+    "stmt-algebraic-combinatorics-lem.fps.infprod.comp-approx",
+    "stmt-algebraic-combinatorics-lem.jtp.partitiongenfun-mul-pentagonalseries",
+    "stmt-algebraic-combinatorics-lem.sf.schur-alternant",
+    "stmt-algebraic-combinatorics-prop.binom.nck-2i-qedmo.cn",
+    "stmt-algebraic-combinatorics-prop.fps.subs.rule-infprod",
+    "stmt-algebraic-combinatorics-thm.det.det-a-b-"
+  ],
+  "agent_evaluations": {
+    "stmt-algebraic-combinatorics-prop.det.charpol-explicit": {
+      "path": "audits/faithfulness/stmt-algebraic-combinatorics-prop.det.charpol-explicit/faithfulness_auditor_620015.md",
+      "faithful": true,
+      "targets": {
+        "AlgebraicCombinatorics.CauchyBinet": [
+          "AlgebraicCombinatorics.CauchyBinet.det_charPoly_coeff'",
+          "AlgebraicCombinatorics.CauchyBinet.det_charPoly_coeff"
+        ]
+      },
+      "verdict": "faithful",
+      "justification": "Q1: yes. The elaborated signatures quantify over `{R : Type u} [CommRing R]`, `{n : \u2115}`, `A : Matrix (Fin n) (Fin n) R`, and `x : R`. The apparent `CommRing` hypothesis is not added drift: the source context states, \u201cFor the rest of Section ... we fix a commutative ring K.\u201d The first declaration asserts exactly `(A + x \u2022 1).det = \u2211 P, ...det * x ^ (n - #P)`, matching \u201cdet(A + x I_n) = sum_{P subseteq [n]} det(sub_P^P A) \u00b7 x^{n-|P|}.\u201d Here `P : Finset (Fin n)` ranges over every subset of `[n]`; `Matrix.submatrix` is documented as having entries `M (r i) (c j)`, and `P.orderEmbOfFin` is the increasing bijection onto `P`, so its determinant is precisely the principal minor indexed by P. The second declaration sums over `k \u2208 Finset.range (n + 1)` and filters all P by `P.card = n - k`, exactly representing `k=0,...,n` and `|P|=n-k`. Scalar multiplication `x \u2022 (1 : Matrix ...)` is the pointwise matrix scalar action on the identity, hence `x I_n`. Q2: yes. The informal displayed chain gives each of the two formal equalities separately after the standard encodings `K \u21a6 R`, `[n] \u21a6 Fin n`, and subsets `P \u21a6 Finset (Fin n)`. Conversely, the two Lean declarations share the same left-hand side, so together they give the full informal equality chain. There are no extra mathematical hypotheses, restricted ranges, or altered definitions."
+    },
+    "stmt-algebraic-combinatorics-prop.det.x-ai": {
+      "path": "audits/faithfulness/stmt-algebraic-combinatorics-prop.det.x-ai/faithfulness_auditor_e969a0.md",
+      "faithful": true,
+      "targets": {
+        "AlgebraicCombinatorics.CauchyBinet": [
+          "AlgebraicCombinatorics.CauchyBinet.det_const_add_diagonal"
+        ]
+      },
+      "verdict": "faithful",
+      "justification": "The source context fixes the coefficient type exactly as required: \u201cFor the rest of Section ... we fix a commutative ring K.\u201d The elaborated Lean signature likewise quantifies over `{R : Type*} [CommRing R]`, with `{n : \u2115}`, `x : R`, and `d : Fin n \u2192 R`. The referenced definition is `constPlusDiagMatrix x d := fun i j => x + if i = j then d i else 0`, which is exactly the informal matrix having diagonal entries `x+d_i` and off-diagonal entries `x`. The conclusion `(constPlusDiagMatrix x d).det = (\u220f i : Fin n, d i) + x * \u2211 i : Fin n, \u220f j \u2208 Finset.univ.erase i, d j` exactly represents \u201cdet F = d_1...d_n + x sum_i d_1...hat(d_i)...d_n\u201d: `Fin n` indexes the n entries, and `univ.erase i` omits precisely the i-th factor. Thus Q1 is yes: every Lean instance supplies the informal identity over the fixed commutative ring. Q2 is also yes: the informal data translate directly to `d : Fin n \u2192 R` and the defined matrix, yielding exactly the Lean equality. There are no additional hypotheses or restricted index ranges."
+    },
+    "stmt-algebraic-combinatorics-thm.sf.pieri": {
+      "path": "audits/faithfulness/stmt-algebraic-combinatorics-thm.sf.pieri/faithfulness_auditor_600593.md",
+      "faithful": true,
+      "targets": {
+        "AlgebraicCombinatorics.SymmetricFunctions.PieriJacobiTrudi": [
+          "SymmetricFunctions.pieri_horizontal",
+          "SymmetricFunctions.pieri_vertical"
+        ]
+      },
+      "verdict": "faithful",
+      "justification": "Q1: yes. Q2: yes. The elaborated signatures quantify over `{N : \u2115} {R : Type} [CommRing R]` and state `hsymm (Fin N) R n * schur mu = \u2211 lam \u2208 horizontalNStripPartitions mu n, schur lam` and, respectively, `esymm (Fin N) R n * schur mu = \u2211 lam \u2208 verticalNStripPartitions mu n, schur lam`. These hidden binders match the source's standing convention, quoted as \u201cFix a commutative ring K. Fix an N \u2208 \u2115\u201d and its polynomial ring `K[x\u2081,\u2026,x_N]`; `Fin N` is merely the zero-based indexing equivalent of the source's `[N]`. Mathlib defines `hsymm` as \u201cthe sum over all the degree n monomials\u201d and `esymm` as \u201cthe sum over all the degree n squarefree monomials,\u201d matching `h_n` and `e_n`. The project definition `schur lam := \u2211 T \u2208 ssytFinset lam, T.toMonomial` matches the source definition `s_\u03bb := \u2211_{T\u2208SSYT(\u03bb)} x_T`; its tableaux have entries in `Fin N`, are row-weak, and column-strict, exactly as the source requires. Finally, the formal summation domains match \u201c\u03bb/\u03bc is a horizontal [or vertical] n-strip\u201d: `horizontalNStripPartitions` and `verticalNStripPartitions` require containment, respectively `\u03bc_i \u2265 \u03bb_{i+1}` or `\u03bb_i \u2264 \u03bc_i + 1`, and size equation `|\u03bb| = |\u03bc| + n`. The horizontal enumerator's explicit finite upper bounds do not narrow the intended domain: the bounds for later rows follow from the horizontal-strip condition, while the first-row bound follows from containment and the size equation. Thus both formal declarations express precisely the two informal Pieri identities."
+    },
+    "stmt-algebraic-combinatorics-thm.sf.schur-symm-jt": {
+      "path": "audits/faithfulness/stmt-algebraic-combinatorics-thm.sf.schur-symm-jt/faithfulness_auditor_f142bf.md",
+      "faithful": false,
+      "targets": {
+        "AlgebraicCombinatorics.SymmetricFunctions.PieriJacobiTrudi": [
+          "SymmetricFunctions.schur_isSymmetric_jacobiTrudi"
+        ]
+      },
+      "verdict": "drift",
+      "justification": "Q1: yes. The elaborated signature universally quantifies `{N : \u2115} {R : Type} [CommRing R]` and concludes `(schur (R := R) \u27e8lam, hlam\u27e9).IsSymmetric`; specializing to `R = \u2124` and positive `N` yields the informal claim. The partition binder also matches the source notion: `lam : Fin N \u2192 \u2115` with `hlam : \u2200 i j, i \u2264 j \u2192 lam j \u2264 lam i` is precisely a weakly decreasing N-tuple. Moreover, Mathlib documents `MvPolynomial.IsSymmetric` as invariance under permutations of variables, matching \u201cis a symmetric polynomial.\u201d Q2: no as stated. The source context says, \u201cWe work over a fixed positive integer N and the polynomial ring P = \u2124[x_1, x_2, ..., x_N],\u201d whereas the declaration's folded section binders quantify over every natural `N`, including zero, and every coefficient type `R` satisfying `[CommRing R]`. Its referenced definition likewise has the genuinely coefficient-parametric body `noncomputable def schur ... : MvPolynomial (Fin N) R := \u2211 T \u2208 ssytFinset lam, T.toMonomial`. Thus the informal integer-coefficient, positive-dimensional assertion does not itself assert the declaration's additional cases over arbitrary commutative rings and `N = 0`. The difference enters at `SymmetricFunctions.schur_isSymmetric_jacobiTrudi` through the implicit binders `{N : \u2115}`, `{R : Type}`, and `[CommRing R]`, together with the `R` parameter in `SymmetricFunctions.schur`. To match the recorded source exactly, specialize the conclusion to `R := \u2124` and restrict `N` to the source's positive setting, for example with `[NeZero N]`; alternatively, revise the informal statement and its Schur-polynomial definition to explicitly quantify over arbitrary commutative coefficient rings and allow `N = 0`."
+    },
+    "stmt-algebraic-combinatorics-cor.lgv.binom-det-nonneg": {
+      "path": "audits/faithfulness/stmt-algebraic-combinatorics-cor.lgv.binom-det-nonneg/faithfulness_auditor_78ad09.md",
+      "faithful": true,
+      "targets": {
+        "AlgebraicCombinatorics.Determinants.LGV2": [
+          "LGV.binom_det_nonneg"
+        ]
+      },
+      "verdict": "faithful",
+      "justification": "Q1: yes. The elaborated signature is `\u2200 {k : \u2115} (a b : Fin k \u2192 \u2115), (\u2200 i j : Fin k, i \u2264 j \u2192 a j \u2264 a i) \u2192 (\u2200 i j : Fin k, i \u2264 j \u2192 b j \u2264 b i) \u2192 0 \u2264 (Matrix.of fun i j => \u2191((a i).choose (b j))).det`. Thus `a` and `b` are precisely length-`k` sequences of nonnegative integers, and the hypotheses encode exactly the informal chains `a\u2081 \u2265 a\u2082 \u2265 \u22ef \u2265 a\u2096` and `b\u2081 \u2265 b\u2082 \u2265 \u22ef \u2265 b\u2096` after the standard shift from `Fin k` indices `0,\u2026,k-1` to indices `1,\u2026,k`. The conclusion is the determinant over `\u2124` of the matrix whose `(i,j)` entry is `(a i).choose (b j)`, cast from `\u2115`, and asserts it is nonnegative. The library docstring confirms that `Nat.choose n r` is \u201cthe number of `r`-element subsets in an `n`-element set. Also known as binomial coefficients,\u201d while `Matrix.of` merely \u201cCast[s] a function into a matrix.\u201d Hence the formal conclusion implies the displayed informal inequality. Q2: yes. Given any informal `k`, sequences, and the two decreasing chains, representing the sequences as functions `Fin k \u2192 \u2115` supplies exactly `ha` and `hb`, and the informal determinant is exactly the formal `Matrix.det`. There are no hidden section binders or additional hypotheses in the elaborated declaration. The `k = 0` case is also consistent with Lean\u2019s standard meaning of `\u2115` and the empty determinant convention."
+    },
+    "stmt-algebraic-combinatorics-cor.lgv.catalan-hankel-det-0": {
+      "path": "audits/faithfulness/stmt-algebraic-combinatorics-cor.lgv.catalan-hankel-det-0/faithfulness_auditor_1ce413.md",
+      "faithful": true,
+      "targets": {
+        "AlgebraicCombinatorics.Determinants.LGV2": [
+          "LGV.catalan_hankel_det"
+        ]
+      },
+      "verdict": "faithful",
+      "justification": "Q1: yes. The elaborated signature is `LGV.catalan_hankel_det (k : \u2115) : (catalanHankelMatrix k).det = 1`, with no hidden hypotheses or restricted range. The referenced definition is `def catalanHankelMatrix (k : \u2115) : Matrix (Fin k) (Fin k) \u2124 := Matrix.of fun i j => (catalan ((i : \u2115) + (j : \u2115)) : \u2124)`. Thus its zero-based entry `(i,j)` is `catalan (i+j)`. Under the reindexing `i = I-1`, `j = J-1`, this is exactly the informal entry `c_{I+J-2}` for `1 \u2264 I,J \u2264 k`. Mathlib's recursively defined `catalan` denotes the source's sequence because `catalan_eq_centralBinom_div` states `catalan n = n.centralBinom / (n + 1)`, while `Nat.centralBinom_eq_two_mul_choose` states `n.centralBinom = (2 * n).choose n`; together these give the quoted informal definition `c_n = 1/(n+1) binom(2n,n)`. The coercion of these natural-number entries to `\u2124` is the standard determinant coefficient ring and does not alter the claimed equality. Q2: yes. The informal statement quantifies over the same `k \u2208 \u2115` and says the determinant of precisely this finite matrix is `1`, which directly gives the Lean equality after zero-based reindexing and integer coercion. The informal equality between the indexed notation and the displayed matrix is only an expansion of the same matrix, not an additional independent assertion. The `k = 0` case is also compatible: `Fin 0` gives the empty matrix, whose determinant is `1`."
+    },
+    "stmt-algebraic-combinatorics-prop.fps.subs.rule-infprod-mulable": {
+      "path": "audits/faithfulness/stmt-algebraic-combinatorics-prop.fps.subs.rule-infprod-mulable/faithfulness_auditor_0651a2.md",
+      "faithful": true,
+      "targets": {
+        "AlgebraicCombinatorics.Details.InfiniteProducts2": [
+          "PowerSeries.comp_prod_multipliable"
+        ]
+      },
+      "verdict": "faithful",
+      "justification": "Q1: yes. The elaborated hypothesis `hf_mulable : \u2200 (n : \u2115), \u2203 M, \u2200 (J : Finset I), M \u2286 J \u2192 coeff n (\u220f i \u2208 J, f i) = coeff n (\u220f i \u2208 M, f i)` is exactly the unfolded project definition of a multipliable family: `Multipliable a := \u2200 n : \u2115, CoeffFinitelyDeterminedInProd a n`, where `CoeffFinitelyDeterminedInProd a n := \u2203 M : Finset I, DeterminesCoeffInProd a M n` and `DeterminesCoeffInProd a M n := \u2200 J : Finset I, M \u2286 J \u2192 ...`. Its conclusion is the same predicate applied to `fun i => (f i).subst g`. Mathlib defines `subst a f` as substitution of `a` into `f`, and its coefficient formula uses `coeff d f` multiplied by coefficients of `a ^ d`; thus `(f i).subst g` is `f_i \u2218 g`, in the same order as the informal fragment `(f_i \\circ g)`. Finally, the formal hypothesis `hg : constantCoeff g = 0` is precisely the informal `[x^0]g = 0`. Therefore the Lean statement implies the informal statement. Q2: yes. Unfolding informal multipliability gives exactly the formal hypothesis and desired conclusion, so the informal statement implies the Lean statement. The elaborated ambient binders `{K : Type} [CommRing K]` supply the coefficient-ring setting, while `[DecidableEq I]` only supports `Finset I` operations and is an encoding requirement rather than an additional mathematical restriction (classical decidable equality is available for an arbitrary index type)."
+    },
+    "stmt-algebraic-combinatorics-thm.det.det-a-d-": {
+      "path": "audits/faithfulness/stmt-algebraic-combinatorics-thm.det.det-a-d-/faithfulness_auditor_51073f.md",
+      "faithful": true,
+      "targets": {
+        "AlgebraicCombinatorics.CauchyBinet": [
+          "AlgebraicCombinatorics.CauchyBinet.det_add_diagonal"
+        ]
+      },
+      "verdict": "faithful",
+      "justification": "Q1: yes. The elaborated signature is `\u2200 {R : Type u} [CommRing R] {n : \u2115} (A : Matrix (Fin n) (Fin n) R) (d : Fin n \u2192 R), (A + Matrix.diagonal d).det = \u2211 P, (A.submatrix (P.orderEmbOfFin ...) (P.orderEmbOfFin ...)).det * \u220f i \u2208 P\u1d9c, d i`. This matches the informal formula `det (A+D) = \u2211_{P\u2286[n]} det (sub_P^P A) \u00b7 \u220f_{i\u2208[n]\\P} d_i`: finsets of `Fin n` represent all subsets of `[n]`, `P\u1d9c` is the complement in the full finite index set, and `P.orderEmbOfFin` enumerates P in increasing order, exactly as the source definition of `sub` requires. Mathlib documents `Matrix.diagonal d` as having entry `d i` on the diagonal and zero when the indices differ, matching the source's explicit `D = (d_i [i=j])`. The implicit `[CommRing R]` is not drift: the governing source convention says, `For the rest of Section ... we fix a commutative ring K`, while the Lean declaration generalizes uniformly over that fixed arbitrary ring. Q2: yes. Given the informal diagonal matrix D and its diagonal entries, the source explicitly says `so that D = (d_i [i=j])`; hence D is exactly `Matrix.diagonal d`, and the Lean equality is the informal equality after the standard identification of the source's one-based `[n]` with `Fin n`. Conversely, every `Matrix.diagonal d` is a diagonal D with those entries, so the Lean parameterization does not narrow the informal quantification. The final sentence calling these determinants 'principal minors' is explanatory terminology rather than an additional propositional claim; the project also defines `principalMinor` using this same principal submatrix determinant."
+    },
+    "stmt-algebraic-combinatorics-thm.sf.jt-e": {
+      "path": "audits/faithfulness/stmt-algebraic-combinatorics-thm.sf.jt-e/faithfulness_auditor_02e158.md",
+      "faithful": false,
+      "targets": {
+        "AlgebraicCombinatorics.SymmetricFunctions.PieriJacobiTrudi": [
+          "SymmetricFunctions.jacobiTrudi_e"
+        ]
+      },
+      "verdict": "unstatable",
+      "justification": "Q1: No. Q2: Yes, only as a restricted specialization. The informal theorem chooses the determinant size independently: \u201cLet M \u2208 \u2115 be such that both \u03bb\u1d57 and \u03bc\u1d57 have length \u2264 M,\u201d while the surrounding source fixes an independent number N of polynomial variables. The source explicitly clarifies for Jacobi\u2013Trudi that tableau entries remain in \u201c[N]\u201d when the partitions are M-tuples. In contrast, the elaborated signature has a single parameter N: `lam mu lamt muT : Fin N \u2192 \u2115`, forms an `N \u00d7 N` determinant, and uses `esymm (Fin N) R`. Thus N simultaneously controls the row representation of \u03bb and \u03bc, the padded transposes, the determinant size, and the polynomial alphabet. The module itself confirms this discrepancy: \u201cIn the source, M is the length of the partition tuples \u2026 while N is the number of variables \u2026 We use a single parameter N for simplicity.\u201d Moreover, because `NPartition.IsTranspose lam lamt` is two-sided and both functions have domain `Fin N`, it restricts the represented partitions and their transposes to fit inside an N-by-N box, whereas the informal theorem only requires a freely chosen M large enough for the transposes. There is a second restriction at the target binder `hcontained : \u2200 i, mu i \u2264 lam i`: the informal statement quantifies over \u201ctwo partitions\u201d without this hypothesis, and its referenced skew-Schur definition assigns no tableaux, hence polynomial zero, when \u03bc is not contained in \u03bb. The formal `SkewPartition` instead has a mandatory `contained` field, so `skewSchur` cannot even express those source cases. Consequently, the general informal theorem specializes to the formal equality, but the formal theorem cannot imply the independent-M or noncontained cases. Making the source meaning statable requires changing the dependency definitions `SkewPartition`, `SkewSSYT`, and `skewSchur` so the shape dimension and tableau alphabet dimension are separate and noncontained shapes yield zero; then `jacobiTrudi_e` must introduce an independent binder `M`, take `lamt muT : Fin M \u2192 \u2115`, and use a `Matrix (Fin M) (Fin M)` while retaining `esymm (Fin N) R`."
+    },
+    "stmt-algebraic-combinatorics-thm.sf.jt-h-nonskew": {
+      "path": "audits/faithfulness/stmt-algebraic-combinatorics-thm.sf.jt-h-nonskew/faithfulness_auditor_70fa59.md",
+      "faithful": true,
+      "targets": {
+        "AlgebraicCombinatorics.SymmetricFunctions.PieriJacobiTrudi": [
+          "SymmetricFunctions.jacobiTrudi_h_nonSkew"
+        ]
+      },
+      "verdict": "faithful",
+      "justification": "Q1: Yes. The elaborated declaration quantifies over `{N : \u2115}`, `{R : Type u}`, `[CommRing R]`, `lam : Fin N \u2192 \u2115`, and `hlam : \u2200 i j : Fin N, i \u2264 j \u2192 lam j \u2264 lam i`, so `\u27e8lam, hlam\u27e9` is exactly an N-partition. Its conclusion is `schur (R := R) \u27e8lam, hlam\u27e9 = (jacobiTrudiMatrixH (R := R) lam (fun _ => 0)).det`. The referenced definition expands the matrix entry to `hsymmExt ((lam i : \u2124) - (0 : \u2124) - (i.val : \u2124) + (j.val : \u2124))`, while `hsymmExt` is `if 0 \u2264 n then hsymm (Fin N) R n.toNat else 0`. Thus the right side is precisely the determinant of `(h_{\u03bb_i-i+j})` with the usual negative-index convention. Although Lean uses zero-based `Fin N` indices, replacing source indices i,j by `i.val + 1,j.val + 1` leaves `-i+j` unchanged. The matrix has row and column type `Fin N`, matching the informal range `1 \u2264 i,j \u2264 N`. The left side uses `schur`, defined as `\u2211 T \u2208 ssytFinset lam, T.toMonomial`, matching the source definition of `s_\u03bb` as the sum of tableau monomials. Q2: Yes. The informal phrase \"For non-skew Schur polynomials (\u03bc = 0)\" and formula `s_\u03bb = det((h_{\u03bb_i-i+j})_{1 \u2264 i,j \u2264 N})` implicitly require \u03bb to be an N-partition; `hlam` merely packages that requirement and is not an added restriction. The ambient source convention fixes an arbitrary commutative ring and N, matching Lean's implicit `{R}` with `[CommRing R]` and `{N}`. The target explicitly uses N for both the determinant size and the N-variable Schur polynomial, as Lean does through `Fin N`; unlike the more general source theorem with an independent partition length M, no independent M appears in this informal target. Therefore each statement implies the other."
+    },
+    "stmt-algebraic-combinatorics-thm.sf.lr-zy": {
+      "path": "audits/faithfulness/stmt-algebraic-combinatorics-thm.sf.lr-zy/faithfulness_auditor_8d815e.md",
+      "faithful": false,
+      "targets": {
+        "AlgebraicCombinatorics.SymmetricFunctions.LittlewoodRichardson": [
+          "AlgebraicCombinatorics.littlewoodRichardson"
+        ]
+      },
+      "verdict": "drift",
+      "justification": "Q1: No. Q2: No. There are two decisive differences. First, the source fixes only \"a commutative ring K\" and defines the ambient ring as \"P ... K[x_1,...,x_N]\", whereas the elaborated target has the additional binder `[IsDomain R]` in `theorem littlewoodRichardson [IsDomain R]`. This restricts the theorem to integral-domain coefficient rings, so the Lean theorem does not cover the source's arbitrary commutative ring. The restriction enters through the target binder and ultimately through the dependency `AlgebraicCombinatorics.alternant_rho_isRegular`, whose formal signature also assumes `[IsDomain R]`; it should instead establish the required regularity over the chapter's arbitrary commutative ring, or the target should be proved by another argument allowing removal of `[IsDomain R]`.\n\nSecond, the source definition says: \"If we don't have \u03bc\u2286\u03bb, then we agree that there are no Young tableaux of shape \u03bb/\u03bc.\" The Lean definition instead unconditionally sets `skewYoungDiagram lam mu := {c | mu c.1 < c.2 \u2227 c.2 \u2264 lam c.1}` and `Tableau lam mu := {c // c \u2208 skewYoungDiagram lam mu} \u2192 Fin N`. Thus, when `mu` is not contained in `lam`, Lean can retain boxes from rows where `mu i < lam i` and consequently admit tableaux, while the source admits none. The same mismatch propagates into `skewSchurPoly`, whose body unconditionally sums over Lean's semistandard tableaux. Since the target quantifies over every three N-partitions without a containment hypothesis, these malformed-shape cases are included. To make the formalization faithful, `Tableau`/`skewYoungDiagram` and `skewSchurPoly` should implement the source convention by yielding no tableaux, and hence the zero skew Schur polynomial, whenever `\u00ac\u2200 i, mu i \u2264 lam i`; merely adding a containment hypothesis to the target would omit source cases rather than formalize them. For contained shapes, the remaining equation and the definitions of semistandardness, content, and `IsYamanouchi` match the quoted informal rule."
+    },
+    "stmt-algebraic-combinatorics-thm.sf.skew-schur-symm-jt": {
+      "path": "audits/faithfulness/stmt-algebraic-combinatorics-thm.sf.skew-schur-symm-jt/faithfulness_auditor_9a5b4e.md",
+      "faithful": false,
+      "targets": {
+        "AlgebraicCombinatorics.SymmetricFunctions.PieriJacobiTrudi": [
+          "SymmetricFunctions.skewSchur_isSymmetric_jacobiTrudi"
+        ]
+      },
+      "verdict": "unstatable",
+      "justification": "Q1: no. Q2: yes. The informal statement quantifies over \u201cany partitions \u03bb \u2287 \u03bc\u201d and asserts that \u201cs_{\u03bb/\u03bc} is a symmetric polynomial.\u201d In the intended finite-variable setting, the partition length and the number of polynomial variables are independent. The module itself confirms this: \u201cIn the source, M is the length of the partition tuples (for Jacobi-Trudi), while N is the number of variables,\u201d followed by \u201cWe use a single parameter N for simplicity in this formalization.\u201d The elaborated declaration instead has one implicit binder `{N : \u2115}` and takes `lam mu : Fin N \u2192 \u2115`, while its conclusion concerns `MvPolynomial (Fin N) R`. This forces the partitions to have exactly the same indexing dimension as the variable set. Consequently, for a fixed number N of variables, skew shapes represented using M-partitions with M > N cannot even be supplied to the theorem. Thus the Lean theorem proves only the dimension-diagonal cases M = N and does not imply the unrestricted informal claim; the informal claim does imply those cases. The mismatch enters through the definitions: `SkewPartition (N)` contains `NPartition N`, `SkewSSYT (s : SkewPartition N)` has entries in `Fin N`, and `skewSchur` returns `MvPolynomial (Fin N) R`, all using the same parameter. The intended independent-dimension theorem cannot be stated with this `skewSchur`, so the verdict is unstatable rather than ordinary drift. To make it faithful, generalize the tableau and polynomial definitions to separate parameters M and N, for example `SkewSSYT (s : SkewPartition M)` with entries in `Fin N` and `skewSchur : SkewPartition M \u2192 MvPolynomial (Fin N) R`, then state the theorem with `lam mu : Fin M \u2192 \u2115` and independent `{M N : \u2115}`."
+    },
+    "stmt-algebraic-combinatorics-cor.lgv.kpaths.wt-np": {
+      "path": "audits/faithfulness/stmt-algebraic-combinatorics-cor.lgv.kpaths.wt-np/faithfulness_auditor_5808ce.md",
+      "faithful": true,
+      "targets": {
+        "AlgebraicCombinatorics.Determinants.LGV2": [
+          "LGV.lgv_nonpermutable"
+        ]
+      },
+      "verdict": "faithful",
+      "justification": "Q1: Yes. The elaborated signature quantifies over exactly the informal setting: `{K : Type} [CommRing K]`, `{k : \u2115}`, `w : ArcWeight integerLattice K`, and `A B : kVertex (\u2124 \u00d7 \u2124) k`. Its hypotheses `hxA : xDecreasing A`, `hyA : yIncreasing A`, `hxB : xDecreasing B`, and `hyB : yIncreasing B` exactly encode the four displayed weak orderings. In particular, `xDecreasing A` unfolds to `\u2200 i j : Fin k, i \u2264 j \u2192 xCoord (A j) \u2264 xCoord (A i)`, while `yIncreasing A` unfolds to `\u2200 i j : Fin k, i \u2264 j \u2192 yCoord (A i) \u2264 yCoord (A j)`, with `xCoord := Prod.fst` and `yCoord := Prod.snd`; the same applies to B. The lattice also has the intended meaning: `integerLattice.arc u v := (v.1 = u.1 + 1 \u2227 v.2 = u.2) \u2228 (v.1 = u.1 \u2227 v.2 = u.2 + 1)`, namely east and north unit steps. The formal conclusion `(pathWeightMatrix integerLattice_pathFinite w A B).det = nipatWeightSum integerLattice_pathFinite w A B (Equiv.refl (Fin k))` expands on the left to the matrix with entries `\u2211 p \u2208 pathsFromTo ... (A i) (B j), pathWeight w p`, and on the right to the sum over nonintersecting path tuples from A to B of `pathTupleWeight`, matching the informal equation. The informal preliminary claim, quoted as \u201cthere are no nipats from A to \u03c3(B) when \u03c3 \u2208 S_k is not the identity,\u201d is represented by the declared dependency `LGV.no_nipats_nonidentity`, whose conclusion is `nipatSet ... A (permuteKVertex \u03c3 B) = \u2205` under the same sorting hypotheses and `h\u03c3 : \u03c3 \u2260 Equiv.refl (Fin k)`. Thus it is not lost merely because the target declaration records the resulting simplified equality. Q2: Yes. The informal assumptions supply precisely the formal binders and hypotheses, and its displayed determinant identity is precisely the formal conclusion after unfolding `pathWeightMatrix`, `nipatWeightSum`, `pathWeight`, and `pathTupleWeight`. No additional mathematical restriction is introduced by the formal signature; the hidden `CommRing K` binder is explicitly present in the referenced weighted LGV setting (\u201cLet K be a commutative ring\u201d)."
+    },
+    "stmt-algebraic-combinatorics-cor.pars.pn-rec": {
+      "path": "audits/faithfulness/stmt-algebraic-combinatorics-cor.pars.pn-rec/faithfulness_auditor_9496fe.md",
+      "faithful": true,
+      "targets": {
+        "AlgebraicCombinatorics.PentagonalJacobi": [
+          "AlgebraicCombinatorics.partition_recursive"
+        ]
+      },
+      "verdict": "faithful",
+      "justification": "Q1: Yes. The elaborated theorem quantifies exactly over positive naturals, `\u2200 n > 0`, matching \u201cFor each positive integer n\u201d. Its `partitionCount` reduces to `Nat.Partition.partitionCount`, whose body is `fun n => Fintype.card n.Partition`; `Nat.Partition` is defined as multisets of positive integers whose sum is `n`, so this is the intended partition number `p(n)`. Its `pentagonalNumber` body is `((3 * k - 1) * k / 2).toNat`, and the project proves `(pentagonalNumber k : \u2124) = (3 * k - 1) * k / 2`, matching `w_k`. The formal summand sign, `if k.natAbs % 2 = 1 then 1 else -1`, equals `(-1)^(k-1)` for every nonzero integer `k`: it is positive for odd `|k|` and negative for even `|k|`, producing the displayed `+,+,-,-,+,+,-,-,\u2026` pattern at `w_1=1, w_{-1}=2, w_2=5, w_{-2}=7, \u2026`. The formal range `{k : \u2124 // k \u2260 0 \u2227 pentagonalNumber k \u2264 n}` is the finite-support form of the informal `k\u2208\u2124; k\u22600`: terms with `w_k>n` have negative `n-w_k` and are conventionally zero, while the formal statement omits them and uses natural subtraction only where `w_k\u2264n`. Thus the formal equality entails both the compact recurrence and its displayed expansion. Q2: Yes. Conversely, the informal recurrence, restricted to its nonzero terms `w_k\u2264n`, is exactly the formal `tsum`; the subtype is finite because pentagonal numbers grow, so `\u2211'` introduces no convergence strengthening. The cast of the natural-valued partition count into `\u2124` merely supplies the additive group needed for alternating signs. No additional mathematical hypothesis or restriction appears."
+    },
+    "stmt-algebraic-combinatorics-lem.fps.infprod.comp-approx": {
+      "path": "audits/faithfulness/stmt-algebraic-combinatorics-lem.fps.infprod.comp-approx/faithfulness_auditor_cbf236.md",
+      "faithful": true,
+      "targets": {
+        "AlgebraicCombinatorics.Details.InfiniteProducts2": [
+          "PowerSeries.comp_prod_approx_determines"
+        ]
+      },
+      "verdict": "faithful",
+      "justification": "Q1: yes. The elaborated hypothesis `hM_approx : \u2200 k \u2264 n, \u2200 J : Finset I, M \u2286 J \u2192 coeff k (\u220f i \u2208 J, f i) = coeff k (\u220f i \u2208 M, f i)` exactly expresses the informal condition \u201cfor all k \u2264 n and J \u2287 M, [x^k](\u220f_{i \u2208 J} f_i) = [x^k](\u220f_{i \u2208 M} f_i).\u201d The project definition `DeterminesCoeffInProd` confirms that these `J` are intended to be finite supersets: \u201cfor every finite superset J of M,\u201d with body `\u2200 J : Finset I, M \u2286 J \u2192 ...`. The formal premise `hg : constantCoeff g = 0` is precisely `[x^0]g = 0`. Its conclusion `\u2200 J : Finset I, M \u2286 J \u2192 coeff n (\u220f i \u2208 J, (f i).subst g) = coeff n (\u220f i \u2208 M, (f i).subst g)` exactly matches the informal conclusion. Mathlib defines `subst (a) (f)` as \u201cSubstitution of power series into a power series,\u201d and `(f i).subst g` elaborates as `PowerSeries.subst g (f i)`, hence denotes the stated outer-inner composition `f_i \u2218 g`. Q2: yes. Conversely, the informal statement supplies every substantive formal binder and equality. The hidden section binders `{K : Type*} [CommRing K]` provide the ordinary coefficient-ring setting for these products and substitutions, while `[DecidableEq I]` is only an implementation instance required for `Finset` products and does not mathematically narrow the class of index sets. Thus neither direction introduces an additional mathematical hypothesis or changes a quantifier, coefficient, product, or composition orientation."
+    },
+    "stmt-algebraic-combinatorics-lem.jtp.partitiongenfun-mul-pentagonalseries": {
+      "path": "audits/faithfulness/stmt-algebraic-combinatorics-lem.jtp.partitiongenfun-mul-pentagonalseries/faithfulness_auditor_1d7c6d.md",
+      "faithful": true,
+      "targets": {
+        "AlgebraicCombinatorics.PentagonalJacobi": [
+          "AlgebraicCombinatorics.partitionGenFun_mul_pentagonalSeries"
+        ]
+      },
+      "verdict": "faithful",
+      "justification": "Q1: yes. The elaborated signature is exactly \u201cpartitionGenFun * pentagonalSeries = 1\u201d in \u2124\u27e6X\u27e7, matching the informal \u201cP\u00b7Q = 1.\u201d The referenced definitions give \u201cpartitionGenFun := PowerSeries.mk fun n => partitionCount n,\u201d with partitionCount an alias for Nat.Partition.partitionCount, so it is precisely the informal \u201cP = \u2211_{n\u22650} p(n)x^n.\u201d Likewise, \u201cpentagonalSeries := PowerSeries.mk fun n => (pentagonalCoeff n : R),\u201d where pentagonalCoeff is (-1)^k.natAbs when n = pentagonalNumber k and zero otherwise, and \u201cpentagonalNumber (k : \u2124) := ((3 * k - 1) * k / 2).toNat.\u201d Since the pentagonal numbers are nonnegative and injective, this coefficientwise definition is exactly the locally finite formal series \u201cQ = \u2211_{k\u2208\u2124} (-1)^k x^{w_k}\u201d; using k.natAbs does not change the sign because (-1)^k = (-1)^|k|. Thus the Lean equality implies the stated generating-function identity. Q2: yes. Interpreting the informal P and Q as formal power series with integer coefficients gives exactly the two Lean definitions, so the informal identity implies the Lean equality. There are no additional binders, hypotheses, typeclass restrictions, or narrowed index ranges in the elaborated theorem."
+    },
+    "stmt-algebraic-combinatorics-lem.sf.schur-alternant": {
+      "path": "audits/faithfulness/stmt-algebraic-combinatorics-lem.sf.schur-alternant/faithfulness_auditor_499779.md",
+      "faithful": true,
+      "targets": {
+        "AlgebraicCombinatorics.SymmetricFunctions.LittlewoodRichardson": [
+          "AlgebraicCombinatorics.schurPoly_eq_alternant_div"
+        ]
+      },
+      "verdict": "faithful",
+      "justification": "Q1: yes. Q2: yes. The informal claim is exactly \"Let \u03bb be an N-partition\" and \"a_{\u03bb+\u03c1} = a_\u03c1 \u00b7 s_\u03bb\". The elaborated Lean signature is `{R : Type u} [CommRing R] {N : \u2115} (lam : Fin N \u2192 \u2115) (hlam : IsNPartition lam) : alternant (lam + rho N) = alternant (rho N) * schurPoly lam`. Its implicit ring and dimension binders match the source convention \"Fix a commutative ring K. Fix an N \u2208 \u2115\"; they are not added restrictions. `IsNPartition lam` is defined as `\u2200 i j : Fin N, i \u2264 j \u2192 lam j \u2264 lam i`, exactly a weakly decreasing N-tuple of natural numbers. Addition on `Fin N \u2192 \u2115` is pointwise, matching the source's \"addition on \u2115^N is defined entrywise\", and `rho N` has body `fun i => N - 1 - i.val`, representing `(N-1,N-2,...,0)`. The referenced definitions also agree with the informal notation: `alternant \u03b1` is `\u2211 \u03c3, sign \u03c3 \u2022 xPow (\u03b1 \u2218 \u03c3)` and `alternant_eq_det` identifies it with the source determinant `det((x_i^{\u03b1_j}))` (the formal matrix is its transpose, which has the same determinant); `schurPoly lam` is the sum of `xPow (contentTableau T)` over semistandard tableaux of shape `lam/0`, matching `s_\u03bb := \u2211_{T\u2208SSYT(\u03bb)} x_T`. Thus neither direction introduces or omits a mathematical hypothesis, and both statements assert the same polynomial identity over the same arbitrary commutative-ring setting."
+    },
+    "stmt-algebraic-combinatorics-prop.binom.nck-2i-qedmo.cn": {
+      "path": "audits/faithfulness/stmt-algebraic-combinatorics-prop.binom.nck-2i-qedmo.cn/faithfulness_auditor_d4b8dd.md",
+      "faithful": true,
+      "targets": {
+        "AlgebraicCombinatorics.FPS.NonIntegerPowers": [
+          "AlgebraicCombinatorics.FPS.binomialIdentity"
+        ]
+      },
+      "verdict": "faithful",
+      "justification": "Q1: yes. The elaborated signature is `binomialIdentity {K} [CommRing K] [Algebra \u211a K] [BinomialRing K] [CharZero K] (n : K) (k : \u2115)` with conclusion `\u2211 i \u2208 range (k / 2 + 1), Ring.choose (n + \u2191i - 1) i * Ring.choose n (k - 2 * i) = Ring.choose (n + \u2191k - 1) k`. Specializing `K` to `\u2102` gives the informal domain. Mathlib defines `Ring.choose` as the generalized binomial coefficient: `choose r n := multichoose (r - n + 1) n`, with `n! \u2022 choose r n` equal to the descending Pochhammer evaluation, matching the usual complex binomial coefficient. The formal range `range (k / 2 + 1)` is exactly `0 \u2264 i \u2264 \u230ak/2\u230b`. This is equivalent to the informal `\u2211_{i=0}^{k}` under the standard convention that a binomial coefficient with a negative lower index is zero; the omitted indices have `k-2i < 0`. Using Lean's natural subtraction over the full range would instead truncate `k-2i` to zero and incorrectly contribute `Ring.choose n 0 = 1`. Q2: yes. The formal generalization from `\u2102` to commutative characteristic-zero \u211a-algebras does not alter the identity: for fixed `k`, every `Ring.choose x j` is the rational descending-Pochhammer polynomial in `x`, so validity for every complex `n` forces the corresponding rational polynomial identity, which then evaluates identically in every such `K`. This broader setting is also carried by the declared dependency whose informal text says `Assume that K is a commutative \u211a-algebra`. Thus the generalized carrier and the shortened range are conservative encodings, not drift."
+    },
+    "stmt-algebraic-combinatorics-prop.fps.subs.rule-infprod": {
+      "path": "audits/faithfulness/stmt-algebraic-combinatorics-prop.fps.subs.rule-infprod/faithfulness_auditor_cfd02c.md",
+      "faithful": false,
+      "targets": {
+        "AlgebraicCombinatorics.FPS.InfiniteProducts2": [
+          "tprod_rescale_substitution"
+        ]
+      },
+      "verdict": "drift",
+      "justification": "Q1: No. The informal statement quantifies over an arbitrary FPS \"g ... satisfying [x^0]g=0\", asserts that \"the family (f_i \\circ g) ... is multipliable as well\", and then asserts the substitution equality. The elaborated Lean signature instead quantifies over a scalar \"(a : K)\" and concludes only \"rescale a (\u220f' i, f i) = \u220f' i, rescale a (f i)\". Mathlib documents `PowerSeries.rescale a` as \"the ring homomorphism taking a power series f(X) to f(aX)\", so the Lean theorem covers only substitution by the linear series `aX`, not arbitrary zero-constant-term `g`, and it omits the transformed family's multipliability from its conclusion. Q2: No for the actual elaborated statement. Its binder \"(hf : Multipliable f)\" resolves to Mathlib's topological `Multipliable`, whose body is `\u2203 a, HasProd f a`, with `HasProd` defined by convergence of finite products; `\u220f'` is Mathlib's topological unconditional product. This differs from the declared dependency `PowerSeries.Multipliable`, whose body is \"\u2200 n : \u2115, CoeffFinitelyDeterminedInProd a n\", and from the dependency's coefficientwise `PowerSeries.tprod`. For example, over a nondiscrete topological ring a product can converge without its coefficients being eventually determined by one finite subset, so the informal hypothesis does not cover every `hf` admitted by this Lean signature. The difference enters in `tprod_rescale_substitution` at the binders `(a : K)` and `(hf : Multipliable f)`, and in its use of `rescale` and Mathlib `\u220f'`. This is statable rather than unstatable: `PowerSeries.subst` already represents general FPS substitution, and the finite dependency has the faithful binders `(g : PowerSeries K) (hg : constantCoeff g = 0)`. A faithful target should import/use the project's coefficientwise `PowerSeries.Multipliable` and `PowerSeries.tprod`, quantify `(g : K\u27e6X\u27e7)` with `constantCoeff g = 0`, assert `PowerSeries.Multipliable (fun i => (f i).subst g)`, and state the corresponding equality between the project-defined products after `subst g`."
+    },
+    "stmt-algebraic-combinatorics-thm.det.det-a-b-": {
+      "path": "audits/faithfulness/stmt-algebraic-combinatorics-thm.det.det-a-b-/faithfulness_auditor_29626e.md",
+      "faithful": true,
+      "targets": {
+        "AlgebraicCombinatorics.CauchyBinet": [
+          "AlgebraicCombinatorics.CauchyBinet.det_add_sum"
+        ]
+      },
+      "verdict": "faithful",
+      "justification": "Q1: yes. Q2: yes. The elaborated signature quantifies `{R : Type} [CommRing R] {n : \u2115}` and `A B : Matrix (Fin n) (Fin n) R`, matching the source context, which states, \u201cWe work over a commutative ring K,\u201d and the target\u2019s \u201ctwo n\u00d7n-matrices in K^{n\u00d7n}.\u201d The formal right-hand side is `\u2211 P, \u2211 Q, if h : Q.card = P.card then (-1 : R) ^ (finsetSumFin P + finsetSumFin Q) * submatrixDet A Q P h * submatrixDet B Q\u1d9c P\u1d9c ... else 0`; the conditional zero terms are exactly equivalent to the informal restriction `|P|=|Q|`. The referenced definitions are `finsetSumFin P := \u2211 i \u2208 P, i.val` and `submatrixDet A P Q h := (A.submatrix (P.orderEmbOfFin rfl) (Q.orderEmbOfFin ...)).det`, so the latter selects rows P and columns Q. Thus the displayed formal summand appears to reverse the informal `sub_P^Q` arguments, using rows Q and columns P. However, exchanging the two dummy variables P and Q throughout the unrestricted double sum converts it exactly into `det(sub_P^Q A) * det(sub_{P\u1d9c}^{Q\u1d9c} B)`; the cardinality condition and exponent are symmetric in P and Q. Finally, Lean uses zero-based `Fin n` while the source uses `[n]={1,...,n}`. Under the canonical shift, each subset sum gains its cardinality, so for `|P|=|Q|` the total exponent gains `|P|+|Q|=2|P|`; therefore the power of `-1` is unchanged. Complements and order-preserving submatrices correspond under the same shift. Hence the two formulas are equivalent in both directions."
+    }
+  },
+  "one_shot_evaluations": {
+    "stmt-algebraic-combinatorics-prop.det.x-ai": {
+      "path": "audits/faithfulness/stmt-algebraic-combinatorics-prop.det.x-ai/faithfulness_judge_1a6f62.md",
+      "faithful": null,
+      "targets": {
+        "AlgebraicCombinatorics.CauchyBinet": [
+          "AlgebraicCombinatorics.CauchyBinet.det_const_add_diagonal"
+        ]
+      },
+      "verdict": "unclear",
+      "justification": "The matrix and formula otherwise match exactly: `constPlusDiagMatrix x d ... => x + if i = j then d i else 0` gives diagonal entries `x+d\u1d62` and off-diagonal entries `x`, while `\u220f i, d i + x * \u2211 i, \u220f j \u2208 Finset.univ.erase i, d j` is precisely the full product plus `x` times the sum of products omitting one factor. The missing information is the algebraic status and quantification of `K` in the informal statement (`d_1,...,d_n \u2208 K` and `F \u2208 K^{n\u00d7n}`). The Lean declaration quantifies over every `{R : Type} [CommRing R]`. If `K` is intended to range over arbitrary commutative rings, the formalization is faithful. If `K` is an ambient field or a fixed coefficient structure, Lean makes a broader claim, so the informal statement does not imply the Lean statement. The package would need the source convention or declaration specifying what `K` denotes and how it is quantified."
+    },
+    "stmt-algebraic-combinatorics-thm.sf.pieri": {
+      "path": "audits/faithfulness/stmt-algebraic-combinatorics-thm.sf.pieri/faithfulness_judge_3f7a46.md",
+      "faithful": true,
+      "targets": {
+        "AlgebraicCombinatorics.SymmetricFunctions.PieriJacobiTrudi": [
+          "SymmetricFunctions.pieri_horizontal",
+          "SymmetricFunctions.pieri_vertical"
+        ]
+      },
+      "verdict": "faithful",
+      "justification": "Both Lean theorems exactly formalize the two Pieri identities. For (a), `MvPolynomial.hsymm (Fin N) R n * SymmetricFunctions.schur mu` is `h_n s_\u03bc`, while the right side sums `schur lam` over `horizontalNStripPartitions mu n`. That dependency is documented and defined as the finite set of N-partitions \u03bb satisfying containment `\u03bc_i \u2264 \u03bb_i`, the horizontal-strip inequalities `\u03bc_i \u2265 \u03bb_{i+1}`, and size difference `|\u03bb| = |\u03bc| + n`, precisely meaning that `\u03bb/\u03bc` is a horizontal n-strip. The same comparison holds for (b): `MvPolynomial.esymm (Fin N) R n` is `e_n`, and `verticalNStripPartitions mu n` consists exactly of containing N-partitions satisfying `\u03bb_i \u2264 \u03bc_i + 1` and `|\u03bb| = |\u03bc| + n`, precisely the vertical n-strips. `NPartition N` has the stated meaning, and `schur` is defined as the tableau sum for the Schur polynomial. The universal `CommRing R` binder supplies the coefficient-ring setting for these polynomial identities and does not introduce a contrary mathematical restriction. Thus each Lean theorem implies its corresponding informal clause, and each informal Pieri rule, interpreted in this stated polynomial setting, implies the Lean equality."
+    },
+    "stmt-algebraic-combinatorics-thm.sf.schur-symm-jt": {
+      "path": "audits/faithfulness/stmt-algebraic-combinatorics-thm.sf.schur-symm-jt/faithfulness_judge_b03b3b.md",
+      "faithful": true,
+      "targets": {
+        "AlgebraicCombinatorics.SymmetricFunctions.PieriJacobiTrudi": [
+          "SymmetricFunctions.schur_isSymmetric_jacobiTrudi"
+        ]
+      },
+      "verdict": "faithful",
+      "justification": "The target states that for every `N`, commutative coefficient ring `R`, and weakly decreasing `lam : Fin N \u2192 \u2115`, `(SymmetricFunctions.schur { parts := lam, weaklyDecreasing := hlam }).IsSymmetric`. This matches \u201cfor any partition \u03bb, s_\u03bb is a symmetric polynomial\u201d: `NPartition` is exactly a weakly decreasing length-`N` sequence of naturals, `schur` is defined as \u201cthe sum over all SSYT of shape \u03bb,\u201d and `MvPolynomial.IsSymmetric` means invariance under permutations of variables. Presenting the partition through `lam` and `hlam` does not restrict it, since `SymmetricFunctions.NPartition` has the sole constructor `mk` with precisely those fields. Quantifying over `N` covers all finite partition lengths, consistently with the informal dependency\u2019s explicit phrase \u201cFor any N-partition \u03bb.\u201d The `[CommRing R]` binder supplies the coefficient-ring setting required by the given definition and is not a conflicting mathematical hypothesis. The informal note that symmetry is proved via Jacobi\u2013Trudi concerns the proof method, not additional propositional content."
+    },
+    "stmt-algebraic-combinatorics-prop.fps.subs.rule-infprod-mulable": {
+      "path": "audits/faithfulness/stmt-algebraic-combinatorics-prop.fps.subs.rule-infprod-mulable/faithfulness_judge_cc54f5.md",
+      "faithful": true,
+      "targets": {
+        "AlgebraicCombinatorics.Details.InfiniteProducts2": [
+          "PowerSeries.comp_prod_multipliable"
+        ]
+      },
+      "verdict": "faithful",
+      "justification": "The premise expands \u201c$(f_i)_{i\\in I}$ is multipliable\u201d coefficientwise as `\u2200 n, \u2203 M, \u2200 J, M \u2286 J \u2192 coeff n (\u220f i \u2208 J, f i) = coeff n (\u220f i \u2208 M, f i)`, and the conclusion asserts the identical stabilization property for `PowerSeries.subst g (f i)`. By the signature of `PowerSeries.subst`, `subst g (f i)` is substitution of `g` into `f_i`, matching `$f_i \\circ g$`. The hypothesis `PowerSeries.constantCoeff g = 0` exactly matches `$[x^0]g=0$`. Although the dependency\u2019s approximator uses one `M` for all `k \u2264 n`, this is equivalent to the target premise: finitely many coefficientwise witnesses can be united, and stabilization remains valid after enlarging the witness. `[DecidableEq I]` is an encoding requirement for finite-set operations rather than a mathematical restriction intended by the source. Thus the Lean and informal statements imply each other."
+    },
+    "stmt-algebraic-combinatorics-thm.det.det-a-d-": {
+      "path": "audits/faithfulness/stmt-algebraic-combinatorics-thm.det.det-a-d-/faithfulness_judge_ef2360.md",
+      "faithful": null,
+      "targets": {
+        "AlgebraicCombinatorics.CauchyBinet": [
+          "AlgebraicCombinatorics.CauchyBinet.det_add_diagonal"
+        ]
+      },
+      "verdict": "unclear",
+      "justification": "The determinant identity itself matches: the formal `A + Matrix.diagonal d`, sum over all finsets `P`, principal submatrix selected by `P.orderEmbOfFin`, and product over `P\u1d9c` correspond to informal `A+D`, `P \u2286 [n]`, `sub_P^P A`, and `\u220f_{i\u2208[n]\\setminus P} d_i`. However, the informal statement only says the matrices lie in `K^{n\u00d7n}` and the package never specifies what algebraic structure `K` has. The target instead quantifies over every `{R : Type u_1} [CommRing R]`. If `K` is intended to be an arbitrary commutative ring, this is faithful; if surrounding context makes `K` a field or another fixed class, the target has broader generality and the two statements do not imply each other as quantified claims. The package would need the omitted declaration/convention for `K` to decide. The potentially differing binder is the target\u2019s `{R} [CommRing R]`; faithfulness can be ensured by stating informally that `K` is an arbitrary commutative ring, or by changing that binder to the intended structure on `K`."
+    }
+  },
+  "no_verdict": {
+    "one_shot": [
+      "stmt-algebraic-combinatorics-prop.det.charpol-explicit",
+      "stmt-algebraic-combinatorics-cor.lgv.binom-det-nonneg",
+      "stmt-algebraic-combinatorics-cor.lgv.catalan-hankel-det-0",
+      "stmt-algebraic-combinatorics-thm.sf.jt-e",
+      "stmt-algebraic-combinatorics-thm.sf.jt-h-nonskew",
+      "stmt-algebraic-combinatorics-thm.sf.lr-zy",
+      "stmt-algebraic-combinatorics-thm.sf.skew-schur-symm-jt",
+      "stmt-algebraic-combinatorics-cor.lgv.kpaths.wt-np",
+      "stmt-algebraic-combinatorics-cor.pars.pn-rec",
+      "stmt-algebraic-combinatorics-lem.fps.infprod.comp-approx",
+      "stmt-algebraic-combinatorics-lem.jtp.partitiongenfun-mul-pentagonalseries",
+      "stmt-algebraic-combinatorics-lem.sf.schur-alternant",
+      "stmt-algebraic-combinatorics-prop.binom.nck-2i-qedmo.cn",
+      "stmt-algebraic-combinatorics-prop.fps.subs.rule-infprod",
+      "stmt-algebraic-combinatorics-thm.det.det-a-b-"
+    ]
+  },
+  "errors": {
+    "one_shot": {
+      "stmt-algebraic-combinatorics-prop.det.charpol-explicit": "APIError: Get statement closure failed (HTTP 404): Lean repo is overloaded: 5 waiting requests (limit 5)",
+      "stmt-algebraic-combinatorics-cor.lgv.binom-det-nonneg": "APIError: Get statement closure failed (HTTP 404): Lean repo is overloaded: 5 waiting requests (limit 5)",
+      "stmt-algebraic-combinatorics-cor.lgv.catalan-hankel-det-0": "APIError: Get statement closure failed (HTTP 404): Lean repo is overloaded: 5 waiting requests (limit 5)",
+      "stmt-algebraic-combinatorics-thm.sf.jt-e": "APIError: Get statement closure failed (HTTP 404): Lean repo is overloaded: 5 waiting requests (limit 5)",
+      "stmt-algebraic-combinatorics-thm.sf.jt-h-nonskew": "APIError: Get statement closure failed (HTTP 404): Lean repo is overloaded: 5 waiting requests (limit 5)",
+      "stmt-algebraic-combinatorics-thm.sf.lr-zy": "APIError: Get statement closure failed (HTTP 404): Lean repo is overloaded: 5 waiting requests (limit 5)",
+      "stmt-algebraic-combinatorics-thm.sf.skew-schur-symm-jt": "APIError: Get statement closure failed (HTTP 404): Lean repo is overloaded: 5 waiting requests (limit 5)",
+      "stmt-algebraic-combinatorics-cor.lgv.kpaths.wt-np": "APIError: Get statement closure failed (HTTP 404): Lean repo is overloaded: 5 waiting requests (limit 5)",
+      "stmt-algebraic-combinatorics-cor.pars.pn-rec": "APIError: Get statement closure failed (HTTP 404): Lean repo is overloaded: 5 waiting requests (limit 5)",
+      "stmt-algebraic-combinatorics-lem.fps.infprod.comp-approx": "APIError: Get statement closure failed (HTTP 404): Lean repo is overloaded: 5 waiting requests (limit 5)",
+      "stmt-algebraic-combinatorics-lem.jtp.partitiongenfun-mul-pentagonalseries": "APIError: Get statement closure failed (HTTP 404): Lean repo is overloaded: 5 waiting requests (limit 5)",
+      "stmt-algebraic-combinatorics-lem.sf.schur-alternant": "APIError: Get statement closure failed (HTTP 404): Lean repo is overloaded: 5 waiting requests (limit 5)",
+      "stmt-algebraic-combinatorics-prop.binom.nck-2i-qedmo.cn": "APIError: Get statement closure failed (HTTP 404): Lean repo is overloaded: 5 waiting requests (limit 5)",
+      "stmt-algebraic-combinatorics-prop.fps.subs.rule-infprod": "APIError: Get statement closure failed (HTTP 404): Lean repo is overloaded: 5 waiting requests (limit 5)",
+      "stmt-algebraic-combinatorics-thm.det.det-a-b-": "APIError: Get statement closure failed (HTTP 404): Lean repo is overloaded: 5 waiting requests (limit 5)"
+    }
+  },
+  "diff_analysis": {
+    "reference": "agent",
+    "eligible": 5,
+    "agent_unclear_ids": [],
+    "coverage": 0.6,
+    "n_resolved": 3,
+    "one_shot_unclear_ids": [
+      "stmt-algebraic-combinatorics-prop.det.x-ai",
+      "stmt-algebraic-combinatorics-thm.det.det-a-d-"
+    ],
+    "only_agent_unfaithful": [
+      "stmt-algebraic-combinatorics-thm.sf.schur-symm-jt"
+    ],
+    "only_one_shot_unfaithful": [],
+    "both_unfaithful": [],
+    "selective": {
+      "true_positive": 0,
+      "false_positive": 0,
+      "true_negative": 2,
+      "false_negative": 1,
+      "precision": null,
+      "recall": 0.0,
+      "f1": null,
+      "mcc": null
+    },
+    "pessimistic": {
+      "true_positive": 0,
+      "false_positive": 2,
+      "true_negative": 2,
+      "false_negative": 1,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": null,
+      "mcc": -0.4082482904638631
+    },
+    "caveats": [
+      "The agent is the reference, not verified truth: the one-shot arm cannot score above it, and agent errors are invisible here.",
+      "Positive class is UNFAITHFUL (drift/unstatable), the minority class.",
+      "A null metric is undefined on this sample, not zero."
+    ]
+  }
+}
