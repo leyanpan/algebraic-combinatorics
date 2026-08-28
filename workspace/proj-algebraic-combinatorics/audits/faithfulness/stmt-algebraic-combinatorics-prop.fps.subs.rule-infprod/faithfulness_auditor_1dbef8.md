@@ -1,0 +1,15 @@
+Declaration: tprod_rescale_substitution
+Module: AlgebraicCombinatorics.FPS.InfiniteProducts2
+
+Statement id: stmt-algebraic-combinatorics-prop.fps.subs.rule-infprod
+
+## INFORMAL STATEMENT
+prop.fps.subs.rule-infprod
+
+If $\left( f_{i}\right) _{i\in I}\in K\left[ \left[ x\right] \right] ^{I}$ is a multipliable family of FPSs, and if $g\in K\left[ \left[ x\right] \right] $ is an FPS satisfying $\left[ x^{0}\right] g=0$, then the family $\left( f_{i}\circ g\right) _{i\in I}\in K\left[ \left[ x\right] \right] ^{I}$ is multipliable as well and we have $\left( \prod _{i\in I}f_{i}\right) \circ g=\prod _{i\in I}\left( f_{i}\circ g\right) $.
+
+## VERDICT
+{
+  "verdict": "drift",
+  "justification": "Q1: No. The informal statement quantifies over an arbitrary FPS \"g \u2208 K[[x]]\" with \"[x^0]g = 0\" and uses general composition \"f_i \u2218 g\". The elaborated target instead quantifies over a scalar \"(a : K)\" and concludes only \"rescale a (\u220f' i, f i) = \u220f' i, rescale a (f i)\". `PowerSeries.rescale` is defined by `coeff n (rescale a f) = a ^ n * coeff n f` and documented as taking `f(X)` to `f(aX)`, so it represents only substitution by the linear series `aX`, not substitution by every zero-constant series such as `X + X^2`. The formal signature also does not state the informal conclusion that the composed family is multipliable.\n\nThere is a second independent mismatch in the binder `(hf : Multipliable f)`. In this module, the elaborated constant is the topological library predicate `Multipliable f := \u2203 a, HasProd f a`, under the folded binders `[TopologicalSpace K] [IsTopologicalRing K] [T2Space K]` and the pi topology on power series. The informal dependency instead defines multipliable by \"each coefficient in its product is finitely determined\", formalized elsewhere as `PowerSeries.Multipliable a := \u2200 n, CoeffFinitelyDeterminedInProd a n`. Thus the target's `\u220f'` is the topological product, rather than the coefficientwise product supplied by the informal dependency.\n\nQ2: No. The informal result covers the special substitution `g = aX`, but only for coefficientwise-finitely-determined families. It does not establish the target for every topologically multipliable family allowed by the elaborated `hf`; over a nondiscrete topological coefficient ring, partial products may converge without their coefficients eventually being exactly determined by a finite subset.\n\nThe intended claim is statable: the target declaration should bind `(g : K\u27e6X\u27e7)` and `(hg : constantCoeff g = 0)`, use `PowerSeries.subst g` rather than `rescale a`, use the dependency's `PowerSeries.Multipliable` and coefficientwise `PowerSeries.tprod`, and conclude both `PowerSeries.Multipliable (fun i => (f i).subst g)` and the corresponding product-substitution equality. The drift therefore enters in `tprod_rescale_substitution` through the binder `(a : K)`, the resolved meaning of `(hf : Multipliable f)`, and the use of `rescale`/topological `\u220f'` in its conclusion."
+}
