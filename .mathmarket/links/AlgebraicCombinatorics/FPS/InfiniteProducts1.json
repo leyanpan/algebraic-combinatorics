@@ -1,0 +1,13 @@
+{
+  "AlgebraicCombinatorics.FPS.CoeffFinitelyDetermined": "stmt-algebraic-combinatorics-def.fps.xn-coeff-fin-determined",
+  "AlgebraicCombinatorics.FPS.DeterminesCoeff": "stmt-algebraic-combinatorics-def.fps.determines-xn-coeff",
+  "AlgebraicCombinatorics.FPS.IsXnApproximator": "stmt-algebraic-combinatorics-def.fps.infprod-approx",
+  "AlgebraicCombinatorics.FPS.Multipliable": "stmt-algebraic-combinatorics-def.fps.multipliable",
+  "AlgebraicCombinatorics.FPS.infprod_of_finite": "stmt-algebraic-combinatorics-lem.fps.infprod-of-finite",
+  "AlgebraicCombinatorics.FPS.multipliable_exists_approximator": "stmt-algebraic-combinatorics-lem.fps.mulable.approx",
+  "AlgebraicCombinatorics.FPS.multipliable_of_finite": "stmt-algebraic-combinatorics-lem.fps.multipliable-of-finite",
+  "AlgebraicCombinatorics.FPS.xnApproximator_inter": "stmt-algebraic-combinatorics-lem.fps.prods-mulable-subfams-appr",
+  "AlgebraicCombinatorics.FPS.xnEquiv_div": "stmt-algebraic-combinatorics-lem.fps.prod.irlv.cong-div",
+  "AlgebraicCombinatorics.FPS.xnEquiv_finprod": "stmt-algebraic-combinatorics-lem.fps.prods-mulable-rules.sw1.lem1",
+  "AlgebraicCombinatorics.FPS.xnEquiv_mul_of_coeff_eq": "stmt-algebraic-combinatorics-lem.fps.prod.irlv.cong-mul-2"
+}

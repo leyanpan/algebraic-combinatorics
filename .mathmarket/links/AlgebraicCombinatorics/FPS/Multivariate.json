@@ -1,0 +1,23 @@
+{
+  "AlgebraicCombinatorics.BivFPS": "stmt-algebraic-combinatorics-def.fps.mulvar.algebra",
+  "AlgebraicCombinatorics.BivFPS.x": "stmt-algebraic-combinatorics-def.fps.mulvar.algebra",
+  "AlgebraicCombinatorics.BivFPS.y": "stmt-algebraic-combinatorics-def.fps.mulvar.algebra",
+  "AlgebraicCombinatorics.FPS": "stmt-algebraic-combinatorics-def.fps.mulvar.algebra",
+  "AlgebraicCombinatorics.X_pow_mul_inv_one_sub_pow_eq_mk_choose": "stmt-algebraic-combinatorics-lem.fps.mulvar.x-pow-mul-inv",
+  "AlgebraicCombinatorics.antidiag_shift_fst": "stmt-algebraic-combinatorics-lem.fps.mulvar.antidiag-shift-fst",
+  "AlgebraicCombinatorics.antidiag_shift_snd": "stmt-algebraic-combinatorics-lem.fps.mulvar.antidiag-shift-snd",
+  "AlgebraicCombinatorics.binomialGenFun": "stmt-algebraic-combinatorics-def.fps.mulvar.binomialgenfun",
+  "AlgebraicCombinatorics.binomialGenFunClosedForm": "stmt-algebraic-combinatorics-def.fps.mulvar.binomialgenfunclosedform",
+  "AlgebraicCombinatorics.binomialGenFun_eq": "stmt-algebraic-combinatorics-thm.fps.mulvar.binomialgenfun-eq",
+  "AlgebraicCombinatorics.binomialGenFun_xyk_eq": "stmt-algebraic-combinatorics-thm.fps.mulvar.exa1.xyk",
+  "AlgebraicCombinatorics.coeff_embedUnivInBiv": "stmt-algebraic-combinatorics-lem.fps.mulvar.coeff-embed",
+  "AlgebraicCombinatorics.coeff_partialDeriv": "stmt-algebraic-combinatorics-lem.fps.mulvar.coeff-partialderiv",
+  "AlgebraicCombinatorics.embedUnivInBiv": "stmt-algebraic-combinatorics-def.fps.mulvar.embedunivinbiv",
+  "AlgebraicCombinatorics.eq_of_embedUnivInBiv_eq": "stmt-algebraic-combinatorics-prop.fps.mulvar.comp-y-coeff",
+  "AlgebraicCombinatorics.one_sub_X_inv_eq_mk_one": "stmt-algebraic-combinatorics-lem.fps.mulvar.one-sub-x-inv",
+  "AlgebraicCombinatorics.partialDeriv": "stmt-algebraic-combinatorics-def.fps.mulvar.partialderiv",
+  "AlgebraicCombinatorics.partialDeriv_mul": "stmt-algebraic-combinatorics-thm.fps.mulvar.partialderiv-mul",
+  "AlgebraicCombinatorics.sum_choose_pow_eq": "stmt-algebraic-combinatorics-thm.fps.mulvar.exa1.res1",
+  "AlgebraicCombinatorics.sum_filter_zero_fst": "stmt-algebraic-combinatorics-lem.fps.mulvar.sum-filter-zero-fst",
+  "AlgebraicCombinatorics.sum_filter_zero_snd": "stmt-algebraic-combinatorics-lem.fps.mulvar.sum-filter-zero-snd"
+}

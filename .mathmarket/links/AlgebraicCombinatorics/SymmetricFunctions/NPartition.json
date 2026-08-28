@@ -1,0 +1,18 @@
+{
+  "NPartition.add": "stmt-algebraic-combinatorics-lem.sf.npar-add",
+  "NPartition.add_size": "stmt-algebraic-combinatorics-lem.sf.npar-add",
+  "NPartition.eq_zero_of_size_eq_zero": "stmt-algebraic-combinatorics-lem.sf.npar-size",
+  "NPartition.le_iff_youngDiagram_subset": "stmt-algebraic-combinatorics-lem.sf.npar-le-iff-youngdiagram",
+  "NPartition.length": "stmt-algebraic-combinatorics-lem.sf.npar-length",
+  "NPartition.length_eq_zero_iff": "stmt-algebraic-combinatorics-lem.sf.npar-length",
+  "NPartition.length_le": "stmt-algebraic-combinatorics-lem.sf.npar-length",
+  "NPartition.mem_youngDiagram": "stmt-algebraic-combinatorics-lem.sf.ydiag-mem",
+  "NPartition.parts_le_size": "stmt-algebraic-combinatorics-lem.sf.npar-size",
+  "NPartition.size_eq_zero_iff": "stmt-algebraic-combinatorics-lem.sf.npar-size",
+  "NPartition.size_le_of_le": "stmt-algebraic-combinatorics-lem.sf.npar-le-size",
+  "NPartition.skewYoungDiagram": "stmt-algebraic-combinatorics-def.sf.npar-skewyoungdiagram",
+  "NPartition.skewYoungDiagram_card": "stmt-algebraic-combinatorics-lem.sf.npar-skewyoungdiagram-card",
+  "NPartition.youngDiagram": "stmt-algebraic-combinatorics-def.sf.npar-youngdiagram",
+  "NPartition.youngDiagram_card": "stmt-algebraic-combinatorics-lem.sf.npar-youngdiagram-card",
+  "NPartition.youngDiagram_row_card": "stmt-algebraic-combinatorics-lem.sf.npar-youngdiagram-row"
+}

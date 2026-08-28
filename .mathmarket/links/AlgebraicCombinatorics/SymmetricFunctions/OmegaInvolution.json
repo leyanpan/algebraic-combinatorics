@@ -1,0 +1,13 @@
+{
+  "SymmetricFunctions.esymm_recurrence_he": "stmt-algebraic-combinatorics-lem.sf.esymm-recurrence",
+  "SymmetricFunctions.hsymmAlgHom": "stmt-algebraic-combinatorics-def.sf.hsymm-alg-hom",
+  "SymmetricFunctions.hsymm_recurrence_eh": "stmt-algebraic-combinatorics-lem.sf.hsymm-recurrence",
+  "SymmetricFunctions.newtonGirard_he": "stmt-algebraic-combinatorics-thm.sf.newton-girard-he",
+  "SymmetricFunctions.omegaInvolution": "stmt-algebraic-combinatorics-def.sf.omega-involution",
+  "SymmetricFunctions.omegaInvolutionEquiv": "stmt-algebraic-combinatorics-def.sf.omega-equiv",
+  "SymmetricFunctions.omegaInvolution_bijective": "stmt-algebraic-combinatorics-thm.sf.omega-bijective",
+  "SymmetricFunctions.omegaInvolution_det_hsymm": "stmt-algebraic-combinatorics-lem.sf.omega-det-hsymm",
+  "SymmetricFunctions.omegaInvolution_esymm_succ": "stmt-algebraic-combinatorics-thm.sf.omega-esymm",
+  "SymmetricFunctions.omegaInvolution_hsymm_succ": "stmt-algebraic-combinatorics-thm.sf.omega-hsymm",
+  "SymmetricFunctions.omegaInvolution_involutive": "stmt-algebraic-combinatorics-thm.sf.omega-involutive"
+}

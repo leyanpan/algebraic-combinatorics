@@ -1,0 +1,12 @@
+{
+  "PermFinset.imageFinset": "stmt-algebraic-combinatorics-def.det.imagefinset",
+  "PermFinset.imageFinset_card": "stmt-algebraic-combinatorics-lem.det.imagefinset-card",
+  "PermFinset.imageFinset_compl": "stmt-algebraic-combinatorics-lem.det.imagefinset-compl",
+  "PermFinset.imageFinset_inv": "stmt-algebraic-combinatorics-lem.det.imagefinset-inv",
+  "PermFinset.permsMapping": "stmt-algebraic-combinatorics-def.det.permsmapping",
+  "PermFinset.permsMapping_empty_of_card_ne": "stmt-algebraic-combinatorics-lem.det.permsmapping-empty",
+  "PermFinset.submatrixDet": "stmt-algebraic-combinatorics-def.det.submatrixdet",
+  "PermFinset.submatrixDet_empty": "stmt-algebraic-combinatorics-lem.det.submatrixdet-empty",
+  "PermFinset.submatrixDet_of_card_eq": "stmt-algebraic-combinatorics-lem.det.submatrixdet-card-eq",
+  "PermFinset.submatrixDet_of_card_ne": "stmt-algebraic-combinatorics-lem.det.submatrixdet-card-ne"
+}
