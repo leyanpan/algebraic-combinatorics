@@ -1,0 +1,17 @@
+Declaration: SymmetricFunctions.jacobiTrudi_e
+Module: AlgebraicCombinatorics.SymmetricFunctions.PieriJacobiTrudi
+
+Statement id: stmt-algebraic-combinatorics-thm.sf.jt-e
+
+## INFORMAL STATEMENT
+Second Jacobi–Trudi formula
+
+Let $\lambda $ and $\mu $ be two partitions. Let $\lambda ^{t}$ and $\mu ^{t}$ be the transposes of $\lambda $ and $\mu $. Let $M\in \mathbb {N}$ be such that both $\lambda ^{t}$ and $\mu ^{t}$ have length $\leq M$. We extend the partitions $\lambda ^{t}$ and $\mu ^{t}$ to $M$-tuples (by inserting zeroes at the end). Write these $M$-tuples $\lambda ^{t}$ and $\mu ^{t}$ as $\lambda ^{t}=\left( \lambda _{1}^{t},\lambda _{2}^{t},\ldots ,\lambda _{M}^{t}\right) $ and $\mu ^{t}=\left( \mu _{1}^{t},\mu _{2}^{t},\ldots ,\mu _{M}^{t}\right) $. Then,
+
+\[  s_{\lambda /\mu }=\det \left( \left( e_{\lambda _{i}^{t}-\mu _{j}^{t}-i+j}\right) _{1\leq i\leq M,\  1\leq j\leq M}\right) .  \]
+
+## VERDICT
+{
+  "verdict": "drift",
+  "justification": "The declaration narrows two independent parameters to one and adds a containment hypothesis. The blueprint fixes a polynomial ring in N variables through the definitions of P and e_n, but separately says, \"Let M\u2208N be such that both \u03bb^t and \u03bc^t have length \u2264 M\" and takes the determinant over \"1\u2264i\u2264M, 1\u2264j\u2264M.\" The elaborated signature instead has only one size binder, \"{N : \u2115},\" with both the original and transposed tuples typed as \"lam mu lamt muT : Fin N \u2192 \u2115\"; its determinant is indexed by Fin N, and its entries are \"esymm (Fin N) R n.toNat.\" Its left side is also a polynomial in the same Fin N variables because \"skewSchur ... : MvPolynomial (Fin N) R.\" Thus N simultaneously denotes the number of polynomial variables, the number of rows used to encode \u03bb and \u03bc, and the determinant/padded-transpose length M. In particular, \"NPartition.IsTranspose lam lamt\" has both functions indexed by Fin N and, by its body, counts every row and column in those same finite ranges, thereby restricting the transposes to fit in the number-of-variables bound. The blueprint permits M independently of N.\n\nThe declaration also assumes \"hcontained : \u2200 (i : Fin N), mu i \u2264 lam i.\" The blueprint says only, \"Let \u03bb and \u03bc be two partitions.\" This is not supplied implicitly by its definitions: the blueprint definition of skew tableaux explicitly says that if \u03bc is not contained in \u03bb, there are no tableaux of shape \u03bb/\u03bc, so the corresponding skew Schur polynomial is zero. Hence the blueprint statement covers noncontained pairs, whereas the formal theorem quantifies only over contained pairs because `SymmetricFunctions.skewSchur` takes a `SkewPartition N`, whose definition contains the field \"contained : inner \u2264 outer.\" This is an added hypothesis and makes the formal theorem weaker.\n\nTo make the formalization faithful, the target and its skew-Schur dependency should separate the variable count N from the padding/determinant size M: use `lam mu : Fin N \u2192 \u2115`, `lamt muT : Fin M \u2192 \u2115`, `NPartition.IsTranspose` across those two index sizes, a `Matrix (Fin M) (Fin M) (MvPolynomial (Fin N) R)`, and entries `esymm (Fin N) R ...`. The skew-Schur definition used on the left must accept arbitrary \u03bb and \u03bc and evaluate to zero when containment fails, allowing `hcontained` to be removed. The generic binder `[CommRing R]` is consistent with, and more general than, the blueprint's commutative coefficient ring; it is not the source of drift."
+}
