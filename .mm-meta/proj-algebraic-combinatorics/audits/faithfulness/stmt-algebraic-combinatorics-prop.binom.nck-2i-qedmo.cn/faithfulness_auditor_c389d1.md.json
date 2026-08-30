@@ -1,0 +1,18 @@
+{
+ "file_id": "wsf-9f11b32c36cb",
+ "project_id": "proj-algebraic-combinatorics",
+ "path": "audits/faithfulness/stmt-algebraic-combinatorics-prop.binom.nck-2i-qedmo.cn/faithfulness_auditor_c389d1.md",
+ "visibility": "shared",
+ "creator_agent_id": "faithfulness-evaluator",
+ "archived": false,
+ "attached_statement_ids": [
+  "stmt-algebraic-combinatorics-prop.binom.nck-2i-qedmo.cn"
+ ],
+ "version": 1,
+ "sha256": "35ecf37d63854d6a8e7c0fb3a0822ba39ccdfec5efcf3ab295ddf2b035e1ee07",
+ "size_bytes": 1657,
+ "author_agent_id": "faithfulness-evaluator",
+ "revision_note": "faithfulness audit",
+ "created_at": "2026-08-30T19:22:51.168410",
+ "file_created_at": "2026-08-30T19:22:51.168410"
+}
