@@ -1,0 +1,15 @@
+Declaration: tprod_rescale_substitution
+Module: AlgebraicCombinatorics.FPS.InfiniteProducts2
+
+Statement id: stmt-algebraic-combinatorics-prop.fps.subs.rule-infprod
+
+## INFORMAL STATEMENT
+prop.fps.subs.rule-infprod
+
+If $\left( f_{i}\right) _{i\in I}\in K\left[ \left[ x\right] \right] ^{I}$ is a multipliable family of FPSs, and if $g\in K\left[ \left[ x\right] \right] $ is an FPS satisfying $\left[ x^{0}\right] g=0$, then the family $\left( f_{i}\circ g\right) _{i\in I}\in K\left[ \left[ x\right] \right] ^{I}$ is multipliable as well and we have $\left( \prod _{i\in I}f_{i}\right) \circ g=\prod _{i\in I}\left( f_{i}\circ g\right) $.
+
+## VERDICT
+{
+  "verdict": "drift",
+  "justification": "The blueprint quantifies over an arbitrary inner FPS: \u201cif g \u2208 K[[x]] satisfies [x^0]g = 0,\u201d and concludes both that \u201c(f_i \u2218 g) is multipliable\u201d and that \u201c(\u220f_i f_i) \u2218 g = \u220f_i (f_i \u2218 g).\u201d The elaborated Lean signature instead has `\u2200 {K} [CommRing K] [TopologicalSpace K] [IsTopologicalRing K] [T2Space K] {I} (f : I \u2192 K\u27e6X\u27e7) (a : K), Multipliable f \u2192 rescale a (\u220f' i, f i) = \u220f' i, rescale a (f i)`. The binder `(a : K)` and `rescale a` restrict substitution to the special inner series `aX`; `PowerSeries.rescale` is documented as taking `f(X)` to `f(aX)`. There is no binder `(g : K\u27e6X\u27e7)` or hypothesis `constantCoeff g = 0`, so arbitrary zero-constant-term substitutions such as `g = X + X^2` are not covered. The conclusion also does not state multipliability of the substituted family. A second difference enters through the unqualified `Multipliable` and `\u220f'`: here `Multipliable f` is Mathlib's topological predicate `\u2203 a, HasProd f a`, with `HasProd` defined by convergence of finite products, whereas blueprint definition node `PowerSeries.Multipliable` has body `\u2200 n : \u2115, CoeffFinitelyDeterminedInProd a n`, and its product is `PowerSeries.tprod a ha`. Consequently the extra binders `[TopologicalSpace K] [IsTopologicalRing K] [T2Space K]` arise from using a different infinite-product notion, not merely from encoding the blueprint's formal setting. The intended statement is expressible in the project: `PowerSeries.subst` represents composition, `PowerSeries.Multipliable` and `PowerSeries.tprod` implement the blueprint definitions, and the project already contains `comp_prod_multipliable` and `comp_prod_infinite` for arbitrary `g` with `constantCoeff g = 0`. To become faithful, `tprod_rescale_substitution` must use those project definitions, quantify over `(g : K\u27e6X\u27e7)` with `(hg : constantCoeff g = 0)`, assume `PowerSeries.Multipliable f`, conclude `PowerSeries.Multipliable (fun i => (f i).subst g)`, and state the corresponding equality between `PowerSeries.tprod` values after `subst`, without the unnecessary topological typeclasses."
+}
