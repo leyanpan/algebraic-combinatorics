@@ -1,0 +1,15 @@
+Declaration: tprod_rescale_substitution
+Module: AlgebraicCombinatorics.FPS.InfiniteProducts2
+
+Statement id: stmt-algebraic-combinatorics-prop.fps.subs.rule-infprod
+
+## INFORMAL STATEMENT
+prop.fps.subs.rule-infprod
+
+If $\left( f_{i}\right) _{i\in I}\in K\left[ \left[ x\right] \right] ^{I}$ is a multipliable family of FPSs, and if $g\in K\left[ \left[ x\right] \right] $ is an FPS satisfying $\left[ x^{0}\right] g=0$, then the family $\left( f_{i}\circ g\right) _{i\in I}\in K\left[ \left[ x\right] \right] ^{I}$ is multipliable as well and we have $\left( \prod _{i\in I}f_{i}\right) \circ g=\prod _{i\in I}\left( f_{i}\circ g\right) $.
+
+## VERDICT
+{
+  "verdict": "drift",
+  "justification": "The blueprint quantifies over an arbitrary FPS \"g \u2208 K[[x]] satisfying [x^0]g = 0\" and concludes both that \"(f_i \u2218 g)_{i\u2208I} is multipliable\" and that \"(\u220f_{i\u2208I} f_i) \u2218 g = \u220f_{i\u2208I}(f_i \u2218 g)\". The elaborated Lean signature instead is `\u2200 {K} [CommRing K] [TopologicalSpace K] [IsTopologicalRing K] [T2Space K] {I} (f : I \u2192 PowerSeries K) (a : K), Multipliable f \u2192 rescale a (\u220f' i, f i) = \u220f' i, rescale a (f i)`. Thus the binder `(a : K)` replaces the required `(g : K\u27e6X\u27e7)` and there is no hypothesis `constantCoeff g = 0`. `PowerSeries.rescale a` is specifically the ring homomorphism sending `f(X)` to `f(aX)`, with body `mk (fun n => a ^ n * coeff n f)`, so it represents substitution only by the special series `aX`, not arbitrary series such as `X + X^2`. This narrows the quantified substitutions and is not a more-general theorem. The conclusion also contains only an equality; it does not assert `Multipliable (fun i => (f i).subst g)`. That assertion cannot be recovered merely from the occurrence of `\u220f'`, because Mathlib's `tprod` is defined even for nonmultipliable families, returning `1` when no product exists. Finally, the unqualified `Multipliable` in this module resolves to Mathlib's topological definition `\u2203 a, HasProd f a`, while blueprint node `def.fps.multipliable` defines multipliability by every coefficient being finitely determined. This introduces the additional binders `[TopologicalSpace K] [IsTopologicalRing K] [T2Space K]` and changes the predicate despite the intended project definition being available as `PowerSeries.Multipliable` in `AlgebraicCombinatorics.FPS.InfiniteProducts`. The blueprint is therefore statable: project declarations such as `PowerSeries.comp_prod_multipliable` already quantify over `(g : PowerSeries K)` with `(hg : constantCoeff g = 0)` and express preservation of coefficientwise multipliability. To make the target faithful, it should use the project's coefficient-finite `PowerSeries.Multipliable` and dependent `PowerSeries.tprod`, quantify over arbitrary `g` with `constantCoeff g = 0`, use `PowerSeries.subst g`, and conclude both multipliability of `fun i => (f i).subst g` and the corresponding product equality, without the topology typeclass binders."
+}
