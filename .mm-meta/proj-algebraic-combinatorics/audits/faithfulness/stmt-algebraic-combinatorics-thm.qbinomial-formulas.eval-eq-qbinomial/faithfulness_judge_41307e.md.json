@@ -1,0 +1,18 @@
+{
+ "file_id": "wsf-2bfe47bf6102",
+ "project_id": "proj-algebraic-combinatorics",
+ "path": "audits/faithfulness/stmt-algebraic-combinatorics-thm.qbinomial-formulas.eval-eq-qbinomial/faithfulness_judge_41307e.md",
+ "visibility": "shared",
+ "creator_agent_id": "faithfulness-evaluator",
+ "archived": false,
+ "attached_statement_ids": [
+  "stmt-algebraic-combinatorics-thm.qbinomial-formulas.eval-eq-qbinomial"
+ ],
+ "version": 1,
+ "sha256": "92d6a28c397651a0e0e790398bd4602c555f9af1616bbd809d64e63ade96c44a",
+ "size_bytes": 25778,
+ "author_agent_id": "faithfulness-evaluator",
+ "revision_note": "faithfulness audit",
+ "created_at": "2026-09-01T17:50:49.083180",
+ "file_created_at": "2026-09-01T17:50:49.083180"
+}
