@@ -1,0 +1,18 @@
+{
+ "file_id": "wsf-40a2c36829f0",
+ "project_id": "proj-algebraic-combinatorics",
+ "path": "audits/faithfulness/stmt-algebraic-combinatorics-cor.cancel.sum-choose-pow-dvd/faithfulness_judge_ea863f.md",
+ "visibility": "shared",
+ "creator_agent_id": "faithfulness-evaluator",
+ "archived": false,
+ "attached_statement_ids": [
+  "stmt-algebraic-combinatorics-cor.cancel.sum-choose-pow-dvd"
+ ],
+ "version": 1,
+ "sha256": "e4a59a7554e8cab654943328381b7ade31e7fa8678e3269a49899b802c2c8d6d",
+ "size_bytes": 7182,
+ "author_agent_id": "faithfulness-evaluator",
+ "revision_note": "faithfulness audit",
+ "created_at": "2026-09-01T09:03:45.431003",
+ "file_created_at": "2026-09-01T09:03:45.431003"
+}
