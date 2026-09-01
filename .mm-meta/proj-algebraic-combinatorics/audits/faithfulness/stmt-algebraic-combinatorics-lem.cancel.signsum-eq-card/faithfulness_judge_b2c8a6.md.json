@@ -1,0 +1,18 @@
+{
+ "file_id": "wsf-9849eefd529b",
+ "project_id": "proj-algebraic-combinatorics",
+ "path": "audits/faithfulness/stmt-algebraic-combinatorics-lem.cancel.signsum-eq-card/faithfulness_judge_b2c8a6.md",
+ "visibility": "shared",
+ "creator_agent_id": "faithfulness-evaluator",
+ "archived": false,
+ "attached_statement_ids": [
+  "stmt-algebraic-combinatorics-lem.cancel.signsum-eq-card"
+ ],
+ "version": 1,
+ "sha256": "e3e9f7dc726f9537777ebc701b7397ab164f7ab5818681f11a256b25d1b9da16",
+ "size_bytes": 11898,
+ "author_agent_id": "faithfulness-evaluator",
+ "revision_note": "faithfulness audit",
+ "created_at": "2026-09-01T11:04:45.936610",
+ "file_created_at": "2026-09-01T11:04:45.936610"
+}
