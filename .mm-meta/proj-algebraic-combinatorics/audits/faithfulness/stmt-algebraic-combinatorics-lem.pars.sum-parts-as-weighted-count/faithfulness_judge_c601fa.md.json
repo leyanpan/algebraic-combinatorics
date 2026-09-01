@@ -1,0 +1,18 @@
+{
+ "file_id": "wsf-bf258691c880",
+ "project_id": "proj-algebraic-combinatorics",
+ "path": "audits/faithfulness/stmt-algebraic-combinatorics-lem.pars.sum-parts-as-weighted-count/faithfulness_judge_c601fa.md",
+ "visibility": "shared",
+ "creator_agent_id": "faithfulness-evaluator",
+ "archived": false,
+ "attached_statement_ids": [
+  "stmt-algebraic-combinatorics-lem.pars.sum-parts-as-weighted-count"
+ ],
+ "version": 1,
+ "sha256": "cb585bb9685f96cf76154cef10a15792e86f8bf47f4cda8837e9cfcde0238a92",
+ "size_bytes": 6711,
+ "author_agent_id": "faithfulness-evaluator",
+ "revision_note": "faithfulness audit",
+ "created_at": "2026-09-01T15:09:09.167825",
+ "file_created_at": "2026-09-01T15:09:09.167825"
+}
