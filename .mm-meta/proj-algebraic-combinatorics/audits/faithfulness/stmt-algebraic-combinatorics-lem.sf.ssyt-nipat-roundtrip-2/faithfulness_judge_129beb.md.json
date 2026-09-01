@@ -1,0 +1,18 @@
+{
+ "file_id": "wsf-3c0678177576",
+ "project_id": "proj-algebraic-combinatorics",
+ "path": "audits/faithfulness/stmt-algebraic-combinatorics-lem.sf.ssyt-nipat-roundtrip-2/faithfulness_judge_129beb.md",
+ "visibility": "shared",
+ "creator_agent_id": "faithfulness-evaluator",
+ "archived": false,
+ "attached_statement_ids": [
+  "stmt-algebraic-combinatorics-lem.sf.ssyt-nipat-roundtrip-2"
+ ],
+ "version": 1,
+ "sha256": "9ec6f3f0fc419990165266fbab812f1aab6d87c27ecbfa0520e7cecada6b86ee",
+ "size_bytes": 33111,
+ "author_agent_id": "faithfulness-evaluator",
+ "revision_note": "faithfulness audit",
+ "created_at": "2026-09-01T16:33:40.162889",
+ "file_created_at": "2026-09-01T16:33:40.162889"
+}
