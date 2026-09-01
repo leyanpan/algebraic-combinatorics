@@ -1,0 +1,18 @@
+{
+ "file_id": "wsf-10f5f6e7e5fc",
+ "project_id": "proj-algebraic-combinatorics",
+ "path": "audits/faithfulness/stmt-algebraic-combinatorics-lem.det.vander.det-vandermondepolymat/faithfulness_judge_a70deb.md",
+ "visibility": "shared",
+ "creator_agent_id": "faithfulness-evaluator",
+ "archived": false,
+ "attached_statement_ids": [
+  "stmt-algebraic-combinatorics-lem.det.vander.det-vandermondepolymat"
+ ],
+ "version": 1,
+ "sha256": "89b0b522177ab4f5341da28059589352b9a66ee8ae5545661f9125d5959e56f1",
+ "size_bytes": 27975,
+ "author_agent_id": "faithfulness-evaluator",
+ "revision_note": "faithfulness audit",
+ "created_at": "2026-09-01T11:44:34.059182",
+ "file_created_at": "2026-09-01T11:44:34.059182"
+}
