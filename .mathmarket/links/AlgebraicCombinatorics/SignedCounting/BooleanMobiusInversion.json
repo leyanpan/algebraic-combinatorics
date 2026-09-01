@@ -1,0 +1,5 @@
+{
+  "BooleanMobius.booleanMobiusInversion": "stmt-algebraic-combinatorics-thm.pie.moeb",
+  "BooleanMobius.booleanMobiusInversion'": "stmt-algebraic-combinatorics-lem.pie.moeb-module",
+  "BooleanMobius.sum_powerset_powerset_swap": "stmt-algebraic-combinatorics-lem.pie.sum-swap"
+}

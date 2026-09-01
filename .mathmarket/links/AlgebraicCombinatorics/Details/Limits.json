@@ -1,0 +1,14 @@
+{
+  "PowerSeries.coeffStabilizesTo_add'": "stmt-algebraic-combinatorics-prop.fps.lim.sum-prod.add-detail",
+  "PowerSeries.coeffStabilizesTo_mul'": "stmt-algebraic-combinatorics-prop.fps.lim.sum-prod.mul-detail",
+  "PowerSeries.coeffStabilizesTo_partial_prod'": "stmt-algebraic-combinatorics-lem.fps.lim.partial-prod-detail",
+  "PowerSeries.coeffStabilizesTo_partial_sum'": "stmt-algebraic-combinatorics-lem.fps.lim.partial-sum-detail",
+  "PowerSeries.exists_xnEquiv_K": "stmt-algebraic-combinatorics-prop.fps.lim.sum-prod.k",
+  "PowerSeries.exists_xnEquiv_L": "stmt-algebraic-combinatorics-prop.fps.lim.sum-prod.l",
+  "PowerSeries.exists_xnEquiv_both": "stmt-algebraic-combinatorics-prop.fps.lim.sum-prod.both",
+  "PowerSeries.isMultipliable_of_coeffStabilizesTo_partial_prod'": "stmt-algebraic-combinatorics-lem.fps.lim.multipliable-of-partial-prod-detail",
+  "PowerSeries.isSummable_of_coeffStabilizesTo_partial_sum'": "stmt-algebraic-combinatorics-lem.fps.lim.summable-of-partial-sum-detail",
+  "PowerSeries.tprod'_eq_of_coeffStabilizesTo_partial_prod'": "stmt-algebraic-combinatorics-lem.fps.lim.tprod-eq-detail",
+  "PowerSeries.tsum'_eq_of_coeffStabilizesTo_partial_sum'": "stmt-algebraic-combinatorics-lem.fps.lim.tsum-eq-detail",
+  "Seq.stabilizesTo_unique'": "stmt-algebraic-combinatorics-lem.fps.lim.stab-unique-detail"
+}

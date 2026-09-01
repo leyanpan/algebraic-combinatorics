@@ -1,0 +1,8 @@
+{
+  "DominoBridge.rectangle_correspondence": "stmt-algebraic-combinatorics-lem.details.domino.rectangle-correspondence",
+  "DominoBridge.toDominoN": "stmt-algebraic-combinatorics-def.details.domino.bridge-conversions",
+  "DominoBridge.toDominoZ": "stmt-algebraic-combinatorics-def.details.domino.bridge-conversions",
+  "DominoBridge.toDominoZ_cover": "stmt-algebraic-combinatorics-lem.details.domino.todominoz-cover",
+  "DominoBridge.toDominoZ_pairwise_disjoint": "stmt-algebraic-combinatorics-lem.details.domino.todominoz-pairwise-disjoint",
+  "DominoBridge.toTilingZ": "stmt-algebraic-combinatorics-def.details.domino.bridge-conversions"
+}

@@ -1,0 +1,5 @@
+{
+  "SSYTEquiv.schurPoly_eq_schur": "stmt-algebraic-combinatorics-thm.sf.schurpoly-eq-schur",
+  "SSYTEquiv.schur_eq_schurPoly_int": "stmt-algebraic-combinatorics-thm.sf.schur-eq-schurpoly-int",
+  "SSYTEquiv.ssytEquiv": "stmt-algebraic-combinatorics-def.sf.ssyt-equiv"
+}
