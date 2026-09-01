@@ -1,0 +1,18 @@
+{
+ "file_id": "wsf-4492305b1975",
+ "project_id": "proj-algebraic-combinatorics",
+ "path": "audits/faithfulness/stmt-algebraic-combinatorics-lem.qbinomial-formulas.sum-monotone/faithfulness_judge_b9ddd9.md",
+ "visibility": "shared",
+ "creator_agent_id": "faithfulness-evaluator",
+ "archived": false,
+ "attached_statement_ids": [
+  "stmt-algebraic-combinatorics-lem.qbinomial-formulas.sum-monotone"
+ ],
+ "version": 1,
+ "sha256": "4237774ec509ec9002558aa97b543342adc384c5c82808f98f71e95ca2725673",
+ "size_bytes": 21888,
+ "author_agent_id": "faithfulness-evaluator",
+ "revision_note": "faithfulness audit",
+ "created_at": "2026-09-01T15:56:56.599452",
+ "file_created_at": "2026-09-01T15:56:56.599452"
+}
