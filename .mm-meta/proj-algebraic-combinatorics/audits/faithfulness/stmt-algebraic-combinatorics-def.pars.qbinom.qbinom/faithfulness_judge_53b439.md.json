@@ -1,0 +1,18 @@
+{
+ "file_id": "wsf-bc119e966f99",
+ "project_id": "proj-algebraic-combinatorics",
+ "path": "audits/faithfulness/stmt-algebraic-combinatorics-def.pars.qbinom.qbinom/faithfulness_judge_53b439.md",
+ "visibility": "shared",
+ "creator_agent_id": "faithfulness-evaluator",
+ "archived": false,
+ "attached_statement_ids": [
+  "stmt-algebraic-combinatorics-def.pars.qbinom.qbinom"
+ ],
+ "version": 1,
+ "sha256": "4d7368667306057e5e5ba2011873655c2784a47be74b6ecdebda06fa6f4c70aa",
+ "size_bytes": 12909,
+ "author_agent_id": "faithfulness-evaluator",
+ "revision_note": "faithfulness audit",
+ "created_at": "2026-09-01T10:12:36.938736",
+ "file_created_at": "2026-09-01T10:12:36.938736"
+}
