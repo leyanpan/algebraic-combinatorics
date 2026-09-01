@@ -1,0 +1,18 @@
+{
+ "file_id": "wsf-0cc569902685",
+ "project_id": "proj-algebraic-combinatorics",
+ "path": "audits/faithfulness/stmt-algebraic-combinatorics-lem.switch_involution/faithfulness_judge_051186.md",
+ "visibility": "shared",
+ "creator_agent_id": "faithfulness-evaluator",
+ "archived": false,
+ "attached_statement_ids": [
+  "stmt-algebraic-combinatorics-lem.switch_involution"
+ ],
+ "version": 1,
+ "sha256": "cc3b908ea852f2d8989f91143ecb3c48919344125cc4f73ba73e916175e37ed6",
+ "size_bytes": 7676,
+ "author_agent_id": "faithfulness-evaluator",
+ "revision_note": "faithfulness audit",
+ "created_at": "2026-09-01T17:01:23.246949",
+ "file_created_at": "2026-09-01T17:01:23.246949"
+}
