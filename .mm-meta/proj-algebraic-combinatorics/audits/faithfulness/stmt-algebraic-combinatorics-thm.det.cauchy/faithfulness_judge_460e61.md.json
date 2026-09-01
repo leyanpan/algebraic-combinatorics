@@ -1,0 +1,18 @@
+{
+ "file_id": "wsf-588f8f59fcd4",
+ "project_id": "proj-algebraic-combinatorics",
+ "path": "audits/faithfulness/stmt-algebraic-combinatorics-thm.det.cauchy/faithfulness_judge_460e61.md",
+ "visibility": "shared",
+ "creator_agent_id": "faithfulness-evaluator",
+ "archived": false,
+ "attached_statement_ids": [
+  "stmt-algebraic-combinatorics-thm.det.cauchy"
+ ],
+ "version": 1,
+ "sha256": "45fbdf5443dd9fca9c5fa1773ff8a2e3879e33c748d2c00d26c23e60ef9d97a3",
+ "size_bytes": 27206,
+ "author_agent_id": "faithfulness-evaluator",
+ "revision_note": "faithfulness audit",
+ "created_at": "2026-09-01T17:18:06.748314",
+ "file_created_at": "2026-09-01T17:18:06.748314"
+}
