@@ -1,0 +1,18 @@
+{
+ "file_id": "wsf-78161a240c50",
+ "project_id": "proj-algebraic-combinatorics",
+ "path": "audits/faithfulness/stmt-algebraic-combinatorics-def.sf.stemb-violator-misstep/faithfulness_judge_585a90.md",
+ "visibility": "shared",
+ "creator_agent_id": "faithfulness-evaluator",
+ "archived": false,
+ "attached_statement_ids": [
+  "stmt-algebraic-combinatorics-def.sf.stemb-violator-misstep"
+ ],
+ "version": 1,
+ "sha256": "636b665ae228fe23c6652a31897f2b13ab0c9022970e28aaa8f3483cc1d372f1",
+ "size_bytes": 25789,
+ "author_agent_id": "faithfulness-evaluator",
+ "revision_note": "faithfulness audit",
+ "created_at": "2026-09-01T11:00:54.106542",
+ "file_created_at": "2026-09-01T11:00:54.106542"
+}
