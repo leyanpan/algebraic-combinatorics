@@ -1,0 +1,18 @@
+{
+ "file_id": "wsf-6abb9821508a",
+ "project_id": "proj-algebraic-combinatorics",
+ "path": "audits/faithfulness/stmt-algebraic-combinatorics-lem.det.cauchy-det-of-poly/faithfulness_judge_35a067.md",
+ "visibility": "shared",
+ "creator_agent_id": "faithfulness-evaluator",
+ "archived": false,
+ "attached_statement_ids": [
+  "stmt-algebraic-combinatorics-lem.det.cauchy-det-of-poly"
+ ],
+ "version": 1,
+ "sha256": "43467d270589e3131c8956a1e0fe06f467778e06a93e9acb640186930264b71c",
+ "size_bytes": 25619,
+ "author_agent_id": "faithfulness-evaluator",
+ "revision_note": "faithfulness audit",
+ "created_at": "2026-09-01T11:21:04.150659",
+ "file_created_at": "2026-09-01T11:21:04.150659"
+}
