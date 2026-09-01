@@ -1,0 +1,18 @@
+{
+ "file_id": "wsf-67a35875bbc4",
+ "project_id": "proj-algebraic-combinatorics",
+ "path": "audits/faithfulness/stmt-algebraic-combinatorics-lem.sf.monomial-isprimal-iff/faithfulness_judge_8fae13.md",
+ "visibility": "shared",
+ "creator_agent_id": "faithfulness-evaluator",
+ "archived": false,
+ "attached_statement_ids": [
+  "stmt-algebraic-combinatorics-lem.sf.monomial-isprimal-iff"
+ ],
+ "version": 1,
+ "sha256": "32d13248f610ea8b6a1834a5cc1fb49bcf0de5d87092c7e26ba55b1ab1faa99b",
+ "size_bytes": 9884,
+ "author_agent_id": "faithfulness-evaluator",
+ "revision_note": "faithfulness audit",
+ "created_at": "2026-09-01T16:06:50.931879",
+ "file_created_at": "2026-09-01T16:06:50.931879"
+}
