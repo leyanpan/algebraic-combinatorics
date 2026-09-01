@@ -1,0 +1,18 @@
+{
+ "file_id": "wsf-729a475021e3",
+ "project_id": "proj-algebraic-combinatorics",
+ "path": "audits/faithfulness/stmt-algebraic-combinatorics-def.sf.horizontal-n-strip-partitions/faithfulness_judge_d46b49.md",
+ "visibility": "shared",
+ "creator_agent_id": "faithfulness-evaluator",
+ "archived": false,
+ "attached_statement_ids": [
+  "stmt-algebraic-combinatorics-def.sf.horizontal-n-strip-partitions"
+ ],
+ "version": 1,
+ "sha256": "eb2af03c19b331ba5222ea1fa0f34d338d7741e43799ef7b6298421dc0f443be",
+ "size_bytes": 25080,
+ "author_agent_id": "faithfulness-evaluator",
+ "revision_note": "faithfulness audit",
+ "created_at": "2026-09-01T10:36:28.779907",
+ "file_created_at": "2026-09-01T10:36:28.779907"
+}
