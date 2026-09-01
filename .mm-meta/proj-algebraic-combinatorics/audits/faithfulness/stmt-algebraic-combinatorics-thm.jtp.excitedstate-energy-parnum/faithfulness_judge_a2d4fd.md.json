@@ -1,0 +1,18 @@
+{
+ "file_id": "wsf-7762dcc74b47",
+ "project_id": "proj-algebraic-combinatorics",
+ "path": "audits/faithfulness/stmt-algebraic-combinatorics-thm.jtp.excitedstate-energy-parnum/faithfulness_judge_a2d4fd.md",
+ "visibility": "shared",
+ "creator_agent_id": "faithfulness-evaluator",
+ "archived": false,
+ "attached_statement_ids": [
+  "stmt-algebraic-combinatorics-thm.jtp.excitedstate-energy-parnum"
+ ],
+ "version": 1,
+ "sha256": "d0bd0074d46718e2820787dda76f4a0e5394c0831a30b7a91dd81a4773a79f6e",
+ "size_bytes": 23901,
+ "author_agent_id": "faithfulness-evaluator",
+ "revision_note": "faithfulness audit",
+ "created_at": "2026-09-01T17:44:05.770218",
+ "file_created_at": "2026-09-01T17:44:05.770218"
+}
