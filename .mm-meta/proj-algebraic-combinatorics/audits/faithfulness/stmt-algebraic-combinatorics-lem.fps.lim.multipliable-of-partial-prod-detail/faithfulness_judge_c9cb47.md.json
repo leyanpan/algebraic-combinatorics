@@ -1,0 +1,18 @@
+{
+ "file_id": "wsf-fefbae70aecd",
+ "project_id": "proj-algebraic-combinatorics",
+ "path": "audits/faithfulness/stmt-algebraic-combinatorics-lem.fps.lim.multipliable-of-partial-prod-detail/faithfulness_judge_c9cb47.md",
+ "visibility": "shared",
+ "creator_agent_id": "faithfulness-evaluator",
+ "archived": false,
+ "attached_statement_ids": [
+  "stmt-algebraic-combinatorics-lem.fps.lim.multipliable-of-partial-prod-detail"
+ ],
+ "version": 1,
+ "sha256": "c6760ec062c6ecf1ea2958c02aa0ee14df9d4b5c08d2f59a7e1a2b1cb0659b0f",
+ "size_bytes": 25717,
+ "author_agent_id": "faithfulness-evaluator",
+ "revision_note": "faithfulness audit",
+ "created_at": "2026-09-01T13:24:57.579898",
+ "file_created_at": "2026-09-01T13:24:57.579898"
+}
