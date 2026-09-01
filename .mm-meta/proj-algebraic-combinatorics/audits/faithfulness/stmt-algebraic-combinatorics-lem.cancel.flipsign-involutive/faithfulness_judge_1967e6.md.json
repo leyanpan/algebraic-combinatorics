@@ -1,0 +1,18 @@
+{
+ "file_id": "wsf-a20efb7de5b4",
+ "project_id": "proj-algebraic-combinatorics",
+ "path": "audits/faithfulness/stmt-algebraic-combinatorics-lem.cancel.flipsign-involutive/faithfulness_judge_1967e6.md",
+ "visibility": "shared",
+ "creator_agent_id": "faithfulness-evaluator",
+ "archived": false,
+ "attached_statement_ids": [
+  "stmt-algebraic-combinatorics-lem.cancel.flipsign-involutive"
+ ],
+ "version": 1,
+ "sha256": "1c2b13f83e791df3cafb6bb8a55c1c57a1592c6b85a3e2de3f4b99f13a69c5fb",
+ "size_bytes": 7438,
+ "author_agent_id": "faithfulness-evaluator",
+ "revision_note": "faithfulness audit",
+ "created_at": "2026-09-01T11:04:30.864999",
+ "file_created_at": "2026-09-01T11:04:30.864999"
+}
