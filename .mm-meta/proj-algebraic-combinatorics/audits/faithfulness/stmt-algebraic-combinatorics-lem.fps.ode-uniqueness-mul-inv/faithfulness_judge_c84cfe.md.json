@@ -1,0 +1,18 @@
+{
+ "file_id": "wsf-8fb77437fe0a",
+ "project_id": "proj-algebraic-combinatorics",
+ "path": "audits/faithfulness/stmt-algebraic-combinatorics-lem.fps.ode-uniqueness-mul-inv/faithfulness_judge_c84cfe.md",
+ "visibility": "shared",
+ "creator_agent_id": "faithfulness-evaluator",
+ "archived": false,
+ "attached_statement_ids": [
+  "stmt-algebraic-combinatorics-lem.fps.ode-uniqueness-mul-inv"
+ ],
+ "version": 1,
+ "sha256": "967fb7c908dff5a5fbfda2043dcc9b135547b9bceee16d06110e353c55eb5eb7",
+ "size_bytes": 18260,
+ "author_agent_id": "faithfulness-evaluator",
+ "revision_note": "faithfulness audit",
+ "created_at": "2026-09-01T13:48:05.044166",
+ "file_created_at": "2026-09-01T13:48:05.044166"
+}
