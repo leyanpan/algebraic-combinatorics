@@ -1,0 +1,18 @@
+{
+ "file_id": "wsf-05f175bf6fbb",
+ "project_id": "proj-algebraic-combinatorics",
+ "path": "audits/faithfulness/stmt-algebraic-combinatorics-lem.fps.eulerproduct-mul-eulerproductinv/faithfulness_judge_ea9089.md",
+ "visibility": "shared",
+ "creator_agent_id": "faithfulness-evaluator",
+ "archived": false,
+ "attached_statement_ids": [
+  "stmt-algebraic-combinatorics-lem.fps.eulerproduct-mul-eulerproductinv"
+ ],
+ "version": 1,
+ "sha256": "a7ff5abc238f428f27cacf7bafc4ead7c156864871ee371f066bbbcb95c0e7c1",
+ "size_bytes": 26876,
+ "author_agent_id": "faithfulness-evaluator",
+ "revision_note": "faithfulness audit",
+ "created_at": "2026-09-01T12:18:14.481246",
+ "file_created_at": "2026-09-01T12:18:14.481246"
+}
