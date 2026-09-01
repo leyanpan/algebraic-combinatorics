@@ -1,0 +1,18 @@
+{
+ "file_id": "wsf-33e62c4f97fe",
+ "project_id": "proj-algebraic-combinatorics",
+ "path": "audits/faithfulness/stmt-algebraic-combinatorics-lem.fps.geometric-subst-fibonacci/faithfulness_judge_9d29ef.md",
+ "visibility": "shared",
+ "creator_agent_id": "faithfulness-evaluator",
+ "archived": false,
+ "attached_statement_ids": [
+  "stmt-algebraic-combinatorics-lem.fps.geometric-subst-fibonacci"
+ ],
+ "version": 1,
+ "sha256": "f0447e25166f35d1a07cb8897cfe42e631b708bac57b4b6b94e9a169e9809e0e",
+ "size_bytes": 15652,
+ "author_agent_id": "faithfulness-evaluator",
+ "revision_note": "faithfulness audit",
+ "created_at": "2026-09-01T12:24:36.874781",
+ "file_created_at": "2026-09-01T12:24:36.874781"
+}
