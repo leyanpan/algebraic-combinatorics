@@ -1,0 +1,18 @@
+{
+ "file_id": "wsf-6f051e96015e",
+ "project_id": "proj-algebraic-combinatorics",
+ "path": "audits/faithfulness/stmt-algebraic-combinatorics-lem.jtp.double-sum-term-explicit/faithfulness_judge_016011.md",
+ "visibility": "shared",
+ "creator_agent_id": "faithfulness-evaluator",
+ "archived": false,
+ "attached_statement_ids": [
+  "stmt-algebraic-combinatorics-lem.jtp.double-sum-term-explicit"
+ ],
+ "version": 1,
+ "sha256": "7899d66bde1184e0a689e0b9e7d5539d1bf71028c96e63e9c8050d4ff3d12369",
+ "size_bytes": 23151,
+ "author_agent_id": "faithfulness-evaluator",
+ "revision_note": "faithfulness audit",
+ "created_at": "2026-09-01T14:31:26.832202",
+ "file_created_at": "2026-09-01T14:31:26.832202"
+}
