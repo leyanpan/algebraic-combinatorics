@@ -1,0 +1,18 @@
+{
+ "file_id": "wsf-2f90d5f34fba",
+ "project_id": "proj-algebraic-combinatorics",
+ "path": "audits/faithfulness/stmt-algebraic-combinatorics-def.fps.mulvar.binomialgenfunclosedform/faithfulness_judge_2ce434.md",
+ "visibility": "shared",
+ "creator_agent_id": "faithfulness-evaluator",
+ "archived": false,
+ "attached_statement_ids": [
+  "stmt-algebraic-combinatorics-def.fps.mulvar.binomialgenfunclosedform"
+ ],
+ "version": 1,
+ "sha256": "fb6430455fcc5de116472d6f9276a269c56591ac6163d32d99e596ad394c30b5",
+ "size_bytes": 9392,
+ "author_agent_id": "faithfulness-evaluator",
+ "revision_note": "faithfulness audit",
+ "created_at": "2026-09-01T09:54:52.729938",
+ "file_created_at": "2026-09-01T09:54:52.729938"
+}
