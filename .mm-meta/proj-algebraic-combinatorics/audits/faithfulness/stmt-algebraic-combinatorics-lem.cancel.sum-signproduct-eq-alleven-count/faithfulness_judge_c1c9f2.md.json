@@ -1,0 +1,18 @@
+{
+ "file_id": "wsf-37dc66038a97",
+ "project_id": "proj-algebraic-combinatorics",
+ "path": "audits/faithfulness/stmt-algebraic-combinatorics-lem.cancel.sum-signproduct-eq-alleven-count/faithfulness_judge_c1c9f2.md",
+ "visibility": "shared",
+ "creator_agent_id": "faithfulness-evaluator",
+ "archived": false,
+ "attached_statement_ids": [
+  "stmt-algebraic-combinatorics-lem.cancel.sum-signproduct-eq-alleven-count"
+ ],
+ "version": 1,
+ "sha256": "9dd1037eded91395da35f98e9eeac8be4761f063ed4e6f84d8a0896cf065f580",
+ "size_bytes": 17910,
+ "author_agent_id": "faithfulness-evaluator",
+ "revision_note": "faithfulness audit",
+ "created_at": "2026-09-01T11:15:21.905090",
+ "file_created_at": "2026-09-01T11:15:21.905090"
+}
