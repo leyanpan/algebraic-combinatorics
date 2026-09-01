@@ -1,0 +1,18 @@
+{
+ "file_id": "wsf-ad5331d59de8",
+ "project_id": "proj-algebraic-combinatorics",
+ "path": "audits/faithfulness/stmt-algebraic-combinatorics-thm.fps.laure.balanced-tern-rep-uniq/faithfulness_judge_b94823.md",
+ "visibility": "shared",
+ "creator_agent_id": "faithfulness-evaluator",
+ "archived": false,
+ "attached_statement_ids": [
+  "stmt-algebraic-combinatorics-thm.fps.laure.balanced-tern-rep-uniq"
+ ],
+ "version": 1,
+ "sha256": "20249247f79deadac069aff63002bebb26751b44e4e4404b25f59f9f42f0dd99",
+ "size_bytes": 20898,
+ "author_agent_id": "faithfulness-evaluator",
+ "revision_note": "faithfulness audit",
+ "created_at": "2026-09-01T17:27:29.002594",
+ "file_created_at": "2026-09-01T17:27:29.002594"
+}
