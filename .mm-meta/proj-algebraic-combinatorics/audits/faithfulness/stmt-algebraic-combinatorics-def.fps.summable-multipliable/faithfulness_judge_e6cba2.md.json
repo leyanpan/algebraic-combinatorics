@@ -1,0 +1,18 @@
+{
+ "file_id": "wsf-ce140016756e",
+ "project_id": "proj-algebraic-combinatorics",
+ "path": "audits/faithfulness/stmt-algebraic-combinatorics-def.fps.summable-multipliable/faithfulness_judge_e6cba2.md",
+ "visibility": "shared",
+ "creator_agent_id": "faithfulness-evaluator",
+ "archived": false,
+ "attached_statement_ids": [
+  "stmt-algebraic-combinatorics-def.fps.summable-multipliable"
+ ],
+ "version": 1,
+ "sha256": "5190d6e5126f399007ac45e7bd69a28049f01ff2ca5c78153b3395afe6329736",
+ "size_bytes": 36219,
+ "author_agent_id": "faithfulness-evaluator",
+ "revision_note": "faithfulness audit",
+ "created_at": "2026-09-01T09:53:59.568908",
+ "file_created_at": "2026-09-01T09:53:59.568908"
+}
