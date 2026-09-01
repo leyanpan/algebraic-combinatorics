@@ -1,0 +1,18 @@
+{
+ "file_id": "wsf-17ee408b0d99",
+ "project_id": "proj-algebraic-combinatorics",
+ "path": "audits/faithfulness/stmt-algebraic-combinatorics-lem.fps.multipliable-of-zero-mem/faithfulness_judge_e19fd2.md",
+ "visibility": "shared",
+ "creator_agent_id": "faithfulness-evaluator",
+ "archived": false,
+ "attached_statement_ids": [
+  "stmt-algebraic-combinatorics-lem.fps.multipliable-of-zero-mem"
+ ],
+ "version": 1,
+ "sha256": "27505333a1360b9ee71c96680bac3a54c62f39b52fc0b9c8496b99c696fd5ad3",
+ "size_bytes": 27909,
+ "author_agent_id": "faithfulness-evaluator",
+ "revision_note": "faithfulness audit",
+ "created_at": "2026-09-01T13:37:00.564427",
+ "file_created_at": "2026-09-01T13:37:00.564427"
+}
