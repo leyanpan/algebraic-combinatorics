@@ -1,0 +1,18 @@
+{
+ "file_id": "wsf-a795f2ca6973",
+ "project_id": "proj-algebraic-combinatorics",
+ "path": "audits/faithfulness/stmt-algebraic-combinatorics-lem.pie.card_derangement_eq/faithfulness_judge_0ae220.md",
+ "visibility": "shared",
+ "creator_agent_id": "faithfulness-evaluator",
+ "archived": false,
+ "attached_statement_ids": [
+  "stmt-algebraic-combinatorics-lem.pie.card_derangement_eq"
+ ],
+ "version": 1,
+ "sha256": "f5fe28c33649b905ffd81749f15fde135d2ab375af2f9008496897d4919c134b",
+ "size_bytes": 9190,
+ "author_agent_id": "faithfulness-evaluator",
+ "revision_note": "faithfulness audit",
+ "created_at": "2026-09-01T15:34:39.813707",
+ "file_created_at": "2026-09-01T15:34:39.813707"
+}
