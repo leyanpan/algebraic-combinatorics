@@ -1,0 +1,18 @@
+{
+ "file_id": "wsf-05acd44f34a9",
+ "project_id": "proj-algebraic-combinatorics",
+ "path": "audits/faithfulness/stmt-algebraic-combinatorics-lem.fps.laure.torsion-example/faithfulness_judge_e9e6e0.md",
+ "visibility": "shared",
+ "creator_agent_id": "faithfulness-evaluator",
+ "archived": false,
+ "attached_statement_ids": [
+  "stmt-algebraic-combinatorics-lem.fps.laure.torsion-example"
+ ],
+ "version": 1,
+ "sha256": "a6810c9cefe22372e82087d73312a3219b5fd6011589d71e3aa469f11a886a03",
+ "size_bytes": 32450,
+ "author_agent_id": "faithfulness-evaluator",
+ "revision_note": "faithfulness audit",
+ "created_at": "2026-09-01T13:21:22.068643",
+ "file_created_at": "2026-09-01T13:21:22.068643"
+}
