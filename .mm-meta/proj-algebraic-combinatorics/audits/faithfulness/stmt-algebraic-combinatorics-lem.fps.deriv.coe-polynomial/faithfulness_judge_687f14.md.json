@@ -1,0 +1,18 @@
+{
+ "file_id": "wsf-041e57ace848",
+ "project_id": "proj-algebraic-combinatorics",
+ "path": "audits/faithfulness/stmt-algebraic-combinatorics-lem.fps.deriv.coe-polynomial/faithfulness_judge_687f14.md",
+ "visibility": "shared",
+ "creator_agent_id": "faithfulness-evaluator",
+ "archived": false,
+ "attached_statement_ids": [
+  "stmt-algebraic-combinatorics-lem.fps.deriv.coe-polynomial"
+ ],
+ "version": 1,
+ "sha256": "50244e01334dcb7ec5457bb2daa02d5a40ca01b3a1a8b337589be56a1df6fa11",
+ "size_bytes": 11151,
+ "author_agent_id": "faithfulness-evaluator",
+ "revision_note": "faithfulness audit",
+ "created_at": "2026-09-01T12:10:53.612339",
+ "file_created_at": "2026-09-01T12:10:53.612339"
+}
