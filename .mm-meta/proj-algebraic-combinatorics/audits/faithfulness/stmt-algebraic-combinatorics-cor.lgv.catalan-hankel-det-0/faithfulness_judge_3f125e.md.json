@@ -1,0 +1,18 @@
+{
+ "file_id": "wsf-11e12b9771b2",
+ "project_id": "proj-algebraic-combinatorics",
+ "path": "audits/faithfulness/stmt-algebraic-combinatorics-cor.lgv.catalan-hankel-det-0/faithfulness_judge_3f125e.md",
+ "visibility": "shared",
+ "creator_agent_id": "faithfulness-evaluator",
+ "archived": false,
+ "attached_statement_ids": [
+  "stmt-algebraic-combinatorics-cor.lgv.catalan-hankel-det-0"
+ ],
+ "version": 1,
+ "sha256": "32eb1c640d6778a8a302e121a2e755c9b2d31c87cbd8dc7656a5928e70ec3154",
+ "size_bytes": 20090,
+ "author_agent_id": "faithfulness-evaluator",
+ "revision_note": "faithfulness audit",
+ "created_at": "2026-09-01T05:04:42.798831",
+ "file_created_at": "2026-09-01T05:04:42.798831"
+}
