@@ -1,0 +1,18 @@
+{
+ "file_id": "wsf-42c6352574ce",
+ "project_id": "proj-algebraic-combinatorics",
+ "path": "audits/faithfulness/stmt-algebraic-combinatorics-thm.pars.x-mul-derivative-p-eq-s-mul-p/faithfulness_judge_67c750.md",
+ "visibility": "shared",
+ "creator_agent_id": "faithfulness-evaluator",
+ "archived": false,
+ "attached_statement_ids": [
+  "stmt-algebraic-combinatorics-thm.pars.x-mul-derivative-p-eq-s-mul-p"
+ ],
+ "version": 1,
+ "sha256": "8ff02c386748d48dba3103702a5852f107567338202ac2701066fc08aac10d5d",
+ "size_bytes": 14950,
+ "author_agent_id": "faithfulness-evaluator",
+ "revision_note": "faithfulness audit",
+ "created_at": "2026-09-01T17:49:30.921058",
+ "file_created_at": "2026-09-01T17:49:30.921058"
+}
