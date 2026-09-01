@@ -1,0 +1,18 @@
+{
+ "file_id": "wsf-d11f82c12594",
+ "project_id": "proj-algebraic-combinatorics",
+ "path": "audits/faithfulness/stmt-algebraic-combinatorics-lem.qbinomial-formulas.restricted-eq-atmost/faithfulness_judge_f5cfec.md",
+ "visibility": "shared",
+ "creator_agent_id": "faithfulness-evaluator",
+ "archived": false,
+ "attached_statement_ids": [
+  "stmt-algebraic-combinatorics-lem.qbinomial-formulas.restricted-eq-atmost"
+ ],
+ "version": 1,
+ "sha256": "59e93955341464d2c464846b48c38866ed85bead2b1356d155ebabe208829024",
+ "size_bytes": 7942,
+ "author_agent_id": "faithfulness-evaluator",
+ "revision_note": "faithfulness audit",
+ "created_at": "2026-09-01T15:44:22.680997",
+ "file_created_at": "2026-09-01T15:44:22.680997"
+}
