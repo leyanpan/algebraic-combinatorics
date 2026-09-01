@@ -1,0 +1,18 @@
+{
+ "file_id": "wsf-3c25704aa7f7",
+ "project_id": "proj-algebraic-combinatorics",
+ "path": "audits/faithfulness/stmt-algebraic-combinatorics-lem.sf.filling-monomial-prod-pow/faithfulness_judge_bd8066.md",
+ "visibility": "shared",
+ "creator_agent_id": "faithfulness-evaluator",
+ "archived": false,
+ "attached_statement_ids": [
+  "stmt-algebraic-combinatorics-lem.sf.filling-monomial-prod-pow"
+ ],
+ "version": 1,
+ "sha256": "a7ada8e9008375bba57b8ab57868dc503ea0b5370dea86412c188dd779dd788a",
+ "size_bytes": 23342,
+ "author_agent_id": "faithfulness-evaluator",
+ "revision_note": "faithfulness audit",
+ "created_at": "2026-09-01T16:02:44.582585",
+ "file_created_at": "2026-09-01T16:02:44.582585"
+}
