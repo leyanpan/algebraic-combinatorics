@@ -1,0 +1,18 @@
+{
+ "file_id": "wsf-69943dbc385e",
+ "project_id": "proj-algebraic-combinatorics",
+ "path": "audits/faithfulness/stmt-algebraic-combinatorics-def.pie.dera/faithfulness_judge_9b60b1.md",
+ "visibility": "shared",
+ "creator_agent_id": "faithfulness-evaluator",
+ "archived": false,
+ "attached_statement_ids": [
+  "stmt-algebraic-combinatorics-def.pie.dera"
+ ],
+ "version": 1,
+ "sha256": "d59c5db502da07c60d8f8b76486b14ae828823c35b4c9e5f450de75846353f16",
+ "size_bytes": 4503,
+ "author_agent_id": "faithfulness-evaluator",
+ "revision_note": "faithfulness audit",
+ "created_at": "2026-09-01T10:15:20.812247",
+ "file_created_at": "2026-09-01T10:15:20.812247"
+}
