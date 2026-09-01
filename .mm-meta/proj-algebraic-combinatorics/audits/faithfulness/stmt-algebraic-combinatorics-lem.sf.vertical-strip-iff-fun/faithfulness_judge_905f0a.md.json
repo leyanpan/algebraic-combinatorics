@@ -1,0 +1,18 @@
+{
+ "file_id": "wsf-6613c97b83c1",
+ "project_id": "proj-algebraic-combinatorics",
+ "path": "audits/faithfulness/stmt-algebraic-combinatorics-lem.sf.vertical-strip-iff-fun/faithfulness_judge_905f0a.md",
+ "visibility": "shared",
+ "creator_agent_id": "faithfulness-evaluator",
+ "archived": false,
+ "attached_statement_ids": [
+  "stmt-algebraic-combinatorics-lem.sf.vertical-strip-iff-fun"
+ ],
+ "version": 1,
+ "sha256": "0a046dc360949ae6c0d1e1b837ee5add7dc24f07043e120bd312c9c4da93315a",
+ "size_bytes": 11314,
+ "author_agent_id": "faithfulness-evaluator",
+ "revision_note": "faithfulness audit",
+ "created_at": "2026-09-01T16:45:38.657642",
+ "file_created_at": "2026-09-01T16:45:38.657642"
+}
