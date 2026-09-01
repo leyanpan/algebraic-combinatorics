@@ -1,0 +1,18 @@
+{
+ "file_id": "wsf-0de733081be2",
+ "project_id": "proj-algebraic-combinatorics",
+ "path": "audits/faithfulness/stmt-algebraic-combinatorics-lem.perm.si.iscycle/faithfulness_judge_3287be.md",
+ "visibility": "shared",
+ "creator_agent_id": "faithfulness-evaluator",
+ "archived": false,
+ "attached_statement_ids": [
+  "stmt-algebraic-combinatorics-lem.perm.si.iscycle"
+ ],
+ "version": 1,
+ "sha256": "0370dccb732c0705cc65f53c88485943905a9bd9e8b59496cc94755780592525",
+ "size_bytes": 8551,
+ "author_agent_id": "faithfulness-evaluator",
+ "revision_note": "faithfulness audit",
+ "created_at": "2026-09-01T15:37:04.277369",
+ "file_created_at": "2026-09-01T15:37:04.277369"
+}
