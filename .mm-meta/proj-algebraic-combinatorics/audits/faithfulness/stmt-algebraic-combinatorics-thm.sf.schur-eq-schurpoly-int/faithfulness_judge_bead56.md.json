@@ -1,0 +1,18 @@
+{
+ "file_id": "wsf-a23b51932069",
+ "project_id": "proj-algebraic-combinatorics",
+ "path": "audits/faithfulness/stmt-algebraic-combinatorics-thm.sf.schur-eq-schurpoly-int/faithfulness_judge_bead56.md",
+ "visibility": "shared",
+ "creator_agent_id": "faithfulness-evaluator",
+ "archived": false,
+ "attached_statement_ids": [
+  "stmt-algebraic-combinatorics-thm.sf.schur-eq-schurpoly-int"
+ ],
+ "version": 1,
+ "sha256": "a15ab72b933e05accb25223a3497551e8b5f12c7e16d91584893ff60f17c9ec7",
+ "size_bytes": 40950,
+ "author_agent_id": "faithfulness-evaluator",
+ "revision_note": "faithfulness audit",
+ "created_at": "2026-09-01T17:59:31.792190",
+ "file_created_at": "2026-09-01T17:59:31.792190"
+}
