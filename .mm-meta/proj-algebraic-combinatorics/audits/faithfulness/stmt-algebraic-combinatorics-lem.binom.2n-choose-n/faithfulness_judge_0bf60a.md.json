@@ -1,0 +1,18 @@
+{
+ "file_id": "wsf-b069ae22f1e9",
+ "project_id": "proj-algebraic-combinatorics",
+ "path": "audits/faithfulness/stmt-algebraic-combinatorics-lem.binom.2n-choose-n/faithfulness_judge_0bf60a.md",
+ "visibility": "shared",
+ "creator_agent_id": "faithfulness-evaluator",
+ "archived": false,
+ "attached_statement_ids": [
+  "stmt-algebraic-combinatorics-lem.binom.2n-choose-n"
+ ],
+ "version": 1,
+ "sha256": "830edaef9d6a047ae174c71d1e3be57cf2dd87e9f2f315c4d66f5d8ceea621e4",
+ "size_bytes": 7576,
+ "author_agent_id": "faithfulness-evaluator",
+ "revision_note": "faithfulness audit",
+ "created_at": "2026-09-01T10:58:53.622642",
+ "file_created_at": "2026-09-01T10:58:53.622642"
+}
