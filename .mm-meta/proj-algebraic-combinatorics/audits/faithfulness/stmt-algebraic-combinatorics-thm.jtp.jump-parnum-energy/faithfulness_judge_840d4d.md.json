@@ -1,0 +1,18 @@
+{
+ "file_id": "wsf-0b1e6343ddf6",
+ "project_id": "proj-algebraic-combinatorics",
+ "path": "audits/faithfulness/stmt-algebraic-combinatorics-thm.jtp.jump-parnum-energy/faithfulness_judge_840d4d.md",
+ "visibility": "shared",
+ "creator_agent_id": "faithfulness-evaluator",
+ "archived": false,
+ "attached_statement_ids": [
+  "stmt-algebraic-combinatorics-thm.jtp.jump-parnum-energy"
+ ],
+ "version": 1,
+ "sha256": "ba5b9f5ce4bdf86a5bb6014b422ab17e6ab72686c6b83fe45a919af12caccecd",
+ "size_bytes": 17583,
+ "author_agent_id": "faithfulness-evaluator",
+ "revision_note": "faithfulness audit",
+ "created_at": "2026-09-01T17:43:57.092162",
+ "file_created_at": "2026-09-01T17:43:57.092162"
+}
