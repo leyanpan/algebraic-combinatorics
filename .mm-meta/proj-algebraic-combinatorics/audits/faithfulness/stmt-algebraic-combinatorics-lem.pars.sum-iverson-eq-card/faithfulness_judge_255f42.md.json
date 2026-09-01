@@ -1,0 +1,18 @@
+{
+ "file_id": "wsf-20afe0d2eb65",
+ "project_id": "proj-algebraic-combinatorics",
+ "path": "audits/faithfulness/stmt-algebraic-combinatorics-lem.pars.sum-iverson-eq-card/faithfulness_judge_255f42.md",
+ "visibility": "shared",
+ "creator_agent_id": "faithfulness-evaluator",
+ "archived": false,
+ "attached_statement_ids": [
+  "stmt-algebraic-combinatorics-lem.pars.sum-iverson-eq-card"
+ ],
+ "version": 1,
+ "sha256": "b334cff93e204199e5f1d992440d72356d1fcadbe038cecc41c3e737ca65be9a",
+ "size_bytes": 8142,
+ "author_agent_id": "faithfulness-evaluator",
+ "revision_note": "faithfulness audit",
+ "created_at": "2026-09-01T15:08:50.189366",
+ "file_created_at": "2026-09-01T15:08:50.189366"
+}
