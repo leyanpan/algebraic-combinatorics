@@ -1,0 +1,18 @@
+{
+ "file_id": "wsf-c8ff4bb336b7",
+ "project_id": "proj-algebraic-combinatorics",
+ "path": "audits/faithfulness/stmt-algebraic-combinatorics-cor.fps.anti-newton-binom-2/faithfulness_judge_05c01a.md",
+ "visibility": "shared",
+ "creator_agent_id": "faithfulness-evaluator",
+ "archived": false,
+ "attached_statement_ids": [
+  "stmt-algebraic-combinatorics-cor.fps.anti-newton-binom-2"
+ ],
+ "version": 1,
+ "sha256": "3d348afeae3e12ef5359e5844b6bdde809b62439bdf75cf5405247b778c97d6a",
+ "size_bytes": 18045,
+ "author_agent_id": "faithfulness-evaluator",
+ "revision_note": "faithfulness audit",
+ "created_at": "2026-09-01T09:15:48.312306",
+ "file_created_at": "2026-09-01T09:15:48.312306"
+}
