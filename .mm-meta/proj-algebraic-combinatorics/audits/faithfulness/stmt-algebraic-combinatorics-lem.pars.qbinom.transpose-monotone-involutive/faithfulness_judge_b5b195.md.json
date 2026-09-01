@@ -1,0 +1,18 @@
+{
+ "file_id": "wsf-fbe85f196da8",
+ "project_id": "proj-algebraic-combinatorics",
+ "path": "audits/faithfulness/stmt-algebraic-combinatorics-lem.pars.qbinom.transpose-monotone-involutive/faithfulness_judge_b5b195.md",
+ "visibility": "shared",
+ "creator_agent_id": "faithfulness-evaluator",
+ "archived": false,
+ "attached_statement_ids": [
+  "stmt-algebraic-combinatorics-lem.pars.qbinom.transpose-monotone-involutive"
+ ],
+ "version": 1,
+ "sha256": "991aec714d7c46dbe466ef38bc2b12c8f3a99656bac74636c15a219a88ec55ac",
+ "size_bytes": 10362,
+ "author_agent_id": "faithfulness-evaluator",
+ "revision_note": "faithfulness audit",
+ "created_at": "2026-09-01T15:09:15.233347",
+ "file_created_at": "2026-09-01T15:09:15.233347"
+}
