@@ -1,0 +1,18 @@
+{
+ "file_id": "wsf-3698f712a064",
+ "project_id": "proj-algebraic-combinatorics",
+ "path": "audits/faithfulness/stmt-algebraic-combinatorics-lem.fps.first-n-coeffs-of-xna/faithfulness_judge_9a0831.md",
+ "visibility": "shared",
+ "creator_agent_id": "faithfulness-evaluator",
+ "archived": false,
+ "attached_statement_ids": [
+  "stmt-algebraic-combinatorics-lem.fps.first-n-coeffs-of-xna"
+ ],
+ "version": 1,
+ "sha256": "2e0152f802a4a58bac3c4ec3e7e038fe17ab73c28dffacb344261e14b9580f16",
+ "size_bytes": 12797,
+ "author_agent_id": "faithfulness-evaluator",
+ "revision_note": "faithfulness audit",
+ "created_at": "2026-09-01T12:24:42.036492",
+ "file_created_at": "2026-09-01T12:24:42.036492"
+}
