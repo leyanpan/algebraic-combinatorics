@@ -1,0 +1,18 @@
+{
+ "file_id": "wsf-bbc7d9c7a8d6",
+ "project_id": "proj-algebraic-combinatorics",
+ "path": "audits/faithfulness/stmt-algebraic-combinatorics-lem.fps.multipliable-of-finite/faithfulness_judge_b32b91.md",
+ "visibility": "shared",
+ "creator_agent_id": "faithfulness-evaluator",
+ "archived": false,
+ "attached_statement_ids": [
+  "stmt-algebraic-combinatorics-lem.fps.multipliable-of-finite"
+ ],
+ "version": 1,
+ "sha256": "93cdb747c2efa47786535300f72fb09f087822b0836bbe6667c0ed3a952284b9",
+ "size_bytes": 18919,
+ "author_agent_id": "faithfulness-evaluator",
+ "revision_note": "faithfulness audit",
+ "created_at": "2026-09-01T13:37:09.162617",
+ "file_created_at": "2026-09-01T13:37:09.162617"
+}
