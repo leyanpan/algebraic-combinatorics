@@ -1,0 +1,18 @@
+{
+ "file_id": "wsf-baedf8941773",
+ "project_id": "proj-algebraic-combinatorics",
+ "path": "audits/faithfulness/stmt-algebraic-combinatorics-lem.fps.pol.coe-topolynomial/faithfulness_judge_b34fd3.md",
+ "visibility": "shared",
+ "creator_agent_id": "faithfulness-evaluator",
+ "archived": false,
+ "attached_statement_ids": [
+  "stmt-algebraic-combinatorics-lem.fps.pol.coe-topolynomial"
+ ],
+ "version": 1,
+ "sha256": "3de64067a360c015f4233ab400deb65d777b616d399c377a9bf255674c10559e",
+ "size_bytes": 17375,
+ "author_agent_id": "faithfulness-evaluator",
+ "revision_note": "faithfulness audit",
+ "created_at": "2026-09-01T13:46:49.243188",
+ "file_created_at": "2026-09-01T13:46:49.243188"
+}
