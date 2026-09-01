@@ -1,0 +1,18 @@
+{
+ "file_id": "wsf-f27decbc8f2b",
+ "project_id": "proj-algebraic-combinatorics",
+ "path": "audits/faithfulness/stmt-algebraic-combinatorics-def.fib.fibonacci/faithfulness_judge_f3cd78.md",
+ "visibility": "shared",
+ "creator_agent_id": "faithfulness-evaluator",
+ "archived": false,
+ "attached_statement_ids": [
+  "stmt-algebraic-combinatorics-def.fib.fibonacci"
+ ],
+ "version": 1,
+ "sha256": "3adc4bd6f5668b2facac3ffe2d2a2b74da8533ebaf9e4e86c48df718fccedd34",
+ "size_bytes": 1513,
+ "author_agent_id": "faithfulness-evaluator",
+ "revision_note": "faithfulness audit",
+ "created_at": "2026-09-01T09:32:44.668565",
+ "file_created_at": "2026-09-01T09:32:44.668565"
+}
