@@ -1,0 +1,18 @@
+{
+ "file_id": "wsf-560ee64ed553",
+ "project_id": "proj-algebraic-combinatorics",
+ "path": "audits/faithfulness/stmt-algebraic-combinatorics-lem.det.complementary-minor-inverse/faithfulness_judge_d053ab.md",
+ "visibility": "shared",
+ "creator_agent_id": "faithfulness-evaluator",
+ "archived": false,
+ "attached_statement_ids": [
+  "stmt-algebraic-combinatorics-lem.det.complementary-minor-inverse"
+ ],
+ "version": 1,
+ "sha256": "8083cef5df7be82a54744be8100e745d700a272a101dff575fd85a1155eb46b3",
+ "size_bytes": 31842,
+ "author_agent_id": "faithfulness-evaluator",
+ "revision_note": "faithfulness audit",
+ "created_at": "2026-09-01T11:21:51.547771",
+ "file_created_at": "2026-09-01T11:21:51.547771"
+}
