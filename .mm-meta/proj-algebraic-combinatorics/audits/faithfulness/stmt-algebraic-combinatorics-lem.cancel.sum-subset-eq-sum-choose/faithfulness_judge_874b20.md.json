@@ -1,0 +1,18 @@
+{
+ "file_id": "wsf-eff6fbeef433",
+ "project_id": "proj-algebraic-combinatorics",
+ "path": "audits/faithfulness/stmt-algebraic-combinatorics-lem.cancel.sum-subset-eq-sum-choose/faithfulness_judge_874b20.md",
+ "visibility": "shared",
+ "creator_agent_id": "faithfulness-evaluator",
+ "archived": false,
+ "attached_statement_ids": [
+  "stmt-algebraic-combinatorics-lem.cancel.sum-subset-eq-sum-choose"
+ ],
+ "version": 1,
+ "sha256": "76193807e8c7dc1882b19bb5cc720221a2eb0d84c6d008f098549b8ac2b8d0cc",
+ "size_bytes": 10887,
+ "author_agent_id": "faithfulness-evaluator",
+ "revision_note": "faithfulness audit",
+ "created_at": "2026-09-01T11:06:54.773572",
+ "file_created_at": "2026-09-01T11:06:54.773572"
+}
