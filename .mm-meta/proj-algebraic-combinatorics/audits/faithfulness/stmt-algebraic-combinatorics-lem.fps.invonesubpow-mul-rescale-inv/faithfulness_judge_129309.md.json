@@ -1,0 +1,18 @@
+{
+ "file_id": "wsf-071ae78ef9c2",
+ "project_id": "proj-algebraic-combinatorics",
+ "path": "audits/faithfulness/stmt-algebraic-combinatorics-lem.fps.invonesubpow-mul-rescale-inv/faithfulness_judge_129309.md",
+ "visibility": "shared",
+ "creator_agent_id": "faithfulness-evaluator",
+ "archived": false,
+ "attached_statement_ids": [
+  "stmt-algebraic-combinatorics-lem.fps.invonesubpow-mul-rescale-inv"
+ ],
+ "version": 1,
+ "sha256": "103f32f1569b2294344f6348f1332341a068cd800aca1792ebb3451ba18a6458",
+ "size_bytes": 17274,
+ "author_agent_id": "faithfulness-evaluator",
+ "revision_note": "faithfulness audit",
+ "created_at": "2026-09-01T12:37:17.570249",
+ "file_created_at": "2026-09-01T12:37:17.570249"
+}
