@@ -1,0 +1,18 @@
+{
+ "file_id": "wsf-5209828677f8",
+ "project_id": "proj-algebraic-combinatorics",
+ "path": "audits/faithfulness/stmt-algebraic-combinatorics-lem.fps.finite-funcs-graph-in-finite-set/faithfulness_judge_5c8fc9.md",
+ "visibility": "shared",
+ "creator_agent_id": "faithfulness-evaluator",
+ "archived": false,
+ "attached_statement_ids": [
+  "stmt-algebraic-combinatorics-lem.fps.finite-funcs-graph-in-finite-set"
+ ],
+ "version": 1,
+ "sha256": "b59fd3759072ba4028cb8ccf40a3fa2e418a27a20a0a35b596bd86761b305237",
+ "size_bytes": 8744,
+ "author_agent_id": "faithfulness-evaluator",
+ "revision_note": "faithfulness audit",
+ "created_at": "2026-09-01T12:22:35.083931",
+ "file_created_at": "2026-09-01T12:22:35.083931"
+}
