@@ -1,0 +1,18 @@
+{
+ "file_id": "wsf-b5208e74dea5",
+ "project_id": "proj-algebraic-combinatorics",
+ "path": "audits/faithfulness/stmt-algebraic-combinatorics-def.blockysubsets/faithfulness_judge_ef2f55.md",
+ "visibility": "shared",
+ "creator_agent_id": "faithfulness-evaluator",
+ "archived": false,
+ "attached_statement_ids": [
+  "stmt-algebraic-combinatorics-def.blockysubsets"
+ ],
+ "version": 1,
+ "sha256": "67aca0c128182219c5f377b3d2862f56a8e05255622c8763d4d040361e6dd641",
+ "size_bytes": 11797,
+ "author_agent_id": "faithfulness-evaluator",
+ "revision_note": "faithfulness audit",
+ "created_at": "2026-09-01T09:22:49.081094",
+ "file_created_at": "2026-09-01T09:22:49.081094"
+}
