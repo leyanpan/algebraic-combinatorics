@@ -1,0 +1,18 @@
+{
+ "file_id": "wsf-e1e64ff32782",
+ "project_id": "proj-algebraic-combinatorics",
+ "path": "audits/faithfulness/stmt-algebraic-combinatorics-lem.fps.laure.laupol-embed-add/faithfulness_judge_1a0c23.md",
+ "visibility": "shared",
+ "creator_agent_id": "faithfulness-evaluator",
+ "archived": false,
+ "attached_statement_ids": [
+  "stmt-algebraic-combinatorics-lem.fps.laure.laupol-embed-add"
+ ],
+ "version": 1,
+ "sha256": "33a86d1ad36e94e17b1eda93c4595d65842c0e36d753c7b489a21e3d9ca26ece",
+ "size_bytes": 16645,
+ "author_agent_id": "faithfulness-evaluator",
+ "revision_note": "faithfulness audit",
+ "created_at": "2026-09-01T12:44:14.498919",
+ "file_created_at": "2026-09-01T12:44:14.498919"
+}
