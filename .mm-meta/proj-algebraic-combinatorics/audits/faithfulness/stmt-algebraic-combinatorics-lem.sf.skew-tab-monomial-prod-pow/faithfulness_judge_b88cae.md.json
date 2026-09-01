@@ -1,0 +1,18 @@
+{
+ "file_id": "wsf-42bbfca418dd",
+ "project_id": "proj-algebraic-combinatorics",
+ "path": "audits/faithfulness/stmt-algebraic-combinatorics-lem.sf.skew-tab-monomial-prod-pow/faithfulness_judge_b88cae.md",
+ "visibility": "shared",
+ "creator_agent_id": "faithfulness-evaluator",
+ "archived": false,
+ "attached_statement_ids": [
+  "stmt-algebraic-combinatorics-lem.sf.skew-tab-monomial-prod-pow"
+ ],
+ "version": 1,
+ "sha256": "ea3fa6a70b028072e393c7bd6739a2db0a7e9928ae253c2b58abd48cba1767b6",
+ "size_bytes": 20593,
+ "author_agent_id": "faithfulness-evaluator",
+ "revision_note": "faithfulness audit",
+ "created_at": "2026-09-01T16:28:39.716208",
+ "file_created_at": "2026-09-01T16:28:39.716208"
+}
