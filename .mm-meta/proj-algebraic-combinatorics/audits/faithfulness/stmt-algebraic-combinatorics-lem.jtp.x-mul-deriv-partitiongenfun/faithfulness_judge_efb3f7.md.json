@@ -1,0 +1,18 @@
+{
+ "file_id": "wsf-af8739d83bc6",
+ "project_id": "proj-algebraic-combinatorics",
+ "path": "audits/faithfulness/stmt-algebraic-combinatorics-lem.jtp.x-mul-deriv-partitiongenfun/faithfulness_judge_efb3f7.md",
+ "visibility": "shared",
+ "creator_agent_id": "faithfulness-evaluator",
+ "archived": false,
+ "attached_statement_ids": [
+  "stmt-algebraic-combinatorics-lem.jtp.x-mul-deriv-partitiongenfun"
+ ],
+ "version": 1,
+ "sha256": "147475f70d53edb33a1c677bf1f12e1340abbfb1e9385c59ef42e4f5665ae8b1",
+ "size_bytes": 20382,
+ "author_agent_id": "faithfulness-evaluator",
+ "revision_note": "faithfulness audit",
+ "created_at": "2026-09-01T14:45:16.847186",
+ "file_created_at": "2026-09-01T14:45:16.847186"
+}
