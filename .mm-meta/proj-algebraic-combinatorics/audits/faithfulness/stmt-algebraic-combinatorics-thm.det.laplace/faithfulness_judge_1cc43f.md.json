@@ -1,0 +1,18 @@
+{
+ "file_id": "wsf-424c08f84b01",
+ "project_id": "proj-algebraic-combinatorics",
+ "path": "audits/faithfulness/stmt-algebraic-combinatorics-thm.det.laplace/faithfulness_judge_1cc43f.md",
+ "visibility": "shared",
+ "creator_agent_id": "faithfulness-evaluator",
+ "archived": false,
+ "attached_statement_ids": [
+  "stmt-algebraic-combinatorics-thm.det.laplace"
+ ],
+ "version": 1,
+ "sha256": "3f45fbe63dbd99277d9ae7fc005d24f8393a58912d56b63918e62880e0ea91b3",
+ "size_bytes": 24377,
+ "author_agent_id": "faithfulness-evaluator",
+ "revision_note": "faithfulness audit",
+ "created_at": "2026-09-01T17:19:17.016677",
+ "file_created_at": "2026-09-01T17:19:17.016677"
+}
