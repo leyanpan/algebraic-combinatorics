@@ -1,0 +1,18 @@
+{
+ "file_id": "wsf-e68e20e5072d",
+ "project_id": "proj-algebraic-combinatorics",
+ "path": "audits/faithfulness/stmt-algebraic-combinatorics-lem.pars.qbinom.monotone-partition-bij/faithfulness_judge_54f07a.md",
+ "visibility": "shared",
+ "creator_agent_id": "faithfulness-evaluator",
+ "archived": false,
+ "attached_statement_ids": [
+  "stmt-algebraic-combinatorics-lem.pars.qbinom.monotone-partition-bij"
+ ],
+ "version": 1,
+ "sha256": "c48733870fbeb0297177c468abd35f03483b5bc8a6786c995b8c1b7b85539be5",
+ "size_bytes": 21300,
+ "author_agent_id": "faithfulness-evaluator",
+ "revision_note": "faithfulness audit",
+ "created_at": "2026-09-01T15:05:52.903346",
+ "file_created_at": "2026-09-01T15:05:52.903346"
+}
