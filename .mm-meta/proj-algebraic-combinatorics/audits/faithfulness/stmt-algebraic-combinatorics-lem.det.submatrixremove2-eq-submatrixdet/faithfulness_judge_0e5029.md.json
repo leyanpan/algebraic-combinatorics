@@ -1,0 +1,18 @@
+{
+ "file_id": "wsf-f73d276dc84c",
+ "project_id": "proj-algebraic-combinatorics",
+ "path": "audits/faithfulness/stmt-algebraic-combinatorics-lem.det.submatrixremove2-eq-submatrixdet/faithfulness_judge_0e5029.md",
+ "visibility": "shared",
+ "creator_agent_id": "faithfulness-evaluator",
+ "archived": false,
+ "attached_statement_ids": [
+  "stmt-algebraic-combinatorics-lem.det.submatrixremove2-eq-submatrixdet"
+ ],
+ "version": 1,
+ "sha256": "fbfb4c772404af8b34f33666027cd79e8d822f10f85aef751ce53aba39d3109f",
+ "size_bytes": 33074,
+ "author_agent_id": "faithfulness-evaluator",
+ "revision_note": "faithfulness audit",
+ "created_at": "2026-09-01T11:44:03.819800",
+ "file_created_at": "2026-09-01T11:44:03.819800"
+}
