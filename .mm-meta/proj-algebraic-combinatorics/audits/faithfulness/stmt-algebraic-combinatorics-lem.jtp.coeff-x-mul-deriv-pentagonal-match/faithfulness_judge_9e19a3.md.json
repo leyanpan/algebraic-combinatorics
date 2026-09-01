@@ -1,0 +1,18 @@
+{
+ "file_id": "wsf-57c542bccace",
+ "project_id": "proj-algebraic-combinatorics",
+ "path": "audits/faithfulness/stmt-algebraic-combinatorics-lem.jtp.coeff-x-mul-deriv-pentagonal-match/faithfulness_judge_9e19a3.md",
+ "visibility": "shared",
+ "creator_agent_id": "faithfulness-evaluator",
+ "archived": false,
+ "attached_statement_ids": [
+  "stmt-algebraic-combinatorics-lem.jtp.coeff-x-mul-deriv-pentagonal-match"
+ ],
+ "version": 1,
+ "sha256": "a3ed2b0440cc22fc87324008bfba10de39237386a8e82863d40433d7eba70178",
+ "size_bytes": 27114,
+ "author_agent_id": "faithfulness-evaluator",
+ "revision_note": "faithfulness audit",
+ "created_at": "2026-09-01T14:29:02.000472",
+ "file_created_at": "2026-09-01T14:29:02.000472"
+}
