@@ -1,0 +1,18 @@
+{
+ "file_id": "wsf-3fd4432acc13",
+ "project_id": "proj-algebraic-combinatorics",
+ "path": "audits/faithfulness/stmt-algebraic-combinatorics-thm.sf.omega-involutive/faithfulness_judge_d24a97.md",
+ "visibility": "shared",
+ "creator_agent_id": "faithfulness-evaluator",
+ "archived": false,
+ "attached_statement_ids": [
+  "stmt-algebraic-combinatorics-thm.sf.omega-involutive"
+ ],
+ "version": 1,
+ "sha256": "9f4848b4ae7c7612f1d005acd0c48bf0695bf6817733966ec52a632aba9d4a45",
+ "size_bytes": 29140,
+ "author_agent_id": "faithfulness-evaluator",
+ "revision_note": "faithfulness audit",
+ "created_at": "2026-09-01T17:56:40.680637",
+ "file_created_at": "2026-09-01T17:56:40.680637"
+}
