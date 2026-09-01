@@ -1,0 +1,18 @@
+{
+ "file_id": "wsf-8ce4ef0809ed",
+ "project_id": "proj-algebraic-combinatorics",
+ "path": "audits/faithfulness/stmt-algebraic-combinatorics-lem.jtp.coeff-double-sum-eq-coeff-stategenfun/faithfulness_judge_2a8eb5.md",
+ "visibility": "shared",
+ "creator_agent_id": "faithfulness-evaluator",
+ "archived": false,
+ "attached_statement_ids": [
+  "stmt-algebraic-combinatorics-lem.jtp.coeff-double-sum-eq-coeff-stategenfun"
+ ],
+ "version": 1,
+ "sha256": "7cb0806b331203b32abcb2b8b5c447e1c373c52968497e41f708bbed444b97b5",
+ "size_bytes": 28099,
+ "author_agent_id": "faithfulness-evaluator",
+ "revision_note": "faithfulness audit",
+ "created_at": "2026-09-01T14:22:26.389348",
+ "file_created_at": "2026-09-01T14:22:26.389348"
+}
