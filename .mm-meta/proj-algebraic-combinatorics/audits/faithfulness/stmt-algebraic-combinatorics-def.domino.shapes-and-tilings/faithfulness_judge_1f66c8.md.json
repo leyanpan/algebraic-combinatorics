@@ -1,0 +1,18 @@
+{
+ "file_id": "wsf-110906569f45",
+ "project_id": "proj-algebraic-combinatorics",
+ "path": "audits/faithfulness/stmt-algebraic-combinatorics-def.domino.shapes-and-tilings/faithfulness_judge_1f66c8.md",
+ "visibility": "shared",
+ "creator_agent_id": "faithfulness-evaluator",
+ "archived": false,
+ "attached_statement_ids": [
+  "stmt-algebraic-combinatorics-def.domino.shapes-and-tilings"
+ ],
+ "version": 1,
+ "sha256": "fdd03c4edd21e0ad9dea62249120237e23492783cb1701cbf1bfd3bab676f21e",
+ "size_bytes": 13675,
+ "author_agent_id": "faithfulness-evaluator",
+ "revision_note": "faithfulness audit",
+ "created_at": "2026-09-01T09:34:38.183970",
+ "file_created_at": "2026-09-01T09:34:38.183970"
+}
