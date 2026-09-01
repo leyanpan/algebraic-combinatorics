@@ -1,0 +1,18 @@
+{
+ "file_id": "wsf-ef54da360d45",
+ "project_id": "proj-algebraic-combinatorics",
+ "path": "audits/faithfulness/stmt-algebraic-combinatorics-lem.qbinomial-formulas.binom1-at-one/faithfulness_judge_e6dc0b.md",
+ "visibility": "shared",
+ "creator_agent_id": "faithfulness-evaluator",
+ "archived": false,
+ "attached_statement_ids": [
+  "stmt-algebraic-combinatorics-lem.qbinomial-formulas.binom1-at-one"
+ ],
+ "version": 1,
+ "sha256": "8f94e7fc5c476b77ec000a2d97f484314bb895c3ec39bfd5aa72aae2b9cdda79",
+ "size_bytes": 9270,
+ "author_agent_id": "faithfulness-evaluator",
+ "revision_note": "faithfulness audit",
+ "created_at": "2026-09-01T15:46:31.636627",
+ "file_created_at": "2026-09-01T15:46:31.636627"
+}
