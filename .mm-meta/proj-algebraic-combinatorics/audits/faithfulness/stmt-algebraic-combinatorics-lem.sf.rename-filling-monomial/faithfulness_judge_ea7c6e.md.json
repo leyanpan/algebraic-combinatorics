@@ -1,0 +1,18 @@
+{
+ "file_id": "wsf-64b7234b06b8",
+ "project_id": "proj-algebraic-combinatorics",
+ "path": "audits/faithfulness/stmt-algebraic-combinatorics-lem.sf.rename-filling-monomial/faithfulness_judge_ea7c6e.md",
+ "visibility": "shared",
+ "creator_agent_id": "faithfulness-evaluator",
+ "archived": false,
+ "attached_statement_ids": [
+  "stmt-algebraic-combinatorics-lem.sf.rename-filling-monomial"
+ ],
+ "version": 1,
+ "sha256": "0a74bf668d2f8078cda750cc898394cb69bbd7e62802221b888f6c771869a7f2",
+ "size_bytes": 21054,
+ "author_agent_id": "faithfulness-evaluator",
+ "revision_note": "faithfulness audit",
+ "created_at": "2026-09-01T16:15:32.255367",
+ "file_created_at": "2026-09-01T16:15:32.255367"
+}
