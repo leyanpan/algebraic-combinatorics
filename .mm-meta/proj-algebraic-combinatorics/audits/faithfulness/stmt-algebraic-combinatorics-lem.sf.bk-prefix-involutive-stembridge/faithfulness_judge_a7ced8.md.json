@@ -1,0 +1,18 @@
+{
+ "file_id": "wsf-26a5293921de",
+ "project_id": "proj-algebraic-combinatorics",
+ "path": "audits/faithfulness/stmt-algebraic-combinatorics-lem.sf.bk-prefix-involutive-stembridge/faithfulness_judge_a7ced8.md",
+ "visibility": "shared",
+ "creator_agent_id": "faithfulness-evaluator",
+ "archived": false,
+ "attached_statement_ids": [
+  "stmt-algebraic-combinatorics-lem.sf.bk-prefix-involutive-stembridge"
+ ],
+ "version": 1,
+ "sha256": "0ab3de330cf492f4fbe79501de30300bb6fb8dc1cd77379a483dbb8850a4387e",
+ "size_bytes": 36607,
+ "author_agent_id": "faithfulness-evaluator",
+ "revision_note": "faithfulness audit",
+ "created_at": "2026-09-01T16:02:48.438319",
+ "file_created_at": "2026-09-01T16:02:48.438319"
+}
