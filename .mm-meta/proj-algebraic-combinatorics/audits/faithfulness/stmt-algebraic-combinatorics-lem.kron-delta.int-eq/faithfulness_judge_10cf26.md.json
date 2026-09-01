@@ -1,0 +1,18 @@
+{
+ "file_id": "wsf-31b8a2f11ec4",
+ "project_id": "proj-algebraic-combinatorics",
+ "path": "audits/faithfulness/stmt-algebraic-combinatorics-lem.kron-delta.int-eq/faithfulness_judge_10cf26.md",
+ "visibility": "shared",
+ "creator_agent_id": "faithfulness-evaluator",
+ "archived": false,
+ "attached_statement_ids": [
+  "stmt-algebraic-combinatorics-lem.kron-delta.int-eq"
+ ],
+ "version": 1,
+ "sha256": "187588cb6e0b54b8c41e93238904d16826274bd81cf2c7a3b6f398b7477ca8c9",
+ "size_bytes": 9528,
+ "author_agent_id": "faithfulness-evaluator",
+ "revision_note": "faithfulness audit",
+ "created_at": "2026-09-01T14:39:48.092679",
+ "file_created_at": "2026-09-01T14:39:48.092679"
+}
