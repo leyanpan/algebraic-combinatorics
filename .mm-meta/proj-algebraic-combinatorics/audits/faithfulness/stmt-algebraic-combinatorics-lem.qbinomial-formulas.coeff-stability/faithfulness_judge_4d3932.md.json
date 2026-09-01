@@ -1,0 +1,18 @@
+{
+ "file_id": "wsf-208d012580d7",
+ "project_id": "proj-algebraic-combinatorics",
+ "path": "audits/faithfulness/stmt-algebraic-combinatorics-lem.qbinomial-formulas.coeff-stability/faithfulness_judge_4d3932.md",
+ "visibility": "shared",
+ "creator_agent_id": "faithfulness-evaluator",
+ "archived": false,
+ "attached_statement_ids": [
+  "stmt-algebraic-combinatorics-lem.qbinomial-formulas.coeff-stability"
+ ],
+ "version": 1,
+ "sha256": "64898c4728242997bd331476bfcf13b5dc3da5e296a1061a634d512a5487319b",
+ "size_bytes": 15585,
+ "author_agent_id": "faithfulness-evaluator",
+ "revision_note": "faithfulness audit",
+ "created_at": "2026-09-01T15:43:45.190464",
+ "file_created_at": "2026-09-01T15:43:45.190464"
+}
