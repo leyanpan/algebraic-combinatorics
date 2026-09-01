@@ -1,0 +1,18 @@
+{
+ "file_id": "wsf-5624d687b071",
+ "project_id": "proj-algebraic-combinatorics",
+ "path": "audits/faithfulness/stmt-algebraic-combinatorics-thm.pars.euler-sum-div-rec/faithfulness_judge_14601b.md",
+ "visibility": "shared",
+ "creator_agent_id": "faithfulness-evaluator",
+ "archived": false,
+ "attached_statement_ids": [
+  "stmt-algebraic-combinatorics-thm.pars.euler-sum-div-rec"
+ ],
+ "version": 1,
+ "sha256": "1ab9a7c708ccfc02140cfbaee807e693ce3102accf49ff25c07be2b6f18b92ef",
+ "size_bytes": 20012,
+ "author_agent_id": "faithfulness-evaluator",
+ "revision_note": "faithfulness audit",
+ "created_at": "2026-09-01T17:44:28.043926",
+ "file_created_at": "2026-09-01T17:44:28.043926"
+}
