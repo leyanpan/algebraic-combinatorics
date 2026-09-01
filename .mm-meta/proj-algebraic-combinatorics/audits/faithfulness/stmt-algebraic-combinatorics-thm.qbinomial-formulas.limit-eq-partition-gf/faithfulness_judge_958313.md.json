@@ -1,0 +1,18 @@
+{
+ "file_id": "wsf-8cb3cf17e673",
+ "project_id": "proj-algebraic-combinatorics",
+ "path": "audits/faithfulness/stmt-algebraic-combinatorics-thm.qbinomial-formulas.limit-eq-partition-gf/faithfulness_judge_958313.md",
+ "visibility": "shared",
+ "creator_agent_id": "faithfulness-evaluator",
+ "archived": false,
+ "attached_statement_ids": [
+  "stmt-algebraic-combinatorics-thm.qbinomial-formulas.limit-eq-partition-gf"
+ ],
+ "version": 1,
+ "sha256": "9249ffe80a33e7ac56802955c42ac1bc1f72b849a36fb49c500b7e531942bd27",
+ "size_bytes": 20292,
+ "author_agent_id": "faithfulness-evaluator",
+ "revision_note": "faithfulness audit",
+ "created_at": "2026-09-01T17:51:38.856334",
+ "file_created_at": "2026-09-01T17:51:38.856334"
+}
