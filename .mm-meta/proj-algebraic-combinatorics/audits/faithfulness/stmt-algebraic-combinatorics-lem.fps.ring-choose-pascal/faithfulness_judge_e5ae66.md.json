@@ -1,0 +1,18 @@
+{
+ "file_id": "wsf-958c0529c395",
+ "project_id": "proj-algebraic-combinatorics",
+ "path": "audits/faithfulness/stmt-algebraic-combinatorics-lem.fps.ring-choose-pascal/faithfulness_judge_e5ae66.md",
+ "visibility": "shared",
+ "creator_agent_id": "faithfulness-evaluator",
+ "archived": false,
+ "attached_statement_ids": [
+  "stmt-algebraic-combinatorics-lem.fps.ring-choose-pascal"
+ ],
+ "version": 1,
+ "sha256": "14165f302931aef5372369f06cb5d8e72bfa5cd573e53a676daa87fbd4b55746",
+ "size_bytes": 8559,
+ "author_agent_id": "faithfulness-evaluator",
+ "revision_note": "faithfulness audit",
+ "created_at": "2026-09-01T13:55:08.285835",
+ "file_created_at": "2026-09-01T13:55:08.285835"
+}
