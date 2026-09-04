@@ -14,72 +14,21 @@
     "stmt-algebraic-combinatorics-prop.binom.nhs"
   ],
   "agent_evaluations": {},
-  "one_shot_evaluations": {
-    "stmt-algebraic-combinatorics-lem.sf.skew-schur-zero-sb": {
-      "path": "audits/faithfulness/stmt-algebraic-combinatorics-lem.sf.skew-schur-zero-sb/faithfulness_judge_4d3a29.md",
-      "faithful": false,
-      "targets": {
-        "AlgebraicCombinatorics.SymmetricFunctions.SchurBasics": [
-          "skewSchurPoly_zero"
-        ]
-      },
-      "verdict": "minor_discrepancy",
-      "discrepancies": [
-        {
-          "root": "[inst : NeZero N]",
-          "severity": "minor",
-          "bridge": "The formal theorem covers every positive N. The informal statement does not exclude N = 0. That omitted boundary case is routine: there is a unique 0-partition, its Young diagram and the skew diagram over the zero partition are empty, each has exactly the empty tableau, and both defining sums therefore give the same constant monomial (indeed 1)."
-        }
-      ],
-      "justification": "The blueprint says, \u201cFor any N-partition \u03bb, we have s_{\u03bb/0} = s_\u03bb,\u201d without requiring N \u2260 0. The elaborated signature instead begins `\u2200 {N : \u2115} [inst : NeZero N]`, and both `skewSchurPoly` and `schurPoly` inherit this restriction. Thus N = 0 is not certified by the target, although it is an immediate empty-diagram boundary case. For nonzero N, the bodies match the blueprint: `skewSchurPoly lam 0` sums tableau monomials over `skewYoungDiagram lam 0 = lam.youngDiagram \\ 0.youngDiagram`, while `schurPoly lam` sums the corresponding monomials over `lam.youngDiagram`."
-    },
-    "stmt-algebraic-combinatorics-lem.pars.partscount-split": {
-      "path": "audits/faithfulness/stmt-algebraic-combinatorics-lem.pars.partscount-split/faithfulness_judge_06cf18.md",
-      "faithful": false,
-      "targets": {
-        "AlgebraicCombinatorics.Partitions.Basics": [
-          "Nat.Partition.partsCount_split"
-        ]
-      },
-      "verdict": "minor_discrepancy",
-      "discrepancies": [
-        {
-          "root": "{k n : \u2115} on Nat.Partition.partsCount_split",
-          "severity": "minor",
-          "bridge": "Extend the result from natural n to the blueprint's integer n. For n \u2265 0, identify n with its corresponding natural number and apply the formal theorem. For n < 0, no finite tuple of positive integers can have size n, so the set of partitions, and both subclasses according to whether they contain 1, are empty; hence the claimed equality is 0 = 0."
-        }
-      ],
-      "justification": "The blueprint definition fixes the domain as \u201cLet n\u2208\u2124 and k\u2208\u2115\u201d and defines p_k(n) for those inputs, whereas the elaborated theorem quantifies only \u201c\u2200 {k n : \u2115}\u201d. Thus the formal theorem does not directly cover negative integers. This is only a routine boundary extension because negative integers admit no partitions under the blueprint\u2019s definition. For natural n, unfolding the project definitions gives exactly the asserted split: `partsCount` counts `{p | p.parts.card = k}`, while `partsWithOne` and `partsWithoutOne` count the complementary conditions `p.parts.card = k \u2227 1 \u2208 p.parts` and `p.parts.card = k \u2227 \u00ac(1 \u2208 p.parts)`."
-    },
-    "stmt-algebraic-combinatorics-def.fps.geometric-series": {
-      "path": "audits/faithfulness/stmt-algebraic-combinatorics-def.fps.geometric-series/faithfulness_judge_dcb360.md",
-      "faithful": true,
-      "targets": {
-        "AlgebraicCombinatorics.FPS.Substitution": [
-          "AlgebraicCombinatorics.geometricSeries"
-        ]
-      },
-      "verdict": "faithful",
-      "discrepancies": [],
-      "justification": "The target body `fun {K} [Field K] => (1 - PowerSeries.X)\u207b\u00b9` directly matches the blueprint\u2019s definition \u201cthe geometric series is the FPS \u2026 `(1-x)^{-1} \u2208 K[[x]]` (where `K` is a field).\u201d The binder `{K : Type u_2} \u2192 [Field K]` supplies exactly the stated coefficient setting, `PowerSeries K` represents formal power series over `K`, and `PowerSeries.X` is documented as the formal-power-series variable corresponding to the blueprint\u2019s `x = (0,1,0,\u2026)`."
-    },
-    "stmt-algebraic-combinatorics-prop.binom.nhs": {
-      "path": "audits/faithfulness/stmt-algebraic-combinatorics-prop.binom.nhs/faithfulness_judge_b4afd2.md",
-      "faithful": false,
-      "targets": {
-        "AlgebraicCombinatorics.SignedCounting.AlternatingSums": [
-          "AlgebraicCombinatorics.SignedCounting.negHockeyStick"
-        ]
-      },
-      "verdict": "significant_divergence",
-      "discrepancies": [
-        {
-          "root": "`(n m : \u2115), 0 < n` on `negHockeyStick`",
-          "severity": "significant",
-          "bridge": "To recover the statement for every `n \u2208 \u2102`, one must first identify the casts of `Nat.choose` with the blueprint's falling-factorial binomial coefficients at positive integral values, then regard both sides as complex polynomials in `n` and apply the polynomial identity principle using the infinitely many positive-natural cases. This extension is not asserted by the formal theorem and requires a substantive additional argument."
-        }
-      ],
-      "justification": "The blueprint quantifies \u201cLet `n \u2208 \u2102` and `m \u2208 \u2115`,\u201d whereas the elaborated theorem quantifies only `\u2200 (n m : \u2115), 0 < n \u2192 ...`. Thus it proves the identity only at positive natural values of `n`, with integer-valued casts of `Nat.choose`, rather than for arbitrary complex `n` using the blueprint definition `n(n-1)\u22ef(n-k+1)/k!`. The stated polynomial-identity bridge may make the restricted theorem useful as a proof ingredient, but it is not part of what this declaration certifies."
+  "one_shot_evaluations": {},
+  "no_verdict": {
+    "one_shot": [
+      "stmt-algebraic-combinatorics-lem.sf.skew-schur-zero-sb",
+      "stmt-algebraic-combinatorics-lem.pars.partscount-split",
+      "stmt-algebraic-combinatorics-def.fps.geometric-series",
+      "stmt-algebraic-combinatorics-prop.binom.nhs"
+    ]
+  },
+  "errors": {
+    "one_shot": {
+      "stmt-algebraic-combinatorics-lem.sf.skew-schur-zero-sb": "APIError: Get statement closure failed (HTTP 404): closure query produced no target records for ['skewSchurPoly_zero'] (0 info messages, 1 errors)",
+      "stmt-algebraic-combinatorics-lem.pars.partscount-split": "APIError: Get statement closure failed (HTTP 404): closure query produced no target records for ['Nat.Partition.partsCount_split'] (0 info messages, 1 errors)",
+      "stmt-algebraic-combinatorics-def.fps.geometric-series": "APIError: Get statement closure failed (HTTP 404): closure query produced no target records for ['AlgebraicCombinatorics.geometricSeries'] (0 info messages, 1 errors)",
+      "stmt-algebraic-combinatorics-prop.binom.nhs": "APIError: Get statement closure failed (HTTP 404): closure query produced no target records for ['AlgebraicCombinatorics.SignedCounting.negHockeyStick'] (0 info messages, 1 errors)"
     }
   }
 }

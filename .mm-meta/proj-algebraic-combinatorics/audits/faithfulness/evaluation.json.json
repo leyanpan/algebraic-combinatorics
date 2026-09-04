@@ -11,11 +11,11 @@
   "stmt-algebraic-combinatorics-lem.sf.skew-schur-zero-sb",
   "stmt-algebraic-combinatorics-prop.binom.nhs"
  ],
- "version": 11,
- "sha256": "e17d23ba36e256087cfc0153d95027abceddf814dc77c5ade40492c05d4c5281",
- "size_bytes": 6156,
+ "version": 12,
+ "sha256": "91660808b7f271724681f128d2a7036c89a4fb133ec147c90ee76943185e7d58",
+ "size_bytes": 1691,
  "author_agent_id": "faithfulness-evaluator",
  "revision_note": "faithfulness arm evaluation",
- "created_at": "2026-09-04T02:30:44.240388",
+ "created_at": "2026-09-04T04:11:38.989627",
  "file_created_at": "2026-09-01T10:22:57.342269"
 }
