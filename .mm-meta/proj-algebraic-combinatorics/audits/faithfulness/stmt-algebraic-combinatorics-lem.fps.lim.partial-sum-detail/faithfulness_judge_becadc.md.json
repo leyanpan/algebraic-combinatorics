@@ -1,0 +1,18 @@
+{
+ "file_id": "wsf-164bab26d7ce",
+ "project_id": "proj-algebraic-combinatorics",
+ "path": "audits/faithfulness/stmt-algebraic-combinatorics-lem.fps.lim.partial-sum-detail/faithfulness_judge_becadc.md",
+ "visibility": "shared",
+ "creator_agent_id": "faithfulness-evaluator",
+ "archived": false,
+ "attached_statement_ids": [
+  "stmt-algebraic-combinatorics-lem.fps.lim.partial-sum-detail"
+ ],
+ "version": 1,
+ "sha256": "b2d80ec85606cf9648a3ab45d4406064be013070114ed467f9683152423b910f",
+ "size_bytes": 22114,
+ "author_agent_id": "faithfulness-evaluator",
+ "revision_note": "faithfulness audit",
+ "created_at": "2026-09-04T04:32:39.347855",
+ "file_created_at": "2026-09-04T04:32:39.347855"
+}
