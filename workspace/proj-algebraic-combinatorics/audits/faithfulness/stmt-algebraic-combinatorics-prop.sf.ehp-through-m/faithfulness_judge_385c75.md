@@ -1,0 +1,1012 @@
+## TARGET AlgebraicCombinatorics.SymmetricFunctions.power_sum_eq_monomialSymm (theorem) — ELABORATED SIGNATURE
+∀ {R : Type u_1} [inst : CommSemiring R] {N : ℕ} [DecidableEq (Fin N)] (n : ℕ),
+  n ≠ 0 →
+    ∀ (hN : 0 < N),
+      MvPolynomial.psum (Fin N) R n =
+        AlgebraicCombinatorics.SymmetricFunctions.monomialSymm
+          (AlgebraicCombinatorics.SymmetricFunctions.singletonPartition n hN)
+
+Docstring: p_n = m_{(n,0,0,...,0)} when N > 0 and n > 0.
+(Proposition prop.sf.ehp-through-m (c))
+
+**Important**: This theorem requires `n > 0`. The case `n = 0` is FALSE when `N > 1`:
+- `psum 0 = ∑ i, X i ^ 0 = N` (the constant polynomial N)
+- `monomialSymm (singletonPartition 0 hN) = 1` (since the only tuple sorting to
+  (0,...,0) is the zero tuple, and `monomialExp (0,...,0) = 1`)
+
+The TeX source (MonomialSymmetric.tex, line 133) states "For each n ∈ ℕ, we have
+p_n = m_{(n,0,0,...,0)}" which is mathematically incorrect for n = 0 when N > 1.
+
+The proof uses the fact that psum n = ∑ i, X i ^ n, and each term X i ^ n
+corresponds to the tuple (0,...,0,n,0,...,0) with n at position i.
+All N such tuples sort to the same N-partition (n, 0, 0, ..., 0).
+
+When n > 0, the sortPreimage of (n, 0, ..., 0) consists exactly of the N single
+tuples (0,...,0,n,0,...,0), giving the bijection needed for the proof.
+
+Label: prop.sf.ehp-through-m.c 
+
+## TARGET AlgebraicCombinatorics.SymmetricFunctions.elem_symm_eq_monomialSymm (theorem) — ELABORATED SIGNATURE
+∀ {R : Type u_1} [inst : CommSemiring R] {N : ℕ} [DecidableEq (Fin N)] (n : ℕ) (hn : n ≤ N),
+  MvPolynomial.esymm (Fin N) R n =
+    AlgebraicCombinatorics.SymmetricFunctions.monomialSymm
+      (AlgebraicCombinatorics.SymmetricFunctions.onesThenZeros n hn)
+
+Docstring: e_n = m_{(1,1,...,1,0,0,...,0)} where there are n ones.
+(Proposition prop.sf.ehp-through-m (a))
+
+The proof uses the fact that esymm n is the sum over n-element subsets S of ∏_{i∈S} X_i,
+and each such product equals X^{χ_S} where χ_S is the indicator function of S.
+All indicator functions of n-element subsets sort to the same N-partition (1,...,1,0,...,0).
+
+Label: prop.sf.ehp-through-m.a 
+
+## TARGET AlgebraicCombinatorics.SymmetricFunctions.homog_symm_eq_sum_monomialSymm (theorem) — ELABORATED SIGNATURE
+∀ {R : Type u_1} [inst : CommSemiring R] {N : ℕ} [inst_1 : DecidableEq (Fin N)] (n : ℕ),
+  MvPolynomial.hsymm (Fin N) R n =
+    ∑ mu ∈ AlgebraicCombinatorics.SymmetricFunctions.NPartitionsOfSize n,
+      AlgebraicCombinatorics.SymmetricFunctions.monomialSymm mu
+
+Docstring: h_n = ∑_{|μ| = n} m_μ where the sum is over N-partitions of size n.
+(Proposition prop.sf.ehp-through-m (b))
+
+The proof uses the bijection between Sym (Fin N) n and tuples f : Fin N → ℕ with ∑ f = n,
+given by the count function. Each term (s.1.map X).prod = ∏ i, X i ^ (count i s)
+corresponds to a monomial X^f. Sorting partitions these tuples by their N-partition,
+so hsymm n = ∑_{|μ| = n} m_μ.
+
+Label: prop.sf.ehp-through-m.b 
+
+## PROJECT DEPENDENCY AlgebraicCombinatorics.SymmetricFunctions.monomialSymm (def)
+{R : Type u_1} →
+  [inst : CommSemiring R] → {N : ℕ} → AlgebraicCombinatorics.SymmetricFunctions.NPartition N → MvPolynomial (Fin N) R
+
+Body:
+fun {R} [CommSemiring R] {N} mu =>
+  ∑ a ∈ AlgebraicCombinatorics.SymmetricFunctions.sortPreimage mu,
+    AlgebraicCombinatorics.SymmetricFunctions.monomialExp a
+
+Docstring: The monomial symmetric polynomial m_μ corresponding to an N-partition μ.
+(Definition def.sf.m)
+
+m_μ = ∑_{a ∈ ℕ^N : sort(a) = μ} x^a
+
+This is the sum of all monomials whose exponent tuple sorts to μ. 
+
+## PROJECT DEPENDENCY AlgebraicCombinatorics.SymmetricFunctions.singletonPartition (def)
+{N : ℕ} → ℕ → 0 < N → AlgebraicCombinatorics.SymmetricFunctions.NPartition N
+
+Body:
+fun {N} n _hN => { parts := fun i => if ↑i = 0 then n else 0, antitone := ⋯ }
+
+Docstring: The N-partition (n, 0, 0, ..., 0) with n in the first position and zeros elsewhere. 
+
+## PROJECT DEPENDENCY AlgebraicCombinatorics.SymmetricFunctions.onesThenZeros (def)
+{N : ℕ} → (n : ℕ) → n ≤ N → AlgebraicCombinatorics.SymmetricFunctions.NPartition N
+
+Body:
+fun {N} n _hn => { parts := fun i => if ↑i < n then 1 else 0, antitone := ⋯ }
+
+Docstring: The N-partition (1, 1, ..., 1, 0, 0, ..., 0) with n ones and N-n zeros. 
+
+## PROJECT DEPENDENCY AlgebraicCombinatorics.SymmetricFunctions.NPartition (def)
+ℕ → Type
+
+Body:
+fun N => NPartition N
+
+Docstring: Alias for the canonical `NPartition` type within this namespace.
+An N-partition is a weakly decreasing N-tuple of nonnegative integers.
+(Definition def.sf.Npar)
+
+This is represented as a function `Fin N → ℕ` that is antitone
+(i.e., `i ≤ j → parts j ≤ parts i`).
+
+All basic operations (`size`, `length`, `zero`, etc.) and lemmas are inherited
+from the canonical `_root_.NPartition` definition in `NPartition.lean`. 
+
+## PROJECT DEPENDENCY AlgebraicCombinatorics.SymmetricFunctions.NPartitionsOfSize (def)
+{N : ℕ} → ℕ → Finset (AlgebraicCombinatorics.SymmetricFunctions.NPartition N)
+
+Body:
+fun {N} n =>
+  {mu ∈
+      Finset.image (fun f => AlgebraicCombinatorics.SymmetricFunctions.sortTuple f)
+        (Fintype.piFinset fun x => Finset.range (n + 1)) |
+    NPartition.size mu = n}
+
+Docstring: The set of N-partitions of a given size, as a finite set.
+This is finite because each entry is bounded by the size. 
+
+## PROJECT DEPENDENCY AlgebraicCombinatorics.SymmetricFunctions.sortPreimage (def)
+{N : ℕ} → AlgebraicCombinatorics.SymmetricFunctions.NPartition N → Finset (Fin N → ℕ)
+
+Body:
+fun {N} mu =>
+  {a ∈ Fintype.piFinset fun x => Finset.range (NPartition.size mu + 1) |
+    AlgebraicCombinatorics.SymmetricFunctions.sortTuple a = mu}
+
+Docstring: The set of tuples a ∈ ℕ^N with sort(a) = μ and entries bounded by μ.size.
+This is a finite set since entries are bounded. 
+
+## PROJECT DEPENDENCY AlgebraicCombinatorics.SymmetricFunctions.monomialExp (def)
+{R : Type u_1} → [inst : CommSemiring R] → {N : ℕ} → (Fin N → ℕ) → MvPolynomial (Fin N) R
+
+Body:
+fun {R} [CommSemiring R] {N} a => ∏ i, MvPolynomial.X i ^ a i
+
+Docstring: The monomial x^a = x₁^{a₁} x₂^{a₂} ⋯ x_N^{a_N} for a tuple a ∈ ℕ^N.
+(Definition def.sf.sort (a)) 
+
+## PROJECT DEPENDENCY NPartition.mk (constructor)
+{N : ℕ} → (parts : Fin N → ℕ) → Antitone parts → NPartition N
+
+## PROJECT DEPENDENCY NPartition (inductive)
+ℕ → Type
+
+Body:
+NPartition.mk : {N : ℕ} → (parts : Fin N → ℕ) → Antitone parts → NPartition N
+
+Docstring: An N-partition is a weakly decreasing N-tuple of nonnegative integers.
+(Definition def.sf.Npar)
+
+This is represented as a function `Fin N → ℕ` that is antitone
+(i.e., `i ≤ j → parts j ≤ parts i`).
+
+The field is named `antitone` to match Mathlib conventions. 
+
+## PROJECT DEPENDENCY NPartition.size (def)
+{N : ℕ} → NPartition N → ℕ
+
+Body:
+fun {N} μ => ∑ i, μ.parts i
+
+Docstring: The size (or weight) of an N-partition is the sum of its entries.
+If μ = (μ₁, μ₂, ..., μ_N), then |μ| = μ₁ + μ₂ + ... + μ_N. 
+
+## PROJECT DEPENDENCY NPartition.instDecidableEq (def)
+{N : ℕ} → DecidableEq (NPartition N)
+
+Body:
+fun {N} μ ν => decidable_of_iff (μ.parts = ν.parts) ⋯
+
+Docstring: Decidable equality for N-partitions. 
+
+## PROJECT DEPENDENCY AlgebraicCombinatorics.SymmetricFunctions.sortTuple (def)
+{N : ℕ} → (Fin N → ℕ) → AlgebraicCombinatorics.SymmetricFunctions.NPartition N
+
+Body:
+fun {N} a =>
+  {
+    parts := fun i =>
+      have sorted := (Multiset.map a Finset.univ.val).sort fun x1 x2 => x1 ≥ x2;
+      if h : ↑i < sorted.length then sorted.get ⟨↑i, h⟩ else 0,
+    antitone := ⋯ }
+
+Docstring: Sort a tuple in weakly decreasing order to get an N-partition.
+(Definition def.sf.sort (b)) 
+
+## PROJECT DEPENDENCY NPartition.parts (def)
+{N : ℕ} → NPartition N → Fin N → ℕ
+
+Body:
+fun N self => self.1
+
+Docstring: The entries of the N-partition as a function from `Fin N` to `ℕ` 
+
+## BASE-LIBRARY REF CommSemiring
+Type u → Type u
+
+Docstring: A commutative semiring is a semiring with commutative multiplication. 
+
+## BASE-LIBRARY REF Fin
+ℕ → Type
+
+Docstring: Natural numbers less than some upper bound.
+
+In particular, a `Fin n` is a natural number `i` with the constraint that `i < n`. It is the
+canonical type with `n` elements.
+
+
+## BASE-LIBRARY REF Nat.lt
+ℕ → ℕ → Prop
+
+Body:
+fun n m => n.succ.le m
+
+Docstring: Strict inequality of natural numbers, usually accessed via the `<` operator.
+
+It is defined as `n < m = n + 1 ≤ m`.
+
+
+## BASE-LIBRARY REF MvPolynomial
+Type u_1 → (R : Type u_2) → [CommSemiring R] → Type (max u_2 u_1)
+
+Body:
+fun σ R [CommSemiring R] => AddMonoidAlgebra R (σ →₀ ℕ)
+
+Docstring: Multivariate polynomial, where `σ` is the index set of the variables and
+`R` is the coefficient ring 
+
+## BASE-LIBRARY REF MvPolynomial.psum
+(σ : Type u_5) → (R : Type u_6) → [inst : CommSemiring R] → [Fintype σ] → ℕ → MvPolynomial σ R
+
+Body:
+fun σ R [CommSemiring R] [Fintype σ] n => ∑ i, MvPolynomial.X i ^ n
+
+Docstring: The degree-`n` power sum symmetric `MvPolynomial σ R`.
+It is the sum over all the `n`-th powers of the variables. 
+
+## BASE-LIBRARY REF Fin.fintype
+(n : ℕ) → Fintype (Fin n)
+
+Body:
+fun n => { elems := { val := ↑(List.finRange n), nodup := ⋯ }, complete := ⋯ }
+
+## BASE-LIBRARY REF Multiset.ofList
+{α : Type u_1} → List α → Multiset α
+
+Body:
+fun {α} => Quot.mk ⇑(List.isSetoid α)
+
+Docstring: The quotient map from `List α` to `Multiset α`. 
+
+## BASE-LIBRARY REF List.finRange
+(n : ℕ) → List (Fin n)
+
+Body:
+fun n => List.ofFn fun i => i
+
+Docstring: Lists all elements of `Fin n` in order, starting at `0`.
+
+Examples:
+* `List.finRange 0 = ([] : List (Fin 0))`
+* `List.finRange 2 = ([0, 1] : List (Fin 2))`
+
+
+## BASE-LIBRARY REF List.nodup_finRange
+∀ (n : ℕ), (List.finRange n).Nodup
+
+## BASE-LIBRARY REF List.mem_finRange
+∀ {n : ℕ} (x : Fin n), x ∈ List.finRange n
+
+## BASE-LIBRARY REF Nat.le
+ℕ → ℕ → Prop
+
+Docstring: Non-strict, or weak, inequality of natural numbers, usually accessed via the `≤` operator.
+
+
+## BASE-LIBRARY REF MvPolynomial.esymm
+(σ : Type u_5) → (R : Type u_6) → [inst : CommSemiring R] → [Fintype σ] → ℕ → MvPolynomial σ R
+
+Body:
+fun σ R [CommSemiring R] [Fintype σ] n => ∑ t ∈ Finset.powersetCard n Finset.univ, ∏ i ∈ t, MvPolynomial.X i
+
+Docstring: The `n`th elementary symmetric `MvPolynomial σ R`.
+It is the sum over all the degree n squarefree monomials in `MvPolynomial σ R`. 
+
+## BASE-LIBRARY REF MvPolynomial.hsymm
+(σ : Type u_5) → (R : Type u_6) → [inst : CommSemiring R] → [Fintype σ] → [DecidableEq σ] → ℕ → MvPolynomial σ R
+
+Body:
+fun σ R [CommSemiring R] [Fintype σ] [DecidableEq σ] n => ∑ s, (Multiset.map MvPolynomial.X ↑s).prod
+
+Docstring: The `n`th complete homogeneous symmetric `MvPolynomial σ R`.
+It is the sum over all the degree n monomials in `MvPolynomial σ R`. 
+
+## BASE-LIBRARY REF Finset.sum
+{ι : Type u_1} → {M : Type u_3} → [AddCommMonoid M] → Finset ι → (ι → M) → M
+
+Body:
+fun {ι} {M} [AddCommMonoid M] s f => (Multiset.map f s.val).sum
+
+Docstring: `∑ x ∈ s, f x` is the sum of `f x` as `x` ranges over the elements
+of the finite set `s`.
+
+When the index type is a `Fintype`, the notation `∑ x, f x`, is a shorthand for
+`∑ x ∈ Finset.univ, f x`. 
+
+## BASE-LIBRARY REF NonUnitalNonAssocSemiring
+Type u → Type u
+
+Docstring: A not-necessarily-unital, not-necessarily-associative semiring. See `CommutatorRing` and the
+documentation thereof in case you need a `NonUnitalNonAssocSemiring` instance on a Lie ring
+or a Lie algebra. 
+
+## BASE-LIBRARY REF NonAssocSemiring
+Type u → Type u
+
+Docstring: A unital but not-necessarily-associative semiring. 
+
+## BASE-LIBRARY REF Semiring
+Type u → Type u
+
+Docstring: A `Semiring` is a type with addition, multiplication, a `0` and a `1` where addition is
+commutative and associative, multiplication is associative and left and right distributive over
+addition, and `0` and `1` are additive and multiplicative identities. 
+
+## BASE-LIBRARY REF Semiring.one_mul
+∀ {α : Type u} [self : Semiring α] (a : α), 1 * a = a
+
+Docstring: One is a left neutral element for multiplication 
+
+## BASE-LIBRARY REF Semiring.mul_one
+∀ {α : Type u} [self : Semiring α] (a : α), a * 1 = a
+
+Docstring: One is a right neutral element for multiplication 
+
+## BASE-LIBRARY REF MvPolynomial.commSemiring
+{R : Type u} → {σ : Type u_1} → [inst : CommSemiring R] → CommSemiring (MvPolynomial σ R)
+
+Body:
+fun {R} {σ} [CommSemiring R] => AddMonoidAlgebra.commSemiring
+
+## BASE-LIBRARY REF AddMonoidAlgebra.commSemiring
+{R : Type u_1} → {M : Type u_4} → [inst : CommSemiring R] → [AddCommMonoid M] → CommSemiring (AddMonoidAlgebra R M)
+
+Body:
+fun {R} {M} [CommSemiring R] [AddCommMonoid M] => { toSemiring := AddMonoidAlgebra.semiring, mul_comm := ⋯ }
+
+## BASE-LIBRARY REF Finsupp
+Type u_9 → (M : Type u_10) → [Zero M] → Type (max u_10 u_9)
+
+Docstring: `Finsupp α M`, denoted `α →₀ M`, is the type of functions `f : α → M` such that
+`f x = 0` for all but finitely many `x`. 
+
+## BASE-LIBRARY REF Nat.instMulZeroClass
+MulZeroClass ℕ
+
+Body:
+{ toMul := instMulNat, toZero := Nat.instAddMonoid.toAddZeroClass.toZero, zero_mul := Nat.zero_mul,
+  mul_zero := Nat.mul_zero }
+
+## BASE-LIBRARY REF Finsupp.instAddCommMonoid
+{ι : Type u_1} → {M : Type u_3} → [inst : AddCommMonoid M] → AddCommMonoid (ι →₀ M)
+
+Body:
+fun {ι} {M} [AddCommMonoid M] => { toAddMonoid := Finsupp.instAddMonoid, add_comm := ⋯ }
+
+## BASE-LIBRARY REF Nat.instAddCommMonoid
+AddCommMonoid ℕ
+
+Body:
+inferInstance
+
+## BASE-LIBRARY REF ite
+{α : Sort u} → (c : Prop) → [h : Decidable c] → α → α → α
+
+Body:
+fun {α} c [h : Decidable c] t e => Decidable.casesOn h (fun x => e) fun x => t
+
+Docstring: `if c then t else e` is notation for `ite c t e`, "if-then-else", which decides to
+return `t` or `e` depending on whether `c` is true or false. The explicit argument
+`c : Prop` does not have any actual computational content, but there is an additional
+`[Decidable c]` argument synthesized by typeclass inference which actually
+determines how to evaluate `c` to true or false. Write `if h : c then t else e`
+instead for a "dependent if-then-else" `dite`, which allows `t`/`e` to use the fact
+that `c` is true/false.
+
+
+## BASE-LIBRARY REF Fin.val
+{n : ℕ} → Fin n → ℕ
+
+Body:
+fun n self => self.1
+
+Docstring: The number that is strictly less than `n`.
+
+`Fin.val` is a coercion, so any `Fin n` can be used in a position where a `Nat` is expected.
+
+
+## BASE-LIBRARY REF Nat.decEq
+(n m : ℕ) → Decidable (n = m)
+
+Body:
+fun n m =>
+  match h : n.beq m with
+  | true => isTrue ⋯
+  | false => isFalse ⋯
+
+Docstring: A decision procedure for equality of natural numbers, usually accessed via the `DecidableEq Nat`
+instance.
+
+This function is overridden in both the kernel and the compiler to efficiently evaluate using the
+arbitrary-precision arithmetic library. The definition provided here is the logical model.
+
+Examples:
+ * `Nat.decEq 5 5 = isTrue rfl`
+ * `(if 3 = 4 then "yes" else "no") = "no"`
+ * `show 12 = 12 by decide`
+
+
+## BASE-LIBRARY REF Nat.decLt
+(n m : ℕ) → Decidable (n < m)
+
+Body:
+fun n m => n.succ.decLe m
+
+Docstring: A decision procedure for strict inequality of natural numbers, usually accessed via the
+`DecidableLT Nat` instance.
+
+Examples:
+ * `(if 3 < 4 then "yes" else "no") = "yes"`
+ * `(if 4 < 4 then "yes" else "no") = "no"`
+ * `(if 6 < 4 then "yes" else "no") = "no"`
+ * `show 5 < 12 by decide`
+
+
+## BASE-LIBRARY REF Finset
+Type u_4 → Type u_4
+
+Docstring: `Finset α` is the type of finite sets of elements of `α`. It is implemented
+as a multiset (a list up to permutation) which has no duplicate elements. 
+
+## BASE-LIBRARY REF Finset.filter
+{α : Type u_1} → (p : α → Prop) → [DecidablePred p] → Finset α → Finset α
+
+Body:
+fun {α} p [DecidablePred p] s => { val := Multiset.filter p s.val, nodup := ⋯ }
+
+Docstring: `Finset.filter p s` is the set of elements of `s` that satisfy `p`.
+
+For example, one can use `s.filter (· ∈ t)` to get the intersection of `s` with `t : Set α`
+as a `Finset α` (when a `DecidablePred (· ∈ t)` instance is available). 
+
+## BASE-LIBRARY REF Finset.image
+{α : Type u_1} → {β : Type u_2} → [DecidableEq β] → (α → β) → Finset α → Finset β
+
+Body:
+fun {α} {β} [DecidableEq β] f s => (Multiset.map f s.val).toFinset
+
+Docstring: `image f s` is the forward image of `s` under `f`. 
+
+## BASE-LIBRARY REF Fintype.piFinset
+{α : Type u_1} → [DecidableEq α] → [Fintype α] → {δ : α → Type u_4} → ((a : α) → Finset (δ a)) → Finset ((a : α) → δ a)
+
+Body:
+fun {α} [DecidableEq α] [Fintype α] {δ} t => Finset.map { toFun := fun f a => f a ⋯, inj' := ⋯ } (Finset.univ.pi t)
+
+Docstring: Given for all `a : α` a finset `t a` of `δ a`, then one can define the
+finset `Fintype.piFinset t` of all functions taking values in `t a` for all `a`. This is the
+analogue of `Finset.pi` where the base finset is `univ` (but formally they are not the same, as
+there is an additional condition `i ∈ Finset.univ` in the `Finset.pi` definition). 
+
+## BASE-LIBRARY REF instDecidableEqFin.match_1
+(n : ℕ) →
+  (i j : Fin n) →
+    (motive : Decidable (↑i = ↑j) → Sort u_1) →
+      (x : Decidable (↑i = ↑j)) → ((h : ↑i = ↑j) → motive (isTrue h)) → ((h : ¬↑i = ↑j) → motive (isFalse h)) → motive x
+
+Body:
+fun n i j motive x h_1 h_2 => Decidable.casesOn x (fun h => h_2 h) fun h => h_1 h
+
+## BASE-LIBRARY REF decEq
+{α : Sort u} → [inst : DecidableEq α] → (a b : α) → Decidable (a = b)
+
+Body:
+fun {α} [inst : DecidableEq α] a b => inst a b
+
+Docstring: Checks whether two terms of a type are equal using the type's `DecidableEq` instance.
+
+
+## BASE-LIBRARY REF Decidable.isTrue
+{p : Prop} → p → Decidable p
+
+Docstring: Proves that `p` is decidable by supplying a proof of `p` 
+
+## BASE-LIBRARY REF Fin.eq_of_val_eq
+∀ {n : ℕ} {i j : Fin n}, ↑i = ↑j → i = j
+
+## BASE-LIBRARY REF Decidable.isFalse
+{p : Prop} → ¬p → Decidable p
+
+Docstring: Proves that `p` is decidable by supplying a proof of `¬p` 
+
+## BASE-LIBRARY REF instDecidableEqFin._proof_1
+∀ (n : ℕ) (i j : Fin n), ¬↑i = ↑j → i = j → False
+
+## BASE-LIBRARY REF Finset.range
+ℕ → Finset ℕ
+
+Body:
+fun n => { val := Multiset.range n, nodup := ⋯ }
+
+Docstring: `range n` is the set of natural numbers less than `n`. 
+
+## BASE-LIBRARY REF Add
+Type u → Type u
+
+Docstring: The homogeneous version of `HAdd`: `a + b : α` where `a b : α`. 
+
+## BASE-LIBRARY REF Add.add
+{α : Type u} → [self : Add α] → α → α → α
+
+Body:
+fun α [self : Add α] => self.1
+
+Docstring: `a + b` computes the sum of `a` and `b`. See `HAdd`. 
+
+## BASE-LIBRARY REF Nat.add
+ℕ → ℕ → ℕ
+
+Body:
+fun x x_1 =>
+  Nat.brecOn (motive := fun x => ℕ → ℕ) x_1
+    (fun x f x_2 =>
+      (match (motive := ℕ → (x : ℕ) → Nat.below (motive := fun x => ℕ → ℕ) x → ℕ) x_2, x with
+        | a, Nat.zero => fun x => a
+        | a, b.succ => fun x => (x.1 a).succ)
+        f)
+    x
+
+Docstring: Addition of natural numbers, typically used via the `+` operator.
+
+This function is overridden in both the kernel and the compiler to efficiently evaluate using the
+arbitrary-precision arithmetic library. The definition provided here is the logical model.
+
+
+## BASE-LIBRARY REF Finset.prod
+{ι : Type u_1} → {M : Type u_3} → [CommMonoid M] → Finset ι → (ι → M) → M
+
+Body:
+fun {ι} {M} [CommMonoid M] s f => (Multiset.map f s.val).prod
+
+Docstring: `∏ x ∈ s, f x` is the product of `f x` as `x` ranges over the elements of the finite set `s`.
+
+When the index type is a `Fintype`, the notation `∏ x, f x`, is a shorthand for
+`∏ x ∈ Finset.univ, f x`. 
+
+## BASE-LIBRARY REF NonUnitalSemiring.mul_assoc
+∀ {α : Type u} [self : NonUnitalSemiring α] (a b c : α), a * b * c = a * (b * c)
+
+Docstring: Multiplication is associative 
+
+## BASE-LIBRARY REF CommSemiring.mul_comm
+∀ {R : Type u} [self : CommSemiring R] (a b : R), a * b = b * a
+
+Docstring: Multiplication is commutative in a commutative multiplicative magma. 
+
+## BASE-LIBRARY REF Finset.univ
+{α : Type u_1} → [Fintype α] → Finset α
+
+Body:
+fun {α} [Fintype α] => Fintype.elems
+
+Docstring: `univ` is the universal finite set of type `Finset α` implied from
+the assumption `Fintype α`. 
+
+## BASE-LIBRARY REF Pow
+Type u → Type v → Type (max u v)
+
+Docstring: The homogeneous version of `HPow`: `a ^ b : α` where `a : α`, `b : β`.
+(The right argument is not the same as the left since we often want this even
+in the homogeneous case.)
+
+Types can choose to subscribe to particular defaulting behavior by providing
+an instance to either `NatPow` or `HomogeneousPow`:
+- `NatPow` is for types whose exponents is preferentially a `Nat`.
+- `HomogeneousPow` is for types whose base and exponent are preferentially the same.
+
+
+## BASE-LIBRARY REF Pow.pow
+{α : Type u} → {β : Type v} → [self : Pow α β] → α → β → α
+
+Body:
+fun α β [self : Pow α β] => self.1
+
+Docstring: `a ^ b` computes `a` to the power of `b`. See `HPow`. 
+
+## BASE-LIBRARY REF Monoid
+Type u → Type u
+
+Docstring: A `Monoid` is a `Semigroup` with an element `1` such that `1 * a = a * 1 = a`. 
+
+## BASE-LIBRARY REF MonoidWithZero
+Type u → Type u
+
+Docstring: A type `M₀` is a “monoid with zero” if it is a monoid with zero element, and `0` is left
+and right absorbing. 
+
+## BASE-LIBRARY REF NonUnitalNonAssocSemiring.zero_mul
+∀ {α : Type u} [self : NonUnitalNonAssocSemiring α] (a : α), 0 * a = 0
+
+Docstring: Zero is a left absorbing element for multiplication 
+
+## BASE-LIBRARY REF NonUnitalNonAssocSemiring.mul_zero
+∀ {α : Type u} [self : NonUnitalNonAssocSemiring α] (a : α), a * 0 = 0
+
+Docstring: Zero is a right absorbing element for multiplication 
+
+## BASE-LIBRARY REF MvPolynomial.X
+{R : Type u} → {σ : Type u_1} → [inst : CommSemiring R] → σ → MvPolynomial σ R
+
+Body:
+fun {R} {σ} [CommSemiring R] n => (MvPolynomial.monomial fun₀ | n => 1) 1
+
+Docstring: `X n` is the degree `1` monomial $X_n$. 
+
+## BASE-LIBRARY REF Antitone
+{α : Type u} → {β : Type v} → [Preorder α] → [Preorder β] → (α → β) → Prop
+
+Body:
+fun {α} {β} [Preorder α] [Preorder β] f => ∀ ⦃a b : α⦄, a ≤ b → f b ≤ f a
+
+Docstring: A function `f` is antitone if `a ≤ b` implies `f b ≤ f a`. 
+
+## BASE-LIBRARY REF PartialOrder
+Type u_2 → Type u_2
+
+Docstring: A partial order is a reflexive, transitive, antisymmetric relation `≤`. 
+
+## BASE-LIBRARY REF Fin.instPartialOrder
+{n : ℕ} → PartialOrder (Fin n)
+
+Body:
+fun {n} => inferInstance
+
+## BASE-LIBRARY REF Fin.instLinearOrder
+{n : ℕ} → LinearOrder (Fin n)
+
+Body:
+fun {n} => Function.Injective.linearOrder Fin.val ⋯ ⋯ ⋯ ⋯ ⋯ ⋯
+
+## BASE-LIBRARY REF Nat.instPreorder
+Preorder ℕ
+
+Body:
+inferInstance
+
+## BASE-LIBRARY REF Preorder
+Type u_2 → Type u_2
+
+Docstring: A preorder is a reflexive, transitive relation `≤`.
+In a preorder, `a < b` means `a ≤ b ∧ ¬b ≤ a`, and `<` is defined this way by default.
+You can override this definition to set a better def-eq.
+
+
+## BASE-LIBRARY REF Nat.instLinearOrder
+LinearOrder ℕ
+
+Body:
+{ le := Nat.le, lt := Nat.lt, le_refl := Nat.le_refl, le_trans := @Nat.le_trans,
+  lt_iff_le_not_ge := @Nat.lt_iff_le_not_le, le_antisymm := @Nat.le_antisymm, toMin := instMinNat, toMax := Nat.instMax,
+  toOrd := instOrdNat, le_total := Nat.le_total, toDecidableLE := inferInstance, toDecidableEq := inferInstance,
+  toDecidableLT := inferInstance, min_def := Nat.instLinearOrder._proof_1, max_def := Nat.instLinearOrder._proof_2,
+  compare_eq_compareOfLessAndEq := Nat.instLinearOrder._proof_3 }
+
+## BASE-LIBRARY REF decidable_of_iff
+{b : Prop} → (a : Prop) → (a ↔ b) → [Decidable a] → Decidable b
+
+Body:
+fun {b} a h [Decidable a] => decidable_of_decidable_of_iff h
+
+Docstring: Transfer decidability of `a` to decidability of `b`, if the propositions are equivalent.
+**Important**: this function should be used instead of `rw` on `Decidable b`, because the
+kernel will get stuck reducing the usage of `propext` otherwise,
+and `decide` will not work. 
+
+## BASE-LIBRARY REF Fintype.decidablePiFintype
+{α : Type u_5} → {β : α → Type u_4} → [(a : α) → DecidableEq (β a)] → [Fintype α] → DecidableEq ((a : α) → β a)
+
+Body:
+fun {α} {β} [(a : α) → DecidableEq (β a)] [Fintype α] f g => decidable_of_iff (∀ a ∈ Finset.univ, f a = g a) ⋯
+
+## BASE-LIBRARY REF Fintype
+Type u_4 → Type u_4
+
+Docstring: `Fintype α` means that `α` is finite, i.e. there are only
+finitely many distinct elements of type `α`. The evidence of this
+is a finset `elems` (a list up to permutation without duplicates),
+together with a proof that everything of type `α` is in the list. 
+
+## BASE-LIBRARY REF Fintype.decidablePiFintype._proof_2
+∀ {α : Type u_1} {β : α → Type u_2} [inst : Fintype α] (f g : (a : α) → β a), (∀ a ∈ Finset.univ, f a = g a) ↔ f = g
+
+## BASE-LIBRARY REF Finset.decidableDforallFinset
+{α : Type u_1} →
+  {s : Finset α} →
+    {p : (a : α) → a ∈ s → Prop} →
+      [_hp : (a : α) → (h : a ∈ s) → Decidable (p a h)] → Decidable (∀ (a : α) (h : a ∈ s), p a h)
+
+Body:
+fun {α} {s} {p} [(a : α) → (h : a ∈ s) → Decidable (p a h)] => Multiset.decidableDforallMultiset
+
+## BASE-LIBRARY REF List
+Type u → Type u
+
+Docstring: Linked lists: ordered lists, in which each element has a reference to the next element.
+
+Most operations on linked lists take time proportional to the length of the list, because each
+element must be traversed to find the next element.
+
+`List α` is isomorphic to `Array α`, but they are useful for different things:
+* `List α` is easier for reasoning, and `Array α` is modeled as a wrapper around `List α`.
+* `List α` works well as a persistent data structure, when many copies of the tail are shared. When
+  the value is not shared, `Array α` will have better performance because it can do destructive
+  updates.
+
+
+## BASE-LIBRARY REF Multiset.sort
+{α : Type u_1} →
+  Multiset α →
+    (r : autoParam (α → α → Prop) Multiset.sort._auto_1) →
+      [DecidableRel r] → [IsTrans α r] → [Std.Antisymm r] → [Std.Total r] → List α
+
+Body:
+fun {α} s r [DecidableRel r] [IsTrans α r] [Std.Antisymm r] [Std.Total r] =>
+  Quot.liftOn s (fun x => x.mergeSort fun x1 x2 => decide (r x1 x2)) ⋯
+
+Docstring: `sort s` constructs a sorted list from the multiset `s`.
+(Uses merge sort algorithm.) 
+
+## BASE-LIBRARY REF Multiset.map
+{α : Type u_1} → {β : Type v} → (α → β) → Multiset α → Multiset β
+
+Body:
+fun {α} {β} f s => Quot.liftOn s (fun l => ↑(List.map f l)) ⋯
+
+Docstring: `map f s` is the lift of the list `map` operation. The multiplicity
+of `b` in `map f s` is the number of `a ∈ s` (counting multiplicity)
+such that `f a = b`. 
+
+## BASE-LIBRARY REF Finset.val
+{α : Type u_4} → Finset α → Multiset α
+
+Body:
+fun α self => self.1
+
+Docstring: The underlying multiset 
+
+## BASE-LIBRARY REF Nat.decLe
+(n m : ℕ) → Decidable (n ≤ m)
+
+Body:
+fun n m => if h : n.ble m = true then isTrue ⋯ else isFalse ⋯
+
+Docstring: A decision procedure for non-strict inequality of natural numbers, usually accessed via the
+`DecidableLE Nat` instance.
+
+Examples:
+ * `(if 3 ≤ 4 then "yes" else "no") = "yes"`
+ * `(if 6 ≤ 4 then "yes" else "no") = "no"`
+ * `show 12 ≤ 12 by decide`
+ * `show 5 ≤ 12 by decide`
+
+
+## BASE-LIBRARY REF Nat.instPartialOrder
+PartialOrder ℕ
+
+Body:
+inferInstance
+
+## BASE-LIBRARY REF LE.total'
+∀ {α : Type u} [inst : LinearOrder α], Std.Total fun x1 x2 => x2 ≤ x1
+
+## BASE-LIBRARY REF dite
+{α : Sort u} → (c : Prop) → [h : Decidable c] → (c → α) → (¬c → α) → α
+
+Body:
+fun {α} c [h : Decidable c] t e => Decidable.casesOn h e t
+
+Docstring: "Dependent" if-then-else, normally written via the notation `if h : c then t(h) else e(h)`,
+is sugar for `dite c (fun h => t(h)) (fun h => e(h))`, and it is the same as
+`if c then t else e` except that `t` is allowed to depend on a proof `h : c`,
+and `e` can depend on `h : ¬c`. (Both branches use the same name for the hypothesis,
+even though it has different types in the two cases.)
+
+We use this to be able to communicate the if-then-else condition to the branches.
+For example, `Array.get arr i h` expects a proof `h : i < arr.size` in order to
+avoid a bounds check, so you can write `if h : i < arr.size then arr.get i h else ...`
+to avoid the bounds check inside the if branch. (Of course in this case we have only
+lifted the check into an explicit `if`, but we could also use this proof multiple times
+or derive `i < arr.size` from some other proposition that we are checking in the `if`.)
+
+
+## BASE-LIBRARY REF List.length
+{α : Type u_1} → List α → ℕ
+
+Body:
+fun {α} x =>
+  List.brecOn x fun x f =>
+    (match (motive := (x : List α) → List.below x → ℕ) x with
+      | [] => fun x => 0
+      | head :: as => fun x => x.1 + 1)
+      f
+
+Docstring: The length of a list.
+
+This function is overridden in the compiler to `lengthTR`, which uses constant stack space.
+
+Examples:
+* `([] : List String).length = 0`
+* `["green", "brown"].length = 2`
+
+
+## BASE-LIBRARY REF List.get
+{α : Type u} → (as : List α) → Fin as.length → α
+
+Docstring: Returns the element at the provided index, counting from `0`.
+
+In other words, for `i : Fin as.length`, `as.get i` returns the `i`'th element of the list `as`.
+Because the index is a `Fin` bounded by the list's length, the index will never be out of bounds.
+
+Examples:
+ * `["spring", "summer", "fall", "winter"].get (2 : Fin 4) = "fall"`
+ * `["spring", "summer", "fall", "winter"].get (0 : Fin 4) = "spring"`
+
+
+## INFORMAL STATEMENT
+prop.sf.ehp-through-m
+
+\textbf{(a)} For each $n\in \left\{  0,1,\ldots ,N\right\}  $, we have
+
+\[  e_{n}=m_{\left( 1,1,\ldots ,1,0,0,\ldots ,0\right) },  \]
+
+ where $\left( 1,1,\ldots ,1,0,0,\ldots ,0\right) $ is the $N$-tuple that begins with $n$ many $1$’s and ends with $N-n$ many $0$’s. 
+
+\textbf{(b)} For each $n\in \mathbb {N}$, we have
+
+\[  h_{n}=\sum _{\substack {\lambda \text{ is an }N\text{-partition;}\\ \left\vert \lambda \right\vert =n}}m_{\lambda },  \]
+
+ where the \emph{size} $\left\vert \lambda \right\vert $ of an $N$-partition $\lambda $ is defined to be the sum of its entries (i.e., if $\lambda =\left( \lambda _{1},\lambda _{2},\ldots ,\lambda _{N}\right) $, then $\left\vert \lambda \right\vert :=\lambda _{1}+\lambda _{2}+\cdots +\lambda _{N}$). 
+
+\textbf{(c)} Assume that $N>0$. For each $n\in \mathbb {N}$, we have
+
+\[  p_{n}=m_{\left( n,0,0,\ldots ,0\right) },  \]
+
+ where $\left( n,0,0,\ldots ,0\right) $ is the $N$-tuple that begins with an $n$ and ends with $N-1$ zeroes.
+
+## INFORMAL DEFINITION stmt-algebraic-combinatorics-conv.sf.kn
+conv.sf.KN
+
+Fix a commutative ring $K$. Fix an $N\in \mathbb {N}$. Throughout this chapter, we will keep $K$ and $N$ fixed. Let $S_N$ denote the symmetric group, i.e., the group of all permutations of $[N] := \{ 1,2,\ldots ,N\} $.
+
+## INFORMAL DEFINITION stmt-algebraic-combinatorics-def.alg.commring
+def.alg.commring
+
+A \emph{commutative ring} means a set $K$ equipped with three maps
+
+\begin{align*}  \oplus &  :K\times K\rightarrow K,\\ \ominus &  :K\times K\rightarrow K,\\ \odot &  :K\times K\rightarrow K \end{align*}
+
+ and two elements $\mathbf{0}\in K$ and $\mathbf{1}\in K$ satisfying the following axioms: 
+
+\begin{enumerate} \item \emph{Commutativity of addition:} We have $a\oplus b=b\oplus a$ for all $a,b\in K$. 
+
+\item \emph{Associativity of addition:} We have $a\oplus \left( b\oplus c\right) =\left( a\oplus b\right) \oplus c$ for all $a,b,c\in K$. 
+
+\item \emph{Neutrality of zero:} We have $a\oplus \mathbf{0}=\mathbf{0}\oplus a=a$ for all $a\in K$. 
+
+\item \emph{Subtraction undoes addition:} Let $a,b,c\in K$. We have $a\oplus b=c$ if and only if $a=c\ominus b$. 
+
+\item \emph{Commutativity of multiplication:} We have $a\odot b=b\odot a$ for all $a,b\in K$. 
+
+\item \emph{Associativity of multiplication:} We have $a\odot \left( b\odot c\right) =\left( a\odot b\right) \odot c$ for all $a,b,c\in K$. 
+
+\item \emph{Distributivity:} We have
+
+\[  a\odot \left( b\oplus c\right) =\left( a\odot b\right) \oplus \left( a\odot c\right) \  \  \  \  \  \  \  \  \  \  \text{and}\  \  \  \  \  \  \  \  \  \  \left( a\oplus b\right) \odot c=\left( a\odot c\right) \oplus \left( b\odot c\right)  \]
+
+ for all $a,b,c\in K$. 
+
+\item \emph{Neutrality of one:} We have $a\odot \mathbf{1}=\mathbf{1}\odot a=a$ for all $a\in K$. 
+
+\item \emph{Annihilation:} We have $a\odot \mathbf{0}=\mathbf{0}\odot a=\mathbf{0}$ for all $a\in K$. 
+
+\end{enumerate}
+
+The operations $\oplus $, $\ominus $ and $\odot $ are called the \emph{addition}, the \emph{subtraction} and the \emph{multiplication} of the ring $K$. When confusion is unlikely, we will denote these three operations $\oplus $, $\ominus $ and $\odot $ by $+$, $-$ and $\cdot $, respectively, and we will abbreviate $a\odot b=a\cdot b$ by $ab$. 
+
+The elements $\mathbf{0}$ and $\mathbf{1}$ are called the \emph{zero} and the \emph{unity} (or the \emph{one}) of the ring $K$. We will simply call these elements $0$ and $1$ when confusion with the corresponding numbers is unlikely. 
+
+We will use \emph{PEMDAS conventions} for the three operations $\oplus $, $\ominus $ and $\odot $. These imply that the operation $\odot $ has higher precedence than $\oplus $ and $\ominus $, while the operations $\oplus $ and $\ominus $ are left-associative.
+
+## INFORMAL DEFINITION stmt-algebraic-combinatorics-def.perm.perm
+def.perm.perm
+
+Let $X$ be a set. 
+
+\textbf{(a)} A \emph{permutation} of $X$ means a bijection from $X$ to $X$. 
+
+\textbf{(b)} It is known that the set of all permutations of $X$ is a group under composition. This group is called the \emph{symmetric group} of $X$, and is denoted by $S_X$. Its neutral element is the identity map $\operatorname {id}_X : X \to X$. Its size is $|X|!$ when $X$ is finite. 
+
+\textbf{(c)} As usual in group theory, we will write $\alpha \beta $ for the composition $\alpha \circ \beta $ when $\alpha , \beta \in S_X$. This is the map that sends each $x \in X$ to $\alpha (\beta (x))$. 
+
+\textbf{(d)} If $\alpha \in S_X$ and $i \in \mathbb {Z}$, then $\alpha ^i$ shall denote the $i$-th power of $\alpha $ in the group $S_X$. Note that $\alpha ^i = \underbrace{\alpha \circ \alpha \circ \cdots \circ \alpha }_{i\text{ times}}$ if $i \ge 0$. Also, $\alpha ^0 = \operatorname {id}_X$. Also, $\alpha ^{-1}$ is the inverse of $\alpha $ in the group $S_X$, that is, the inverse of the map $\alpha $.
+
+## INFORMAL DEFINITION stmt-algebraic-combinatorics-def.perm.sn-iven
+def.perm.Sn-iven
+
+Let $n \in \mathbb {Z}$. Then, $[n]$ shall mean the set $\{ 1, 2, \ldots , n\} $. This is an $n$-element set if $n \ge 0$, and is an empty set if $n \le 0$. 
+
+The symmetric group $S_{[n]}$ (consisting of all permutations of $[n]$) will be denoted $S_n$ and called the $n$\emph{-th symmetric group}. Its size is $n!$ (when $n \ge 0$).
+
+## INFORMAL DEFINITION stmt-algebraic-combinatorics-def.sf.ehp
+def.sf.ehp
+
+\textbf{(a)} For each $n \in \mathbb {Z}$, define a symmetric polynomial $e_n \in \mathcal{S}$ by 
+
+\[  e_n = \sum _{\substack {(i_1, i_2, \ldots , i_n) \in [N]^n; \\ i_1 < i_2 < \cdots < i_n}} x_{i_1} x_{i_2} \cdots x_{i_n} = (\text{sum of all squarefree monomials of degree } n).  \]
+
+ This $e_n$ is called the $n$-th \emph{elementary symmetric polynomial} in $x_1, x_2, \ldots , x_N$. \medskip 
+
+\textbf{(b)} For each $n \in \mathbb {Z}$, define a symmetric polynomial $h_n \in \mathcal{S}$ by 
+
+\[  h_n = \sum _{\substack {(i_1, i_2, \ldots , i_n) \in [N]^n; \\ i_1 \leq i_2 \leq \cdots \leq i_n}} x_{i_1} x_{i_2} \cdots x_{i_n} = (\text{sum of all monomials of degree } n).  \]
+
+ This $h_n$ is called the $n$-th \emph{complete homogeneous symmetric polynomial} in $x_1, x_2, \ldots , x_N$. \medskip 
+
+\textbf{(c)} For each $n \in \mathbb {Z}$, define a symmetric polynomial $p_n \in \mathcal{S}$ by 
+
+\begin{align*}  p_n & = \begin{cases}  x_1^n + x_2^n + \cdots + x_N^n, &  \text{if } n > 0; \\ 1, &  \text{if } n = 0; \\ 0, &  \text{if } n < 0 \end{cases}\\ & = (\text{sum of all primal monomials of degree } n). \end{align*}
+
+ This $p_n$ is called the $n$-th \emph{power sum} in $x_1, x_2, \ldots , x_N$.
+
+## INFORMAL DEFINITION stmt-algebraic-combinatorics-def.sf.m
+def.sf.m
+
+Let $\lambda $ be any $N$-partition. Then, we define a symmetric polynomial $m_{\lambda }\in \mathcal{S}$ by
+
+\[  m_{\lambda }:=\sum _{\substack {a\in \mathbb {N}^{N};\\ \operatorname *{sort}a=\lambda }}x^{a}.  \]
+
+ This is called the \emph{monomial symmetric polynomial corresponding to }$\lambda $.
+
+## INFORMAL DEFINITION stmt-algebraic-combinatorics-def.sf.monomial
+def.sf.monomial
+
+\textbf{(a)} A \emph{monomial} is an expression of the form $x_1^{a_1} x_2^{a_2} \cdots x_N^{a_N}$ with $a_1, a_2, \ldots , a_N \in \mathbb {N}$. \medskip 
+
+\textbf{(b)} The \emph{degree} $\deg \mathfrak {m}$ of a monomial $\mathfrak {m} = x_1^{a_1} x_2^{a_2} \cdots x_N^{a_N}$ is defined to be $a_1 + a_2 + \cdots + a_N \in \mathbb {N}$. \medskip 
+
+\textbf{(c)} A monomial $\mathfrak {m} = x_1^{a_1} x_2^{a_2} \cdots x_N^{a_N}$ is said to be \emph{squarefree} if $a_1, a_2, \ldots , a_N \in \{ 0,1\} $. (This is saying that no square or higher power of an indeterminate appears in $\mathfrak {m}$; thus the name “squarefree”.) \medskip 
+
+\textbf{(d)} A monomial $\mathfrak {m} = x_1^{a_1} x_2^{a_2} \cdots x_N^{a_N}$ is said to be \emph{primal} if there is at most one $i \in [N]$ satisfying $a_i > 0$. (This is saying that the monomial $\mathfrak {m}$ contains no two distinct indeterminates. Thus, a primal monomial is just $1$ or a power of an indeterminate.)
+
+## INFORMAL DEFINITION stmt-algebraic-combinatorics-def.sf.npar
+def.sf.Npar
+
+An $N$\emph{-partition} will mean a weakly decreasing $N$-tuple of nonnegative integers. In other words, an $N$-partition means an $N$-tuple $\left( \lambda _{1},\lambda _{2},\ldots ,\lambda _{N}\right) \in \mathbb {N}^{N}$ with $\lambda _{1}\geq \lambda _{2}\geq \cdots \geq \lambda _{N}$. 
+
+The \emph{size} (or weight) of an $N$-partition $\lambda = (\lambda _1, \lambda _2, \ldots , \lambda _N)$ is defined to be $|\lambda | := \lambda _1 + \lambda _2 + \cdots + \lambda _N$.
+
+## INFORMAL DEFINITION stmt-algebraic-combinatorics-def.sf.ps
+def.sf.PS
+
+\textbf{(a)} Let $\mathcal{P}$ be the polynomial ring $K[x_1, x_2, \ldots , x_N]$ in $N$ variables over $K$. This is not just a ring; it is a commutative $K$-algebra. \medskip 
+
+\textbf{(b)} The symmetric group $S_N$ acts on the set $\mathcal{P}$ according to the formula 
+
+\[  \sigma \cdot f = f[x_{\sigma (1)}, x_{\sigma (2)}, \ldots , x_{\sigma (N)}] \quad \text{for any } \sigma \in S_N \text{ and any } f \in \mathcal{P}.  \]
+
+ Here, $f[a_1, a_2, \ldots , a_N]$ means the result of substituting $a_1, a_2, \ldots , a_N$ for the indeterminates $x_1, x_2, \ldots , x_N$ in a polynomial $f \in \mathcal{P}$. 
+
+Roughly speaking, the group $S_N$ is thus acting on $\mathcal{P}$ by permuting variables: A permutation $\sigma \in S_N$ transforms a polynomial $f$ by substituting $x_{\sigma (i)}$ for each $x_i$. 
+
+Note that this action of $S_N$ on $\mathcal{P}$ is a well-defined group action (as we will see in Proposition~ \ref{prop.sf.SN-acts} below). \medskip 
+
+\textbf{(c)} A polynomial $f \in \mathcal{P}$ is said to be \emph{symmetric} if it satisfies 
+
+\[  \sigma \cdot f = f \quad \text{for all } \sigma \in S_N.  \]
+
+\textbf{(d)} We let $\mathcal{S}$ be the set of all symmetric polynomials $f \in \mathcal{P}$.
+
+## INFORMAL DEFINITION stmt-algebraic-combinatorics-def.sf.sort
+def.sf.sort
+
+Let $a=\left( a_{1},a_{2},\ldots ,a_{N}\right) \in \mathbb {N}^{N}$. Then: 
+
+\textbf{(a)} We let $x^{a}$ denote the monomial $x_{1}^{a_{1}}x_{2}^{a_{2}}\cdots x_{N}^{a_{N}}$. 
+
+\textbf{(b)} We let $\operatorname *{sort}a$ mean the $N$-partition obtained from $a$ by sorting the entries of $a$ in weakly decreasing order.
+
+## VERDICT
+{
+  "verdict": "minor_discrepancy",
+  "discrepancies": [
+    {
+      "root": "the body of `MvPolynomial.psum`",
+      "severity": "minor",
+      "bridge": "For `n > 0`, the informal `p_n` is exactly `\u2211 i, X i ^ n`, so `power_sum_eq_monomialSymm` proves part (c). Handle the omitted boundary case `n = 0` separately: the informal definition explicitly gives `p_0 = 1`, while `singletonPartition 0 hN` is the zero partition and unfolding `monomialSymm` leaves only the zero exponent tuple, whose `monomialExp` is `1`. Thus `p_0 = m_(0,\u2026,0)`. This is a routine one-line boundary case. The formal `MvPolynomial.psum 0 = \u2211 i, 1` itself cannot be used as the informal `p_0`, which is why the formal theorem requires `n \u2260 0`."
+    }
+  ],
+  "justification": "Parts (a) and (b) match directly: `(n : \u2115) (hn : n \u2264 N)` formalizes \u201c`n \u2208 {0,1,\u2026,N}`\u201d and `onesThenZeros n hn` has exactly `n` ones; while `NPartitionsOfSize n` filters by `NPartition.size mu = n`, with `size` defined as the sum of entries. Part (c) differs at zero. The blueprint says \u201cFor each `n \u2208 \u2115`\u201d and its definition specifies `p_n = 1` \u201cif `n = 0`.\u201d By contrast, the formal signature assumes `n \u2260 0`, and `MvPolynomial.psum` has body `\u2211 i, MvPolynomial.X i ^ n`, which at `n = 0` is a sum of `N` copies of `1`, not the blueprint\u2019s `p_0`. The missing source case nevertheless follows immediately from the source definition and the unfolded definition of `monomialSymm`. The use of `[CommSemiring R]` rather than a commutative ring is a strictly more general coefficient setting and introduces no discrepancy."
+}
