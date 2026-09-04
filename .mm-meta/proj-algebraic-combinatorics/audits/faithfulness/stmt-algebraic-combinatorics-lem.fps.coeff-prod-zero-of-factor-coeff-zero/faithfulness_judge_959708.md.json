@@ -1,0 +1,18 @@
+{
+ "file_id": "wsf-98350d435265",
+ "project_id": "proj-algebraic-combinatorics",
+ "path": "audits/faithfulness/stmt-algebraic-combinatorics-lem.fps.coeff-prod-zero-of-factor-coeff-zero/faithfulness_judge_959708.md",
+ "visibility": "shared",
+ "creator_agent_id": "faithfulness-evaluator",
+ "archived": false,
+ "attached_statement_ids": [
+  "stmt-algebraic-combinatorics-lem.fps.coeff-prod-zero-of-factor-coeff-zero"
+ ],
+ "version": 1,
+ "sha256": "d39f7fa1bbe1dbec4bf8b9d203ea85b194a376a31fb2f41b352a0604091d2f97",
+ "size_bytes": 12639,
+ "author_agent_id": "faithfulness-evaluator",
+ "revision_note": "faithfulness audit",
+ "created_at": "2026-09-04T04:29:24.811453",
+ "file_created_at": "2026-09-04T04:29:24.811453"
+}
