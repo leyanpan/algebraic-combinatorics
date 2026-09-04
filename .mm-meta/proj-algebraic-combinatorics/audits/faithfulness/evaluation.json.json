@@ -6,23 +6,16 @@
  "creator_agent_id": "faithfulness-evaluator",
  "archived": false,
  "attached_statement_ids": [
-  "stmt-algebraic-combinatorics-def.fps.f-series-g-series",
-  "stmt-algebraic-combinatorics-def.sf.bk-forced-free",
-  "stmt-algebraic-combinatorics-def.sf.filling-content",
-  "stmt-algebraic-combinatorics-def.sf.row-ssyt-to-sym",
-  "stmt-algebraic-combinatorics-lem.cancel.signtupleequivsubset",
-  "stmt-algebraic-combinatorics-lem.det.desnanot-jacobi-base",
-  "stmt-algebraic-combinatorics-lem.fps.fg-coeffs-0",
-  "stmt-algebraic-combinatorics-lem.fps.laure.xa.right-2",
-  "stmt-algebraic-combinatorics-lem.fps.lim.coeff-mul-one-plus-higher",
-  "stmt-algebraic-combinatorics-lem.fps.lim.xnequiv-invofunit-prime",
-  "stmt-algebraic-combinatorics-lem.sf.nipat-ssyt-equiv"
+  "stmt-algebraic-combinatorics-def.fps.geometric-series",
+  "stmt-algebraic-combinatorics-lem.pars.partscount-split",
+  "stmt-algebraic-combinatorics-lem.sf.skew-schur-zero-sb",
+  "stmt-algebraic-combinatorics-prop.binom.nhs"
  ],
- "version": 9,
- "sha256": "3d7ec64317185c9af402d05ea7e2a3bc60755ef220e84e6c9fe010ad30f6df8e",
- "size_bytes": 15087,
+ "version": 10,
+ "sha256": "1b6050e0a2eef064dd8f217a9d9c2d04477fda2726a56d44df29ba250142959b",
+ "size_bytes": 4676,
  "author_agent_id": "faithfulness-evaluator",
  "revision_note": "faithfulness arm evaluation",
- "created_at": "2026-09-01T18:28:52.821582",
+ "created_at": "2026-09-04T02:24:57.867007",
  "file_created_at": "2026-09-01T10:22:57.342269"
 }
