@@ -1,0 +1,18 @@
+{
+ "file_id": "wsf-d2868e521bb4",
+ "project_id": "proj-algebraic-combinatorics",
+ "path": "audits/faithfulness/stmt-algebraic-combinatorics-lem.lgv.catalan-unique-nipat/faithfulness_judge_507105.md",
+ "visibility": "shared",
+ "creator_agent_id": "faithfulness-evaluator",
+ "archived": false,
+ "attached_statement_ids": [
+  "stmt-algebraic-combinatorics-lem.lgv.catalan-unique-nipat"
+ ],
+ "version": 1,
+ "sha256": "6b6453f4930cd723cebf6d142739a9f5a740a59e6c7fe06fe8d9dcfe7300341f",
+ "size_bytes": 23131,
+ "author_agent_id": "faithfulness-evaluator",
+ "revision_note": "faithfulness audit",
+ "created_at": "2026-09-04T04:36:52.030592",
+ "file_created_at": "2026-09-04T04:36:52.030592"
+}
