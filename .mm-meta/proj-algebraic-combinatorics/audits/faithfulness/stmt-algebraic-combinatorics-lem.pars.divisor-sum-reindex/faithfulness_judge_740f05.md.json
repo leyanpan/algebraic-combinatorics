@@ -1,0 +1,18 @@
+{
+ "file_id": "wsf-03ecd0de9db8",
+ "project_id": "proj-algebraic-combinatorics",
+ "path": "audits/faithfulness/stmt-algebraic-combinatorics-lem.pars.divisor-sum-reindex/faithfulness_judge_740f05.md",
+ "visibility": "shared",
+ "creator_agent_id": "faithfulness-evaluator",
+ "archived": false,
+ "attached_statement_ids": [
+  "stmt-algebraic-combinatorics-lem.pars.divisor-sum-reindex"
+ ],
+ "version": 1,
+ "sha256": "71114501d5ddabdda762f2a8f6110436acd95559baadd0381dbcbec4d99c0585",
+ "size_bytes": 15696,
+ "author_agent_id": "faithfulness-evaluator",
+ "revision_note": "faithfulness audit",
+ "created_at": "2026-09-04T04:36:55.712769",
+ "file_created_at": "2026-09-04T04:36:55.712769"
+}
