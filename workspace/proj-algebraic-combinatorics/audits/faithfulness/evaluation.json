@@ -14,21 +14,72 @@
     "stmt-algebraic-combinatorics-prop.binom.nhs"
   ],
   "agent_evaluations": {},
-  "one_shot_evaluations": {},
-  "no_verdict": {
-    "one_shot": [
-      "stmt-algebraic-combinatorics-lem.sf.skew-schur-zero-sb",
-      "stmt-algebraic-combinatorics-lem.pars.partscount-split",
-      "stmt-algebraic-combinatorics-def.fps.geometric-series",
-      "stmt-algebraic-combinatorics-prop.binom.nhs"
-    ]
-  },
-  "errors": {
-    "one_shot": {
-      "stmt-algebraic-combinatorics-lem.sf.skew-schur-zero-sb": "APIError: Get statement closure failed (HTTP 404): closure query produced no target records for ['skewSchurPoly_zero'] (0 info messages, 1 errors)",
-      "stmt-algebraic-combinatorics-lem.pars.partscount-split": "APIError: Get statement closure failed (HTTP 404): closure query produced no target records for ['Nat.Partition.partsCount_split'] (0 info messages, 1 errors)",
-      "stmt-algebraic-combinatorics-def.fps.geometric-series": "APIError: Get statement closure failed (HTTP 404): closure query produced no target records for ['AlgebraicCombinatorics.geometricSeries'] (0 info messages, 1 errors)",
-      "stmt-algebraic-combinatorics-prop.binom.nhs": "APIError: Get statement closure failed (HTTP 404): closure query produced no target records for ['AlgebraicCombinatorics.SignedCounting.negHockeyStick'] (0 info messages, 1 errors)"
+  "one_shot_evaluations": {
+    "stmt-algebraic-combinatorics-lem.sf.skew-schur-zero-sb": {
+      "path": "audits/faithfulness/stmt-algebraic-combinatorics-lem.sf.skew-schur-zero-sb/faithfulness_judge_b64f2f.md",
+      "faithful": false,
+      "targets": {
+        "AlgebraicCombinatorics.SymmetricFunctions.SchurBasics": [
+          "skewSchurPoly_zero"
+        ]
+      },
+      "verdict": "minor_discrepancy",
+      "discrepancies": [
+        {
+          "root": "[inst : NeZero N]",
+          "severity": "minor",
+          "bridge": "Handle the excluded case N = 0 directly. Then Fin 0 is empty, every NPartition 0 has the unique empty tuple of parts, both the Young diagram and the skew diagram against 0 are empty, and each SSYT sum consists of the unique empty filling with monomial equal to the empty product 1. Hence skewSchurPoly lam 0 = schurPoly lam also holds for N = 0 by unfolding the definitions."
+        }
+      ],
+      "justification": "The blueprint says, \u201cFor any N-partition \u03bb, we have s_{\u03bb/0} = s_\u03bb,\u201d without requiring N \u2260 0. The elaborated signature instead begins \u201c\u2200 {N : \u2115} [inst : NeZero N] (lam : NPartition N),\u201d so it excludes N = 0. All positive N are covered, and the omitted empty case is routine from the displayed definition bodies. The formal definitions otherwise match the blueprint: skewSchurPoly is the sum over SSYT fillings of Y(\u03bb) \\ Y(0), while schurPoly is the corresponding sum over SSYT fillings of Y(\u03bb); NPartition.zero has all parts zero."
+    },
+    "stmt-algebraic-combinatorics-lem.pars.partscount-split": {
+      "path": "audits/faithfulness/stmt-algebraic-combinatorics-lem.pars.partscount-split/faithfulness_judge_966836.md",
+      "faithful": false,
+      "targets": {
+        "AlgebraicCombinatorics.Partitions.Basics": [
+          "Nat.Partition.partsCount_split"
+        ]
+      },
+      "verdict": "minor_discrepancy",
+      "discrepancies": [
+        {
+          "root": "\u2200 {k n : \u2115}",
+          "severity": "minor",
+          "bridge": "The blueprint defines and states p_k(n) for n \u2208 \u2124, whereas the theorem only quantifies over natural n. For n \u2265 0, identify the integer n with its corresponding natural number and apply the formal theorem. For n < 0, no finite tuple of positive integers can have size n, so there are no partitions of n; consequently p_k(n), the count containing 1, and the count not containing 1 are all zero, and the claimed equality is immediate."
+        }
+      ],
+      "justification": "The elaborated signature restricts the indices to `\u2200 {k n : \u2115}`, while the blueprint definition says, \u201cLet $n\\in\\mathbb Z$ and $k\\in\\mathbb N$\u201d and defines $p_k(n)$ there. After unfolding the project definitions, the formal equality correctly partitions `{p | p.parts.card = k}` into the complementary predicates `p.containsOne` and `\u00acp.containsOne`, with `containsOne` defined as `1 \u2208 p.parts`. Thus the only gap is the routine negative-integer boundary case."
+    },
+    "stmt-algebraic-combinatorics-def.fps.geometric-series": {
+      "path": "audits/faithfulness/stmt-algebraic-combinatorics-def.fps.geometric-series/faithfulness_judge_e398bd.md",
+      "faithful": true,
+      "targets": {
+        "AlgebraicCombinatorics.FPS.Substitution": [
+          "AlgebraicCombinatorics.geometricSeries"
+        ]
+      },
+      "verdict": "faithful",
+      "discrepancies": [],
+      "justification": "The blueprint defines the geometric series as \u201cthe FPS 1/(1-x) = (1-x)\u207b\u00b9 \u2208 K[[x]] (where K is a field).\u201d The elaborated declaration has exactly the field binder `{K : Type u_2} \u2192 [Field K] \u2192 PowerSeries K` and body `(1 - PowerSeries.X)\u207b\u00b9`. Here `PowerSeries K` is the library representation of one-variable formal power series, and `PowerSeries.X` is its variable. Since `1 - X` has nonzero constant coefficient, the library\u2019s power-series inverse has the intended multiplicative-inverse meaning. Thus the body directly matches the blueprint definition."
+    },
+    "stmt-algebraic-combinatorics-prop.binom.nhs": {
+      "path": "audits/faithfulness/stmt-algebraic-combinatorics-prop.binom.nhs/faithfulness_judge_53bd0b.md",
+      "faithful": false,
+      "targets": {
+        "AlgebraicCombinatorics.SignedCounting.AlternatingSums": [
+          "AlgebraicCombinatorics.SignedCounting.negHockeyStick"
+        ]
+      },
+      "verdict": "significant_divergence",
+      "discrepancies": [
+        {
+          "root": "n : \u2115",
+          "severity": "significant",
+          "bridge": "To recover the claim for arbitrary complex n, one must separately formalize the generalized binomial coefficient as the falling-factorial polynomial over \u2102, prove that its values at positive natural numbers agree with the cast of Nat.choose, and then apply a polynomial identity argument for each m. None of this is asserted by the target, whose language only expresses Nat.choose for natural upper indices. This bridge contains the substantive extension from positive integers to all complex numbers."
+        }
+      ],
+      "justification": "The target quantifies only \u201c\u2200 (n m : \u2115), 0 < n\u201d and uses \u201c\u2191(n.choose k)\u201d and \u201c\u2191((n - 1).choose m)\u201d. The blueprint instead says \u201cLet n \u2208 \u2102 and m \u2208 \u2115\u201d and defines binomial coefficients for complex upper arguments by the falling-factorial formula. Thus the target proves only the positive-natural specialization. Its docstring's statement that the complex result follows \u201cby the polynomial identity principle\u201d is contextual prose, not part of the theorem's formal conclusion."
     }
   }
 }
